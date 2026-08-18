@@ -10,18 +10,15 @@ import feedparser
 
 
 # ============================================================
-# NOWNEX — Arabic News Generator
+# NOWNEX — Arabic AI News Engine
 # ============================================================
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    raise RuntimeError(
-        "GEMINI_API_KEY is missing from GitHub Secrets."
-    )
+    raise RuntimeError("GEMINI_API_KEY is missing from GitHub Secrets.")
 
 
-# Gemini model
 GEMINI_MODEL = "gemini-2.5-flash"
 
 GEMINI_URL = (
@@ -59,6 +56,22 @@ MAX_NEWS = 8
 
 
 # ============================================================
+# VALID CATEGORIES
+# ============================================================
+
+VALID_CATEGORIES = {
+    "World",
+    "Technology",
+    "Entertainment",
+    "AI",
+    "Cars",
+    "Science",
+    "Sports",
+    "Facts"
+}
+
+
+# ============================================================
 # TEXT CLEANING
 # ============================================================
 
@@ -84,12 +97,12 @@ def clean_text(value):
 
 
 # ============================================================
-# REMOVE DUPLICATES
+# NORMALIZE TITLE
 # ============================================================
 
 def normalize_title(title):
 
-    title = title.lower()
+    title = clean_text(title).lower()
 
     title = re.sub(
         r"[^\w\u0600-\u06FF]+",
@@ -99,6 +112,10 @@ def normalize_title(title):
 
     return title
 
+
+# ============================================================
+# REMOVE DUPLICATES
+# ============================================================
 
 def remove_duplicates(items):
 
@@ -126,7 +143,7 @@ def remove_duplicates(items):
 
 
 # ============================================================
-# READ RSS NEWS
+# READ RSS
 # ============================================================
 
 def get_news():
@@ -136,7 +153,7 @@ def get_news():
     for source_name, feed_url in RSS_FEEDS:
 
         print(
-            "Reading news from:",
+            "Reading:",
             source_name
         )
 
@@ -146,7 +163,7 @@ def get_news():
                 feed_url
             )
 
-            for entry in feed.entries[:15]:
+            for entry in feed.entries[:20]:
 
                 title = clean_text(
                     entry.get(
@@ -164,6 +181,30 @@ def get_news():
                         )
                     )
                 )
+
+                # Some feeds provide content instead
+                # of summary/description.
+
+                if not description:
+
+                    content = entry.get(
+                        "content",
+                        []
+                    )
+
+                    if content:
+
+                        try:
+
+                            description = clean_text(
+                                content[0].get(
+                                    "value",
+                                    ""
+                                )
+                            )
+
+                        except Exception:
+                            pass
 
                 link = str(
                     entry.get(
@@ -201,6 +242,52 @@ def get_news():
 
 
 # ============================================================
+# CHECK SUMMARY
+# ============================================================
+
+def summary_is_valid(
+    title,
+    summary
+):
+
+    title_clean = clean_text(
+        title
+    )
+
+    summary_clean = clean_text(
+        summary
+    )
+
+    if not summary_clean:
+        return False
+
+    # Must be meaningfully longer than the title.
+
+    if len(summary_clean) < 120:
+        return False
+
+    # If the summary is almost exactly the title,
+    # reject it.
+
+    if summary_clean.lower() == title_clean.lower():
+        return False
+
+    # Count sentences.
+
+    sentence_count = len(
+        re.findall(
+            r"[.!؟。]",
+            summary_clean
+        )
+    )
+
+    if sentence_count < 2:
+        return False
+
+    return True
+
+
+# ============================================================
 # GEMINI
 # ============================================================
 
@@ -210,11 +297,20 @@ def ask_gemini(
     source
 ):
 
-    prompt = f"""
-أنت رئيس تحرير منصة إخبارية عربية احترافية اسمها NOWNEX.
+    # If RSS has very little information,
+    # explicitly tell Gemini not to invent anything.
 
-أريد منك تحويل الخبر التالي إلى خبر عربي مختصر
-ومفهوم للقارئ العربي.
+    if not description:
+        description = (
+            "لا يوجد وصف إضافي متاح من مصدر RSS. "
+            "اعتمد على العنوان فقط ولا تخترع تفاصيل."
+        )
+
+    prompt = f"""
+أنت محرر الأخبار الرئيسي في منصة NOWNEX العربية.
+
+مهمتك هي كتابة نسخة عربية أصلية ومختصرة من الخبر
+الموجود في البيانات أدناه.
 
 المصدر:
 {source}
@@ -222,16 +318,14 @@ def ask_gemini(
 العنوان الأصلي:
 {title}
 
-المعلومات المتاحة:
+النص أو الوصف المتاح:
 {description}
 
-أعد النتيجة بصيغة JSON فقط.
-
-الصيغة:
+اكتب النتيجة في JSON فقط بهذا الشكل:
 
 {{
   "title": "عنوان عربي احترافي",
-  "summary": "ملخص عربي واضح من 3 إلى 5 جمل",
+  "summary": "ملخص عربي من 3 إلى 5 جمل يشرح ما حدث وأهميته",
   "category": "World"
 }}
 
@@ -246,18 +340,19 @@ Science
 Sports
 Facts
 
-القواعد المهمة:
+قواعد صارمة:
 
-1. اكتب بالعربية الفصحى.
-2. لا تترجم ترجمة حرفية.
-3. اجعل العنوان جذابًا لكن غير مبالغ فيه.
-4. لا تضف أي معلومة غير موجودة في النص.
-5. لا تخترع أرقامًا أو تصريحات.
-6. لا تقدم رأيًا شخصيًا.
-7. إذا كان الخبر غير واضح، حافظ على المعلومات المؤكدة فقط.
-8. الملخص يجب أن يشرح للقارئ ماذا حدث ولماذا الخبر مهم.
-9. لا تضع Markdown.
-10. أرسل JSON فقط بدون أي كلام قبله أو بعده.
+- استخدم العربية الفصحى.
+- لا تكرر العنوان داخل الملخص.
+- الملخص يجب أن يكون مختلفًا عن العنوان.
+- الملخص يجب أن يحتوي على 3 إلى 5 جمل.
+- اشرح ما حدث بناءً على المعلومات المتاحة فقط.
+- لا تخترع أسماء أو أرقامًا أو تصريحات أو أحداثًا.
+- لا تضف رأيًا شخصيًا.
+- إذا كانت المعلومات ناقصة، قل فقط ما يمكن تأكيده.
+- لا تستخدم Markdown.
+- لا تستخدم علامات اقتباس حول JSON.
+- أرسل JSON صالحًا فقط.
 """
 
     payload = {
@@ -265,6 +360,8 @@ Facts
         "contents": [
 
             {
+                "role": "user",
+
                 "parts": [
 
                     {
@@ -278,14 +375,14 @@ Facts
 
         "generationConfig": {
 
-            "temperature": 0.2,
+            "temperature": 0.3,
 
-            "responseMimeType": "application/json"
+            "responseMimeType":
+                "application/json"
 
         }
 
     }
-
 
     headers = {
 
@@ -297,143 +394,145 @@ Facts
 
     }
 
+    last_error = None
 
-    response = requests.post(
+    # Retry Gemini up to 3 times.
 
-        GEMINI_URL,
+    for attempt in range(1, 4):
 
-        headers=headers,
+        try:
 
-        json=payload,
-
-        timeout=90
-
-    )
-
-
-    print(
-        "Gemini status:",
-        response.status_code
-    )
-
-
-    if response.status_code != 200:
-
-        print(
-            response.text[:3000]
-        )
-
-        raise RuntimeError(
-            "Gemini API request failed."
-        )
-
-
-    data = response.json()
-
-
-    try:
-
-        text = (
-            data
-            ["candidates"]
-            [0]
-            ["content"]
-            ["parts"]
-            [0]
-            ["text"]
-        )
-
-    except Exception:
-
-        print(
-            json.dumps(
-                data,
-                ensure_ascii=False,
-                indent=2
+            print(
+                f"Gemini attempt {attempt}/3"
             )
-        )
 
-        raise RuntimeError(
-            "Invalid Gemini response."
-        )
+            response = requests.post(
 
+                GEMINI_URL,
 
-    text = text.strip()
+                headers=headers,
 
+                json=payload,
 
-    # Remove accidental Markdown fences
+                timeout=90
 
-    text = re.sub(
-        r"^```json\s*",
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
+            )
 
-    text = re.sub(
-        r"\s*```$",
-        "",
-        text
-    )
+            print(
+                "Gemini status:",
+                response.status_code
+            )
 
+            if response.status_code != 200:
 
-    result = json.loads(
-        text
-    )
+                print(
+                    response.text[:2000]
+                )
 
+                raise RuntimeError(
+                    f"Gemini HTTP {response.status_code}"
+                )
 
-    return {
+            data = response.json()
 
-        "title":
-            clean_text(
+            text = (
+                data
+                ["candidates"]
+                [0]
+                ["content"]
+                ["parts"]
+                [0]
+                ["text"]
+            )
+
+            text = text.strip()
+
+            # Remove accidental markdown fences.
+
+            text = re.sub(
+                r"^```json\s*",
+                "",
+                text,
+                flags=re.IGNORECASE
+            )
+
+            text = re.sub(
+                r"\s*```$",
+                "",
+                text
+            )
+
+            result = json.loads(
+                text
+            )
+
+            new_title = clean_text(
                 result.get(
                     "title",
-                    title
+                    ""
                 )
-            ),
+            )
 
-        "summary":
-            clean_text(
+            new_summary = clean_text(
                 result.get(
                     "summary",
-                    description
+                    ""
                 )
-            ),
+            )
 
-        "category":
-            result.get(
+            new_category = result.get(
                 "category",
                 "World"
             )
 
-    }
+            if not new_title:
+                raise RuntimeError(
+                    "Gemini returned an empty title."
+                )
 
+            if not summary_is_valid(
+                title,
+                new_summary
+            ):
 
-# ============================================================
-# CATEGORY VALIDATION
-# ============================================================
+                raise RuntimeError(
+                    "Gemini returned an invalid or "
+                    "too-short summary."
+                )
 
-VALID_CATEGORIES = {
+            if new_category not in VALID_CATEGORIES:
 
-    "World",
-    "Technology",
-    "Entertainment",
-    "AI",
-    "Cars",
-    "Science",
-    "Sports",
-    "Facts"
+                new_category = "World"
 
-}
+            return {
 
+                "title":
+                    new_title,
 
-def valid_category(category):
+                "summary":
+                    new_summary,
 
-    if category in VALID_CATEGORIES:
+                "category":
+                    new_category
 
-        return category
+            }
 
-    return "World"
+        except Exception as error:
+
+            last_error = error
+
+            print(
+                "Gemini error:",
+                error
+            )
+
+            if attempt < 3:
+
+                time.sleep(4)
+
+    raise RuntimeError(
+        f"Gemini failed after 3 attempts: {last_error}"
+    )
 
 
 # ============================================================
@@ -444,13 +543,11 @@ def main():
 
     print("")
     print("==============================")
-    print(" NOWNEX NEWS ENGINE")
+    print(" NOWNEX AI NEWS ENGINE")
     print("==============================")
     print("")
 
-
     articles = get_news()
-
 
     if not articles:
 
@@ -458,23 +555,17 @@ def main():
             "No news articles found."
         )
 
-
     print(
-        "Found",
+        "Found:",
         len(articles),
-        "articles."
+        "articles"
     )
-
-
-    # Limit the number sent to Gemini
 
     articles = articles[
         :MAX_NEWS
     ]
 
-
     final_news = []
-
 
     for index, article in enumerate(
         articles,
@@ -487,9 +578,9 @@ def main():
         )
 
         print(
+            "Original:",
             article["title"]
         )
-
 
         try:
 
@@ -503,7 +594,6 @@ def main():
 
             )
 
-
             item = {
 
                 "title":
@@ -516,9 +606,7 @@ def main():
                     ai["summary"],
 
                 "category":
-                    valid_category(
-                        ai["category"]
-                    ),
+                    ai["category"],
 
                 "source":
                     article["source"],
@@ -533,67 +621,47 @@ def main():
 
             }
 
-
             final_news.append(
                 item
             )
 
-
             print(
-                "✓ Arabic article created"
+                "✓ Gemini Arabic summary created"
             )
 
+            print(
+                "Title:",
+                ai["title"]
+            )
+
+            print(
+                "Summary:",
+                ai["summary"]
+            )
 
         except Exception as error:
 
+            # IMPORTANT:
+            # Do NOT silently publish an unsummarized
+            # article anymore.
+
             print(
-                "Gemini failed:",
+                "✗ Article rejected:",
                 error
             )
 
-            # Keep the original article
-            # if Gemini temporarily fails.
-
-            final_news.append(
-
-                {
-
-                    "title":
-                        article["title"],
-
-                    "summary":
-                        article["description"],
-
-                    "description":
-                        article["description"],
-
-                    "category":
-                        "World",
-
-                    "source":
-                        article["source"],
-
-                    "link":
-                        article["link"],
-
-                    "publishedAt":
-                        datetime.now(
-                            timezone.utc
-                        ).isoformat()
-
-                }
-
-            )
-
-
-        # Small delay between requests
-
         time.sleep(2)
 
+    # If Gemini failed for every article,
+    # stop the workflow instead of creating
+    # fake/empty summaries.
 
-    # ========================================================
-    # CREATE news.json
-    # ========================================================
+    if not final_news:
+
+        raise RuntimeError(
+            "Gemini did not successfully create "
+            "any Arabic articles."
+        )
 
     output = {
 
@@ -602,11 +670,13 @@ def main():
                 timezone.utc
             ).isoformat(),
 
+        "count":
+            len(final_news),
+
         "news":
             final_news
 
     }
-
 
     with open(
 
@@ -629,7 +699,6 @@ def main():
             indent=2
 
         )
-
 
     print("")
     print("==============================")
