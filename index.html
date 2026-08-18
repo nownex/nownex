@@ -5,10 +5,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
 
@@ -17,17 +14,9 @@
   content="NOWNEX — منصة عربية لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
 >
 
-<!-- Arabic Font -->
-<link
-  rel="preconnect"
-  href="https://fonts.googleapis.com"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link
-  rel="preconnect"
-  href="https://fonts.gstatic.com"
-  crossorigin
->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
@@ -37,7 +26,7 @@
 <style>
 
 /* =====================================================
-   NOWNEX — GLOBAL
+   GLOBAL
 ===================================================== */
 
 * {
@@ -103,6 +92,10 @@ body {
 
 }
 
+body.article-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -111,6 +104,7 @@ a {
 button {
   font-family: inherit;
 }
+
 
 /* =====================================================
    HEADER
@@ -124,8 +118,7 @@ header {
 
   z-index: 100;
 
-  backdrop-filter:
-    blur(18px);
+  backdrop-filter: blur(18px);
 
   background:
     rgba(6,9,20,0.90);
@@ -143,8 +136,7 @@ header {
 
   height: 76px;
 
-  padding:
-    0 22px;
+  padding: 0 22px;
 
   display: flex;
 
@@ -269,6 +261,7 @@ nav a.active {
   display: none;
 }
 
+
 /* =====================================================
    HERO
 ===================================================== */
@@ -352,11 +345,14 @@ nav a.active {
   letter-spacing:
     -2px;
 
-  max-width: 850px;
+  max-width:
+    850px;
 
-  margin-bottom: 25px;
+  margin-bottom:
+    25px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
 }
 
@@ -379,28 +375,36 @@ nav a.active {
 
 .hero p {
 
-  max-width: 700px;
+  max-width:
+    700px;
 
   color:
     var(--muted);
 
-  font-size: 18px;
+  font-size:
+    18px;
 
-  line-height: 1.9;
+  line-height:
+    1.9;
 
-  margin-bottom: 30px;
+  margin-bottom:
+    30px;
 
-  font-weight: 500;
+  font-weight:
+    500;
 
 }
 
 .hero-buttons {
 
-  display: flex;
+  display:
+    flex;
 
-  gap: 12px;
+  gap:
+    12px;
 
-  flex-wrap: wrap;
+  flex-wrap:
+    wrap;
 
 }
 
@@ -410,11 +414,14 @@ nav a.active {
   padding:
     14px 21px;
 
-  border-radius: 12px;
+  border-radius:
+    12px;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
-  font-weight: 800;
+  font-weight:
+    800;
 
   border:
     1px solid var(--line);
@@ -458,6 +465,7 @@ nav a.active {
     translateY(-2px);
 
 }
+
 
 /* =====================================================
    ORB
@@ -583,6 +591,7 @@ nav a.active {
 
 }
 
+
 /* =====================================================
    SECTIONS
 ===================================================== */
@@ -668,8 +677,9 @@ nav a.active {
 
 }
 
+
 /* =====================================================
-   NEWS
+   NEWS CARDS
 ===================================================== */
 
 .trend-grid {
@@ -817,6 +827,9 @@ nav a.active {
   transition:
     0.2s;
 
+  cursor:
+    pointer;
+
 }
 
 .news-link:hover {
@@ -825,6 +838,7 @@ nav a.active {
     white;
 
 }
+
 
 /* =====================================================
    CATEGORIES
@@ -916,6 +930,7 @@ nav a.active {
     500;
 
 }
+
 
 /* =====================================================
    FEATURE
@@ -1043,33 +1058,54 @@ nav a.active {
 
 }
 
+
 /* =====================================================
-   FOOTER
+   ARTICLE READER
 ===================================================== */
 
-footer {
+.article-overlay {
 
-  border-top:
-    1px solid var(--line);
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    500;
+
+  display:
+    none;
 
   background:
-    #050711;
+    rgba(3,6,14,0.96);
 
-  margin-top:
-    20px;
+  backdrop-filter:
+    blur(18px);
 
-}
-
-.footer-inner {
-
-  max-width:
-    1250px;
-
-  margin:
+  overflow-y:
     auto;
 
   padding:
-    35px 22px;
+    35px 20px 60px;
+
+}
+
+.article-overlay.active {
+  display: block;
+}
+
+.article-container {
+
+  max-width:
+    900px;
+
+  margin:
+    0 auto;
+
+}
+
+.article-top {
 
   display:
     flex;
@@ -1081,11 +1117,275 @@ footer {
     center;
 
   gap:
+    15px;
+
+  margin-bottom:
+    35px;
+
+}
+
+.article-brand {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    10px;
+
+  color:
+    var(--gold-light);
+
+  font-weight:
+    900;
+
+  font-size:
+    18px;
+
+}
+
+.article-close {
+
+  width:
+    46px;
+
+  height:
+    46px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(255,255,255,0.05);
+
+  color:
+    white;
+
+  border-radius:
+    13px;
+
+  cursor:
+    pointer;
+
+  font-size:
+    25px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+}
+
+.article-category {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  color:
+    var(--gold-light);
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+  margin-bottom:
+    18px;
+
+}
+
+.article-title {
+
+  font-size:
+    clamp(30px, 5vw, 54px);
+
+  line-height:
+    1.35;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    -1px;
+
+  margin-bottom:
     20px;
 
 }
 
-.footer-copy {
+.article-info {
+
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    12px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+
+  margin-bottom:
+    35px;
+
+}
+
+.article-info span {
+
+  padding:
+    7px 12px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(255,255,255,0.035);
+
+  border-radius:
+    9px;
+
+}
+
+.article-summary-box {
+
+  background:
+
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.055),
+      rgba(255,255,255,0.018)
+    ),
+
+    var(--card);
+
+  border:
+    1px solid var(--line);
+
+  border-right:
+    3px solid var(--gold);
+
+  border-radius:
+    20px;
+
+  padding:
+    30px;
+
+  margin-bottom:
+    25px;
+
+}
+
+.article-summary-label {
+
+  color:
+    var(--gold-light);
+
+  font-size:
+    13px;
+
+  font-weight:
+    900;
+
+  margin-bottom:
+    17px;
+
+}
+
+.article-summary {
+
+  color:
+    #e9edf8;
+
+  font-size:
+    18px;
+
+  line-height:
+    2.05;
+
+  font-weight:
+    500;
+
+  white-space:
+    pre-line;
+
+}
+
+.article-points {
+
+  margin-top:
+    25px;
+
+  padding:
+    25px;
+
+  border-radius:
+    18px;
+
+  background:
+    rgba(79,140,255,0.05);
+
+  border:
+    1px solid
+    rgba(79,140,255,0.12);
+
+}
+
+.article-points h3 {
+
+  color:
+    var(--gold-light);
+
+  font-size:
+    17px;
+
+  margin-bottom:
+    15px;
+
+}
+
+.article-points p {
+
+  color:
+    var(--muted);
+
+  line-height:
+    1.9;
+
+  font-size:
+    14px;
+
+}
+
+.article-source {
+
+  margin-top:
+    25px;
+
+  padding:
+    25px;
+
+  border-top:
+    1px solid var(--line);
+
+}
+
+.article-source-title {
 
   color:
     var(--muted);
@@ -1093,24 +1393,88 @@ footer {
   font-size:
     12px;
 
+  margin-bottom:
+    8px;
+
 }
 
-.footer-logo {
+.article-source-name {
+
+  color:
+    white;
 
   font-size:
-    20px;
+    18px;
+
+  font-weight:
+    800;
+
+  margin-bottom:
+    18px;
+
+}
+
+.original-btn {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  padding:
+    13px 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+
+  color:
+    #080b13;
+
+  border-radius:
+    11px;
+
+  font-size:
+    13px;
 
   font-weight:
     900;
 
+  transition:
+    0.2s;
+
 }
 
-.footer-logo span {
+.original-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+}
+
+.article-note {
 
   color:
-    var(--gold-light);
+    var(--muted);
+
+  font-size:
+    11px;
+
+  line-height:
+    1.8;
+
+  margin-top:
+    15px;
 
 }
+
 
 /* =====================================================
    SEARCH
@@ -1142,7 +1506,8 @@ footer {
 }
 
 .search-panel.active {
-  display: block;
+  display:
+    block;
 }
 
 .search-box {
@@ -1222,6 +1587,142 @@ footer {
     pointer;
 
 }
+
+.search-results {
+
+  max-width:
+    750px;
+
+  margin:
+    25px auto;
+
+}
+
+.search-result {
+
+  padding:
+    18px;
+
+  margin-bottom:
+    10px;
+
+  border:
+    1px solid var(--line);
+
+  border-radius:
+    14px;
+
+  background:
+    var(--card);
+
+  cursor:
+    pointer;
+
+}
+
+.search-result:hover {
+
+  border-color:
+    rgba(217,180,91,0.35);
+
+}
+
+.search-result-title {
+
+  font-size:
+    15px;
+
+  font-weight:
+    800;
+
+  line-height:
+    1.7;
+
+}
+
+.search-result-meta {
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
+
+  margin-top:
+    7px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+  border-top:
+    1px solid var(--line);
+
+  background:
+    #050711;
+
+  margin-top:
+    20px;
+
+}
+
+.footer-inner {
+
+  max-width:
+    1250px;
+
+  margin:
+    auto;
+
+  padding:
+    35px 22px;
+
+  display:
+    flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap:
+    20px;
+
+}
+
+.footer-copy {
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+
+}
+
+.footer-logo {
+
+  font-size:
+    20px;
+
+  font-weight:
+    900;
+
+}
+
+.footer-logo span {
+
+  color:
+    var(--gold-light);
+
+}
+
 
 /* =====================================================
    RESPONSIVE
@@ -1354,6 +1855,37 @@ footer {
 
   }
 
+  .article-overlay {
+
+    padding:
+      20px 14px 40px;
+
+  }
+
+  .article-summary-box {
+
+    padding:
+      22px;
+
+  }
+
+  .article-summary {
+
+    font-size:
+      16px;
+
+    line-height:
+      2;
+
+  }
+
+  .article-title {
+
+    font-size:
+      30px;
+
+  }
+
 }
 
 </style>
@@ -1376,6 +1908,7 @@ footer {
 <a
   href="#"
   class="logo"
+  onclick="closeArticle();"
 >
 
 <div class="logo-mark">
@@ -1438,7 +1971,7 @@ N<span>OWNEX</span>
 
 
 <!-- =====================================================
-     HERO
+     MAIN
 ===================================================== -->
 
 <main>
@@ -1642,7 +2175,6 @@ NOWNEX · مباشر
 
 <div>
 
-
 <h2 class="section-title">
 
 استكشف
@@ -1659,7 +2191,6 @@ NOWNEX
 كل ما يحدث الآن، مرتب حسب اهتماماتك.
 
 </p>
-
 
 </div>
 
@@ -1681,8 +2212,7 @@ NOWNEX
 </h3>
 
 <p>
-اكتشف أسرع المواضيع انتشاراً
-حول العالم.
+اكتشف أسرع المواضيع انتشاراً حول العالم.
 </p>
 
 </div>
@@ -1699,8 +2229,7 @@ NOWNEX
 </h3>
 
 <p>
-الذكاء الاصطناعي والروبوتات
-وتكنولوجيا المستقبل.
+الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.
 </p>
 
 </div>
@@ -1717,8 +2246,7 @@ NOWNEX
 </h3>
 
 <p>
-التطبيقات والهواتف والأجهزة
-والابتكارات الرقمية.
+التطبيقات والهواتف والأجهزة والابتكارات الرقمية.
 </p>
 
 </div>
@@ -1735,8 +2263,7 @@ NOWNEX
 </h3>
 
 <p>
-أحدث السيارات والمركبات الكهربائية
-وتكنولوجيا السيارات.
+أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.
 </p>
 
 </div>
@@ -1753,8 +2280,7 @@ NOWNEX
 </h3>
 
 <p>
-الأفلام والمسلسلات والألعاب
-وثقافة الإنترنت.
+الأفلام والمسلسلات والألعاب وثقافة الإنترنت.
 </p>
 
 </div>
@@ -1771,8 +2297,7 @@ NOWNEX
 </h3>
 
 <p>
-أهم الأحداث والقصص التي
-تشكل العالم.
+أهم الأحداث والقصص التي تشكل العالم.
 </p>
 
 </div>
@@ -1789,8 +2314,7 @@ NOWNEX
 </h3>
 
 <p>
-حقائق مثيرة وعلوم وأشياء
-قد لا تعرفها.
+حقائق مثيرة وعلوم وأشياء قد لا تعرفها.
 </p>
 
 </div>
@@ -1807,8 +2331,7 @@ NOWNEX
 </h3>
 
 <p>
-المنتجات والأجهزة التي تحصل
-على اهتمام كبير الآن.
+المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.
 </p>
 
 </div>
@@ -1862,6 +2385,7 @@ NOWNEX
 <button
   class="primary-btn"
   style="width:max-content;"
+  onclick="scrollToCategories()"
 >
 
 اكتشف عالم الذكاء الاصطناعي ←
@@ -1927,7 +2451,58 @@ OWNEX
 
 
 <!-- =====================================================
-     SEARCH
+     ARTICLE READER
+===================================================== -->
+
+<div
+  class="article-overlay"
+  id="articleOverlay"
+>
+
+
+<div class="article-container">
+
+
+<div class="article-top">
+
+
+<div class="article-brand">
+
+<div class="logo-mark" style="width:34px;height:34px;font-size:18px;">
+N
+</div>
+
+N<span style="color:white;">OWNEX</span>
+
+</div>
+
+
+<button
+  class="article-close"
+  onclick="closeArticle()"
+  aria-label="إغلاق"
+>
+×
+</button>
+
+
+</div>
+
+
+<div id="articleContent">
+
+<!-- يتم وضع الخبر هنا -->
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SEARCH PANEL
 ===================================================== -->
 
 <div
@@ -1941,8 +2516,9 @@ OWNEX
 
 <input
   type="text"
-  placeholder="ابحث في NOWNEX..."
+  placeholder="ابحث في أخبار NOWNEX..."
   id="searchInput"
+  oninput="performSearch()"
 >
 
 
@@ -1957,6 +2533,13 @@ OWNEX
 </div>
 
 
+<div
+  class="search-results"
+  id="searchResults"
+>
+</div>
+
+
 </div>
 
 
@@ -1965,6 +2548,13 @@ OWNEX
 ===================================================== -->
 
 <script>
+
+
+/* =====================================================
+   GLOBAL NEWS DATA
+===================================================== */
+
+let allNews = [];
 
 
 /* =====================================================
@@ -1991,6 +2581,137 @@ function closeSearch() {
     .getElementById("searchPanel")
     .classList
     .remove("active");
+
+}
+
+
+function performSearch() {
+
+  const input =
+    document.getElementById("searchInput");
+
+  const results =
+    document.getElementById("searchResults");
+
+  const query =
+    input.value
+      .trim()
+      .toLowerCase();
+
+  if (!query) {
+
+    results.innerHTML = "";
+
+    return;
+
+  }
+
+
+  const filtered =
+    allNews.filter(function(item) {
+
+      const title =
+        String(item.title || "")
+          .toLowerCase();
+
+      const summary =
+        String(item.summary || "")
+          .toLowerCase();
+
+      const category =
+        String(item.category || "")
+          .toLowerCase();
+
+      return (
+        title.includes(query) ||
+        summary.includes(query) ||
+        category.includes(query)
+      );
+
+    });
+
+
+  if (!filtered.length) {
+
+    results.innerHTML = `
+
+      <div class="search-result">
+
+        <div class="search-result-title">
+
+          لم نجد أخباراً مطابقة لبحثك.
+
+        </div>
+
+        <div class="search-result-meta">
+
+          جرّب كلمة أخرى.
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  results.innerHTML = "";
+
+
+  filtered
+    .slice(0, 10)
+    .forEach(function(item) {
+
+      const result =
+        document.createElement("div");
+
+      result.className =
+        "search-result";
+
+      result.innerHTML = `
+
+        <div class="search-result-title">
+
+          ${escapeHTML(
+            item.title || "خبر"
+          )}
+
+        </div>
+
+        <div class="search-result-meta">
+
+          ${escapeHTML(
+            translateCategory(
+              item.category || "Trending"
+            )
+          )}
+
+          ·
+
+          ${escapeHTML(
+            item.source || "NOWNEX"
+          )}
+
+        </div>
+
+      `;
+
+
+      result.onclick = function() {
+
+        closeSearch();
+
+        openArticle(item);
+
+      };
+
+
+      results.appendChild(result);
+
+    });
 
 }
 
@@ -2022,7 +2743,7 @@ function scrollToCategories() {
 
 
 /* =====================================================
-   ESCAPE
+   ESCAPE KEY
 ===================================================== */
 
 document.addEventListener(
@@ -2032,6 +2753,8 @@ document.addEventListener(
     if (event.key === "Escape") {
 
       closeSearch();
+
+      closeArticle();
 
     }
 
@@ -2111,7 +2834,9 @@ function getNewsIcon(category) {
 
     "Science": "🔬",
 
-    "Sports": "⚽"
+    "Sports": "⚽",
+
+    "Trending": "🔥"
 
   };
 
@@ -2122,11 +2847,306 @@ function getNewsIcon(category) {
 
 
 /* =====================================================
+   CATEGORY TRANSLATION
+===================================================== */
+
+function translateCategory(category) {
+
+  const categories = {
+
+    "World": "العالم",
+
+    "Technology": "التكنولوجيا",
+
+    "Entertainment": "الترفيه",
+
+    "AI": "الذكاء الاصطناعي",
+
+    "Cars": "السيارات",
+
+    "Facts": "حقائق",
+
+    "Science": "علوم",
+
+    "Sports": "رياضة",
+
+    "Trending": "الترند"
+
+  };
+
+
+  return (
+    categories[category] ||
+    category
+  );
+
+}
+
+
+/* =====================================================
+   OPEN ARTICLE
+===================================================== */
+
+function openArticle(item) {
+
+  if (!item) {
+    return;
+  }
+
+
+  const overlay =
+    document.getElementById(
+      "articleOverlay"
+    );
+
+
+  const content =
+    document.getElementById(
+      "articleContent"
+    );
+
+
+  const title =
+    escapeHTML(
+      item.title ||
+      "خبر من NOWNEX"
+    );
+
+
+  const summaryRaw =
+    item.summary ||
+    item.description ||
+    "لا يوجد ملخص متاح لهذا الخبر حالياً.";
+
+
+  const summary =
+    escapeHTML(
+      summaryRaw
+    );
+
+
+  const category =
+    escapeHTML(
+      translateCategory(
+        item.category ||
+        "Trending"
+      )
+    );
+
+
+  const source =
+    escapeHTML(
+      item.source ||
+      "NOWNEX"
+    );
+
+
+  const originalLink =
+    safeURL(
+      item.link
+    );
+
+
+  const icon =
+    getNewsIcon(
+      item.category
+    );
+
+
+  let dateText = "";
+
+
+  if (item.published) {
+
+    dateText =
+      escapeHTML(
+        item.published
+      );
+
+  }
+
+  else if (item.date) {
+
+    dateText =
+      escapeHTML(
+        item.date
+      );
+
+  }
+
+
+  content.innerHTML = `
+
+    <div class="article-category">
+
+      ${icon}
+
+      ${category}
+
+    </div>
+
+
+    <h1 class="article-title">
+
+      ${title}
+
+    </h1>
+
+
+    <div class="article-info">
+
+      <span>
+
+        المصدر:
+        ${source}
+
+      </span>
+
+
+      ${
+        dateText
+        ? `
+          <span>
+            ${dateText}
+          </span>
+        `
+        : ""
+      }
+
+    </div>
+
+
+    <div class="article-summary-box">
+
+      <div class="article-summary-label">
+
+        📰 ملخص NOWNEX
+
+      </div>
+
+
+      <div class="article-summary">
+
+        ${summary}
+
+      </div>
+
+
+      <div class="article-points">
+
+        <h3>
+          ما الذي يعنيه الخبر؟
+        </h3>
+
+        <p>
+
+          يقدم NOWNEX هذا الخبر في صورة
+          مختصرة باللغة العربية لتسهيل فهم
+          الحدث وأهميته، مع الحفاظ على
+          الإشارة إلى المصدر الأصلي.
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="article-source">
+
+      <div class="article-source-title">
+
+        المصدر الأصلي
+
+      </div>
+
+
+      <div class="article-source-name">
+
+        ${source}
+
+      </div>
+
+
+      ${
+        originalLink !== "#"
+        ? `
+          <a
+            class="original-btn"
+            href="${originalLink}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            قراءة الخبر الأصلي
+            ↗
+
+          </a>
+        `
+        :
+        `
+          <div class="article-note">
+
+            رابط المصدر الأصلي غير متاح حالياً.
+
+          </div>
+        `
+      }
+
+
+      <div class="article-note">
+
+        NOWNEX يعرض ملخصاً عربياً للخبر
+        مع الإشارة إلى مصدره الأصلي.
+        للاطلاع على النص الكامل، يرجى
+        زيارة المصدر.
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  overlay.classList.add("active");
+
+  document.body.classList.add(
+    "article-open"
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+function closeArticle() {
+
+  const overlay =
+    document.getElementById(
+      "articleOverlay"
+    );
+
+
+  overlay.classList.remove(
+    "active"
+  );
+
+
+  document.body.classList.remove(
+    "article-open"
+  );
+
+}
+
+
+/* =====================================================
    LOAD NEWS
 ===================================================== */
 
 async function loadNews() {
-
 
   const newsGrid =
     document.getElementById(
@@ -2135,7 +3155,6 @@ async function loadNews() {
 
 
   try {
-
 
     const response =
       await fetch(
@@ -2173,6 +3192,9 @@ async function loadNews() {
       );
 
     }
+
+
+    allNews = news;
 
 
     newsGrid.innerHTML = "";
@@ -2214,12 +3236,6 @@ async function loadNews() {
             escapeHTML(
               item.source ||
               "NOWNEX"
-            );
-
-
-          const link =
-            safeURL(
-              item.link
             );
 
 
@@ -2269,9 +3285,8 @@ async function loadNews() {
 
             <a
               class="news-link"
-              href="${link}"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              aria-label="اقرأ الخبر"
             >
 
               اقرأ الخبر ←
@@ -2279,6 +3294,24 @@ async function loadNews() {
             </a>
 
           `;
+
+
+          const newsLink =
+            card.querySelector(
+              ".news-link"
+            );
+
+
+          newsLink.addEventListener(
+            "click",
+            function(event) {
+
+              event.preventDefault();
+
+              openArticle(item);
+
+            }
+          );
 
 
           newsGrid.appendChild(
@@ -2294,7 +3327,6 @@ async function loadNews() {
 
 
   catch (error) {
-
 
     console.error(
       "NOWNEX News Error:",
@@ -2344,44 +3376,6 @@ async function loadNews() {
 
 
 /* =====================================================
-   CATEGORY TRANSLATION
-===================================================== */
-
-function translateCategory(category) {
-
-
-  const categories = {
-
-    "World": "العالم",
-
-    "Technology": "التكنولوجيا",
-
-    "Entertainment": "الترفيه",
-
-    "AI": "الذكاء الاصطناعي",
-
-    "Cars": "السيارات",
-
-    "Facts": "حقائق",
-
-    "Science": "علوم",
-
-    "Sports": "رياضة",
-
-    "Trending": "الترند"
-
-  };
-
-
-  return (
-    categories[category] ||
-    category
-  );
-
-}
-
-
-/* =====================================================
    START
 ===================================================== */
 
@@ -2389,8 +3383,8 @@ loadNews();
 
 
 /*
-  تحديث الأخبار كل 10 دقائق
-  إذا بقي الزائر داخل الموقع.
+   تحديث الأخبار داخل الصفحة
+   كل 10 دقائق.
 */
 
 setInterval(
@@ -2398,8 +3392,8 @@ setInterval(
   10 * 60 * 1000
 );
 
-
 </script>
+
 
 </body>
 
