@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+
+      - name: Get repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -23,229 +24,307 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install feedparser
+          python -m pip install --upgrade pip
+          pip install requests feedparser
 
-      - name: Update Arabic News with Gemini
+      - name: Generate Arabic NOWNEX News
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          cat > update_news.py <<'PY'
+          cat > generate_news.py <<'PY'
           import os
           import json
           import re
+          import html
+          import requests
           import feedparser
-          import urllib.request
-          import urllib.parse
           from datetime import datetime, timezone
 
-          API_KEY = os.environ["GEMINI_API_KEY"]
+          API_KEY = os.environ.get("GEMINI_API_KEY")
 
-          MODEL = "gemini-2.5-flash-lite"
+          if not API_KEY:
+              raise RuntimeError("GEMINI_API_KEY is missing")
 
-          FEEDS = [
+          GEMINI_URL = (
+              "https://generativelanguage.googleapis.com/"
+              "v1beta/models/gemini-2.5-flash:generateContent"
+          )
+
+          RSS_FEEDS = [
               (
-                  "BBC",
-                  "World",
-                  "https://feeds.bbci.co.uk/news/world/rss.xml"
+                  "BBC عربي",
+                  "https://feeds.bbci.co.uk/arabic/rss.xml"
               ),
               (
-                  "BBC",
-                  "Technology",
-                  "https://feeds.bbci.co.uk/news/technology/rss.xml"
-              ),
-              (
-                  "BBC",
-                  "Science",
-                  "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml"
-              ),
-              (
-                  "BBC",
-                  "Entertainment",
-                  "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"
+                  "الجزيرة",
+                  "https://www.aljazeera.net/aljazeera.rss"
               )
           ]
 
-          def clean(text):
-              text = re.sub(r"<[^>]+>", " ", str(text or ""))
-              text = re.sub(r"\s+", " ", text)
-              return text.strip()
+          MAX_NEWS = 8
 
-          def translate_with_gemini(title, description):
+          def clean_text(value):
+              value = html.unescape(str(value or ""))
+              value = re.sub(r"<[^>]+>", " ", value)
+              value = re.sub(r"\s+", " ", value)
+              return value.strip()
 
+          def translate_category(category):
+              category = str(category or "").lower()
+
+              if any(x in category for x in ["sport", "football"]):
+                  return "Sports"
+
+              if any(x in category for x in ["tech", "technology"]):
+                  return "Technology"
+
+              if any(x in category for x in ["science"]):
+                  return "Science"
+
+              if any(x in category for x in ["business", "economy"]):
+                  return "World"
+
+              return "World"
+
+          def ask_gemini(title, description, source):
               prompt = f"""
-أنت محرر الأخبار في منصة NOWNEX العربية.
+          أنت محرر أخبار محترف يعمل لمنصة عربية اسمها NOWNEX.
 
-حوّل الخبر التالي إلى محتوى إخباري عربي واضح واحترافي.
+          مهمتك تحويل الخبر التالي إلى مادة عربية قصيرة وواضحة
+          بأسلوب صحفي احترافي.
 
-العنوان الأصلي:
-{title}
+          المصدر:
+          {source}
 
-الوصف الأصلي:
-{description}
+          العنوان الأصلي:
+          {title}
 
-المطلوب:
+          وصف الخبر:
+          {description}
 
-- عنوان عربي احترافي.
-- ملخص عربي من 2 إلى 4 فقرات قصيرة.
-- لا تخترع أي معلومات.
-- لا تضف أرقامًا أو تصريحات غير موجودة.
-- استخدم العربية الفصحى السهلة.
-- لا تستخدم Markdown.
-- لا تذكر أنك ذكاء اصطناعي.
+          أعد النتيجة بصيغة JSON فقط، بدون Markdown وبدون أي نص إضافي.
 
-أعد النتيجة بهذا الشكل:
+          الصيغة المطلوبة:
 
-TITLE:
-العنوان
+          {{
+            "title": "عنوان عربي جذاب ودقيق",
+            "summary": "ملخص عربي من 2 إلى 4 جمل يشرح أهم ما حدث",
+            "category": "World أو Technology أو Entertainment أو AI أو Cars أو Science أو Sports أو Facts"
+          }}
 
-SUMMARY:
-الملخص
-"""
+          القواعد:
+          - اكتب باللغة العربية الفصحى.
+          - لا تترجم ترجمة حرفية.
+          - لا تضف معلومات غير موجودة في المادة الأصلية.
+          - لا تخترع أسماء أو أرقامًا أو تصريحات.
+          - حافظ على المعنى الأصلي بدقة.
+          - لا تستخدم عبارات مبالغًا فيها.
+          - اجعل العنوان مناسبًا لموقع إخباري محترف.
+          """
 
-              url = (
-                  "https://generativelanguage.googleapis.com/"
-                  "v1beta/models/"
-                  + MODEL
-                  + ":generateContent?"
-                  + urllib.parse.urlencode({"key": API_KEY})
-              )
-
-              body = {
-                  "contents": [
-                      {
-                          "parts": [
-                              {
-                                  "text": prompt
-                              }
-                          ]
-                      }
-                  ]
-              }
-
-              request = urllib.request.Request(
-                  url,
-                  data=json.dumps(body).encode("utf-8"),
+              response = requests.post(
+                  GEMINI_URL,
+                  params={"key": API_KEY},
                   headers={
                       "Content-Type": "application/json"
                   },
-                  method="POST"
+                  json={
+                      "contents": [
+                          {
+                              "parts": [
+                                  {
+                                      "text": prompt
+                                  }
+                              ]
+                          }
+                      ]
+                  },
+                  timeout=90
               )
 
-              try:
-                  with urllib.request.urlopen(
-                      request,
-                      timeout=60
-                  ) as response:
+              if response.status_code != 200:
+                  print("Gemini error:", response.status_code)
+                  print(response.text[:2000])
+                  raise RuntimeError("Gemini API request failed")
 
-                      result = json.loads(
-                          response.read().decode("utf-8")
+              data = response.json()
+
+              try:
+                  text = data["candidates"][0]["content"]["parts"][0]["text"]
+              except Exception:
+                  raise RuntimeError(
+                      "Could not read Gemini response"
+                  )
+
+              text = text.strip()
+
+              text = re.sub(
+                  r"^```json\s*",
+                  "",
+                  text,
+                  flags=re.IGNORECASE
+              )
+
+              text = re.sub(
+                  r"\s*```$",
+                  "",
+                  text
+              )
+
+              result = json.loads(text)
+
+              return {
+                  "title": clean_text(result.get("title")),
+                  "summary": clean_text(result.get("summary")),
+                  "category": result.get(
+                      "category",
+                      "World"
+                  )
+              }
+
+          def get_feed_items():
+              articles = []
+
+              for source_name, feed_url in RSS_FEEDS:
+
+                  try:
+                      print("Reading:", source_name)
+
+                      feed = feedparser.parse(feed_url)
+
+                      for entry in feed.entries[:10]:
+
+                          title = clean_text(
+                              entry.get("title", "")
+                          )
+
+                          description = clean_text(
+                              entry.get(
+                                  "summary",
+                                  entry.get(
+                                      "description",
+                                      ""
+                                  )
+                              )
+                          )
+
+                          link = entry.get("link", "")
+
+                          if not title or not link:
+                              continue
+
+                          articles.append(
+                              {
+                                  "title": title,
+                                  "description": description,
+                                  "link": link,
+                                  "source": source_name
+                              }
+                          )
+
+                  except Exception as error:
+                      print(
+                          "Feed error:",
+                          source_name,
+                          error
                       )
 
-                  text = result["candidates"][0]["content"]["parts"][0]["text"]
+              return articles
 
-                  title_match = re.search(
-                      r"TITLE:\s*(.*?)\s*SUMMARY:",
-                      text,
-                      re.S
+          def remove_duplicates(items):
+              result = []
+              seen = set()
+
+              for item in items:
+
+                  key = re.sub(
+                      r"\W+",
+                      "",
+                      item["title"].lower()
                   )
-
-                  summary_match = re.search(
-                      r"SUMMARY:\s*(.*)",
-                      text,
-                      re.S
-                  )
-
-                  arabic_title = (
-                      title_match.group(1).strip()
-                      if title_match
-                      else title
-                  )
-
-                  arabic_summary = (
-                      summary_match.group(1).strip()
-                      if summary_match
-                      else description
-                  )
-
-                  return arabic_title, arabic_summary
-
-              except Exception as error:
-
-                  print("Gemini error:", error)
-
-                  return title, description
-
-          news = []
-          seen = set()
-
-          for source, category, feed_url in FEEDS:
-
-              print("Loading:", source, category)
-
-              feed = feedparser.parse(feed_url)
-
-              for entry in feed.entries[:5]:
-
-                  original_title = clean(
-                      getattr(entry, "title", "")
-                  )
-
-                  description = clean(
-                      getattr(entry, "summary", "")
-                  )
-
-                  link = getattr(
-                      entry,
-                      "link",
-                      ""
-                  )
-
-                  if not original_title:
-                      continue
-
-                  key = original_title.lower()
 
                   if key in seen:
                       continue
 
                   seen.add(key)
+                  result.append(item)
 
-                  arabic_title, arabic_summary = (
-                      translate_with_gemini(
-                          original_title,
-                          description
-                      )
+              return result
+
+          articles = get_feed_items()
+
+          articles = remove_duplicates(articles)
+
+          if not articles:
+              raise RuntimeError(
+                  "No news articles were found"
+              )
+
+          articles = articles[:MAX_NEWS]
+
+          final_news = []
+
+          for index, article in enumerate(articles):
+
+              print(
+                  f"Processing {index + 1}/{len(articles)}:"
+                  f" {article['title']}"
+              )
+
+              try:
+
+                  ai = ask_gemini(
+                      article["title"],
+                      article["description"],
+                      article["source"]
                   )
 
-                  news.append(
+                  final_news.append(
                       {
-                          "id": len(news) + 1,
-                          "title": arabic_title,
-                          "summary": arabic_summary,
-                          "originalTitle": original_title,
-                          "source": source,
-                          "category": category,
-                          "link": link,
-                          "updatedAt": datetime.now(
+                          "title": ai["title"],
+                          "summary": ai["summary"],
+                          "description": ai["summary"],
+                          "category": ai["category"],
+                          "source": article["source"],
+                          "link": article["link"],
+                          "publishedAt": datetime.now(
                               timezone.utc
                           ).isoformat()
                       }
                   )
 
-                  if len(news) >= 12:
-                      break
+              except Exception as error:
 
-              if len(news) >= 12:
-                  break
+                  print(
+                      "AI processing failed:",
+                      error
+                  )
+
+                  final_news.append(
+                      {
+                          "title": article["title"],
+                          "summary": article["description"],
+                          "description": article["description"],
+                          "category": translate_category(
+                              ""
+                          ),
+                          "source": article["source"],
+                          "link": article["link"],
+                          "publishedAt": datetime.now(
+                              timezone.utc
+                          ).isoformat()
+                      }
+                  )
 
           output = {
-              "site": "NOWNEX",
-              "language": "ar",
               "updatedAt": datetime.now(
                   timezone.utc
               ).isoformat(),
-              "news": news
+
+              "news": final_news
           }
+
+          os.makedirs(".", exist_ok=True)
 
           with open(
               "news.json",
@@ -261,21 +340,29 @@ SUMMARY:
               )
 
           print(
-              "NOWNEX updated:",
-              len(news),
-              "articles"
+              f"Successfully generated "
+              f"{len(final_news)} Arabic news articles."
           )
+
           PY
 
-          python update_news.py
+          python generate_news.py
 
-      - name: Commit news.json
+      - name: Check generated news
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python -m json.tool news.json > /dev/null
+          echo "news.json is valid."
+
+      - name: Save news to repository
+        run: |
+          git config user.name "NOWNEX Bot"
+          git config user.email "actions@github.com"
 
           git add news.json
 
-          git diff --cached --quiet || git commit -m "Update NOWNEX Arabic news"
-
-          git push
+          if git diff --cached --quiet; then
+            echo "No news changes."
+          else
+            git commit -m "Update NOWNEX Arabic news"
+            git push
+          fi
