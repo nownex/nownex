@@ -22,12 +22,14 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install requests feedparser
+        run: |
+          pip install requests feedparser
 
       - name: Generate news
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python generate_news.py
+        run: |
+          python generate_news.py
 
       - name: Save news
         run: |
