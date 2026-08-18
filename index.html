@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>NOWNEX — What's happening. What's next.</title>
-  <meta name="description" content="NOWNEX — Discover what's trending now and what's coming next. AI, technology, cars, entertainment, world news and more.">
+
+  <meta
+    name="description"
+    content="NOWNEX — Discover what's trending now and what's coming next. AI, technology, cars, entertainment, world news and more."
+  >
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -29,10 +34,20 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
+
       background:
-        radial-gradient(circle at 80% 0%, rgba(79,140,255,0.12), transparent 30%),
-        radial-gradient(circle at 15% 15%, rgba(217,180,91,0.08), transparent 25%),
+        radial-gradient(
+          circle at 80% 0%,
+          rgba(79,140,255,0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 15% 15%,
+          rgba(217,180,91,0.08),
+          transparent 25%
+        ),
         var(--bg);
+
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
@@ -47,47 +62,71 @@
       font: inherit;
     }
 
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       position: sticky;
       top: 0;
       z-index: 100;
+
       backdrop-filter: blur(18px);
+
       background: rgba(6,9,20,0.88);
+
       border-bottom: 1px solid var(--line);
     }
 
     .header-inner {
       max-width: 1250px;
       margin: auto;
+
       height: 76px;
+
       padding: 0 22px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 25px;
     }
 
     .logo {
       display: flex;
       align-items: center;
+
       gap: 11px;
+
       font-size: 27px;
       font-weight: 900;
+
       letter-spacing: -1px;
     }
 
     .logo-mark {
       width: 38px;
       height: 38px;
+
       border-radius: 12px;
+
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
       color: #080b13;
+
       font-size: 20px;
-      box-shadow: 0 0 25px rgba(217,180,91,0.18);
+
+      box-shadow:
+        0 0 25px rgba(217,180,91,0.18);
     }
 
     .logo span {
@@ -97,13 +136,16 @@
     nav {
       display: flex;
       align-items: center;
+
       gap: 25px;
     }
 
     nav a {
       color: #b9c1d3;
+
       font-size: 14px;
       font-weight: 600;
+
       transition: 0.2s;
     }
 
@@ -115,105 +157,175 @@
     .search-btn {
       width: 42px;
       height: 42px;
+
       border: 1px solid var(--line);
+
       background: rgba(255,255,255,0.04);
+
       color: white;
+
       border-radius: 12px;
+
       cursor: pointer;
+
       font-size: 18px;
     }
 
     .mobile-menu {
       display: none;
+
       width: 42px;
       height: 42px;
+
       border: 1px solid var(--line);
+
       background: rgba(255,255,255,0.04);
+
       color: white;
+
       border-radius: 12px;
+
       cursor: pointer;
     }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
       max-width: 1250px;
+
       margin: auto;
+
       padding: 80px 22px 45px;
+
       display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
+
+      grid-template-columns:
+        1.35fr 0.65fr;
+
       gap: 35px;
+
       align-items: center;
     }
 
     .hero-badge {
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
+
       padding: 8px 13px;
-      border: 1px solid rgba(217,180,91,0.25);
-      background: rgba(217,180,91,0.07);
+
+      border:
+        1px solid
+        rgba(217,180,91,0.25);
+
+      background:
+        rgba(217,180,91,0.07);
+
       color: var(--gold-light);
+
       border-radius: 50px;
+
       font-size: 12px;
       font-weight: 700;
+
       margin-bottom: 20px;
     }
 
     .live-dot {
       width: 7px;
       height: 7px;
+
       border-radius: 50%;
+
       background: #56e39f;
-      box-shadow: 0 0 12px #56e39f;
+
+      box-shadow:
+        0 0 12px #56e39f;
     }
 
     .hero h1 {
-      font-size: clamp(45px, 7vw, 82px);
+      font-size:
+        clamp(45px, 7vw, 82px);
+
       line-height: 0.98;
+
       letter-spacing: -4px;
+
       max-width: 800px;
+
       margin-bottom: 24px;
     }
 
     .hero h1 span {
-      background: linear-gradient(90deg, #fff, var(--gold-light));
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          var(--gold-light)
+        );
+
       -webkit-background-clip: text;
+
       color: transparent;
     }
 
     .hero p {
       max-width: 650px;
+
       color: var(--muted);
+
       font-size: 18px;
+
       line-height: 1.7;
+
       margin-bottom: 30px;
     }
 
     .hero-buttons {
       display: flex;
+
       gap: 12px;
+
       flex-wrap: wrap;
     }
 
     .primary-btn,
     .secondary-btn {
       padding: 14px 20px;
+
       border-radius: 12px;
+
       cursor: pointer;
+
       font-weight: 700;
-      border: 1px solid var(--line);
+
+      border:
+        1px solid var(--line);
+
       transition: 0.2s;
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
       color: #090c15;
+
       border: none;
     }
 
     .secondary-btn {
-      background: rgba(255,255,255,0.04);
+      background:
+        rgba(255,255,255,0.04);
+
       color: white;
     }
 
@@ -222,75 +334,124 @@
       transform: translateY(-2px);
     }
 
-    /* TREND VISUAL */
+    /* =========================
+       TREND VISUAL
+    ========================= */
 
     .trend-orb {
       min-height: 350px;
+
       position: relative;
+
       display: grid;
+
       place-items: center;
     }
 
     .orb {
       width: 260px;
       height: 260px;
+
       border-radius: 50%;
+
       background:
-        radial-gradient(circle at 35% 30%, #fff7d0 0%, var(--gold) 8%, #5b4920 38%, #11182b 65%, transparent 66%);
+        radial-gradient(
+          circle at 35% 30%,
+          #fff7d0 0%,
+          var(--gold) 8%,
+          #5b4920 38%,
+          #11182b 65%,
+          transparent 66%
+        );
+
       box-shadow:
-        0 0 70px rgba(217,180,91,0.16),
-        inset 0 0 50px rgba(255,255,255,0.08);
-      animation: float 5s ease-in-out infinite;
+        0 0 70px
+        rgba(217,180,91,0.16),
+
+        inset 0 0 50px
+        rgba(255,255,255,0.08);
+
+      animation:
+        float 5s ease-in-out infinite;
     }
 
     .orbit {
       position: absolute;
+
       width: 330px;
       height: 170px;
-      border: 1px solid rgba(217,180,91,0.25);
+
+      border:
+        1px solid
+        rgba(217,180,91,0.25);
+
       border-radius: 50%;
+
       transform: rotate(-25deg);
     }
 
     .orbit::after {
       content: "";
+
       position: absolute;
+
       width: 9px;
       height: 9px;
+
       border-radius: 50%;
-      background: var(--gold-light);
-      box-shadow: 0 0 18px var(--gold);
+
+      background:
+        var(--gold-light);
+
+      box-shadow:
+        0 0 18px
+        var(--gold);
+
       top: 30px;
       right: 30px;
     }
 
     @keyframes float {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
-        transform: translateY(-12px);
+        transform:
+          translateY(-12px);
       }
     }
 
-    /* SECTION */
+    /* =========================
+       SECTION
+    ========================= */
 
     .section {
       max-width: 1250px;
+
       margin: auto;
-      padding: 30px 22px 70px;
+
+      padding:
+        30px 22px 70px;
     }
 
     .section-header {
       display: flex;
+
       justify-content: space-between;
+
       align-items: end;
+
       margin-bottom: 25px;
+
       gap: 20px;
     }
 
     .section-title {
       font-size: 28px;
+
       letter-spacing: -0.7px;
     }
 
@@ -300,201 +461,344 @@
 
     .section-description {
       color: var(--muted);
+
       font-size: 13px;
+
       margin-top: 7px;
     }
 
     .view-all {
       color: var(--gold-light);
+
       font-size: 13px;
+
       font-weight: 700;
     }
 
-    /* TREND CARDS */
+    /* =========================
+       NEWS CARDS
+    ========================= */
 
     .trend-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 15px;
     }
 
     .trend-card {
       position: relative;
-      min-height: 180px;
+
+      min-height: 210px;
+
       padding: 20px;
+
       background:
-        linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)),
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.06),
+          rgba(255,255,255,0.015)
+        ),
         var(--card);
-      border: 1px solid var(--line);
+
+      border:
+        1px solid var(--line);
+
       border-radius: 18px;
+
       overflow: hidden;
+
       transition: 0.25s;
     }
 
     .trend-card:hover {
-      transform: translateY(-5px);
-      background: var(--card-hover);
-      border-color: rgba(217,180,91,0.25);
+      transform:
+        translateY(-5px);
+
+      background:
+        var(--card-hover);
+
+      border-color:
+        rgba(217,180,91,0.25);
     }
 
     .trend-number {
       font-size: 13px;
-      color: var(--gold-light);
+
+      color:
+        var(--gold-light);
+
       font-weight: 800;
     }
 
     .trend-icon {
       position: absolute;
+
       right: 18px;
       top: 15px;
+
       font-size: 34px;
+
       opacity: 0.8;
     }
 
     .trend-card h3 {
       margin-top: 55px;
+
       font-size: 17px;
-      line-height: 1.35;
+
+      line-height: 1.45;
     }
 
     .trend-meta {
-      color: var(--muted);
+      color:
+        var(--muted);
+
       font-size: 11px;
+
       margin-top: 10px;
     }
 
-    /* CATEGORIES */
+    .news-link {
+      display: inline-block;
+
+      margin-top: 15px;
+
+      color:
+        var(--gold-light);
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      transition: 0.2s;
+    }
+
+    .news-link:hover {
+      color: white;
+
+      transform:
+        translateX(-2px);
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================= */
 
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 15px;
     }
 
     .category {
       padding: 24px;
+
       min-height: 150px;
+
       border-radius: 18px;
-      border: 1px solid var(--line);
-      background: var(--card);
+
+      border:
+        1px solid var(--line);
+
+      background:
+        var(--card);
+
       transition: 0.25s;
+
       cursor: pointer;
     }
 
     .category:hover {
-      transform: translateY(-4px);
-      border-color: rgba(79,140,255,0.3);
+      transform:
+        translateY(-4px);
+
+      border-color:
+        rgba(79,140,255,0.3);
     }
 
     .category-icon {
       font-size: 28px;
+
       margin-bottom: 18px;
     }
 
     .category h3 {
       font-size: 17px;
+
       margin-bottom: 7px;
     }
 
     .category p {
       color: var(--muted);
+
       font-size: 12px;
+
       line-height: 1.5;
     }
 
-    /* FEATURE */
+    /* =========================
+       FEATURE
+    ========================= */
 
     .feature {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
+
       min-height: 350px;
+
       overflow: hidden;
+
       border-radius: 24px;
-      border: 1px solid var(--line);
-      background: var(--card);
+
+      border:
+        1px solid var(--line);
+
+      background:
+        var(--card);
     }
 
     .feature-visual {
       min-height: 350px;
+
       display: grid;
+
       place-items: center;
+
       font-size: 100px;
+
       background:
-        radial-gradient(circle at center, rgba(79,140,255,0.2), transparent 45%),
-        linear-gradient(135deg, #0c1730, #090d1a);
+        radial-gradient(
+          circle at center,
+          rgba(79,140,255,0.2),
+          transparent 45%
+        ),
+        linear-gradient(
+          135deg,
+          #0c1730,
+          #090d1a
+        );
     }
 
     .feature-content {
       padding: 45px;
+
       display: flex;
+
       flex-direction: column;
+
       justify-content: center;
     }
 
     .tag {
-      color: var(--gold-light);
+      color:
+        var(--gold-light);
+
       font-size: 12px;
+
       font-weight: 800;
+
       text-transform: uppercase;
+
       letter-spacing: 1px;
+
       margin-bottom: 15px;
     }
 
     .feature-content h2 {
       font-size: 34px;
+
       line-height: 1.15;
+
       margin-bottom: 15px;
     }
 
     .feature-content p {
       color: var(--muted);
+
       line-height: 1.7;
+
       font-size: 14px;
+
       margin-bottom: 22px;
     }
 
-    /* FOOTER */
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
-      border-top: 1px solid var(--line);
-      background: #050711;
+      border-top:
+        1px solid var(--line);
+
+      background:
+        #050711;
+
       margin-top: 20px;
     }
 
     .footer-inner {
       max-width: 1250px;
+
       margin: auto;
+
       padding: 35px 22px;
+
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
+
       gap: 20px;
     }
 
     .footer-copy {
-      color: var(--muted);
+      color:
+        var(--muted);
+
       font-size: 12px;
     }
 
     .footer-logo {
       font-size: 20px;
+
       font-weight: 900;
     }
 
     .footer-logo span {
-      color: var(--gold-light);
+      color:
+        var(--gold-light);
     }
 
-    /* SEARCH */
+    /* =========================
+       SEARCH
+    ========================= */
 
     .search-panel {
       display: none;
+
       position: fixed;
+
       inset: 0;
+
       z-index: 300;
-      background: rgba(4,7,15,0.94);
-      backdrop-filter: blur(15px);
-      padding: 100px 22px;
+
+      background:
+        rgba(4,7,15,0.94);
+
+      backdrop-filter:
+        blur(15px);
+
+      padding:
+        100px 22px;
     }
 
     .search-panel.active {
@@ -503,37 +807,60 @@
 
     .search-box {
       max-width: 750px;
+
       margin: auto;
+
       position: relative;
     }
 
     .search-box input {
       width: 100%;
-      padding: 20px 25px;
+
+      padding:
+        20px 60px 20px 25px;
+
       border-radius: 15px;
-      border: 1px solid var(--line);
-      background: var(--card);
+
+      border:
+        1px solid var(--line);
+
+      background:
+        var(--card);
+
       color: white;
+
       outline: none;
+
       font-size: 18px;
     }
 
     .close-search {
       position: absolute;
+
       right: 12px;
       top: 10px;
+
       width: 45px;
       height: 45px;
+
       border: none;
-      background: transparent;
+
+      background:
+        transparent;
+
       color: white;
+
       font-size: 25px;
+
       cursor: pointer;
     }
 
-    /* RESPONSIVE */
+    /* =========================
+       RESPONSIVE
+    ========================= */
 
     @media (max-width: 950px) {
+
       nav {
         display: none;
       }
@@ -544,6 +871,7 @@
 
       .hero {
         grid-template-columns: 1fr;
+
         padding-top: 55px;
       }
 
@@ -553,7 +881,8 @@
 
       .trend-grid,
       .category-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .feature {
@@ -562,6 +891,7 @@
     }
 
     @media (max-width: 600px) {
+
       .header-inner {
         height: 68px;
       }
@@ -581,6 +911,7 @@
 
       .hero h1 {
         font-size: 48px;
+
         letter-spacing: -2px;
       }
 
@@ -611,201 +942,427 @@
 
       .footer-inner {
         flex-direction: column;
+
         align-items: flex-start;
       }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <!-- =========================
+       HEADER
+  ========================= -->
+
   <header>
+
     <div class="header-inner">
 
       <a href="#" class="logo">
-        <div class="logo-mark">N</div>
+
+        <div class="logo-mark">
+          N
+        </div>
+
         N<span>OWNEX</span>
+
       </a>
 
       <nav>
-        <a href="#" class="active">Home</a>
-        <a href="#trending">Trending</a>
-        <a href="#categories">Categories</a>
-        <a href="#about">About</a>
+
+        <a
+          href="#"
+          class="active"
+        >
+          Home
+        </a>
+
+        <a href="#trending">
+          Trending
+        </a>
+
+        <a href="#categories">
+          Categories
+        </a>
+
+        <a href="#about">
+          About
+        </a>
+
       </nav>
 
-      <div style="display:flex;gap:8px;">
-        <button class="search-btn" onclick="openSearch()" aria-label="Search">
+      <div
+        style="
+          display:flex;
+          gap:8px;
+        "
+      >
+
+        <button
+          class="search-btn"
+          onclick="openSearch()"
+          aria-label="Search"
+        >
           🔍
         </button>
 
-        <button class="mobile-menu" onclick="scrollToTrending()" aria-label="Menu">
+        <button
+          class="mobile-menu"
+          onclick="scrollToTrending()"
+          aria-label="Menu"
+        >
           ☰
         </button>
+
       </div>
 
     </div>
+
   </header>
 
 
-  <!-- HERO -->
+  <!-- =========================
+       HERO
+  ========================= -->
+
   <main>
 
     <section class="hero">
 
       <div>
+
         <div class="hero-badge">
+
           <span class="live-dot"></span>
+
           LIVE TRENDING
+
         </div>
 
         <h1>
+
           What's happening.
-          <span>What's next.</span>
+
+          <span>
+            What's next.
+          </span>
+
         </h1>
 
         <p>
-          Discover the stories, trends, technologies and ideas
-          shaping the world right now — all in one place.
+          Discover the stories, trends,
+          technologies and ideas shaping
+          the world right now — all in one place.
         </p>
 
         <div class="hero-buttons">
-          <button class="primary-btn" onclick="scrollToTrending()">
+
+          <button
+            class="primary-btn"
+            onclick="scrollToTrending()"
+          >
             🔥 Explore Trends
           </button>
 
-          <button class="secondary-btn" onclick="scrollToCategories()">
+          <button
+            class="secondary-btn"
+            onclick="scrollToCategories()"
+          >
             Explore Categories
           </button>
+
         </div>
+
       </div>
+
 
       <div class="trend-orb">
+
         <div class="orbit"></div>
+
         <div class="orb"></div>
-      </div>
-
-    </section>
-
-
-    <!-- TRENDING -->
-    <section class="section" id="trending">
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">
-            🔥 <span>Trending</span> Now
-          </h2>
-
-          <p class="section-description">
-            The topics everyone is talking about.
-          </p>
-        </div>
-
-        <a href="#" class="view-all">View all →</a>
-      </div>
-
-
-      <div class="trend-grid">
-
-        <article class="trend-card">
-          <div class="trend-number">01 — TRENDING</div>
-          <div class="trend-icon">🤖</div>
-          <h3>Artificial Intelligence is changing everything</h3>
-          <div class="trend-meta">Technology · Rising fast</div>
-        </article>
-
-        <article class="trend-card">
-          <div class="trend-number">02 — TRENDING</div>
-          <div class="trend-icon">📱</div>
-          <h3>The next generation of smartphones</h3>
-          <div class="trend-meta">Tech · Worldwide</div>
-        </article>
-
-        <article class="trend-card">
-          <div class="trend-number">03 — TRENDING</div>
-          <div class="trend-icon">🚗</div>
-          <h3>The future of electric cars</h3>
-          <div class="trend-meta">Cars · Rising fast</div>
-        </article>
-
-        <article class="trend-card">
-          <div class="trend-number">04 — TRENDING</div>
-          <div class="trend-icon">🌍</div>
-          <h3>What the world is talking about today</h3>
-          <div class="trend-meta">World · Live</div>
-        </article>
 
       </div>
 
     </section>
 
 
-    <!-- CATEGORIES -->
-    <section class="section" id="categories">
+    <!-- =========================
+         TRENDING
+    ========================= -->
+
+    <section
+      class="section"
+      id="trending"
+    >
 
       <div class="section-header">
+
         <div>
+
           <h2 class="section-title">
-            Explore <span>NOWNEX</span>
+
+            🔥
+
+            <span>
+              Trending
+            </span>
+
+            Now
+
           </h2>
 
           <p class="section-description">
-            Everything happening now, organized for you.
+
+            The latest stories from around
+            the world, updated automatically.
+
           </p>
+
         </div>
+
+        <a
+          href="#trending"
+          class="view-all"
+        >
+          View all →
+        </a>
+
+      </div>
+
+
+      <!-- NEWS WILL BE INSERTED HERE -->
+
+      <div
+        class="trend-grid"
+        id="newsGrid"
+      >
+
+        <article class="trend-card">
+
+          <div class="trend-number">
+            01 — LOADING
+          </div>
+
+          <div class="trend-icon">
+            🌍
+          </div>
+
+          <h3>
+            Loading the latest news...
+          </h3>
+
+          <div class="trend-meta">
+            NOWNEX · Updating
+          </div>
+
+        </article>
+
+
+        <article class="trend-card">
+
+          <div class="trend-number">
+            02 — LOADING
+          </div>
+
+          <div class="trend-icon">
+            🔥
+          </div>
+
+          <h3>
+            Discovering what's trending now...
+          </h3>
+
+          <div class="trend-meta">
+            NOWNEX · Live
+          </div>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================= -->
+
+    <section
+      class="section"
+      id="categories"
+    >
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+
+            Explore
+
+            <span>
+              NOWNEX
+            </span>
+
+          </h2>
+
+          <p class="section-description">
+            Everything happening now,
+            organized for you.
+          </p>
+
+        </div>
+
       </div>
 
 
       <div class="category-grid">
 
         <div class="category">
-          <div class="category-icon">🔥</div>
-          <h3>Trending Now</h3>
-          <p>Discover the fastest-growing topics around the world.</p>
+
+          <div class="category-icon">
+            🔥
+          </div>
+
+          <h3>
+            Trending Now
+          </h3>
+
+          <p>
+            Discover the fastest-growing
+            topics around the world.
+          </p>
+
         </div>
 
-        <div class="category">
-          <div class="category-icon">🤖</div>
-          <h3>AI & Future</h3>
-          <p>Artificial intelligence, robots and the technology of tomorrow.</p>
-        </div>
 
         <div class="category">
-          <div class="category-icon">📱</div>
-          <h3>Technology</h3>
-          <p>Apps, smartphones, gadgets and digital innovation.</p>
+
+          <div class="category-icon">
+            🤖
+          </div>
+
+          <h3>
+            AI & Future
+          </h3>
+
+          <p>
+            Artificial intelligence,
+            robots and the technology
+            of tomorrow.
+          </p>
+
         </div>
 
-        <div class="category">
-          <div class="category-icon">🚗</div>
-          <h3>Cars</h3>
-          <p>New cars, electric vehicles and automotive technology.</p>
-        </div>
 
         <div class="category">
-          <div class="category-icon">🎬</div>
-          <h3>Entertainment</h3>
-          <p>Movies, shows, games and internet culture.</p>
+
+          <div class="category-icon">
+            📱
+          </div>
+
+          <h3>
+            Technology
+          </h3>
+
+          <p>
+            Apps, smartphones, gadgets
+            and digital innovation.
+          </p>
+
         </div>
 
-        <div class="category">
-          <div class="category-icon">🌎</div>
-          <h3>World</h3>
-          <p>The stories and events shaping the world.</p>
-        </div>
 
         <div class="category">
-          <div class="category-icon">🧠</div>
-          <h3>Facts</h3>
-          <p>Interesting facts, science and things you didn't know.</p>
+
+          <div class="category-icon">
+            🚗
+          </div>
+
+          <h3>
+            Cars
+          </h3>
+
+          <p>
+            New cars, electric vehicles
+            and automotive technology.
+          </p>
+
         </div>
 
+
         <div class="category">
-          <div class="category-icon">🛍️</div>
-          <h3>Trending Products</h3>
-          <p>Products and gadgets getting attention right now.</p>
+
+          <div class="category-icon">
+            🎬
+          </div>
+
+          <h3>
+            Entertainment
+          </h3>
+
+          <p>
+            Movies, shows, games
+            and internet culture.
+          </p>
+
+        </div>
+
+
+        <div class="category">
+
+          <div class="category-icon">
+            🌎
+          </div>
+
+          <h3>
+            World
+          </h3>
+
+          <p>
+            The stories and events
+            shaping the world.
+          </p>
+
+        </div>
+
+
+        <div class="category">
+
+          <div class="category-icon">
+            🧠
+          </div>
+
+          <h3>
+            Facts
+          </h3>
+
+          <p>
+            Interesting facts, science
+            and things you didn't know.
+          </p>
+
+        </div>
+
+
+        <div class="category">
+
+          <div class="category-icon">
+            🛍️
+          </div>
+
+          <h3>
+            Trending Products
+          </h3>
+
+          <p>
+            Products and gadgets
+            getting attention right now.
+          </p>
+
         </div>
 
       </div>
@@ -813,7 +1370,10 @@
     </section>
 
 
-    <!-- FEATURE -->
+    <!-- =========================
+         FEATURE
+    ========================= -->
+
     <section class="section">
 
       <div class="feature">
@@ -824,19 +1384,27 @@
 
         <div class="feature-content">
 
-          <div class="tag">AI & FUTURE</div>
+          <div class="tag">
+            AI & FUTURE
+          </div>
 
           <h2>
-            The future is moving faster than ever.
+            The future is moving
+            faster than ever.
           </h2>
 
           <p>
-            NOWNEX brings together the latest developments in
-            artificial intelligence, technology and the ideas
+            NOWNEX brings together
+            the latest developments
+            in artificial intelligence,
+            technology and the ideas
             shaping tomorrow.
           </p>
 
-          <button class="primary-btn" style="width:max-content;">
+          <button
+            class="primary-btn"
+            style="width:max-content;"
+          >
             Discover AI →
           </button>
 
@@ -849,23 +1417,39 @@
   </main>
 
 
-  <!-- FOOTER -->
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
   <footer id="about">
 
     <div class="footer-inner">
 
       <div>
+
         <div class="footer-logo">
-          N<span>OWNEX</span>
+
+          N<span>
+            OWNEX
+          </span>
+
         </div>
 
         <div class="footer-copy">
-          What's happening. What's next.
+
+          What's happening.
+          What's next.
+
         </div>
+
       </div>
 
+
       <div class="footer-copy">
-        © 2026 NOWNEX. All rights reserved.
+
+        © 2026 NOWNEX.
+        All rights reserved.
+
       </div>
 
     </div>
@@ -873,8 +1457,14 @@
   </footer>
 
 
-  <!-- SEARCH PANEL -->
-  <div class="search-panel" id="searchPanel">
+  <!-- =========================
+       SEARCH PANEL
+  ========================= -->
+
+  <div
+    class="search-panel"
+    id="searchPanel"
+  >
 
     <div class="search-box">
 
@@ -884,7 +1474,10 @@
         id="searchInput"
       >
 
-      <button class="close-search" onclick="closeSearch()">
+      <button
+        class="close-search"
+        onclick="closeSearch()"
+      >
         ×
       </button>
 
@@ -893,34 +1486,384 @@
   </div>
 
 
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
 
+    /* =========================
+       SEARCH
+    ========================= */
+
     function openSearch() {
-      document.getElementById("searchPanel").classList.add("active");
-      document.getElementById("searchInput").focus();
+
+      document
+        .getElementById("searchPanel")
+        .classList
+        .add("active");
+
+      document
+        .getElementById("searchInput")
+        .focus();
+
     }
+
 
     function closeSearch() {
-      document.getElementById("searchPanel").classList.remove("active");
+
+      document
+        .getElementById("searchPanel")
+        .classList
+        .remove("active");
+
     }
+
+
+    /* =========================
+       NAVIGATION
+    ========================= */
 
     function scrollToTrending() {
-      document.getElementById("trending").scrollIntoView({
-        behavior: "smooth"
-      });
+
+      document
+        .getElementById("trending")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
     }
+
 
     function scrollToCategories() {
-      document.getElementById("categories").scrollIntoView({
-        behavior: "smooth"
-      });
+
+      document
+        .getElementById("categories")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
     }
 
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Escape") {
-        closeSearch();
+
+    /* =========================
+       ESCAPE SEARCH
+    ========================= */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Escape") {
+
+          closeSearch();
+
+        }
+
       }
-    });
+    );
+
+
+    /* =========================
+       SECURITY
+    ========================= */
+
+    function escapeHTML(value) {
+
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function safeURL(value) {
+
+      try {
+
+        const url =
+          new URL(
+            String(value || "#"),
+            window.location.href
+          );
+
+        if (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        ) {
+
+          return url.href;
+
+        }
+
+      } catch (error) {}
+
+      return "#";
+
+    }
+
+
+    /* =========================
+       NEWS ICONS
+    ========================= */
+
+    function getNewsIcon(category) {
+
+      const icons = {
+
+        "World": "🌍",
+
+        "Technology": "💻",
+
+        "Entertainment": "🎬",
+
+        "AI": "🤖",
+
+        "Cars": "🚗",
+
+        "Facts": "🧠",
+
+        "Science": "🔬",
+
+        "Sports": "⚽"
+
+      };
+
+      return icons[category] || "🔥";
+
+    }
+
+
+    /* =========================
+       LOAD LIVE NEWS
+    ========================= */
+
+    async function loadNews() {
+
+      const newsGrid =
+        document.getElementById(
+          "newsGrid"
+        );
+
+      try {
+
+        const response =
+          await fetch(
+            "news.json?v=" +
+            Date.now(),
+            {
+              cache: "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "news.json could not be loaded"
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        const news =
+          Array.isArray(data.news)
+            ? data.news
+            : [];
+
+
+        if (!news.length) {
+
+          throw new Error(
+            "No news available"
+          );
+
+        }
+
+
+        newsGrid.innerHTML = "";
+
+
+        news
+          .slice(0, 8)
+          .forEach(
+            function(item, index) {
+
+              const card =
+                document.createElement(
+                  "article"
+                );
+
+              card.className =
+                "trend-card";
+
+
+              const title =
+                escapeHTML(
+                  item.title ||
+                  "Untitled story"
+                );
+
+
+              const category =
+                escapeHTML(
+                  item.category ||
+                  "Trending"
+                );
+
+
+              const source =
+                escapeHTML(
+                  item.source ||
+                  "NOWNEX"
+                );
+
+
+              const link =
+                safeURL(
+                  item.link
+                );
+
+
+              const icon =
+                getNewsIcon(
+                  item.category
+                );
+
+
+              card.innerHTML = `
+
+                <div class="trend-number">
+
+                  ${String(
+                    index + 1
+                  ).padStart(2, "0")}
+
+                  — TRENDING
+
+                </div>
+
+
+                <div class="trend-icon">
+
+                  ${icon}
+
+                </div>
+
+
+                <h3>
+
+                  ${title}
+
+                </h3>
+
+
+                <div class="trend-meta">
+
+                  ${category}
+
+                  ·
+
+                  ${source}
+
+                </div>
+
+
+                <a
+                  class="news-link"
+                  href="${link}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+
+                  Read story →
+
+                </a>
+
+              `;
+
+
+              newsGrid.appendChild(
+                card
+              );
+
+            }
+          );
+
+
+      } catch (error) {
+
+        console.error(
+          "NOWNEX News Error:",
+          error
+        );
+
+
+        newsGrid.innerHTML = `
+
+          <article class="trend-card">
+
+            <div class="trend-number">
+
+              NOWNEX
+
+            </div>
+
+
+            <div class="trend-icon">
+
+              ⚠️
+
+            </div>
+
+
+            <h3>
+
+              News are temporarily
+              unavailable.
+
+            </h3>
+
+
+            <div class="trend-meta">
+
+              Please try again shortly.
+
+            </div>
+
+          </article>
+
+        `;
+
+      }
+
+    }
+
+
+    /* =========================
+       START NEWS SYSTEM
+    ========================= */
+
+    loadNews();
+
+
+    /*
+      Refresh the news every
+      10 minutes while the
+      visitor keeps the page open.
+    */
+
+    setInterval(
+      loadNews,
+      10 * 60 * 1000
+    );
 
   </script>
 
