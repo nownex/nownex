@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Get repository
         uses: actions/checkout@v4
 
@@ -23,56 +24,349 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install feedparser
+          pip install requests
 
-      - name: Fetch news
+      - name: Fetch and translate news
         run: |
-          python - <<'PY'
-          import feedparser
+          cat > update_news.py <<'PY'
+          import requests
+          import xml.etree.ElementTree as ET
           import json
-          from datetime import datetime, timezone
+          import re
+          import html
+          import time
+          from urllib.parse import quote
 
-          feeds = {
-              "World": "https://feeds.bbci.co.uk/news/world/rss.xml",
-              "Technology": "https://feeds.bbci.co.uk/news/technology/rss.xml",
-              "Entertainment": "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+          # -----------------------------------------
+          # NOWNEX AUTOMATIC NEWS SYSTEM
+          # -----------------------------------------
+
+          NEWS_LIMIT = 20
+
+          searches = [
+              ("العالم", "world latest news"),
+              ("التكنولوجيا", "technology latest news"),
+              ("الذكاء الاصطناعي", "artificial intelligence latest news"),
+              ("السيارات", "cars automotive latest news"),
+              ("الترفيه", "entertainment latest news"),
+              ("العلوم", "science latest news"),
+              ("الألعاب", "gaming latest news"),
+              ("الهواتف", "smartphones latest news")
+          ]
+
+          def clean_text(text):
+              if not text:
+                  return ""
+
+              text = html.unescape(text)
+
+              text = re.sub(r"<script.*?</script>", "", text,
+                            flags=re.I | re.S)
+
+              text = re.sub(r"<style.*?</style>", "", text,
+                            flags=re.I | re.S)
+
+              text = re.sub(r"<[^>]+>", " ", text)
+
+              text = re.sub(r"\s+", " ", text)
+
+              return text.strip()
+
+          def translate_to_arabic(text):
+              if not text:
+                  return ""
+
+              text = text[:1500]
+
+              try:
+                  url = (
+                      "https://translate.googleapis.com/"
+                      "translate_a/single"
+                  )
+
+                  params = {
+                      "client": "gtx",
+                      "sl": "auto",
+                      "tl": "ar",
+                      "dt": "t",
+                      "q": text
+                  }
+
+                  response = requests.get(
+                      url,
+                      params=params,
+                      timeout=15
+                  )
+
+                  if response.status_code == 200:
+                      data = response.json()
+
+                      result = ""
+
+                      for part in data[0]:
+                          if part and part[0]:
+                              result += part[0]
+
+                      if result.strip():
+                          return result.strip()
+
+              except Exception as e:
+                  print("Translation error:", e)
+
+              return text
+
+          def fetch_google_news(query, category):
+
+              encoded_query = quote(query)
+
+              url = (
+                  "https://news.google.com/rss/search?"
+                  f"q={encoded_query}"
+                  "&hl=en-US"
+                  "&gl=US"
+                  "&ceid=US:en"
+              )
+
+              try:
+
+                  response = requests.get(
+                      url,
+                      timeout=20,
+                      headers={
+                          "User-Agent":
+                          "Mozilla/5.0 NOWNEX News Bot"
+                      }
+                  )
+
+                  response.raise_for_status()
+
+                  root = ET.fromstring(response.content)
+
+                  results = []
+
+                  for item in root.findall(".//item"):
+
+                      title = item.findtext("title") or ""
+                      link = item.findtext("link") or ""
+                      description = (
+                          item.findtext("description") or ""
+                      )
+                      pub_date = (
+                          item.findtext("pubDate") or ""
+                      )
+
+                      source_element = item.find("source")
+
+                      if source_element is not None:
+                          source = (
+                              source_element.text or "News"
+                          )
+                      else:
+                          source = "News"
+
+                      title = clean_text(title)
+                      description = clean_text(description)
+                      source = clean_text(source)
+
+                      if not title or not link:
+                          continue
+
+                      results.append({
+                          "original_title": title,
+                          "original_description": description,
+                          "link": link,
+                          "source": source,
+                          "date": pub_date,
+                          "category": category
+                      })
+
+                      if len(results) >= 5:
+                          break
+
+                  return results
+
+              except Exception as e:
+
+                  print(
+                      f"RSS error for {category}:",
+                      e
+                  )
+
+                  return []
+
+          all_news = []
+
+          # -----------------------------------------
+          # GET NEWS
+          # -----------------------------------------
+
+          for category, query in searches:
+
+              print(
+                  f"Fetching: {category}"
+              )
+
+              news = fetch_google_news(
+                  query,
+                  category
+              )
+
+              all_news.extend(news)
+
+              time.sleep(1)
+
+          # -----------------------------------------
+          # REMOVE DUPLICATES
+          # -----------------------------------------
+
+          unique = []
+
+          seen_titles = set()
+          seen_links = set()
+
+          for article in all_news:
+
+              key = (
+                  article["original_title"]
+                  .lower()
+                  .strip()
+              )
+
+              if key in seen_titles:
+                  continue
+
+              if article["link"] in seen_links:
+                  continue
+
+              seen_titles.add(key)
+              seen_links.add(article["link"])
+
+              unique.append(article)
+
+          # -----------------------------------------
+          # LIMIT NEWS
+          # -----------------------------------------
+
+          unique = unique[:NEWS_LIMIT]
+
+          final_news = []
+
+          # -----------------------------------------
+          # TRANSLATE
+          # -----------------------------------------
+
+          for index, article in enumerate(unique):
+
+              print(
+                  f"Translating {index + 1}/{len(unique)}"
+              )
+
+              original_title = article[
+                  "original_title"
+              ]
+
+              original_description = article[
+                  "original_description"
+              ]
+
+              arabic_title = translate_to_arabic(
+                  original_title
+              )
+
+              time.sleep(0.5)
+
+              arabic_summary = ""
+
+              if original_description:
+
+                  arabic_summary = (
+                      translate_to_arabic(
+                          original_description
+                      )
+                  )
+
+              # Keep summaries short
+              if len(arabic_summary) > 260:
+                  arabic_summary = (
+                      arabic_summary[:257]
+                      + "..."
+                  )
+
+              final_news.append({
+
+                  "title": arabic_title,
+
+                  "summary": arabic_summary,
+
+                  "category": article[
+                      "category"
+                  ],
+
+                  "source": article[
+                      "source"
+                  ],
+
+                  "link": article[
+                      "link"
+                  ],
+
+                  "date": article[
+                      "date"
+                  ]
+
+              })
+
+          # -----------------------------------------
+          # SAVE news.json
+          # -----------------------------------------
+
+          output = {
+              "updated": time.strftime(
+                  "%Y-%m-%d %H:%M:%S UTC",
+                  time.gmtime()
+              ),
+              "count": len(final_news),
+              "news": final_news
           }
 
-          news = []
+          with open(
+              "news.json",
+              "w",
+              encoding="utf-8"
+          ) as file:
 
-          for category, url in feeds.items():
-              feed = feedparser.parse(url)
+              json.dump(
+                  output,
+                  file,
+                  ensure_ascii=False,
+                  indent=2
+              )
 
-              for item in feed.entries[:10]:
-                  news.append({
-                      "title": item.get("title", ""),
-                      "link": item.get("link", ""),
-                      "description": item.get("summary", ""),
-                      "category": category,
-                      "published": item.get("published", ""),
-                      "source": "BBC",
-                      "updated_at": datetime.now(timezone.utc).isoformat()
-                  })
+          print(
+              f"Successfully saved {len(final_news)} articles."
+          )
 
-          data = {
-              "updated_at": datetime.now(timezone.utc).isoformat(),
-              "total": len(news),
-              "news": news
-          }
-
-          with open("news.json", "w", encoding="utf-8") as f:
-              json.dump(data, f, ensure_ascii=False, indent=2)
-
-          print(f"Collected {len(news)} news items.")
           PY
+
+          python update_news.py
 
       - name: Commit updated news
         run: |
-          git config user.name "NOWNEX Bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git config user.name "NOWNEX News Bot"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add news.json
 
-          git diff --cached --quiet || git commit -m "Update NOWNEX news"
+          if git diff --cached --quiet; then
+            echo "No news changes."
+          else
 
-          git push
+            git commit \
+              -m "Update NOWNEX Arabic news"
+
+            git push
+
+          fi
