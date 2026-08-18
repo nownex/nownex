@@ -16,10 +16,16 @@ import feedparser
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    raise RuntimeError("GEMINI_API_KEY is missing from GitHub Secrets.")
+    raise RuntimeError(
+        "GEMINI_API_KEY is missing from GitHub Secrets."
+    )
 
 
-GEMINI_MODEL = "gemini-2.5-flash"
+# ============================================================
+# GEMINI MODEL
+# ============================================================
+
+GEMINI_MODEL = "gemini-3.6-flash"
 
 GEMINI_URL = (
     "https://generativelanguage.googleapis.com/"
@@ -182,8 +188,8 @@ def get_news():
                     )
                 )
 
-                # Some feeds provide content instead
-                # of summary/description.
+                # Some feeds provide content
+                # instead of summary/description.
 
                 if not description:
 
@@ -301,6 +307,7 @@ def ask_gemini(
     # explicitly tell Gemini not to invent anything.
 
     if not description:
+
         description = (
             "لا يوجد وصف إضافي متاح من مصدر RSS. "
             "اعتمد على العنوان فقط ولا تخترع تفاصيل."
@@ -429,6 +436,16 @@ Facts
                     response.text[:2000]
                 )
 
+                # Do not repeat requests when the
+                # model itself is unavailable.
+
+                if response.status_code == 404:
+
+                    raise RuntimeError(
+                        "Gemini model is unavailable: "
+                        f"{GEMINI_MODEL}"
+                    )
+
                 raise RuntimeError(
                     f"Gemini HTTP {response.status_code}"
                 )
@@ -486,6 +503,7 @@ Facts
             )
 
             if not new_title:
+
                 raise RuntimeError(
                     "Gemini returned an empty title."
                 )
@@ -641,9 +659,7 @@ def main():
 
         except Exception as error:
 
-            # IMPORTANT:
-            # Do NOT silently publish an unsummarized
-            # article anymore.
+            # Do NOT publish an unsummarized article.
 
             print(
                 "✗ Article rejected:",
@@ -653,8 +669,7 @@ def main():
         time.sleep(2)
 
     # If Gemini failed for every article,
-    # stop the workflow instead of creating
-    # fake/empty summaries.
+    # stop the workflow.
 
     if not final_news:
 
