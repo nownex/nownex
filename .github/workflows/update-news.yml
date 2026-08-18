@@ -1,0 +1,78 @@
+name: Update NOWNEX News
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser
+
+      - name: Fetch news
+        run: |
+          python - <<'PY'
+          import feedparser
+          import json
+          from datetime import datetime, timezone
+
+          feeds = {
+              "World": "https://feeds.bbci.co.uk/news/world/rss.xml",
+              "Technology": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+              "Entertainment": "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+          }
+
+          news = []
+
+          for category, url in feeds.items():
+              feed = feedparser.parse(url)
+
+              for item in feed.entries[:10]:
+                  news.append({
+                      "title": item.get("title", ""),
+                      "link": item.get("link", ""),
+                      "description": item.get("summary", ""),
+                      "category": category,
+                      "published": item.get("published", ""),
+                      "source": "BBC",
+                      "updated_at": datetime.now(timezone.utc).isoformat()
+                  })
+
+          data = {
+              "updated_at": datetime.now(timezone.utc).isoformat(),
+              "total": len(news),
+              "news": news
+          }
+
+          with open("news.json", "w", encoding="utf-8") as f:
+              json.dump(data, f, ensure_ascii=False, indent=2)
+
+          print(f"Collected {len(news)} news items.")
+          PY
+
+      - name: Commit updated news
+        run: |
+          git config user.name "NOWNEX Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add news.json
+
+          git diff --cached --quiet || git commit -m "Update NOWNEX news"
+
+          git push
