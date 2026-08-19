@@ -199,6 +199,11 @@ nav a:hover,nav a.active{color:#fff}
   color:#e9edf8;font-size:18px;line-height:1.9;font-weight:500;
   white-space:normal;margin:0;padding:0
 }
+.article-title.language-ar,
+.article-summary.language-ar{direction:rtl;text-align:right}
+.article-title.language-en,
+.article-summary.language-en{direction:ltr;text-align:left}
+
 .article-points{
   margin-top:15px;padding:19px 21px;border-radius:18px;
   background:rgba(79,140,255,.05);border:1px solid rgba(79,140,255,.12)
@@ -600,31 +605,61 @@ function cleanNewsText(value){
 function getNewsTitle(item){
   if(!item)return "";
   if(currentLanguage==="en"){
-    if(item.title_en)return cleanNewsText(item.title_en);
-    if(item.title && !containsArabic(item.title))return cleanNewsText(item.title);
-    return "NOWNEX News";
+    // EN mode: NEVER use Arabic fields.
+    return cleanNewsText(
+      item.title_en ||
+      (item.title && !containsArabic(item.title) ? item.title : "") ||
+      "NOWNEX News"
+    );
   }
-  if(item.title_ar)return cleanNewsText(item.title_ar);
-  if(item.title && containsArabic(item.title))return cleanNewsText(item.title);
-  return "عنوان الخبر غير متوفر بالعربية";
+
+  // AR mode: NEVER use English title fields.
+  // This is intentionally strict so English headlines can never leak into Arabic UI.
+  return cleanNewsText(
+    item.title_ar ||
+    (item.title && containsArabic(item.title) ? item.title : "") ||
+    "عنوان الخبر غير متوفر بالعربية"
+  );
 }
 
 function getNewsSummary(item){
   if(!item)return "";
   if(currentLanguage==="en"){
-    if(item.summary_en)return cleanNewsText(item.summary_en);
-    if(item.summary && !containsArabic(item.summary))return cleanNewsText(item.summary);
-    return "No summary is currently available.";
+    // EN mode: NEVER use Arabic summary fields.
+    return cleanNewsText(
+      item.summary_en ||
+      (item.summary && !containsArabic(item.summary) ? item.summary : "") ||
+      "No summary is currently available."
+    );
   }
-  if(item.summary_ar)return cleanNewsText(item.summary_ar);
-  if(item.summary && containsArabic(item.summary))return cleanNewsText(item.summary);
-  return "لا يوجد ملخص عربي متاح لهذا الخبر حالياً.";
+
+  // AR mode: NEVER use English summary fields.
+  return cleanNewsText(
+    item.summary_ar ||
+    (item.summary && containsArabic(item.summary) ? item.summary : "") ||
+    "لا يوجد ملخص عربي متاح لهذا الخبر حالياً."
+  );
 }
 
 function getSearchableText(item){
+  if(currentLanguage==="en"){
+    return [
+      item.title_en,
+      item.summary_en,
+      item.title && !containsArabic(item.title) ? item.title : "",
+      item.summary && !containsArabic(item.summary) ? item.summary : "",
+      item.category,
+      item.source
+    ].filter(Boolean).join(" ").toLowerCase();
+  }
+
   return [
-    item.title_ar,item.title_en,item.summary_ar,item.summary_en,
-    item.title,item.summary,item.description,item.category,item.source
+    item.title_ar,
+    item.summary_ar,
+    item.title && containsArabic(item.title) ? item.title : "",
+    item.summary && containsArabic(item.summary) ? item.summary : "",
+    item.category,
+    item.source
   ].filter(Boolean).join(" ").toLowerCase();
 }
 
@@ -758,6 +793,18 @@ function escapeHTML(value){
     .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
 }
 
+function formatNewsDate(value){
+  const raw=cleanNewsText(value);
+  if(!raw)return "";
+  const d=new Date(raw);
+  if(Number.isNaN(d.getTime()))return raw;
+
+  return new Intl.DateTimeFormat(
+    currentLanguage==="ar" ? "ar-DZ" : "en-US",
+    {year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}
+  ).format(d);
+}
+
 function safeURL(value){
   try{
     const url=new URL(String(value||"#"),window.location.href);
@@ -811,7 +858,7 @@ function openArticle(item){
   const originalLink=safeURL(item.link);
   const icon=getNewsIcon(item.category);
 
-  let dateText=item.published?escapeHTML(cleanNewsText(item.published)):"";
+  let dateText=item.published?escapeHTML(formatNewsDate(item.published)):"";
   let articleImageHTML="";
 
   if(item.image){
@@ -830,7 +877,7 @@ function openArticle(item){
 
     <div class="article-category">${icon} ${category}</div>
 
-    <h1 class="article-title">${title}</h1>
+    <h1 class="article-title language-${currentLanguage}">${title}</h1>
 
     <div class="article-info">
       <span>${escapeHTML(t("source"))} ${source}</span>
@@ -839,7 +886,7 @@ function openArticle(item){
 
     <div class="article-summary-box">
       <div class="article-summary-label">${escapeHTML(t("summary"))}</div>
-      <div class="article-summary">${summary}</div>
+      <div class="article-summary language-${currentLanguage}">${summary}</div>
 
       <div class="article-points">
         <h3>${escapeHTML(t("meaning"))}</h3>
