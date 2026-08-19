@@ -42,19 +42,14 @@
 :root {
   --bg: #060914;
   --bg2: #0b1020;
-
   --card: #10172a;
   --card-hover: #151e35;
-
   --text: #f5f7ff;
   --muted: #8d97ad;
-
   --gold: #d9b45b;
   --gold-light: #f3d47d;
-
   --blue: #4f8cff;
   --green: #56e39f;
-
   --line: rgba(255,255,255,0.08);
 }
 
@@ -63,10 +58,7 @@ html {
 }
 
 body {
-  font-family:
-    "Cairo",
-    Arial,
-    sans-serif;
+  font-family: "Cairo", Arial, sans-serif;
 
   background:
     radial-gradient(
@@ -211,18 +203,16 @@ nav a.active {
 
 
 /* =====================================================
-   LANGUAGE BUTTON
+   LANGUAGE
 ===================================================== */
 
 .language-btn {
   height: 43px;
-
   min-width: 82px;
 
   padding: 0 12px;
 
-  border:
-    1px solid var(--line);
+  border: 1px solid var(--line);
 
   background:
     rgba(255,255,255,0.04);
@@ -234,13 +224,10 @@ nav a.active {
   cursor: pointer;
 
   font-size: 13px;
-
   font-weight: 800;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   gap: 6px;
@@ -663,6 +650,9 @@ nav a.active {
 
   transition:
     0.25s;
+
+  cursor:
+    pointer;
 }
 
 .trend-card:hover {
@@ -1767,7 +1757,7 @@ footer {
 
 
 /* =====================================================
-   LTR ADJUSTMENTS
+   LTR
 ===================================================== */
 
 html[dir="ltr"] body {
@@ -1989,7 +1979,7 @@ html[dir="ltr"] .section-header {
 
 
 /* =====================================================
-   HIDE BROKEN IMAGE
+   IMAGE ERROR
 ===================================================== */
 
 .trend-image.image-error {
@@ -2017,7 +2007,6 @@ html[dir="ltr"] .section-header {
 <header>
 
 <div class="header-inner">
-
 
 <a
   href="#"
@@ -2076,7 +2065,6 @@ NOWNEX
 
 <div class="header-actions">
 
-
 <button
   class="language-btn"
   id="languageBtn"
@@ -2104,9 +2092,7 @@ NOWNEX
 ☰
 </button>
 
-
 </div>
-
 
 </div>
 
@@ -2122,9 +2108,7 @@ NOWNEX
 
 <section class="hero">
 
-
 <div>
-
 
 <div class="hero-badge">
 
@@ -2161,7 +2145,6 @@ NOWNEX
 
 <div class="hero-buttons">
 
-
 <button
   class="primary-btn"
   onclick="scrollToTrending()"
@@ -2179,9 +2162,7 @@ NOWNEX
 استكشف الأقسام
 </button>
 
-
 </div>
-
 
 </div>
 
@@ -2193,7 +2174,6 @@ NOWNEX
 <div class="orb"></div>
 
 </div>
-
 
 </section>
 
@@ -2207,12 +2187,9 @@ NOWNEX
   id="trending"
 >
 
-
 <div class="section-header">
 
-
 <div>
-
 
 <h2 class="section-title">
 
@@ -2239,7 +2216,6 @@ NOWNEX
 
 </p>
 
-
 </div>
 
 
@@ -2252,7 +2228,6 @@ NOWNEX
 عرض الكل ←
 </a>
 
-
 </div>
 
 
@@ -2261,8 +2236,7 @@ NOWNEX
   id="categoryFilterBar"
 >
 
-<span id="categoryFilterText">
-</span>
+<span id="categoryFilterText"></span>
 
 <button
   class="clear-filter"
@@ -2279,7 +2253,6 @@ NOWNEX
   class="trend-grid"
   id="newsGrid"
 >
-
 
 <article class="trend-card">
 
@@ -2305,9 +2278,7 @@ NOWNEX · تحديث مباشر
 
 </article>
 
-
 </div>
-
 
 </section>
 
@@ -2321,9 +2292,7 @@ NOWNEX · تحديث مباشر
   id="categories"
 >
 
-
 <div class="section-header">
-
 
 <div>
 
@@ -2348,7 +2317,6 @@ NOWNEX
 </p>
 
 </div>
-
 
 </div>
 
@@ -2535,9 +2503,7 @@ NOWNEX
 
 <section class="section">
 
-
 <div class="feature">
-
 
 <div class="feature-visual">
 🤖
@@ -2545,7 +2511,6 @@ NOWNEX
 
 
 <div class="feature-content">
-
 
 <div
   class="tag"
@@ -2574,12 +2539,9 @@ NOWNEX
 اكتشف عالم الذكاء الاصطناعي ←
 </button>
 
-
 </div>
 
-
 </div>
-
 
 </section>
 
@@ -2593,12 +2555,9 @@ NOWNEX
 
 <footer id="about">
 
-
 <div class="footer-inner">
 
-
 <div>
-
 
 <div class="footer-logo">
 
@@ -2616,7 +2575,6 @@ OWNEX
 ما يحدث الآن. ما القادم.
 </div>
 
-
 </div>
 
 
@@ -2626,7 +2584,6 @@ OWNEX
 >
 © 2026 NOWNEX — جميع الحقوق محفوظة
 </div>
-
 
 </div>
 
@@ -2642,12 +2599,9 @@ OWNEX
   id="articleOverlay"
 >
 
-
 <div class="article-container">
 
-
 <div class="article-top">
-
 
 <div class="article-brand">
 
@@ -2673,13 +2627,10 @@ NOWNEX
 ×
 </button>
 
-
 </div>
 
 
-<div id="articleContent">
-</div>
-
+<div id="articleContent"></div>
 
 </div>
 
@@ -2695,9 +2646,7 @@ NOWNEX
   id="searchPanel"
 >
 
-
 <div class="search-box">
-
 
 <input
   type="text"
@@ -2715,16 +2664,13 @@ NOWNEX
 ×
 </button>
 
-
 </div>
 
 
 <div
   class="search-results"
   id="searchResults"
->
-</div>
-
+></div>
 
 </div>
 
@@ -2734,10 +2680,6 @@ NOWNEX
 ===================================================== -->
 
 <script>
-
-/* =====================================================
-   GLOBAL
-===================================================== */
 
 let allNews = [];
 
@@ -2758,17 +2700,13 @@ const translations = {
   ar: {
 
     navHome: "الرئيسية",
-
     navTrending: "الترند",
-
     navCategories: "الأقسام",
-
     navAbout: "حول NOWNEX",
 
     liveTrend: "مباشر — الترند الآن",
 
     heroNow: "ما يحدث الآن.",
-
     heroNext: "ما القادم.",
 
     heroDescription:
@@ -3109,7 +3047,7 @@ const translations = {
 
 
 /* =====================================================
-   TRANSLATION HELPER
+   TRANSLATION
 ===================================================== */
 
 function t(key) {
@@ -3122,12 +3060,6 @@ function t(key) {
 
 }
 
-
-/* =====================================================
-   GET LOCALIZED TITLE
-   NEW:
-   title_ar / title_en
-===================================================== */
 
 function getNewsTitle(item) {
 
@@ -3156,12 +3088,6 @@ function getNewsTitle(item) {
 }
 
 
-/* =====================================================
-   GET LOCALIZED SUMMARY
-   NEW:
-   summary_ar / summary_en
-===================================================== */
-
 function getNewsSummary(item) {
 
   if (!item) {
@@ -3188,11 +3114,6 @@ function getNewsSummary(item) {
 
 }
 
-
-/* =====================================================
-   SEARCH TEXT
-   Searches BOTH languages
-===================================================== */
 
 function getSearchableText(item) {
 
@@ -3306,11 +3227,6 @@ function applyLanguage() {
   }
 
 
-  /*
-    إذا كان الخبر مفتوحاً أثناء تغيير اللغة،
-    نعيد فتح نفس الخبر باللغة الجديدة.
-  */
-
   const articleOverlay =
     document.getElementById(
       "articleOverlay"
@@ -3332,10 +3248,6 @@ function applyLanguage() {
 
   }
 
-
-  /*
-    إعادة رسم الأخبار باللغة الجديدة.
-  */
 
   if (allNews.length) {
 
@@ -3363,7 +3275,7 @@ function applyLanguage() {
 
 
 /* =====================================================
-   TOGGLE LANGUAGE
+   LANGUAGE TOGGLE
 ===================================================== */
 
 function toggleLanguage() {
@@ -3396,12 +3308,9 @@ function openSearch() {
     .classList
     .add("active");
 
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-  input.focus();
+  document
+    .getElementById("searchInput")
+    .focus();
 
 }
 
@@ -3443,25 +3352,11 @@ function performSearch() {
   }
 
 
-  /*
-    البحث في:
-    العربي
-    الإنجليزي
-    العنوان القديم
-    الملخص القديم
-    التصنيف
-    المصدر
-  */
-
   const filtered =
     allNews.filter(function(item) {
 
-      const searchable =
-        getSearchableText(item);
-
-      return searchable.includes(
-        query
-      );
+      return getSearchableText(item)
+        .includes(query);
 
     });
 
@@ -3501,7 +3396,6 @@ function performSearch() {
 
 
   filtered
-    .slice(0, 10)
     .forEach(function(item) {
 
       const result =
@@ -3725,7 +3619,7 @@ function filterByCategory(
 
 
 /* =====================================================
-   GET FILTERED NEWS
+   FILTERED NEWS
 ===================================================== */
 
 function getFilteredNews(
@@ -3903,11 +3797,8 @@ function safeURL(value) {
 
 
     if (
-      url.protocol ===
-        "http:" ||
-
-      url.protocol ===
-        "https:"
+      url.protocol === "http:" ||
+      url.protocol === "https:"
     ) {
 
       return url.href;
@@ -3962,6 +3853,9 @@ function getNewsIcon(
       "🔥",
 
     Products:
+      "🛍️",
+
+    Shopping:
       "🛍️"
 
   };
@@ -3984,8 +3878,7 @@ function translateCategory(
 ) {
 
   if (
-    currentLanguage ===
-    "en"
+    currentLanguage === "en"
   ) {
 
     const categories = {
@@ -4082,7 +3975,6 @@ function translateCategory(
 
 /* =====================================================
    OPEN ARTICLE
-   NEW LANGUAGE SUPPORT
 ===================================================== */
 
 function openArticle(
@@ -4093,11 +3985,6 @@ function openArticle(
     return;
   }
 
-
-  /*
-    نحفظ الخبر المفتوح حتى إذا غيّر المستخدم
-    اللغة أثناء قراءة الخبر، يتغير المحتوى مباشرة.
-  */
 
   window.currentOpenedArticle =
     item;
@@ -4115,19 +4002,11 @@ function openArticle(
     );
 
 
-  /*
-    العنوان أصبح يعتمد على اللغة.
-  */
-
   const title =
     escapeHTML(
       getNewsTitle(item)
     );
 
-
-  /*
-    الملخص أصبح يعتمد على اللغة.
-  */
 
   const summary =
     escapeHTML(
@@ -4188,10 +4067,6 @@ function openArticle(
 
   }
 
-
-  /* =====================================================
-     IMAGE
-  ===================================================== */
 
   let articleImageHTML =
     "";
@@ -4428,8 +4303,7 @@ function closeArticle() {
 
 
 /* =====================================================
-   RENDER NEWS
-   NEW LANGUAGE SUPPORT
+   RENDER ALL NEWS
 ===================================================== */
 
 function renderNews(
@@ -4503,11 +4377,19 @@ function renderNews(
 
 
   /*
-    الترتيب الحالي محفوظ:
+    ترتيب الصفحة الرئيسية:
+
     Technology
     Cars
     AI
-    بقية الأخبار
+    ثم بقية الأخبار
+
+    =================================================
+    لا يوجد هنا slice(0,8)
+    =================================================
+
+    كل الأخبار الموجودة في news.json
+    سيتم عرضها.
   */
 
   if (
@@ -4588,12 +4470,23 @@ function renderNews(
 
 
   /*
-    الصفحة الرئيسية:
-    أول 8 أخبار.
+    =================================================
+    IMPORTANT
+    =================================================
+
+    سابقاً:
+
+    displayNews.slice(0, 8)
+
+    الآن:
+
+    displayNews
+
+    أي سيتم عرض جميع الأخبار.
   */
 
+
   displayNews
-    .slice(0, 8)
     .forEach(
       function(item, index) {
 
@@ -4607,10 +4500,6 @@ function renderNews(
         card.className =
           "trend-card";
 
-
-        /*
-          العنوان حسب اللغة الحالية.
-        */
 
         const title =
           escapeHTML(
@@ -4639,10 +4528,6 @@ function renderNews(
             item.category
           );
 
-
-        /* =================================================
-           IMAGE
-        ================================================= */
 
         let imageHTML =
           "";
@@ -4772,11 +4657,6 @@ function renderNews(
 
         }
 
-
-        /*
-          الضغط على البطاقة نفسها يفتح الخبر.
-          لا يغير التصميم، فقط يجعل الاستخدام أسهل.
-        */
 
         card.addEventListener(
           "click",
@@ -4931,10 +4811,25 @@ async function loadNews() {
     );
 
 
-    /*
-      فحص بسيط للتأكد أن generate_news.py
-      أنشأ الحقول الجديدة.
-    */
+    console.log(
+      "World:",
+      allNews.filter(
+        x =>
+          x.category ===
+          "World"
+      ).length
+    );
+
+
+    console.log(
+      "Entertainment:",
+      allNews.filter(
+        x =>
+          x.category ===
+          "Entertainment"
+      ).length
+    );
+
 
     const localizedCount =
       allNews.filter(function(item) {
@@ -5003,8 +4898,7 @@ loadNews();
 
 
 /*
-   تحديث الأخبار داخل الصفحة
-   كل 10 دقائق.
+  تحديث الأخبار كل 10 دقائق.
 */
 
 setInterval(
