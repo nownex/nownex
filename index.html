@@ -19,6 +19,9 @@
       href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
       href="https://fonts.gstatic.com"
       crossorigin>
 
@@ -40,17 +43,24 @@
 }
 
 :root {
+
   --bg: #060914;
   --bg2: #0b1020;
+
   --card: #10172a;
   --card-hover: #151e35;
+
   --text: #f5f7ff;
   --muted: #8d97ad;
+
   --gold: #d9b45b;
   --gold-light: #f3d47d;
+
   --blue: #4f8cff;
   --green: #56e39f;
+
   --line: rgba(255,255,255,0.08);
+
 }
 
 html {
@@ -58,9 +68,14 @@ html {
 }
 
 body {
-  font-family: "Cairo", Arial, sans-serif;
+
+  font-family:
+    "Cairo",
+    Arial,
+    sans-serif;
 
   background:
+
     radial-gradient(
       circle at 80% 0%,
       rgba(79,140,255,0.12),
@@ -80,6 +95,7 @@ body {
   min-height: 100vh;
 
   overflow-x: hidden;
+
 }
 
 body.article-open {
@@ -101,8 +117,11 @@ button {
 ===================================================== */
 
 header {
+
   position: sticky;
+
   top: 0;
+
   z-index: 100;
 
   backdrop-filter: blur(18px);
@@ -112,10 +131,13 @@ header {
 
   border-bottom:
     1px solid var(--line);
+
 }
 
 .header-inner {
+
   max-width: 1250px;
+
   margin: auto;
 
   height: 76px;
@@ -123,24 +145,31 @@ header {
   padding: 0 22px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
   gap: 25px;
+
 }
 
 .logo {
+
   display: flex;
+
   align-items: center;
 
   gap: 10px;
 
   font-size: 27px;
+
   font-weight: 900;
 
   letter-spacing: -1px;
 
   white-space: nowrap;
+
 }
 
 .logo-text {
@@ -148,12 +177,14 @@ header {
 }
 
 .logo-mark {
+
   width: 40px;
   height: 40px;
 
   border-radius: 12px;
 
   display: grid;
+
   place-items: center;
 
   background:
@@ -166,28 +197,37 @@ header {
   color: #080b13;
 
   font-size: 21px;
+
   font-weight: 900;
 
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.18);
+
 }
 
 nav {
+
   display: flex;
+
   align-items: center;
+
   gap: 28px;
+
 }
 
 nav a {
+
   color: #b9c1d3;
 
   font-size: 14px;
+
   font-weight: 700;
 
   transition: 0.2s;
 
   cursor: pointer;
+
 }
 
 nav a:hover,
@@ -196,23 +236,30 @@ nav a.active {
 }
 
 .header-actions {
+
   display: flex;
+
   align-items: center;
+
   gap: 8px;
+
 }
 
 
 /* =====================================================
-   LANGUAGE
+   BUTTONS
 ===================================================== */
 
 .language-btn {
+
   height: 43px;
+
   min-width: 82px;
 
   padding: 0 12px;
 
-  border: 1px solid var(--line);
+  border:
+    1px solid var(--line);
 
   background:
     rgba(255,255,255,0.04);
@@ -224,28 +271,36 @@ nav a.active {
   cursor: pointer;
 
   font-size: 13px;
+
   font-weight: 800;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   gap: 6px;
 
   transition: 0.2s;
+
 }
 
 .language-btn:hover {
+
   border-color:
     rgba(217,180,91,0.45);
 
   background:
     rgba(217,180,91,0.08);
+
 }
 
 .search-btn,
 .mobile-menu {
+
   width: 43px;
+
   height: 43px;
 
   border:
@@ -261,6 +316,7 @@ nav a.active {
   cursor: pointer;
 
   font-size: 18px;
+
 }
 
 .mobile-menu {
@@ -273,7 +329,9 @@ nav a.active {
 ===================================================== */
 
 .hero {
+
   max-width: 1250px;
+
   margin: auto;
 
   padding:
@@ -287,9 +345,11 @@ nav a.active {
   gap: 35px;
 
   align-items: center;
+
 }
 
 .hero-badge {
+
   display: inline-flex;
 
   align-items: center;
@@ -316,10 +376,13 @@ nav a.active {
   font-weight: 800;
 
   margin-bottom: 22px;
+
 }
 
 .live-dot {
+
   width: 8px;
+
   height: 8px;
 
   border-radius: 50%;
@@ -330,9 +393,11 @@ nav a.active {
   box-shadow:
     0 0 12px
     var(--green);
+
 }
 
 .hero h1 {
+
   font-size:
     clamp(45px, 7vw, 82px);
 
@@ -345,9 +410,11 @@ nav a.active {
   margin-bottom: 25px;
 
   font-weight: 900;
+
 }
 
 .hero h1 span {
+
   background:
     linear-gradient(
       90deg,
@@ -356,12 +423,15 @@ nav a.active {
     );
 
   -webkit-background-clip: text;
+
   background-clip: text;
 
   color: transparent;
+
 }
 
 .hero p {
+
   max-width: 700px;
 
   color: var(--muted);
@@ -373,18 +443,22 @@ nav a.active {
   margin-bottom: 30px;
 
   font-weight: 500;
+
 }
 
 .hero-buttons {
+
   display: flex;
 
   gap: 12px;
 
   flex-wrap: wrap;
+
 }
 
 .primary-btn,
 .secondary-btn {
+
   padding:
     14px 21px;
 
@@ -402,9 +476,11 @@ nav a.active {
 
   transition:
     0.2s;
+
 }
 
 .primary-btn {
+
   background:
     linear-gradient(
       135deg,
@@ -417,20 +493,25 @@ nav a.active {
 
   border:
     none;
+
 }
 
 .secondary-btn {
+
   background:
     rgba(255,255,255,0.04);
 
   color:
     white;
+
 }
 
 .primary-btn:hover,
 .secondary-btn:hover {
+
   transform:
     translateY(-2px);
+
 }
 
 
@@ -439,6 +520,7 @@ nav a.active {
 ===================================================== */
 
 .trend-orb {
+
   min-height: 350px;
 
   position: relative;
@@ -446,15 +528,19 @@ nav a.active {
   display: grid;
 
   place-items: center;
+
 }
 
 .orb {
+
   width: 260px;
+
   height: 260px;
 
   border-radius: 50%;
 
   background:
+
     radial-gradient(
       circle at 35% 30%,
       #fff7d0 0%,
@@ -465,6 +551,7 @@ nav a.active {
     );
 
   box-shadow:
+
     0 0 70px
     rgba(217,180,91,0.16),
 
@@ -473,12 +560,15 @@ nav a.active {
 
   animation:
     float 5s ease-in-out infinite;
+
 }
 
 .orbit {
+
   position: absolute;
 
   width: 330px;
+
   height: 170px;
 
   border:
@@ -489,14 +579,17 @@ nav a.active {
 
   transform:
     rotate(-25deg);
+
 }
 
 .orbit::after {
+
   content: "";
 
   position: absolute;
 
   width: 9px;
+
   height: 9px;
 
   border-radius: 50%;
@@ -509,10 +602,13 @@ nav a.active {
     var(--gold);
 
   top: 30px;
+
   right: 30px;
+
 }
 
 @keyframes float {
+
   0%,100% {
     transform:
       translateY(0);
@@ -522,6 +618,7 @@ nav a.active {
     transform:
       translateY(-12px);
   }
+
 }
 
 
@@ -530,15 +627,18 @@ nav a.active {
 ===================================================== */
 
 .section {
+
   max-width: 1250px;
 
   margin: auto;
 
   padding:
     30px 22px 70px;
+
 }
 
 .section-header {
+
   display:
     flex;
 
@@ -553,9 +653,11 @@ nav a.active {
 
   gap:
     20px;
+
 }
 
 .section-title {
+
   font-size:
     30px;
 
@@ -564,14 +666,18 @@ nav a.active {
 
   font-weight:
     900;
+
 }
 
 .section-title span {
+
   color:
     var(--gold-light);
+
 }
 
 .section-description {
+
   color:
     var(--muted);
 
@@ -583,9 +689,11 @@ nav a.active {
 
   font-weight:
     500;
+
 }
 
 .view-all {
+
   color:
     var(--gold-light);
 
@@ -597,6 +705,7 @@ nav a.active {
 
   cursor:
     pointer;
+
 }
 
 
@@ -605,6 +714,7 @@ nav a.active {
 ===================================================== */
 
 .trend-grid {
+
   display:
     grid;
 
@@ -613,6 +723,7 @@ nav a.active {
 
   gap:
     15px;
+
 }
 
 
@@ -621,16 +732,18 @@ nav a.active {
 ===================================================== */
 
 .trend-card {
+
   position:
     relative;
 
   min-height:
-    370px;
+    390px;
 
   padding:
     0;
 
   background:
+
     linear-gradient(
       145deg,
       rgba(255,255,255,0.06),
@@ -653,9 +766,11 @@ nav a.active {
 
   cursor:
     pointer;
+
 }
 
 .trend-card:hover {
+
   transform:
     translateY(-5px);
 
@@ -664,15 +779,13 @@ nav a.active {
 
   border-color:
     rgba(217,180,91,0.25);
+
 }
 
-
-/* =====================================================
-   NEWS IMAGE
-===================================================== */
-
 .trend-image {
+
   width: 100%;
+
   height: 190px;
 
   display: block;
@@ -683,19 +796,18 @@ nav a.active {
 
   background:
     #0b1020;
+
 }
 
-
-/* =====================================================
-   CARD CONTENT
-===================================================== */
-
 .trend-card-content {
+
   padding:
     17px 20px 20px;
+
 }
 
 .trend-number {
+
   font-size:
     13px;
 
@@ -704,9 +816,11 @@ nav a.active {
 
   font-weight:
     900;
+
 }
 
 .trend-icon {
+
   position:
     absolute;
 
@@ -727,9 +841,11 @@ nav a.active {
       0 2px 8px
       rgba(0,0,0,0.5)
     );
+
 }
 
 .trend-card h3 {
+
   margin-top:
     10px;
 
@@ -741,9 +857,11 @@ nav a.active {
 
   font-weight:
     800;
+
 }
 
 .trend-meta {
+
   color:
     var(--muted);
 
@@ -755,9 +873,11 @@ nav a.active {
 
   font-weight:
     600;
+
 }
 
 .news-link {
+
   display:
     inline-block;
 
@@ -778,11 +898,14 @@ nav a.active {
 
   cursor:
     pointer;
+
 }
 
 .news-link:hover {
+
   color:
     white;
+
 }
 
 
@@ -791,6 +914,7 @@ nav a.active {
 ===================================================== */
 
 .category-grid {
+
   display:
     grid;
 
@@ -799,9 +923,11 @@ nav a.active {
 
   gap:
     15px;
+
 }
 
 .category {
+
   padding:
     24px;
 
@@ -828,34 +954,42 @@ nav a.active {
 
   user-select:
     none;
+
 }
 
 .category:hover {
+
   transform:
     translateY(-4px);
 
   border-color:
     rgba(79,140,255,0.3);
+
 }
 
 .category.active {
+
   border-color:
     rgba(217,180,91,0.65);
 
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.08);
+
 }
 
 .category-icon {
+
   font-size:
     28px;
 
   margin-bottom:
     18px;
+
 }
 
 .category h3 {
+
   font-size:
     17px;
 
@@ -864,9 +998,11 @@ nav a.active {
 
   font-weight:
     800;
+
 }
 
 .category p {
+
   color:
     var(--muted);
 
@@ -878,6 +1014,7 @@ nav a.active {
 
   font-weight:
     500;
+
 }
 
 
@@ -886,6 +1023,7 @@ nav a.active {
 ===================================================== */
 
 .category-filter-bar {
+
   display:
     none;
 
@@ -913,9 +1051,11 @@ nav a.active {
 
   font-weight:
     800;
+
 }
 
 .category-filter-bar.active {
+
   display:
     flex;
 
@@ -927,9 +1067,11 @@ nav a.active {
 
   gap:
     15px;
+
 }
 
 .clear-filter {
+
   border:
     1px solid var(--line);
 
@@ -950,6 +1092,7 @@ nav a.active {
 
   font-family:
     inherit;
+
 }
 
 
@@ -958,6 +1101,7 @@ nav a.active {
 ===================================================== */
 
 .feature {
+
   display:
     grid;
 
@@ -978,9 +1122,11 @@ nav a.active {
 
   background:
     var(--card);
+
 }
 
 .feature-visual {
+
   min-height:
     350px;
 
@@ -994,6 +1140,7 @@ nav a.active {
     100px;
 
   background:
+
     radial-gradient(
       circle at center,
       rgba(79,140,255,0.2),
@@ -1005,9 +1152,11 @@ nav a.active {
       #0c1730,
       #090d1a
     );
+
 }
 
 .feature-content {
+
   padding:
     45px;
 
@@ -1019,9 +1168,11 @@ nav a.active {
 
   justify-content:
     center;
+
 }
 
 .tag {
+
   color:
     var(--gold-light);
 
@@ -1036,9 +1187,11 @@ nav a.active {
 
   margin-bottom:
     15px;
+
 }
 
 .feature-content h2 {
+
   font-size:
     34px;
 
@@ -1050,9 +1203,11 @@ nav a.active {
 
   font-weight:
     900;
+
 }
 
 .feature-content p {
+
   color:
     var(--muted);
 
@@ -1064,6 +1219,7 @@ nav a.active {
 
   margin-bottom:
     22px;
+
 }
 
 
@@ -1072,6 +1228,7 @@ nav a.active {
 ===================================================== */
 
 .article-overlay {
+
   position:
     fixed;
 
@@ -1095,6 +1252,7 @@ nav a.active {
 
   padding:
     15px 20px 60px;
+
 }
 
 .article-overlay.active {
@@ -1103,14 +1261,17 @@ nav a.active {
 }
 
 .article-container {
+
   max-width:
     1050px;
 
   margin:
     0 auto;
+
 }
 
 .article-top {
+
   display:
     flex;
 
@@ -1125,9 +1286,11 @@ nav a.active {
 
   margin-bottom:
     20px;
+
 }
 
 .article-brand {
+
   display:
     flex;
 
@@ -1145,9 +1308,11 @@ nav a.active {
 
   font-size:
     18px;
+
 }
 
 .article-close {
+
   width:
     46px;
 
@@ -1177,14 +1342,11 @@ nav a.active {
 
   place-items:
     center;
+
 }
 
-
-/* =====================================================
-   ARTICLE IMAGE
-===================================================== */
-
 .article-image-wrapper {
+
   width:
     100%;
 
@@ -1202,9 +1364,11 @@ nav a.active {
 
   background:
     #0b1020;
+
 }
 
 .article-image {
+
   width:
     100%;
 
@@ -1216,14 +1380,11 @@ nav a.active {
 
   object-fit:
     cover;
+
 }
 
-
-/* =====================================================
-   ARTICLE CONTENT
-===================================================== */
-
 .article-category {
+
   display:
     inline-flex;
 
@@ -1244,9 +1405,11 @@ nav a.active {
 
   margin-bottom:
     15px;
+
 }
 
 .article-title {
+
   font-size:
     clamp(30px, 5vw, 54px);
 
@@ -1261,9 +1424,11 @@ nav a.active {
 
   margin-bottom:
     18px;
+
 }
 
 .article-info {
+
   display:
     flex;
 
@@ -1281,9 +1446,11 @@ nav a.active {
 
   margin-bottom:
     25px;
+
 }
 
 .article-info span {
+
   padding:
     7px 12px;
 
@@ -1295,10 +1462,13 @@ nav a.active {
 
   border-radius:
     9px;
+
 }
 
 .article-summary-box {
+
   background:
+
     linear-gradient(
       145deg,
       rgba(255,255,255,0.055),
@@ -1321,9 +1491,11 @@ nav a.active {
 
   margin-bottom:
     25px;
+
 }
 
 .article-summary-label {
+
   color:
     var(--gold-light);
 
@@ -1335,9 +1507,11 @@ nav a.active {
 
   margin-bottom:
     17px;
+
 }
 
 .article-summary {
+
   color:
     #e9edf8;
 
@@ -1352,9 +1526,11 @@ nav a.active {
 
   white-space:
     pre-line;
+
 }
 
 .article-points {
+
   margin-top:
     22px;
 
@@ -1370,9 +1546,11 @@ nav a.active {
   border:
     1px solid
     rgba(79,140,255,0.12);
+
 }
 
 .article-points h3 {
+
   color:
     var(--gold-light);
 
@@ -1381,9 +1559,11 @@ nav a.active {
 
   margin-bottom:
     15px;
+
 }
 
 .article-points p {
+
   color:
     var(--muted);
 
@@ -1392,9 +1572,11 @@ nav a.active {
 
   font-size:
     14px;
+
 }
 
 .article-source {
+
   margin-top:
     25px;
 
@@ -1403,9 +1585,11 @@ nav a.active {
 
   border-top:
     1px solid var(--line);
+
 }
 
 .article-source-title {
+
   color:
     var(--muted);
 
@@ -1414,9 +1598,11 @@ nav a.active {
 
   margin-bottom:
     8px;
+
 }
 
 .article-source-name {
+
   color:
     white;
 
@@ -1428,9 +1614,11 @@ nav a.active {
 
   margin-bottom:
     18px;
+
 }
 
 .original-btn {
+
   display:
     inline-flex;
 
@@ -1444,6 +1632,7 @@ nav a.active {
     13px 19px;
 
   background:
+
     linear-gradient(
       135deg,
       var(--gold-light),
@@ -1464,14 +1653,18 @@ nav a.active {
 
   transition:
     0.2s;
+
 }
 
 .original-btn:hover {
+
   transform:
     translateY(-2px);
+
 }
 
 .article-note {
+
   color:
     var(--muted);
 
@@ -1483,6 +1676,7 @@ nav a.active {
 
   margin-top:
     15px;
+
 }
 
 
@@ -1491,6 +1685,7 @@ nav a.active {
 ===================================================== */
 
 .search-panel {
+
   display:
     none;
 
@@ -1511,6 +1706,7 @@ nav a.active {
 
   padding:
     100px 22px;
+
 }
 
 .search-panel.active {
@@ -1519,6 +1715,7 @@ nav a.active {
 }
 
 .search-box {
+
   max-width:
     750px;
 
@@ -1527,9 +1724,11 @@ nav a.active {
 
   position:
     relative;
+
 }
 
 .search-box input {
+
   width:
     100%;
 
@@ -1556,9 +1755,11 @@ nav a.active {
 
   font-family:
     inherit;
+
 }
 
 .close-search {
+
   position:
     absolute;
 
@@ -1588,25 +1789,31 @@ nav a.active {
 
   cursor:
     pointer;
+
 }
 
 html[dir="ltr"] .close-search {
+
   left:
     auto;
 
   right:
     12px;
+
 }
 
 .search-results {
+
   max-width:
     750px;
 
   margin:
     25px auto;
+
 }
 
 .search-result {
+
   padding:
     18px;
 
@@ -1624,14 +1831,18 @@ html[dir="ltr"] .close-search {
 
   cursor:
     pointer;
+
 }
 
 .search-result:hover {
+
   border-color:
     rgba(217,180,91,0.35);
+
 }
 
 .search-result-title {
+
   font-size:
     15px;
 
@@ -1640,9 +1851,11 @@ html[dir="ltr"] .close-search {
 
   line-height:
     1.7;
+
 }
 
 .search-result-meta {
+
   color:
     var(--muted);
 
@@ -1651,6 +1864,7 @@ html[dir="ltr"] .close-search {
 
   margin-top:
     7px;
+
 }
 
 
@@ -1659,6 +1873,7 @@ html[dir="ltr"] .close-search {
 ===================================================== */
 
 footer {
+
   border-top:
     1px solid var(--line);
 
@@ -1667,9 +1882,11 @@ footer {
 
   margin-top:
     20px;
+
 }
 
 .footer-inner {
+
   max-width:
     1250px;
 
@@ -1690,35 +1907,43 @@ footer {
 
   gap:
     20px;
+
 }
 
 .footer-copy {
+
   color:
     var(--muted);
 
   font-size:
     12px;
+
 }
 
 .footer-logo {
+
   font-size:
     20px;
 
   font-weight:
     900;
+
 }
 
 .footer-logo span {
+
   color:
     var(--gold-light);
+
 }
 
 
 /* =====================================================
-   EMPTY STATE
+   EMPTY
 ===================================================== */
 
 .empty-news {
+
   grid-column:
     1 / -1;
 
@@ -1739,9 +1964,11 @@ footer {
 
   color:
     var(--muted);
+
 }
 
 .empty-news strong {
+
   display:
     block;
 
@@ -1753,6 +1980,7 @@ footer {
 
   margin-bottom:
     8px;
+
 }
 
 
@@ -1761,31 +1989,39 @@ footer {
 ===================================================== */
 
 html[dir="ltr"] body {
+
   font-family:
     Arial,
     "Cairo",
     sans-serif;
+
 }
 
 html[dir="ltr"] .trend-icon {
+
   left:
     auto;
 
   right:
     18px;
+
 }
 
 html[dir="ltr"] .article-summary-box {
+
   border-right:
     1px solid var(--line);
 
   border-left:
     3px solid var(--gold);
+
 }
 
 html[dir="ltr"] .section-header {
+
   text-align:
     left;
+
 }
 
 
@@ -1801,16 +2037,20 @@ html[dir="ltr"] .section-header {
   }
 
   .mobile-menu {
+
     display:
       block;
+
   }
 
   .hero {
+
     grid-template-columns:
       1fr;
 
     padding-top:
       55px;
+
   }
 
   .trend-orb {
@@ -1820,13 +2060,17 @@ html[dir="ltr"] .section-header {
 
   .trend-grid,
   .category-grid {
+
     grid-template-columns:
       repeat(2, 1fr);
+
   }
 
   .feature {
+
     grid-template-columns:
       1fr;
+
   }
 
 }
@@ -1834,6 +2078,7 @@ html[dir="ltr"] .section-header {
 @media (max-width: 600px) {
 
   .header-inner {
+
     height:
       68px;
 
@@ -1842,22 +2087,28 @@ html[dir="ltr"] .section-header {
 
     gap:
       8px;
+
   }
 
   .logo {
+
     font-size:
       22px;
+
   }
 
   .logo-mark {
+
     width:
       34px;
 
     height:
       34px;
+
   }
 
   .language-btn {
+
     min-width:
       72px;
 
@@ -1869,110 +2120,147 @@ html[dir="ltr"] .section-header {
 
     font-size:
       11px;
+
   }
 
   .search-btn,
   .mobile-menu {
+
     width:
       40px;
 
     height:
       40px;
+
   }
 
   .hero {
+
     padding-top:
       45px;
+
   }
 
   .hero h1 {
+
     font-size:
       45px;
 
     letter-spacing:
       -1px;
+
   }
 
   .hero p {
+
     font-size:
       15px;
+
   }
 
   .trend-grid,
   .category-grid {
+
     grid-template-columns:
       1fr;
+
   }
 
   .trend-image {
+
     height:
       205px;
+
   }
 
   .trend-card {
+
     min-height:
       390px;
+
   }
 
   .section {
+
     padding-bottom:
       45px;
+
   }
 
   .section-header {
+
     align-items:
       flex-start;
+
   }
 
   .feature-content {
+
     padding:
       28px;
+
   }
 
   .feature-content h2 {
+
     font-size:
       27px;
+
   }
 
   .footer-inner {
+
     flex-direction:
       column;
 
     align-items:
       flex-start;
+
   }
 
   .article-overlay {
+
     padding:
       15px 14px 40px;
+
   }
 
   .article-image-wrapper {
+
     margin-bottom:
       20px;
+
   }
 
   .article-image {
+
     max-height:
       330px;
+
   }
 
   .article-summary-box {
+
     padding:
       22px;
+
   }
 
   .article-summary {
+
     font-size:
       16px;
 
     line-height:
       2;
+
   }
 
   .article-title {
+
     font-size:
       30px;
+
   }
 
 }
@@ -1992,6 +2280,24 @@ html[dir="ltr"] .section-header {
     none;
 }
 
+
+/* =====================================================
+   LOAD MORE / COUNT
+===================================================== */
+
+.news-count {
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+
+  margin-top:
+    5px;
+
+}
+
 </style>
 
 </head>
@@ -2007,6 +2313,7 @@ html[dir="ltr"] .section-header {
 <header>
 
 <div class="header-inner">
+
 
 <a
   href="#"
@@ -2065,6 +2372,7 @@ NOWNEX
 
 <div class="header-actions">
 
+
 <button
   class="language-btn"
   id="languageBtn"
@@ -2092,7 +2400,9 @@ NOWNEX
 ☰
 </button>
 
+
 </div>
+
 
 </div>
 
@@ -2108,7 +2418,9 @@ NOWNEX
 
 <section class="hero">
 
+
 <div>
+
 
 <div class="hero-badge">
 
@@ -2145,6 +2457,7 @@ NOWNEX
 
 <div class="hero-buttons">
 
+
 <button
   class="primary-btn"
   onclick="scrollToTrending()"
@@ -2162,7 +2475,9 @@ NOWNEX
 استكشف الأقسام
 </button>
 
+
 </div>
+
 
 </div>
 
@@ -2174,6 +2489,7 @@ NOWNEX
 <div class="orb"></div>
 
 </div>
+
 
 </section>
 
@@ -2187,9 +2503,12 @@ NOWNEX
   id="trending"
 >
 
+
 <div class="section-header">
 
+
 <div>
+
 
 <h2 class="section-title">
 
@@ -2216,6 +2535,14 @@ NOWNEX
 
 </p>
 
+
+<div
+  class="news-count"
+  id="newsCount"
+>
+</div>
+
+
 </div>
 
 
@@ -2228,6 +2555,7 @@ NOWNEX
 عرض الكل ←
 </a>
 
+
 </div>
 
 
@@ -2236,7 +2564,8 @@ NOWNEX
   id="categoryFilterBar"
 >
 
-<span id="categoryFilterText"></span>
+<span id="categoryFilterText">
+</span>
 
 <button
   class="clear-filter"
@@ -2254,23 +2583,25 @@ NOWNEX
   id="newsGrid"
 >
 
+
 <article class="trend-card">
 
 <div class="trend-card-content">
 
 <div class="trend-number">
-01 — جارٍ التحميل
+01
 </div>
 
 <div class="trend-icon">
 🌍
 </div>
 
-<h3>
+<h3 data-i18n="loading">
 جارٍ تحميل آخر الأخبار...
 </h3>
 
-<div class="trend-meta">
+<div class="trend-meta"
+     data-i18n="loadingMeta">
 NOWNEX · تحديث مباشر
 </div>
 
@@ -2278,7 +2609,9 @@ NOWNEX · تحديث مباشر
 
 </article>
 
+
 </div>
+
 
 </section>
 
@@ -2292,7 +2625,9 @@ NOWNEX · تحديث مباشر
   id="categories"
 >
 
+
 <div class="section-header">
+
 
 <div>
 
@@ -2317,6 +2652,7 @@ NOWNEX
 </p>
 
 </div>
+
 
 </div>
 
@@ -2503,7 +2839,9 @@ NOWNEX
 
 <section class="section">
 
+
 <div class="feature">
+
 
 <div class="feature-visual">
 🤖
@@ -2511,6 +2849,7 @@ NOWNEX
 
 
 <div class="feature-content">
+
 
 <div
   class="tag"
@@ -2539,9 +2878,12 @@ NOWNEX
 اكتشف عالم الذكاء الاصطناعي ←
 </button>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
@@ -2555,9 +2897,12 @@ NOWNEX
 
 <footer id="about">
 
+
 <div class="footer-inner">
 
+
 <div>
+
 
 <div class="footer-logo">
 
@@ -2575,6 +2920,7 @@ OWNEX
 ما يحدث الآن. ما القادم.
 </div>
 
+
 </div>
 
 
@@ -2584,6 +2930,7 @@ OWNEX
 >
 © 2026 NOWNEX — جميع الحقوق محفوظة
 </div>
+
 
 </div>
 
@@ -2599,9 +2946,12 @@ OWNEX
   id="articleOverlay"
 >
 
+
 <div class="article-container">
 
+
 <div class="article-top">
+
 
 <div class="article-brand">
 
@@ -2627,10 +2977,13 @@ NOWNEX
 ×
 </button>
 
+
 </div>
 
 
-<div id="articleContent"></div>
+<div id="articleContent">
+</div>
+
 
 </div>
 
@@ -2646,7 +2999,9 @@ NOWNEX
   id="searchPanel"
 >
 
+
 <div class="search-box">
+
 
 <input
   type="text"
@@ -2664,24 +3019,29 @@ NOWNEX
 ×
 </button>
 
+
 </div>
 
 
 <div
   class="search-results"
   id="searchResults"
-></div>
+>
+</div>
+
 
 </div>
 
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script>
 
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 let allNews = [];
+
+let trendingNews = [];
 
 let currentCategory = null;
 
@@ -2691,23 +3051,35 @@ let currentCategory = null;
 ===================================================== */
 
 let currentLanguage =
-  localStorage.getItem("nownex-language") ||
-  "ar";
+  localStorage.getItem(
+    "nownex-language"
+  ) || "ar";
 
 
 const translations = {
 
   ar: {
 
-    navHome: "الرئيسية",
-    navTrending: "الترند",
-    navCategories: "الأقسام",
-    navAbout: "حول NOWNEX",
+    navHome:
+      "الرئيسية",
 
-    liveTrend: "مباشر — الترند الآن",
+    navTrending:
+      "الترند",
 
-    heroNow: "ما يحدث الآن.",
-    heroNext: "ما القادم.",
+    navCategories:
+      "الأقسام",
+
+    navAbout:
+      "حول NOWNEX",
+
+    liveTrend:
+      "مباشر — الترند الآن",
+
+    heroNow:
+      "ما يحدث الآن.",
+
+    heroNext:
+      "ما القادم.",
 
     heroDescription:
       "اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
@@ -2842,7 +3214,7 @@ const translations = {
       "رابط المصدر الأصلي غير متاح حالياً.",
 
     articleNote:
-      "NOWNEX يعرض ملخصاً عربياً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
+      "NOWNEX يعرض ملخصاً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
 
     noNews:
       "لا توجد أخبار حالياً",
@@ -2858,6 +3230,9 @@ const translations = {
 
     categoryView:
       "عرض قسم: ",
+
+    newsCount:
+      "خبر متاح",
 
     languageButton:
       "🇬🇧 EN"
@@ -3038,6 +3413,9 @@ const translations = {
     categoryView:
       "Category: ",
 
+    newsCount:
+      "articles available",
+
     languageButton:
       "🇩🇿 AR"
 
@@ -3053,13 +3431,27 @@ const translations = {
 function t(key) {
 
   return (
-    translations[currentLanguage][key] ||
-    translations.ar[key] ||
+
+    translations[
+      currentLanguage
+    ][key]
+
+    ||
+
+    translations.ar[key]
+
+    ||
+
     key
+
   );
 
 }
 
+
+/* =====================================================
+   TITLE
+===================================================== */
 
 function getNewsTitle(item) {
 
@@ -3067,26 +3459,42 @@ function getNewsTitle(item) {
     return "";
   }
 
-  if (currentLanguage === "en") {
+  if (
+    currentLanguage === "en"
+  ) {
 
     return (
+
       item.title_en ||
+
       item.title ||
+
       item.title_ar ||
+
       "NOWNEX News"
+
     );
 
   }
 
   return (
+
     item.title_ar ||
+
     item.title ||
+
     item.title_en ||
+
     "خبر من NOWNEX"
+
   );
 
 }
 
+
+/* =====================================================
+   SUMMARY
+===================================================== */
 
 function getNewsSummary(item) {
 
@@ -3094,26 +3502,42 @@ function getNewsSummary(item) {
     return "";
   }
 
-  if (currentLanguage === "en") {
+  if (
+    currentLanguage === "en"
+  ) {
 
     return (
+
       item.summary_en ||
+
       item.summary ||
+
       item.summary_ar ||
-      "No summary is currently available for this story."
+
+      "No summary is currently available."
+
     );
 
   }
 
   return (
+
     item.summary_ar ||
+
     item.summary ||
+
     item.summary_en ||
+
     "لا يوجد ملخص متاح لهذا الخبر حالياً."
+
   );
 
 }
 
+
+/* =====================================================
+   SEARCH TEXT
+===================================================== */
 
 function getSearchableText(item) {
 
@@ -3137,8 +3561,11 @@ function getSearchableText(item) {
     item.source
 
   ]
+
     .filter(Boolean)
+
     .join(" ")
+
     .toLowerCase();
 
 }
@@ -3153,10 +3580,12 @@ function applyLanguage() {
   const html =
     document.documentElement;
 
+
   html.lang =
     currentLanguage === "ar"
       ? "ar"
       : "en";
+
 
   html.dir =
     currentLanguage === "ar"
@@ -3165,7 +3594,9 @@ function applyLanguage() {
 
 
   document
-    .querySelectorAll("[data-i18n]")
+    .querySelectorAll(
+      "[data-i18n]"
+    )
     .forEach(function(element) {
 
       const key =
@@ -3173,12 +3604,17 @@ function applyLanguage() {
           "data-i18n"
         );
 
+
       if (
-        translations[currentLanguage][key]
+        translations[
+          currentLanguage
+        ][key]
       ) {
 
         element.textContent =
-          translations[currentLanguage][key];
+          translations[
+            currentLanguage
+          ][key];
 
       }
 
@@ -3186,7 +3622,9 @@ function applyLanguage() {
 
 
   document
-    .querySelectorAll("[data-i18n-placeholder]")
+    .querySelectorAll(
+      "[data-i18n-placeholder]"
+    )
     .forEach(function(element) {
 
       const key =
@@ -3194,12 +3632,17 @@ function applyLanguage() {
           "data-i18n-placeholder"
         );
 
+
       if (
-        translations[currentLanguage][key]
+        translations[
+          currentLanguage
+        ][key]
       ) {
 
         element.placeholder =
-          translations[currentLanguage][key];
+          translations[
+            currentLanguage
+          ][key];
 
       }
 
@@ -3207,9 +3650,14 @@ function applyLanguage() {
 
 
   document
-    .getElementById("languageBtn")
+    .getElementById(
+      "languageBtn"
+    )
     .textContent =
       t("languageButton");
+
+
+  updateNewsCount();
 
 
   if (currentCategory) {
@@ -3227,19 +3675,26 @@ function applyLanguage() {
   }
 
 
-  const articleOverlay =
+  const overlay =
     document.getElementById(
       "articleOverlay"
     );
+
 
   const currentArticle =
     window.currentOpenedArticle;
 
 
   if (
-    articleOverlay &&
-    articleOverlay.classList.contains("active") &&
+
+    overlay &&
+
+    overlay.classList.contains(
+      "active"
+    ) &&
+
     currentArticle
+
   ) {
 
     openArticle(
@@ -3251,23 +3706,11 @@ function applyLanguage() {
 
   if (allNews.length) {
 
-    if (currentCategory) {
-
-      renderNews(
-        getFilteredNews(
-          currentCategory
-        )
-      );
-
-    }
-
-    else {
-
-      renderNews(
-        allNews
-      );
-
-    }
+    renderNews(
+      getFilteredNews(
+        currentCategory
+      )
+    );
 
   }
 
@@ -3275,7 +3718,7 @@ function applyLanguage() {
 
 
 /* =====================================================
-   LANGUAGE TOGGLE
+   TOGGLE LANGUAGE
 ===================================================== */
 
 function toggleLanguage() {
@@ -3304,13 +3747,20 @@ function toggleLanguage() {
 function openSearch() {
 
   document
-    .getElementById("searchPanel")
+    .getElementById(
+      "searchPanel"
+    )
     .classList
     .add("active");
 
-  document
-    .getElementById("searchInput")
-    .focus();
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  input.focus();
 
 }
 
@@ -3318,7 +3768,9 @@ function openSearch() {
 function closeSearch() {
 
   document
-    .getElementById("searchPanel")
+    .getElementById(
+      "searchPanel"
+    )
     .classList
     .remove("active");
 
@@ -3332,10 +3784,12 @@ function performSearch() {
       "searchInput"
     );
 
+
   const results =
     document.getElementById(
       "searchResults"
     );
+
 
   const query =
     input.value
@@ -3345,7 +3799,8 @@ function performSearch() {
 
   if (!query) {
 
-    results.innerHTML = "";
+    results.innerHTML =
+      "";
 
     return;
 
@@ -3353,12 +3808,17 @@ function performSearch() {
 
 
   const filtered =
-    allNews.filter(function(item) {
+    allNews.filter(
+      function(item) {
 
-      return getSearchableText(item)
-        .includes(query);
+        return getSearchableText(
+          item
+        ).includes(
+          query
+        );
 
-    });
+      }
+    );
 
 
   if (!filtered.length) {
@@ -3392,16 +3852,19 @@ function performSearch() {
   }
 
 
-  results.innerHTML = "";
+  results.innerHTML =
+    "";
 
 
   filtered
+    .slice(0, 20)
     .forEach(function(item) {
 
       const result =
         document.createElement(
           "div"
         );
+
 
       result.className =
         "search-result";
@@ -3438,13 +3901,16 @@ function performSearch() {
       `;
 
 
-      result.onclick = function() {
+      result.onclick =
+        function() {
 
-        closeSearch();
+          closeSearch();
 
-        openArticle(item);
+          openArticle(
+            item
+          );
 
-      };
+        };
 
 
       results.appendChild(
@@ -3466,6 +3932,7 @@ function goHome() {
 
   clearCategoryFilter();
 
+
   window.scrollTo({
 
     top: 0,
@@ -3481,10 +3948,16 @@ function scrollToTrending() {
 
   closeArticle();
 
+
   document
-    .getElementById("trending")
+    .getElementById(
+      "trending"
+    )
     .scrollIntoView({
-      behavior: "smooth"
+
+      behavior:
+        "smooth"
+
     });
 
 }
@@ -3494,10 +3967,16 @@ function scrollToCategories() {
 
   closeArticle();
 
+
   document
-    .getElementById("categories")
+    .getElementById(
+      "categories"
+    )
     .scrollIntoView({
-      behavior: "smooth"
+
+      behavior:
+        "smooth"
+
     });
 
 }
@@ -3507,10 +3986,16 @@ function scrollToAbout() {
 
   closeArticle();
 
+
   document
-    .getElementById("about")
+    .getElementById(
+      "about"
+    )
     .scrollIntoView({
-      behavior: "smooth"
+
+      behavior:
+        "smooth"
+
     });
 
 }
@@ -3530,7 +4015,9 @@ function filterByCategory(
 
 
   document
-    .querySelectorAll(".category")
+    .querySelectorAll(
+      ".category"
+    )
     .forEach(function(card) {
 
       card.classList.remove(
@@ -3574,6 +4061,7 @@ function filterByCategory(
       "categoryFilterBar"
     );
 
+
   const filterText =
     document.getElementById(
       "categoryFilterText"
@@ -3599,21 +4087,26 @@ function filterByCategory(
   );
 
 
-  setTimeout(function() {
+  setTimeout(
+    function() {
 
-    document
-      .getElementById("trending")
-      .scrollIntoView({
+      document
+        .getElementById(
+          "trending"
+        )
+        .scrollIntoView({
 
-        behavior:
-          "smooth",
+          behavior:
+            "smooth",
 
-        block:
-          "start"
+          block:
+            "start"
 
-      });
+        });
 
-  }, 80);
+    },
+    80
+  );
 
 }
 
@@ -3633,24 +4126,34 @@ function getFilteredNews(
   }
 
 
-  if (category === "Trending") {
+  if (
+    category === "Trending"
+  ) {
 
-    return allNews.slice();
+    return trendingNews.length
+      ? trendingNews.slice()
+      : allNews.slice();
 
   }
 
 
-  if (category === "Products") {
+  if (
+    category === "Products"
+  ) {
 
     return allNews.filter(
       function(item) {
 
         return (
+
           item.category ===
-            "Products" ||
+            "Products"
+
+          ||
 
           item.category ===
             "Shopping"
+
         );
 
       }
@@ -3665,6 +4168,7 @@ function getFilteredNews(
       return String(
         item.category || ""
       ).toLowerCase() ===
+
       String(
         category
       ).toLowerCase();
@@ -3686,7 +4190,9 @@ function clearCategoryFilter() {
 
 
   document
-    .querySelectorAll(".category")
+    .querySelectorAll(
+      ".category"
+    )
     .forEach(function(card) {
 
       card.classList.remove(
@@ -3753,7 +4259,9 @@ document.addEventListener(
 
 function escapeHTML(value) {
 
-  return String(value || "")
+  return String(
+    value || ""
+  )
 
     .replace(
       /&/g,
@@ -3797,8 +4305,13 @@ function safeURL(value) {
 
 
     if (
-      url.protocol === "http:" ||
-      url.protocol === "https:"
+
+      url.protocol ===
+        "http:" ||
+
+      url.protocol ===
+        "https:"
+
     ) {
 
       return url.href;
@@ -3816,7 +4329,7 @@ function safeURL(value) {
 
 
 /* =====================================================
-   NEWS ICONS
+   ICONS
 ===================================================== */
 
 function getNewsIcon(
@@ -3862,8 +4375,15 @@ function getNewsIcon(
 
 
   return (
-    icons[category] ||
+
+    icons[
+      category
+    ]
+
+    ||
+
     "🔥"
+
   );
 
 }
@@ -3878,7 +4398,8 @@ function translateCategory(
 ) {
 
   if (
-    currentLanguage === "en"
+    currentLanguage ===
+    "en"
   ) {
 
     const categories = {
@@ -3920,8 +4441,15 @@ function translateCategory(
 
 
     return (
-      categories[category] ||
+
+      categories[
+        category
+      ]
+
+      ||
+
       category
+
     );
 
   }
@@ -3966,9 +4494,67 @@ function translateCategory(
 
 
   return (
-    categories[category] ||
+
+    categories[
+      category
+    ]
+
+    ||
+
     category
+
   );
+
+}
+
+
+/* =====================================================
+   NEWS COUNT
+===================================================== */
+
+function updateNewsCount() {
+
+  const count =
+    document.getElementById(
+      "newsCount"
+    );
+
+
+  if (!count) {
+    return;
+  }
+
+
+  let number =
+    allNews.length;
+
+
+  if (
+    currentCategory ===
+    "Trending"
+  ) {
+
+    number =
+      trendingNews.length;
+
+  }
+
+  else if (
+    currentCategory
+  ) {
+
+    number =
+      getFilteredNews(
+        currentCategory
+      ).length;
+
+  }
+
+
+  count.textContent =
+    number +
+    " " +
+    t("newsCount");
 
 }
 
@@ -4042,7 +4628,8 @@ function openArticle(
     );
 
 
-  let dateText = "";
+  let dateText =
+    "";
 
 
   if (
@@ -4052,17 +4639,6 @@ function openArticle(
     dateText =
       escapeHTML(
         item.published
-      );
-
-  }
-
-  else if (
-    item.date
-  ) {
-
-    dateText =
-      escapeHTML(
-        item.date
       );
 
   }
@@ -4091,11 +4667,17 @@ function openArticle(
         <div class="article-image-wrapper">
 
           <img
+
             class="article-image"
+
             src="${imageURL}"
+
             alt=""
+
             referrerpolicy="no-referrer"
+
             onerror="this.classList.add('image-error');"
+
           >
 
         </div>
@@ -4143,12 +4725,19 @@ function openArticle(
 
       ${
         dateText
-        ? `
+
+        ?
+
+        `
           <span>
             ${dateText}
           </span>
         `
-        : ""
+
+        :
+
+        ""
+
       }
 
     </div>
@@ -4217,13 +4806,20 @@ function openArticle(
       ${
         originalLink !== "#"
 
-        ? `
+        ?
+
+        `
 
           <a
+
             class="original-btn"
+
             href="${originalLink}"
+
             target="_blank"
+
             rel="noopener noreferrer"
+
           >
 
             ${escapeHTML(
@@ -4247,6 +4843,7 @@ function openArticle(
           </div>
 
         `
+
       }
 
 
@@ -4273,7 +4870,8 @@ function openArticle(
   );
 
 
-  overlay.scrollTop = 0;
+  overlay.scrollTop =
+    0;
 
 }
 
@@ -4303,7 +4901,10 @@ function closeArticle() {
 
 
 /* =====================================================
-   RENDER ALL NEWS
+   RENDER NEWS
+   IMPORTANT:
+   لا يوجد slice(0,8)
+   يعرض كل الأخبار
 ===================================================== */
 
 function renderNews(
@@ -4330,14 +4931,6 @@ function renderNews(
     !news.length
   ) {
 
-    const categoryName =
-      currentCategory
-        ? translateCategory(
-            currentCategory
-          )
-        : "";
-
-
     newsGrid.innerHTML = `
 
       <div class="empty-news">
@@ -4354,323 +4947,208 @@ function renderNews(
           t("noNewsText")
         )}
 
-        ${
-          categoryName
-          ? " " +
-            escapeHTML(
-              categoryName
-            )
-          : ""
-        }
-
       </div>
 
     `;
+
+
+    updateNewsCount();
 
     return;
 
   }
 
 
-  let displayNews =
+  /*
+    IMPORTANT:
+
+    هنا لا نستخدم:
+
+    slice(0,8)
+
+    ولا أي حد أقصى.
+
+    الموقع يعرض كل الأخبار الموجودة
+    في news.json.
+  */
+
+
+  const displayNews =
     news.slice();
 
 
-  /*
-    ترتيب الصفحة الرئيسية:
+  displayNews.forEach(
+    function(item, index) {
 
-    Technology
-    Cars
-    AI
-    ثم بقية الأخبار
+      const card =
+        document.createElement(
+          "article"
+        );
 
-    =================================================
-    لا يوجد هنا slice(0,8)
-    =================================================
 
-    كل الأخبار الموجودة في news.json
-    سيتم عرضها.
-  */
+      card.className =
+        "trend-card";
 
-  if (
-    !currentCategory
-  ) {
 
-    const technology =
-      displayNews.filter(
-        function(item) {
+      const title =
+        escapeHTML(
+          getNewsTitle(item)
+        );
 
-          return (
-            item.category ===
-            "Technology"
+
+      const category =
+        escapeHTML(
+          translateCategory(
+            item.category ||
+            "Trending"
+          )
+        );
+
+
+      const source =
+        escapeHTML(
+          item.source ||
+          "NOWNEX"
+        );
+
+
+      const icon =
+        getNewsIcon(
+          item.category
+        );
+
+
+      let imageHTML =
+        "";
+
+
+      if (
+        item.image
+      ) {
+
+        const imageURL =
+          safeURL(
+            item.image
           );
-
-        }
-      );
-
-
-    const cars =
-      displayNews.filter(
-        function(item) {
-
-          return (
-            item.category ===
-            "Cars"
-          );
-
-        }
-      );
-
-
-    const ai =
-      displayNews.filter(
-        function(item) {
-
-          return (
-            item.category ===
-            "AI"
-          );
-
-        }
-      );
-
-
-    const other =
-      displayNews.filter(
-        function(item) {
-
-          return (
-            item.category !==
-              "Technology" &&
-
-            item.category !==
-              "Cars" &&
-
-            item.category !==
-              "AI"
-          );
-
-        }
-      );
-
-
-    displayNews = [
-
-      ...technology,
-
-      ...cars,
-
-      ...ai,
-
-      ...other
-
-    ];
-
-  }
-
-
-  /*
-    =================================================
-    IMPORTANT
-    =================================================
-
-    سابقاً:
-
-    displayNews.slice(0, 8)
-
-    الآن:
-
-    displayNews
-
-    أي سيتم عرض جميع الأخبار.
-  */
-
-
-  displayNews
-    .forEach(
-      function(item, index) {
-
-
-        const card =
-          document.createElement(
-            "article"
-          );
-
-
-        card.className =
-          "trend-card";
-
-
-        const title =
-          escapeHTML(
-            getNewsTitle(item)
-          );
-
-
-        const category =
-          escapeHTML(
-            translateCategory(
-              item.category ||
-              "Trending"
-            )
-          );
-
-
-        const source =
-          escapeHTML(
-            item.source ||
-            "NOWNEX"
-          );
-
-
-        const icon =
-          getNewsIcon(
-            item.category
-          );
-
-
-        let imageHTML =
-          "";
 
 
         if (
-          item.image
+          imageURL !== "#"
         ) {
 
-          const imageURL =
-            safeURL(
-              item.image
-            );
+          imageHTML = `
 
+            <img
 
-          if (
-            imageURL !== "#"
-          ) {
+              class="trend-image"
 
-            imageHTML = `
+              src="${imageURL}"
 
-              <img
-                class="trend-image"
-                src="${imageURL}"
-                alt=""
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                onerror="this.classList.add('image-error');"
-              >
+              alt=""
 
-            `;
+              loading="lazy"
 
-          }
+              referrerpolicy="no-referrer"
+
+              onerror="this.classList.add('image-error');"
+
+            >
+
+          `;
 
         }
 
-
-        card.innerHTML = `
-
-          ${imageHTML}
+      }
 
 
-          <div class="trend-card-content">
+      card.innerHTML = `
+
+        ${imageHTML}
 
 
-            <div class="trend-number">
-
-              ${String(
-                index + 1
-              ).padStart(
-                2,
-                "0"
-              )}
-
-              — ${escapeHTML(
-                t("trendingLabel")
-              )}
-
-            </div>
+        <div class="trend-card-content">
 
 
-            <div class="trend-icon">
+          <div class="trend-number">
 
-              ${icon}
+            ${String(
+              index + 1
+            ).padStart(
+              2,
+              "0"
+            )}
 
-            </div>
-
-
-            <h3>
-
-              ${title}
-
-            </h3>
-
-
-            <div class="trend-meta">
-
-              ${category}
-
-              ·
-
-              ${source}
-
-            </div>
-
-
-            <a
-              class="news-link"
-              href="#"
-              aria-label="اقرأ الخبر"
-            >
-
-              ${escapeHTML(
-                t("readArticle")
-              )}
-
-            </a>
-
+            — ${escapeHTML(
+              t("trendingLabel")
+            )}
 
           </div>
 
-        `;
+
+          <div class="trend-icon">
+
+            ${icon}
+
+          </div>
 
 
-        const newsLink =
-          card.querySelector(
-            ".news-link"
-          );
+          <h3>
+
+            ${title}
+
+          </h3>
 
 
-        if (
-          newsLink
-        ) {
+          <div class="trend-meta">
 
-          newsLink.addEventListener(
-            "click",
-            function(event) {
+            ${category}
 
-              event.preventDefault();
+            ·
 
-              openArticle(
-                item
-              );
+            ${source}
 
-            }
-          );
-
-        }
+          </div>
 
 
-        card.addEventListener(
+          <a
+
+            class="news-link"
+
+            href="#"
+
+            aria-label="اقرأ الخبر"
+
+          >
+
+            ${escapeHTML(
+              t("readArticle")
+            )}
+
+          </a>
+
+
+        </div>
+
+      `;
+
+
+      const newsLink =
+        card.querySelector(
+          ".news-link"
+        );
+
+
+      if (
+        newsLink
+      ) {
+
+        newsLink.addEventListener(
           "click",
           function(event) {
 
-            if (
-              event.target.closest(
-                ".news-link"
-              )
-            ) {
+            event.preventDefault();
 
-              return;
-
-            }
+            event.stopPropagation();
 
             openArticle(
               item
@@ -4679,13 +5157,40 @@ function renderNews(
           }
         );
 
-
-        newsGrid.appendChild(
-          card
-        );
-
       }
-    );
+
+
+      card.addEventListener(
+        "click",
+        function(event) {
+
+          if (
+            event.target.closest(
+              ".news-link"
+            )
+          ) {
+
+            return;
+
+          }
+
+          openArticle(
+            item
+          );
+
+        }
+      );
+
+
+      newsGrid.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  updateNewsCount();
 
 }
 
@@ -4706,12 +5211,15 @@ async function loadNews() {
 
     const response =
       await fetch(
+
         "news.json?v=" +
         Date.now(),
+
         {
           cache:
             "no-store"
         }
+
       );
 
 
@@ -4734,8 +5242,28 @@ async function loadNews() {
       Array.isArray(
         data.news
       )
-        ? data.news
-        : [];
+
+      ?
+
+      data.news
+
+      :
+
+      [];
+
+
+    const trending =
+      Array.isArray(
+        data.trending
+      )
+
+      ?
+
+      data.trending
+
+      :
+
+      [];
 
 
     if (
@@ -4751,6 +5279,25 @@ async function loadNews() {
 
     allNews =
       news;
+
+
+    trendingNews =
+      trending;
+
+
+    /*
+      إذا لم توجد قائمة Trending
+      نستخدم الأخبار العادية.
+    */
+
+    if (
+      !trendingNews.length
+    ) {
+
+      trendingNews =
+        allNews.slice();
+
+    }
 
 
     if (
@@ -4775,9 +5322,30 @@ async function loadNews() {
 
 
     console.log(
+      "================================"
+    );
+
+
+    console.log(
       "NOWNEX:",
       allNews.length,
       "articles loaded."
+    );
+
+
+    console.log(
+      "Trending:",
+      trendingNews.length
+    );
+
+
+    console.log(
+      "AI:",
+      allNews.filter(
+        x =>
+          x.category ===
+          "AI"
+      ).length
     );
 
 
@@ -4802,11 +5370,11 @@ async function loadNews() {
 
 
     console.log(
-      "AI:",
+      "Entertainment:",
       allNews.filter(
         x =>
           x.category ===
-          "AI"
+          "Entertainment"
       ).length
     );
 
@@ -4822,33 +5390,27 @@ async function loadNews() {
 
 
     console.log(
-      "Entertainment:",
+      "Facts:",
       allNews.filter(
         x =>
           x.category ===
-          "Entertainment"
+          "Facts"
       ).length
     );
 
 
-    const localizedCount =
-      allNews.filter(function(item) {
-
-        return (
-          item.title_ar ||
-          item.title_en ||
-          item.summary_ar ||
-          item.summary_en
-        );
-
-      }).length;
+    console.log(
+      "Products:",
+      allNews.filter(
+        x =>
+          x.category ===
+          "Products"
+      ).length
+    );
 
 
     console.log(
-      "NOWNEX localized articles:",
-      localizedCount,
-      "/",
-      allNews.length
+      "================================"
     );
 
   }
@@ -4898,12 +5460,15 @@ loadNews();
 
 
 /*
-  تحديث الأخبار كل 10 دقائق.
+  تحديث الأخبار كل 10 دقائق
 */
 
 setInterval(
+
   loadNews,
+
   10 * 60 * 1000
+
 );
 
 </script>
