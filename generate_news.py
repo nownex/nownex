@@ -12,6 +12,7 @@ import feedparser
 
 # ============================================================
 # NOWNEX — Bilingual Arabic / English News Engine
+# 24+ ARTICLES / MULTI CATEGORY
 # ============================================================
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -38,11 +39,32 @@ GEMINI_URL = (
 # SETTINGS
 # ============================================================
 
-MAX_NEWS = 8
+# عدد الأخبار المستهدف
+MAX_NEWS = 24
+
+# الحد الأدنى المطلوب من كل قسم
+MIN_PER_CATEGORY = 3
 
 REQUEST_TIMEOUT = 25
 
+# تأخير بين طلبات Gemini
 REQUEST_DELAY = 8
+
+
+# ============================================================
+# MAIN WEBSITE CATEGORIES
+# ============================================================
+
+MAIN_CATEGORIES = [
+    "Trending",
+    "AI",
+    "Technology",
+    "Cars",
+    "Entertainment",
+    "World",
+    "Facts",
+    "Products"
+]
 
 
 # ============================================================
@@ -51,7 +73,9 @@ REQUEST_DELAY = 8
 
 RSS_FEEDS = [
 
+    # ========================================================
     # TECHNOLOGY
+    # ========================================================
 
     (
         "TechCrunch",
@@ -71,8 +95,16 @@ RSS_FEEDS = [
         "Technology"
     ),
 
+    (
+        "MIT Technology Review",
+        "https://www.technologyreview.com/feed/",
+        "Technology"
+    ),
 
+
+    # ========================================================
     # AI
+    # ========================================================
 
     (
         "TechCrunch AI",
@@ -80,8 +112,26 @@ RSS_FEEDS = [
         "AI"
     ),
 
+    (
+        "Google News AI",
+        "https://news.google.com/rss/search?"
+        "q=artificial%20intelligence"
+        "&hl=en&gl=US&ceid=US:en",
+        "AI"
+    ),
 
+    (
+        "Google News AI Arabic",
+        "https://news.google.com/rss/search?"
+        "q=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A"
+        "&hl=ar&gl=DZ&ceid=DZ:ar",
+        "AI"
+    ),
+
+
+    # ========================================================
     # CARS
+    # ========================================================
 
     (
         "Motor1",
@@ -95,8 +145,57 @@ RSS_FEEDS = [
         "Cars"
     ),
 
+    (
+        "Car and Driver",
+        "https://www.caranddriver.com/rss/all.xml",
+        "Cars"
+    ),
 
+    (
+        "Google News Cars",
+        "https://news.google.com/rss/search?"
+        "q=cars%20automotive"
+        "&hl=en&gl=US&ceid=US:en",
+        "Cars"
+    ),
+
+
+    # ========================================================
+    # ENTERTAINMENT
+    # ========================================================
+
+    (
+        "Variety",
+        "https://variety.com/feed/",
+        "Entertainment"
+    ),
+
+    (
+        "Hollywood Reporter",
+        "https://www.hollywoodreporter.com/feed/",
+        "Entertainment"
+    ),
+
+    (
+        "Google News Entertainment",
+        "https://news.google.com/rss/search?"
+        "q=entertainment%20movies%20music"
+        "&hl=en&gl=US&ceid=US:en",
+        "Entertainment"
+    ),
+
+    (
+        "Google News Entertainment Arabic",
+        "https://news.google.com/rss/search?"
+        "q=%D8%AA%D8%B1%D9%81%D9%8A%D9%87%20%D8%A3%D9%81%D9%84%D8%A7%D9%85%20%D9%85%D9%88%D8%B3%D9%8A%D9%82%D9%89"
+        "&hl=ar&gl=DZ&ceid=DZ:ar",
+        "Entertainment"
+    ),
+
+
+    # ========================================================
     # WORLD
+    # ========================================================
 
     (
         "BBC عربي",
@@ -111,10 +210,72 @@ RSS_FEEDS = [
     ),
 
     (
-        "Google News",
+        "Google News World",
         "https://news.google.com/rss?"
         "hl=ar&gl=DZ&ceid=DZ:ar",
         "World"
+    ),
+
+    (
+        "Reuters World",
+        "https://feeds.reuters.com/reuters/worldNews",
+        "World"
+    ),
+
+
+    # ========================================================
+    # FACTS / KNOWLEDGE
+    # ========================================================
+
+    (
+        "Google News Science Facts",
+        "https://news.google.com/rss/search?"
+        "q=science%20facts%20discovery"
+        "&hl=en&gl=US&ceid=US:en",
+        "Facts"
+    ),
+
+    (
+        "Google News Facts Arabic",
+        "https://news.google.com/rss/search?"
+        "q=%D8%AD%D9%82%D8%A7%D8%A6%D9%82%20%D8%B9%D9%84%D9%85%20%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81%D8%A7%D8%AA"
+        "&hl=ar&gl=DZ&ceid=DZ:ar",
+        "Facts"
+    ),
+
+    (
+        "ScienceDaily",
+        "https://www.sciencedaily.com/rss/top/science.xml",
+        "Facts"
+    ),
+
+
+    # ========================================================
+    # PRODUCTS
+    # ========================================================
+
+    (
+        "Google News Products",
+        "https://news.google.com/rss/search?"
+        "q=best%20new%20products%20gadgets"
+        "&hl=en&gl=US&ceid=US:en",
+        "Products"
+    ),
+
+    (
+        "Google News Gadgets",
+        "https://news.google.com/rss/search?"
+        "q=new%20gadgets%20smartphones%20devices"
+        "&hl=en&gl=US&ceid=US:en",
+        "Products"
+    ),
+
+    (
+        "Google News Products Arabic",
+        "https://news.google.com/rss/search?"
+        "q=%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D9%87%D9%88%D8%A7%D8%AA%D9%81"
+        "&hl=ar&gl=DZ&ceid=DZ:ar",
+        "Products"
     )
 
 ]
@@ -130,11 +291,8 @@ VALID_CATEGORIES = {
     "Entertainment",
     "AI",
     "Cars",
-    "Science",
-    "Sports",
     "Facts",
-    "Products",
-    "Shopping"
+    "Products"
 }
 
 
@@ -429,7 +587,7 @@ def get_news():
                 feed_url
             )
 
-            entries = feed.entries[:12]
+            entries = feed.entries[:15]
 
             print(
                 "Found:",
@@ -932,95 +1090,109 @@ def ask_gemini(
 
 
 # ============================================================
+# CATEGORY HELPERS
+# ============================================================
+
+def get_category_articles(
+    articles,
+    category
+):
+
+    return [
+        x for x in articles
+        if x.get("category") == category
+    ]
+
+
+# ============================================================
 # SELECT NEWS
 # ============================================================
 
 def select_news(articles):
 
-    technology = [
-        x for x in articles
-        if x["category"] == "Technology"
-    ]
-
-
-    cars = [
-        x for x in articles
-        if x["category"] == "Cars"
-    ]
-
-
-    ai_news = [
-        x for x in articles
-        if x["category"] == "AI"
-    ]
-
-
-    other = [
-        x for x in articles
-        if x["category"]
-        not in {
-            "Technology",
-            "Cars",
-            "AI"
-        }
-    ]
-
-
     selected = []
 
-
-    selected.extend(
-        technology[:2]
-    )
+    selected_keys = set()
 
 
-    selected.extend(
-        cars[:2]
-    )
+    # ========================================================
+    # STEP 1
+    # ضمان وجود 3 أخبار لكل قسم قدر الإمكان
+    # ========================================================
 
+    for category in MAIN_CATEGORIES:
 
-    selected.extend(
-        ai_news[:1]
-    )
-
-
-    selected.extend(
-        other[:3]
-    )
-
-
-    selected_keys = {
-        normalize_title(
-            x["title"]
-        )
-        for x in selected
-    }
-
-
-    for article in articles:
-
-        key = normalize_title(
-            article["title"]
+        category_articles = get_category_articles(
+            articles,
+            category
         )
 
 
-        if key in selected_keys:
-            continue
+        count = 0
 
 
-        selected.append(
-            article
-        )
+        for article in category_articles:
+
+            key = normalize_title(
+                article["title"]
+            )
 
 
-        selected_keys.add(
-            key
-        )
+            if key in selected_keys:
+                continue
 
 
-        if len(selected) >= MAX_NEWS:
-            break
+            selected.append(
+                article
+            )
 
+            selected_keys.add(
+                key
+            )
+
+            count += 1
+
+
+            if count >= MIN_PER_CATEGORY:
+                break
+
+
+    # ========================================================
+    # STEP 2
+    # إضافة أي أخبار إضافية حتى الوصول إلى MAX_NEWS
+    # ========================================================
+
+    if len(selected) < MAX_NEWS:
+
+        for article in articles:
+
+            key = normalize_title(
+                article["title"]
+            )
+
+
+            if key in selected_keys:
+                continue
+
+
+            selected.append(
+                article
+            )
+
+            selected_keys.add(
+                key
+            )
+
+
+            if len(selected) >= MAX_NEWS:
+                break
+
+
+    # ========================================================
+    # STEP 3
+    # إذا توفر أكثر من MAX_NEWS
+    # لا نريد تجاوز الرقم المحدد
+    # ========================================================
 
     return selected[:MAX_NEWS]
 
@@ -1035,6 +1207,16 @@ def main():
     print("==============================")
     print(" NOWNEX BILINGUAL NEWS ENGINE")
     print("==============================")
+    print("")
+    print(
+        "Target:",
+        MAX_NEWS,
+        "articles"
+    )
+    print(
+        "Minimum per category:",
+        MIN_PER_CATEGORY
+    )
     print("")
 
 
@@ -1057,11 +1239,39 @@ def main():
     )
 
 
+    # ========================================================
+    # PRINT CATEGORY COUNTS
+    # ========================================================
+
+    print("")
+    print("Available by category:")
+
+
+    for category in MAIN_CATEGORIES:
+
+        count = len(
+            get_category_articles(
+                articles,
+                category
+            )
+        )
+
+
+        print(
+            f"  {category}: {count}"
+        )
+
+
+    # ========================================================
+    # SELECT
+    # ========================================================
+
     selected = select_news(
         articles
     )
 
 
+    print("")
     print(
         "Selected:",
         len(selected)
@@ -1070,6 +1280,10 @@ def main():
 
     final_news = []
 
+
+    # ========================================================
+    # PROCESS WITH GEMINI
+    # ========================================================
 
     for index, article in enumerate(
         selected,
@@ -1125,9 +1339,9 @@ def main():
 
         item = {
 
-            # ==========================================
+            # =================================================
             # ARABIC
-            # ==========================================
+            # =================================================
 
             "title_ar":
                 ai["title_ar"],
@@ -1136,9 +1350,9 @@ def main():
                 ai["summary_ar"],
 
 
-            # ==========================================
+            # =================================================
             # ENGLISH
-            # ==========================================
+            # =================================================
 
             "title_en":
                 ai["title_en"],
@@ -1147,9 +1361,9 @@ def main():
                 ai["summary_en"],
 
 
-            # ==========================================
+            # =================================================
             # BACKWARD COMPATIBILITY
-            # ==========================================
+            # =================================================
 
             "title":
                 ai["title_ar"],
@@ -1161,9 +1375,9 @@ def main():
                 ai["summary_ar"],
 
 
-            # ==========================================
+            # =================================================
             # ORIGINAL DATA
-            # ==========================================
+            # =================================================
 
             "category":
                 article["category"],
@@ -1221,10 +1435,18 @@ def main():
             )
 
 
+        # =====================================================
+        # DELAY
+        # =====================================================
+
         time.sleep(
             REQUEST_DELAY
         )
 
+
+    # ========================================================
+    # SAFETY
+    # ========================================================
 
     if not final_news:
 
@@ -1247,6 +1469,10 @@ def main():
 
         return
 
+
+    # ========================================================
+    # OUTPUT
+    # ========================================================
 
     output = {
 
@@ -1283,14 +1509,41 @@ def main():
         )
 
 
+    # ========================================================
+    # FINAL REPORT
+    # ========================================================
+
     print("")
     print("==============================")
     print(" NOWNEX NEWS UPDATED")
     print(
-        "Articles:",
+        "Articles generated:",
         len(final_news)
     )
     print("==============================")
+
+
+    print("")
+    print("Final categories:")
+
+
+    for category in MAIN_CATEGORIES:
+
+        count = len([
+
+            x for x in final_news
+
+            if x.get("category") ==
+            category
+
+        ])
+
+
+        print(
+            f"  {category}: {count}"
+        )
+
+
     print("")
 
 
