@@ -4,6 +4,7 @@ import re
 import html
 import time
 from datetime import datetime, timezone
+from urllib.parse import urljoin
 
 import requests
 import feedparser
@@ -11,7 +12,7 @@ import feedparser
 
 # ============================================================
 # NOWNEX — Arabic AI News Engine
-# Version: 2.0
+# Stable Version
 # ============================================================
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -26,10 +27,6 @@ if not API_KEY:
 # GEMINI
 # ============================================================
 
-# IMPORTANT:
-# Gemini 2.5 Flash was retired for new users.
-# Use the current model configured for this project.
-
 GEMINI_MODEL = "gemini-3.6-flash"
 
 GEMINI_URL = (
@@ -42,24 +39,24 @@ GEMINI_URL = (
 # SETTINGS
 # ============================================================
 
-MAX_NEWS = 16
+# لا نريد إرسال عدد كبير من الطلبات إلى Gemini.
+MAX_NEWS = 8
 
 REQUEST_TIMEOUT = 25
+
+# وقت الانتظار بين الأخبار.
+REQUEST_DELAY = 8
 
 
 # ============================================================
 # NEWS SOURCES
-#
-# We deliberately separate technology and cars.
-# This prevents the website from becoming mostly political/world
-# news.
 # ============================================================
 
 RSS_FEEDS = [
 
-    # --------------------------------------------------------
+    # =========================
     # TECHNOLOGY
-    # --------------------------------------------------------
+    # =========================
 
     (
         "TechCrunch",
@@ -79,9 +76,10 @@ RSS_FEEDS = [
         "Technology"
     ),
 
-    # --------------------------------------------------------
+
+    # =========================
     # AI
-    # --------------------------------------------------------
+    # =========================
 
     (
         "TechCrunch AI",
@@ -89,9 +87,10 @@ RSS_FEEDS = [
         "AI"
     ),
 
-    # --------------------------------------------------------
+
+    # =========================
     # CARS
-    # --------------------------------------------------------
+    # =========================
 
     (
         "Motor1",
@@ -105,9 +104,10 @@ RSS_FEEDS = [
         "Cars"
     ),
 
-    # --------------------------------------------------------
-    # WORLD / GENERAL
-    # --------------------------------------------------------
+
+    # =========================
+    # WORLD
+    # =========================
 
     (
         "BBC عربي",
@@ -126,7 +126,7 @@ RSS_FEEDS = [
         "https://news.google.com/rss?"
         "hl=ar&gl=DZ&ceid=DZ:ar",
         "World"
-    ),
+    )
 
 ]
 
@@ -148,18 +148,19 @@ VALID_CATEGORIES = {
 
 
 # ============================================================
-# SESSION
+# HTTP SESSION
 # ============================================================
 
 SESSION = requests.Session()
 
 SESSION.headers.update({
-    "User-Agent": (
-        "Mozilla/5.0 "
-        "(Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 "
-        "Chrome/131.0 Safari/537.36"
-    )
+
+    "User-Agent":
+        "NOWNEX/1.0 NewsBot",
+
+    "Accept":
+        "application/rss+xml, application/xml, text/xml, text/html"
+
 })
 
 
@@ -194,7 +195,9 @@ def clean_text(value):
 
 def normalize_title(title):
 
-    title = clean_text(title).lower()
+    title = clean_text(
+        title
+    ).lower()
 
     title = re.sub(
         r"[^\w\u0600-\u06FF]+",
@@ -206,58 +209,50 @@ def normalize_title(title):
 
 
 # ============================================================
-# IMAGE EXTRACTION FROM RSS
+# IMAGE FROM RSS
 # ============================================================
 
 def extract_rss_image(entry):
 
-    # --------------------------------------------------------
     # media_content
-    # --------------------------------------------------------
 
     media_content = entry.get(
         "media_content",
         []
     )
 
-    if media_content:
+    for media in media_content:
 
-        for media in media_content:
+        url = (
+            media.get("url")
+            or
+            media.get("href")
+        )
 
-            url = (
-                media.get("url")
-                or media.get("href")
-            )
-
-            if url:
-                return str(url).strip()
+        if url:
+            return str(url).strip()
 
 
-    # --------------------------------------------------------
     # media_thumbnail
-    # --------------------------------------------------------
 
     media_thumbnail = entry.get(
         "media_thumbnail",
         []
     )
 
-    if media_thumbnail:
+    for media in media_thumbnail:
 
-        for media in media_thumbnail:
+        url = (
+            media.get("url")
+            or
+            media.get("href")
+        )
 
-            url = (
-                media.get("url")
-                or media.get("href")
-            )
-
-            if url:
-                return str(url).strip()
+        if url:
+            return str(url).strip()
 
 
-    # --------------------------------------------------------
     # enclosure
-    # --------------------------------------------------------
 
     enclosures = entry.get(
         "enclosures",
@@ -266,32 +261,19 @@ def extract_rss_image(entry):
 
     for enclosure in enclosures:
 
-        url = enclosure.get(
-            "href"
-        ) or enclosure.get(
-            "url"
+        url = (
+            enclosure.get("href")
+            or
+            enclosure.get("url")
         )
 
-        mime = str(
-            enclosure.get(
-                "type",
-                ""
-            )
-        ).lower()
-
-        if url and (
-            "image" in mime
-            or not mime
-        ):
-
+        if url:
             return str(url).strip()
 
 
-    # --------------------------------------------------------
     # image inside HTML
-    # --------------------------------------------------------
 
-    html_sources = [
+    sources = [
 
         entry.get(
             "summary",
@@ -301,24 +283,17 @@ def extract_rss_image(entry):
         entry.get(
             "description",
             ""
-        ),
-
-        str(
-            entry.get(
-                "content",
-                ""
-            )
         )
 
     ]
 
 
-    for source in html_sources:
+    for source in sources:
 
         match = re.search(
             r'<img[^>]+src=["\']([^"\']+)["\']',
             str(source),
-            flags=re.IGNORECASE
+            re.IGNORECASE
         )
 
         if match:
@@ -332,7 +307,7 @@ def extract_rss_image(entry):
 
 
 # ============================================================
-# GET OG IMAGE FROM ORIGINAL ARTICLE
+# OG IMAGE
 # ============================================================
 
 def get_og_image(url):
@@ -351,20 +326,8 @@ def get_og_image(url):
         if response.status_code != 200:
             return ""
 
-        content_type = response.headers.get(
-            "content-type",
-            ""
-        ).lower()
+        page = response.text[:800000]
 
-        if "text/html" not in content_type:
-            return ""
-
-        page = response.text[:1000000]
-
-
-        # ----------------------------------------------------
-        # og:image
-        # ----------------------------------------------------
 
         patterns = [
 
@@ -384,48 +347,33 @@ def get_og_image(url):
             match = re.search(
                 pattern,
                 page,
-                flags=re.IGNORECASE
+                re.IGNORECASE
             )
 
             if match:
 
-                image_url = html.unescape(
+                image = html.unescape(
                     match.group(1).strip()
                 )
 
-                if image_url.startswith("//"):
-
-                    image_url = (
-                        "https:"
-                        + image_url
-                    )
-
-                elif image_url.startswith("/"):
-
-                    from urllib.parse import urljoin
-
-                    image_url = urljoin(
-                        response.url,
-                        image_url
-                    )
+                image = urljoin(
+                    response.url,
+                    image
+                )
 
                 if (
-                    image_url.startswith(
-                        "http://"
-                    )
+                    image.startswith("http://")
                     or
-                    image_url.startswith(
-                        "https://"
-                    )
+                    image.startswith("https://")
                 ):
 
-                    return image_url
+                    return image
 
 
     except Exception as error:
 
         print(
-            "Image extraction error:",
+            "Image error:",
             error
         )
 
@@ -434,57 +382,26 @@ def get_og_image(url):
 
 
 # ============================================================
-# VALIDATE IMAGE URL
+# BEST IMAGE
 # ============================================================
 
-def valid_image_url(url):
+def get_best_image(
+    entry,
+    link
+):
 
-    if not url:
-        return False
-
-    url = str(url).strip()
-
-    return (
-        url.startswith("http://")
-        or
-        url.startswith("https://")
-    )
-
-
-# ============================================================
-# GET BEST IMAGE
-# ============================================================
-
-def get_best_image(entry, article_url):
-
-    # First try RSS image.
-
-    rss_image = extract_rss_image(
+    image = extract_rss_image(
         entry
     )
 
-    if valid_image_url(
-        rss_image
-    ):
+    if image:
 
-        return rss_image
+        return image
 
 
-    # If RSS does not contain a useful image,
-    # try the original article.
-
-    og_image = get_og_image(
-        article_url
+    return get_og_image(
+        link
     )
-
-    if valid_image_url(
-        og_image
-    ):
-
-        return og_image
-
-
-    return ""
 
 
 # ============================================================
@@ -497,6 +414,7 @@ def remove_duplicates(items):
 
     seen = set()
 
+
     for item in items:
 
         key = normalize_title(
@@ -506,12 +424,17 @@ def remove_duplicates(items):
         if not key:
             continue
 
+
         if key in seen:
             continue
 
+
         seen.add(key)
 
-        result.append(item)
+        result.append(
+            item
+        )
+
 
     return result
 
@@ -537,6 +460,7 @@ def get_news():
             source_name
         )
 
+
         try:
 
             feed = feedparser.parse(
@@ -544,23 +468,7 @@ def get_news():
             )
 
 
-            if getattr(
-                feed,
-                "bozo",
-                False
-            ):
-
-                print(
-                    "RSS warning:",
-                    getattr(
-                        feed,
-                        "bozo_exception",
-                        ""
-                    )
-                )
-
-
-            entries = feed.entries[:15]
+            entries = feed.entries[:12]
 
 
             print(
@@ -577,6 +485,10 @@ def get_news():
                         ""
                     )
                 )
+
+
+                if not title:
+                    continue
 
 
                 description = clean_text(
@@ -620,14 +532,9 @@ def get_news():
                 ).strip()
 
 
-                if not title:
-                    continue
-
                 if not link:
                     continue
 
-
-                # Get the best available image.
 
                 image = get_best_image(
                     entry,
@@ -635,15 +542,13 @@ def get_news():
                 )
 
 
-                published = (
+                published = clean_text(
                     entry.get(
                         "published",
-                        ""
-                    )
-                    or
-                    entry.get(
-                        "updated",
-                        ""
+                        entry.get(
+                            "updated",
+                            ""
+                        )
                     )
                 )
 
@@ -669,9 +574,7 @@ def get_news():
                         image,
 
                     "published":
-                        clean_text(
-                            published
-                        )
+                        published
 
                 })
 
@@ -699,36 +602,34 @@ def summary_is_valid(
     summary
 ):
 
-    title_clean = clean_text(
-        title
-    )
-
-    summary_clean = clean_text(
+    summary = clean_text(
         summary
     )
 
-
-    if not summary_clean:
+    if not summary:
         return False
 
 
-    if len(summary_clean) < 120:
+    if len(summary) < 120:
         return False
 
 
-    if summary_clean.lower() == title_clean.lower():
+    if summary.lower() == clean_text(
+        title
+    ).lower():
+
         return False
 
 
-    sentence_count = len(
+    sentences = len(
         re.findall(
             r"[.!؟。]",
-            summary_clean
+            summary
         )
     )
 
 
-    if sentence_count < 2:
+    if sentences < 2:
         return False
 
 
@@ -743,67 +644,51 @@ def ask_gemini(
     title,
     description,
     source,
-    source_category
+    category
 ):
 
     if not description:
 
         description = (
-            "لا يوجد وصف إضافي متاح من مصدر RSS. "
-            "اعتمد على العنوان فقط ولا تخترع تفاصيل."
+            "لا يوجد وصف إضافي متاح. "
+            "اعتمد على العنوان فقط."
         )
 
 
     prompt = f"""
-أنت محرر الأخبار الرئيسي في منصة NOWNEX العربية.
+أنت محرر الأخبار في منصة NOWNEX العربية.
 
-مهمتك هي إعادة صياغة الخبر الموجود في البيانات
-أدناه باللغة العربية الفصحى بطريقة واضحة ومختصرة.
+اكتب نسخة عربية أصلية ومختصرة للخبر التالي.
 
 المصدر:
 {source}
 
-التصنيف المحدد من نظام NOWNEX:
-{source_category}
+التصنيف:
+{category}
 
 العنوان الأصلي:
 {title}
 
-النص أو الوصف المتاح:
+المعلومات المتاحة:
 {description}
 
-أرسل JSON فقط بهذا الشكل:
+أرسل JSON فقط:
 
 {{
   "title": "عنوان عربي احترافي",
-  "summary": "ملخص عربي واضح من 3 إلى 5 جمل",
-  "category": "{source_category}"
+  "summary": "ملخص عربي من 3 إلى 5 جمل"
 }}
-
-الفئات المسموح بها فقط:
-
-World
-Technology
-Entertainment
-AI
-Cars
-Science
-Sports
-Facts
 
 القواعد:
 
-- استخدم العربية الفصحى.
+- العربية الفصحى.
 - لا تكرر العنوان داخل الملخص.
-- الملخص مختلف عن العنوان.
 - الملخص من 3 إلى 5 جمل.
-- لا تخترع أي معلومات.
-- لا تضف أرقامًا أو أسماء أو تصريحات غير موجودة في المادة.
-- إذا كانت المعلومات ناقصة، اذكر فقط المعلومات المؤكدة.
-- لا تضف رأيًا شخصيًا.
-- لا تستخدم Markdown.
+- لا تخترع أي معلومة.
+- لا تخترع أسماء أو أرقامًا أو تصريحات.
+- لا تضف رأيًا.
+- اعتمد فقط على المعلومات المتاحة.
 - أرسل JSON صالحًا فقط.
-- التصنيف الأساسي يجب أن يبقى "{source_category}".
 """
 
 
@@ -850,15 +735,18 @@ Facts
     }
 
 
-    last_error = None
-
+    # ========================================================
+    # IMPORTANT:
+    # We use only ONE request normally.
+    # If 429 occurs, wait before trying again.
+    # ========================================================
 
     for attempt in range(1, 4):
 
         try:
 
             print(
-                f"Gemini attempt {attempt}/3"
+                f"Gemini request {attempt}/3"
             )
 
 
@@ -881,15 +769,53 @@ Facts
             )
 
 
+            # ------------------------------------------------
+            # RATE LIMIT
+            # ------------------------------------------------
+
+            if response.status_code == 429:
+
+                print(
+                    "Gemini rate limit (429)."
+                )
+
+
+                if attempt == 1:
+
+                    wait_time = 30
+
+                elif attempt == 2:
+
+                    wait_time = 60
+
+                else:
+
+                    wait_time = 90
+
+
+                print(
+                    f"Waiting {wait_time} seconds..."
+                )
+
+
+                time.sleep(
+                    wait_time
+                )
+
+                continue
+
+
+            # ------------------------------------------------
+            # OTHER ERROR
+            # ------------------------------------------------
+
             if response.status_code != 200:
 
                 print(
-                    response.text[:2000]
+                    response.text[:1500]
                 )
 
-                raise RuntimeError(
-                    f"Gemini HTTP {response.status_code}"
-                )
+                return None
 
 
             data = response.json()
@@ -945,19 +871,13 @@ Facts
             )
 
 
-            # IMPORTANT:
-            # Keep the source category.
-            # Gemini must not randomly classify a car article
-            # as World.
-
-            new_category = source_category
-
-
             if not new_title:
 
-                raise RuntimeError(
-                    "Gemini returned an empty title."
+                print(
+                    "Empty Gemini title."
                 )
+
+                return None
 
 
             if not summary_is_valid(
@@ -965,9 +885,11 @@ Facts
                 new_summary
             ):
 
-                raise RuntimeError(
-                    "Gemini returned an invalid summary."
+                print(
+                    "Invalid Gemini summary."
                 )
+
+                return None
 
 
             return {
@@ -976,17 +898,12 @@ Facts
                     new_title,
 
                 "summary":
-                    new_summary,
-
-                "category":
-                    new_category
+                    new_summary
 
             }
 
 
         except Exception as error:
-
-            last_error = error
 
             print(
                 "Gemini error:",
@@ -996,13 +913,128 @@ Facts
 
             if attempt < 3:
 
-                time.sleep(4)
+                time.sleep(
+                    20
+                )
 
 
-    raise RuntimeError(
-        "Gemini failed after 3 attempts: "
-        + str(last_error)
+    return None
+
+
+# ============================================================
+# SELECT NEWS
+# ============================================================
+
+def select_news(
+    articles
+):
+
+    technology = [
+        x for x in articles
+        if x["category"] == "Technology"
+    ]
+
+
+    cars = [
+        x for x in articles
+        if x["category"] == "Cars"
+    ]
+
+
+    ai_news = [
+        x for x in articles
+        if x["category"] == "AI"
+    ]
+
+
+    other = [
+        x for x in articles
+        if x["category"]
+        not in {
+            "Technology",
+            "Cars",
+            "AI"
+        }
+    ]
+
+
+    selected = []
+
+
+    # ---------------------------------------------
+    # TECHNOLOGY
+    # ---------------------------------------------
+
+    selected.extend(
+        technology[:2]
     )
+
+
+    # ---------------------------------------------
+    # CARS
+    # ---------------------------------------------
+
+    selected.extend(
+        cars[:2]
+    )
+
+
+    # ---------------------------------------------
+    # AI
+    # ---------------------------------------------
+
+    selected.extend(
+        ai_news[:1]
+    )
+
+
+    # ---------------------------------------------
+    # OTHER
+    # ---------------------------------------------
+
+    selected.extend(
+        other[:3]
+    )
+
+
+    # ---------------------------------------------
+    # Fill if necessary
+    # ---------------------------------------------
+
+    selected_keys = {
+        normalize_title(
+            x["title"]
+        )
+        for x in selected
+    }
+
+
+    for article in articles:
+
+        key = normalize_title(
+            article["title"]
+        )
+
+
+        if key in selected_keys:
+            continue
+
+
+        selected.append(
+            article
+        )
+
+
+        selected_keys.add(
+            key
+        )
+
+
+        if len(selected) >= MAX_NEWS:
+            break
+
+
+    return selected[:MAX_NEWS]
 
 
 # ============================================================
@@ -1013,7 +1045,7 @@ def main():
 
     print("")
     print("==============================")
-    print(" NOWNEX AI NEWS ENGINE 2.0")
+    print(" NOWNEX AI NEWS ENGINE")
     print("==============================")
     print("")
 
@@ -1023,141 +1055,37 @@ def main():
 
     if not articles:
 
-        raise RuntimeError(
-            "No news articles found."
+        print(
+            "No RSS articles found."
         )
+
+        return
 
 
     print("")
     print(
-        "Total articles collected:",
+        "Collected:",
         len(articles)
     )
 
 
-    # --------------------------------------------------------
-    # BALANCED SELECTION
-    #
-    # Technology and Cars receive guaranteed places.
-    # --------------------------------------------------------
-
-    technology = [
-        a for a in articles
-        if a["category"] == "Technology"
-    ]
-
-    ai_news = [
-        a for a in articles
-        if a["category"] == "AI"
-    ]
-
-    cars = [
-        a for a in articles
-        if a["category"] == "Cars"
-    ]
-
-    other = [
-        a for a in articles
-        if a["category"] not in {
-            "Technology",
-            "AI",
-            "Cars"
-        }
-    ]
-
-
-    selected = []
-
-
-    # Minimum technology news.
-
-    selected.extend(
-        technology[:4]
+    selected = select_news(
+        articles
     )
 
 
-    # Minimum AI news.
-
-    selected.extend(
-        ai_news[:2]
-    )
-
-
-    # Minimum car news.
-
-    selected.extend(
-        cars[:4]
-    )
-
-
-    # Fill the remaining positions
-    # with general news.
-
-    remaining_slots = (
-        MAX_NEWS - len(selected)
-    )
-
-
-    if remaining_slots > 0:
-
-        selected.extend(
-            other[:remaining_slots]
-        )
-
-
-    # If still not enough articles,
-    # fill from anything not selected.
-
-    if len(selected) < MAX_NEWS:
-
-        selected_keys = {
-            normalize_title(
-                item["title"]
-            )
-            for item in selected
-        }
-
-
-        for article in articles:
-
-            key = normalize_title(
-                article["title"]
-            )
-
-
-            if key in selected_keys:
-                continue
-
-
-            selected.append(
-                article
-            )
-
-
-            selected_keys.add(
-                key
-            )
-
-
-            if len(selected) >= MAX_NEWS:
-                break
-
-
-    selected = remove_duplicates(
-        selected
-    )[:MAX_NEWS]
-
-
-    print("")
     print(
         "Selected:",
-        len(selected),
-        "articles"
+        len(selected)
     )
 
 
     final_news = []
 
+
+    # ========================================================
+    # PROCESS ARTICLES
+    # ========================================================
 
     for index, article in enumerate(
         selected,
@@ -1166,9 +1094,22 @@ def main():
 
         print("")
         print(
+            "================================"
+        )
+
+        print(
             f"Processing {index}/{len(selected)}"
         )
 
+        print(
+            "Category:",
+            article["category"]
+        )
+
+        print(
+            "Source:",
+            article["source"]
+        )
 
         print(
             "Original:",
@@ -1176,117 +1117,137 @@ def main():
         )
 
 
-        print(
-            "Category:",
+        ai = ask_gemini(
+
+            article["title"],
+
+            article["description"],
+
+            article["source"],
+
             article["category"]
+
         )
 
 
-        try:
+        # ----------------------------------------------------
+        # If Gemini refuses / rate limited,
+        # skip this article instead of crashing everything.
+        # ----------------------------------------------------
 
-            ai = ask_gemini(
+        if not ai:
 
-                article["title"],
-
-                article["description"],
-
-                article["source"],
-
-                article["category"]
-
+            print(
+                "✗ Article skipped."
             )
 
+            continue
 
-            published_at = (
-                article["published"]
-                or
+
+        item = {
+
+            "title":
+                ai["title"],
+
+            "summary":
+                ai["summary"],
+
+            "description":
+                ai["summary"],
+
+            # IMPORTANT:
+            # Keep the original category.
+            "category":
+                article["category"],
+
+            "source":
+                article["source"],
+
+            "link":
+                article["link"],
+
+            "image":
+                article.get(
+                    "image",
+                    ""
+                ),
+
+            "published":
+                article.get(
+                    "published",
+                    ""
+                ),
+
+            "publishedAt":
                 datetime.now(
                     timezone.utc
                 ).isoformat()
-            )
+
+        }
 
 
-            item = {
-
-                "title":
-                    ai["title"],
-
-                "summary":
-                    ai["summary"],
-
-                "description":
-                    ai["summary"],
-
-                "category":
-                    ai["category"],
-
-                "source":
-                    article["source"],
-
-                "link":
-                    article["link"],
-
-                "image":
-                    article.get(
-                        "image",
-                        ""
-                    ),
-
-                "published":
-                    article.get(
-                        "published",
-                        ""
-                    ),
-
-                "publishedAt":
-                    published_at
-
-            }
+        final_news.append(
+            item
+        )
 
 
-            final_news.append(
-                item
-            )
+        print(
+            "✓ Article created"
+        )
 
+
+        if item["image"]:
 
             print(
-                "✓ Arabic summary created"
+                "✓ Image available"
             )
 
-
-            if item["image"]:
-
-                print(
-                    "✓ Image found"
-                )
-
-            else:
-
-                print(
-                    "⚠ No image found"
-                )
-
-
-        except Exception as error:
+        else:
 
             print(
-                "✗ Article rejected:",
-                error
+                "⚠ No image"
             )
 
 
-        # Small pause to avoid hammering the API.
+        # Important delay between API requests.
 
-        time.sleep(2)
+        time.sleep(
+            REQUEST_DELAY
+        )
 
+
+    # ========================================================
+    # NO ARTICLES
+    # ========================================================
 
     if not final_news:
 
-        raise RuntimeError(
-            "Gemini did not successfully create "
-            "any Arabic articles."
+        print("")
+        print(
+            "================================"
         )
 
+        print(
+            "Gemini did not return any articles."
+        )
+
+        print(
+            "Keeping existing news.json unchanged."
+        )
+
+        print(
+            "================================"
+        )
+
+        # IMPORTANT:
+        # Do NOT overwrite news.json.
+        # Do NOT crash the entire website.
+        return
+
+
+    # ========================================================
+    # OUTPUT
+    # ========================================================
 
     output = {
 
@@ -1305,13 +1266,9 @@ def main():
 
 
     with open(
-
         "news.json",
-
         "w",
-
         encoding="utf-8"
-
     ) as file:
 
         json.dump(
@@ -1331,7 +1288,8 @@ def main():
     print("==============================")
     print(" NOWNEX NEWS UPDATED")
     print(
-        f" Articles: {len(final_news)}"
+        "Articles:",
+        len(final_news)
     )
     print("==============================")
     print("")
