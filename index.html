@@ -1,5479 +1,972 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
+<meta name="description" content="NOWNEX — منصة لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم.">
 
-<meta
-  name="description"
-  content="NOWNEX — منصة لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
->
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
-  rel="stylesheet"
->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-/* =====================================================
-   GLOBAL
-===================================================== */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060914;--bg2:#0b1020;--card:#10172a;--card-hover:#151e35;
+  --text:#f5f7ff;--muted:#8d97ad;--gold:#d9b45b;--gold-light:#f3d47d;
+  --blue:#4f8cff;--green:#56e39f;--line:rgba(255,255,255,.08)
 }
-
-:root {
-
-  --bg: #060914;
-  --bg2: #0b1020;
-
-  --card: #10172a;
-  --card-hover: #151e35;
-
-  --text: #f5f7ff;
-  --muted: #8d97ad;
-
-  --gold: #d9b45b;
-  --gold-light: #f3d47d;
-
-  --blue: #4f8cff;
-  --green: #56e39f;
-
-  --line: rgba(255,255,255,0.08);
-
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-
-  font-family:
-    "Cairo",
-    Arial,
-    sans-serif;
-
+html{scroll-behavior:smooth}
+body{
+  font-family:"Cairo",Arial,sans-serif;
   background:
-
-    radial-gradient(
-      circle at 80% 0%,
-      rgba(79,140,255,0.12),
-      transparent 30%
-    ),
-
-    radial-gradient(
-      circle at 15% 15%,
-      rgba(217,180,91,0.08),
-      transparent 25%
-    ),
-
+    radial-gradient(circle at 80% 0%,rgba(79,140,255,.12),transparent 30%),
+    radial-gradient(circle at 15% 15%,rgba(217,180,91,.08),transparent 25%),
     var(--bg);
-
-  color: var(--text);
-
-  min-height: 100vh;
-
-  overflow-x: hidden;
-
-}
-
-body.article-open {
-  overflow: hidden;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: inherit;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-header {
-
-  position: sticky;
-
-  top: 0;
-
-  z-index: 100;
-
-  backdrop-filter: blur(18px);
-
-  background:
-    rgba(6,9,20,0.92);
-
-  border-bottom:
-    1px solid var(--line);
-
-}
-
-.header-inner {
-
-  max-width: 1250px;
-
-  margin: auto;
-
-  height: 76px;
-
-  padding: 0 22px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 25px;
-
-}
-
-.logo {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  font-size: 27px;
-
-  font-weight: 900;
-
-  letter-spacing: -1px;
-
-  white-space: nowrap;
-
-}
-
-.logo-text {
-  color: var(--gold-light);
-}
-
-.logo-mark {
-
-  width: 40px;
-  height: 40px;
-
-  border-radius: 12px;
-
-  display: grid;
-
-  place-items: center;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
-
-  color: #080b13;
-
-  font-size: 21px;
-
-  font-weight: 900;
-
-  box-shadow:
-    0 0 25px
-    rgba(217,180,91,0.18);
-
-}
-
-nav {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 28px;
-
-}
-
-nav a {
-
-  color: #b9c1d3;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-  transition: 0.2s;
-
-  cursor: pointer;
-
-}
-
-nav a:hover,
-nav a.active {
-  color: white;
-}
-
-.header-actions {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-}
-
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-.language-btn {
-
-  height: 43px;
-
-  min-width: 82px;
-
-  padding: 0 12px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color: white;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-size: 13px;
-
-  font-weight: 800;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 6px;
-
-  transition: 0.2s;
-
-}
-
-.language-btn:hover {
-
-  border-color:
-    rgba(217,180,91,0.45);
-
-  background:
-    rgba(217,180,91,0.08);
-
-}
-
-.search-btn,
-.mobile-menu {
-
-  width: 43px;
-
-  height: 43px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color: white;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-size: 18px;
-
-}
-
-.mobile-menu {
-  display: none;
-}
-
-
-/* =====================================================
-   HERO
-===================================================== */
-
-.hero {
-
-  max-width: 1250px;
-
-  margin: auto;
-
-  padding:
-    85px 22px 55px;
-
-  display: grid;
-
-  grid-template-columns:
-    1.35fr 0.65fr;
-
-  gap: 35px;
-
-  align-items: center;
-
-}
-
-.hero-badge {
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  padding:
-    8px 14px;
-
-  border:
-    1px solid
-    rgba(217,180,91,0.25);
-
-  background:
-    rgba(217,180,91,0.07);
-
-  color:
-    var(--gold-light);
-
-  border-radius: 50px;
-
-  font-size: 12px;
-
-  font-weight: 800;
-
-  margin-bottom: 22px;
-
-}
-
-.live-dot {
-
-  width: 8px;
-
-  height: 8px;
-
-  border-radius: 50%;
-
-  background:
-    var(--green);
-
-  box-shadow:
-    0 0 12px
-    var(--green);
-
-}
-
-.hero h1 {
-
-  font-size:
-    clamp(45px, 7vw, 82px);
-
-  line-height: 1.12;
-
-  letter-spacing: -2px;
-
-  max-width: 850px;
-
-  margin-bottom: 25px;
-
-  font-weight: 900;
-
-}
-
-.hero h1 span {
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff,
-      var(--gold-light)
-    );
-
-  -webkit-background-clip: text;
-
-  background-clip: text;
-
-  color: transparent;
-
-}
-
-.hero p {
-
-  max-width: 700px;
-
-  color: var(--muted);
-
-  font-size: 18px;
-
-  line-height: 1.9;
-
-  margin-bottom: 30px;
-
-  font-weight: 500;
-
-}
-
-.hero-buttons {
-
-  display: flex;
-
-  gap: 12px;
-
-  flex-wrap: wrap;
-
-}
-
-.primary-btn,
-.secondary-btn {
-
-  padding:
-    14px 21px;
-
-  border-radius:
-    12px;
-
-  cursor:
-    pointer;
-
-  font-weight:
-    800;
-
-  border:
-    1px solid var(--line);
-
-  transition:
-    0.2s;
-
-}
-
-.primary-btn {
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
-
-  color:
-    #090c15;
-
-  border:
-    none;
-
-}
-
-.secondary-btn {
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color:
-    white;
-
-}
-
-.primary-btn:hover,
-.secondary-btn:hover {
-
-  transform:
-    translateY(-2px);
-
-}
-
-
-/* =====================================================
-   ORB
-===================================================== */
-
-.trend-orb {
-
-  min-height: 350px;
-
-  position: relative;
-
-  display: grid;
-
-  place-items: center;
-
-}
-
-.orb {
-
-  width: 260px;
-
-  height: 260px;
-
-  border-radius: 50%;
-
-  background:
-
-    radial-gradient(
-      circle at 35% 30%,
-      #fff7d0 0%,
-      var(--gold) 8%,
-      #5b4920 38%,
-      #11182b 65%,
-      transparent 66%
-    );
-
-  box-shadow:
-
-    0 0 70px
-    rgba(217,180,91,0.16),
-
-    inset 0 0 50px
-    rgba(255,255,255,0.08);
-
-  animation:
-    float 5s ease-in-out infinite;
-
-}
-
-.orbit {
-
-  position: absolute;
-
-  width: 330px;
-
-  height: 170px;
-
-  border:
-    1px solid
-    rgba(217,180,91,0.25);
-
-  border-radius: 50%;
-
-  transform:
-    rotate(-25deg);
-
-}
-
-.orbit::after {
-
-  content: "";
-
-  position: absolute;
-
-  width: 9px;
-
-  height: 9px;
-
-  border-radius: 50%;
-
-  background:
-    var(--gold-light);
-
-  box-shadow:
-    0 0 18px
-    var(--gold);
-
-  top: 30px;
-
-  right: 30px;
-
-}
-
-@keyframes float {
-
-  0%,100% {
-    transform:
-      translateY(0);
-  }
-
-  50% {
-    transform:
-      translateY(-12px);
-  }
-
-}
-
-
-/* =====================================================
-   SECTIONS
-===================================================== */
-
-.section {
-
-  max-width: 1250px;
-
-  margin: auto;
-
-  padding:
-    30px 22px 70px;
-
-}
-
-.section-header {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    end;
-
-  margin-bottom:
-    25px;
-
-  gap:
-    20px;
-
-}
-
-.section-title {
-
-  font-size:
-    30px;
-
-  letter-spacing:
-    -0.5px;
-
-  font-weight:
-    900;
-
-}
-
-.section-title span {
-
-  color:
-    var(--gold-light);
-
-}
-
-.section-description {
-
-  color:
-    var(--muted);
-
-  font-size:
-    13px;
-
-  margin-top:
-    7px;
-
-  font-weight:
-    500;
-
-}
-
-.view-all {
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    13px;
-
-  font-weight:
-    800;
-
-  cursor:
-    pointer;
-
-}
-
-
-/* =====================================================
-   NEWS GRID
-===================================================== */
-
-.trend-grid {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap:
-    15px;
-
-}
-
-
-/* =====================================================
-   NEWS CARD
-===================================================== */
-
-.trend-card {
-
-  position:
-    relative;
-
-  min-height:
-    390px;
-
-  padding:
-    0;
-
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.06),
-      rgba(255,255,255,0.015)
-    ),
-
-    var(--card);
-
-  border:
-    1px solid var(--line);
-
-  border-radius:
-    18px;
-
-  overflow:
-    hidden;
-
-  transition:
-    0.25s;
-
-  cursor:
-    pointer;
-
-}
-
-.trend-card:hover {
-
-  transform:
-    translateY(-5px);
-
-  background:
-    var(--card-hover);
-
-  border-color:
-    rgba(217,180,91,0.25);
-
-}
-
-.trend-image {
-
-  width: 100%;
-
-  height: 190px;
-
-  display: block;
-
-  object-fit: cover;
-
-  object-position: center;
-
-  background:
-    #0b1020;
-
-}
-
-.trend-card-content {
-
-  padding:
-    17px 20px 20px;
-
-}
-
-.trend-number {
-
-  font-size:
-    13px;
-
-  color:
-    var(--gold-light);
-
-  font-weight:
-    900;
-
-}
-
-.trend-icon {
-
-  position:
-    absolute;
-
-  left:
-    18px;
-
-  top:
-    15px;
-
-  font-size:
-    30px;
-
-  z-index:
-    5;
-
-  filter:
-    drop-shadow(
-      0 2px 8px
-      rgba(0,0,0,0.5)
-    );
-
-}
-
-.trend-card h3 {
-
-  margin-top:
-    10px;
-
-  font-size:
-    17px;
-
-  line-height:
-    1.65;
-
-  font-weight:
-    800;
-
-}
-
-.trend-meta {
-
-  color:
-    var(--muted);
-
-  font-size:
-    11px;
-
-  margin-top:
-    8px;
-
-  font-weight:
-    600;
-
-}
-
-.news-link {
-
-  display:
-    inline-block;
-
-  margin-top:
-    12px;
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    12px;
-
-  font-weight:
-    800;
-
-  transition:
-    0.2s;
-
-  cursor:
-    pointer;
-
-}
-
-.news-link:hover {
-
-  color:
-    white;
-
-}
-
-
-/* =====================================================
-   CATEGORY GRID
-===================================================== */
-
-.category-grid {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap:
-    15px;
-
-}
-
-.category {
-
-  padding:
-    24px;
-
-  min-height:
-    150px;
-
-  border-radius:
-    18px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    var(--card);
-
-  transition:
-    0.25s;
-
-  cursor:
-    pointer;
-
-  position:
-    relative;
-
-  user-select:
-    none;
-
-}
-
-.category:hover {
-
-  transform:
-    translateY(-4px);
-
-  border-color:
-    rgba(79,140,255,0.3);
-
-}
-
-.category.active {
-
-  border-color:
-    rgba(217,180,91,0.65);
-
-  box-shadow:
-    0 0 25px
-    rgba(217,180,91,0.08);
-
-}
-
-.category-icon {
-
-  font-size:
-    28px;
-
-  margin-bottom:
-    18px;
-
-}
-
-.category h3 {
-
-  font-size:
-    17px;
-
-  margin-bottom:
-    7px;
-
-  font-weight:
-    800;
-
-}
-
-.category p {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-  line-height:
-    1.7;
-
-  font-weight:
-    500;
-
-}
-
-
-/* =====================================================
-   CATEGORY FILTER
-===================================================== */
-
-.category-filter-bar {
-
-  display:
-    none;
-
-  margin-bottom:
-    20px;
-
-  padding:
-    15px 18px;
-
-  border:
-    1px solid
-    rgba(217,180,91,0.18);
-
-  border-radius:
-    14px;
-
-  background:
-    rgba(217,180,91,0.05);
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    13px;
-
-  font-weight:
-    800;
-
-}
-
-.category-filter-bar.active {
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  gap:
-    15px;
-
-}
-
-.clear-filter {
-
-  border:
-    1px solid var(--line);
-
-  background:
-    rgba(255,255,255,0.04);
-
-  color:
-    white;
-
-  border-radius:
-    9px;
-
-  padding:
-    7px 12px;
-
-  cursor:
-    pointer;
-
-  font-family:
-    inherit;
-
-}
-
-
-/* =====================================================
-   FEATURE
-===================================================== */
-
-.feature {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  min-height:
-    350px;
-
-  overflow:
-    hidden;
-
-  border-radius:
-    24px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    var(--card);
-
-}
-
-.feature-visual {
-
-  min-height:
-    350px;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  font-size:
-    100px;
-
-  background:
-
-    radial-gradient(
-      circle at center,
-      rgba(79,140,255,0.2),
-      transparent 45%
-    ),
-
-    linear-gradient(
-      135deg,
-      #0c1730,
-      #090d1a
-    );
-
-}
-
-.feature-content {
-
-  padding:
-    45px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  justify-content:
-    center;
-
-}
-
-.tag {
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    12px;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    1px;
-
-  margin-bottom:
-    15px;
-
-}
-
-.feature-content h2 {
-
-  font-size:
-    34px;
-
-  line-height:
-    1.45;
-
-  margin-bottom:
-    15px;
-
-  font-weight:
-    900;
-
-}
-
-.feature-content p {
-
-  color:
-    var(--muted);
-
-  line-height:
-    1.9;
-
-  font-size:
-    14px;
-
-  margin-bottom:
-    22px;
-
-}
-
-
-/* =====================================================
-   ARTICLE READER
-===================================================== */
-
-.article-overlay {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    500;
-
-  display:
-    none;
-
-  background:
-    rgba(3,6,14,0.97);
-
-  backdrop-filter:
-    blur(18px);
-
-  overflow-y:
-    auto;
-
-  padding:
-    15px 20px 60px;
-
-}
-
-.article-overlay.active {
-  display:
-    block;
-}
-
-.article-container {
-
-  max-width:
-    1050px;
-
-  margin:
-    0 auto;
-
-}
-
-.article-top {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  gap:
-    15px;
-
-  margin-bottom:
-    20px;
-
-}
-
-.article-brand {
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    10px;
-
-  color:
-    var(--gold-light);
-
-  font-weight:
-    900;
-
-  font-size:
-    18px;
-
-}
-
-.article-close {
-
-  width:
-    46px;
-
-  height:
-    46px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    rgba(255,255,255,0.05);
-
-  color:
-    white;
-
-  border-radius:
-    13px;
-
-  cursor:
-    pointer;
-
-  font-size:
-    25px;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-}
-
-.article-image-wrapper {
-
-  width:
-    100%;
-
-  margin:
-    0 0 25px;
-
-  border-radius:
-    22px;
-
-  overflow:
-    hidden;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    #0b1020;
-
-}
-
-.article-image {
-
-  width:
-    100%;
-
-  max-height:
-    560px;
-
-  display:
-    block;
-
-  object-fit:
-    cover;
-
-}
-
-.article-category {
-
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  gap:
-    8px;
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    13px;
-
-  font-weight:
-    800;
-
-  margin-bottom:
-    15px;
-
-}
-
-.article-title {
-
-  font-size:
-    clamp(30px, 5vw, 54px);
-
-  line-height:
-    1.35;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    -1px;
-
-  margin-bottom:
-    18px;
-
-}
-
-.article-info {
-
-  display:
-    flex;
-
-  flex-wrap:
-    wrap;
-
-  gap:
-    12px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    13px;
-
-  margin-bottom:
-    25px;
-
-}
-
-.article-info span {
-
-  padding:
-    7px 12px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    rgba(255,255,255,0.035);
-
-  border-radius:
-    9px;
-
-}
-
-.article-summary-box {
-
-  background:
-
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.055),
-      rgba(255,255,255,0.018)
-    ),
-
-    var(--card);
-
-  border:
-    1px solid var(--line);
-
-  border-right:
-    3px solid var(--gold);
-
-  border-radius:
-    20px;
-
-  padding:
-    30px;
-
-  margin-bottom:
-    25px;
-
-}
-
-.article-summary-label {
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    13px;
-
-  font-weight:
-    900;
-
-  margin-bottom:
-    17px;
-
-}
-
-.article-summary {
-
-  color:
-    #e9edf8;
-
-  font-size:
-    18px;
-
-  line-height:
-    2.05;
-
-  font-weight:
-    500;
-
-  white-space:
-    pre-line;
-
-}
-
-.article-points {
-
-  margin-top:
-    22px;
-
-  padding:
-    22px;
-
-  border-radius:
-    18px;
-
-  background:
-    rgba(79,140,255,0.05);
-
-  border:
-    1px solid
-    rgba(79,140,255,0.12);
-
-}
-
-.article-points h3 {
-
-  color:
-    var(--gold-light);
-
-  font-size:
-    17px;
-
-  margin-bottom:
-    15px;
-
-}
-
-.article-points p {
-
-  color:
-    var(--muted);
-
-  line-height:
-    1.9;
-
-  font-size:
-    14px;
-
-}
-
-.article-source {
-
-  margin-top:
-    25px;
-
-  padding:
-    25px;
-
-  border-top:
-    1px solid var(--line);
-
-}
-
-.article-source-title {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-  margin-bottom:
-    8px;
-
-}
-
-.article-source-name {
-
-  color:
-    white;
-
-  font-size:
-    18px;
-
-  font-weight:
-    800;
-
-  margin-bottom:
-    18px;
-
-}
-
-.original-btn {
-
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  gap:
-    8px;
-
-  padding:
-    13px 19px;
-
-  background:
-
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
-
-  color:
-    #080b13;
-
-  border-radius:
-    11px;
-
-  font-size:
-    13px;
-
-  font-weight:
-    900;
-
-  transition:
-    0.2s;
-
-}
-
-.original-btn:hover {
-
-  transform:
-    translateY(-2px);
-
-}
-
-.article-note {
-
-  color:
-    var(--muted);
-
-  font-size:
-    11px;
-
-  line-height:
-    1.8;
-
-  margin-top:
-    15px;
-
-}
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-.search-panel {
-
-  display:
-    none;
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    300;
-
-  background:
-    rgba(4,7,15,0.94);
-
-  backdrop-filter:
-    blur(15px);
-
-  padding:
-    100px 22px;
-
-}
-
-.search-panel.active {
-  display:
-    block;
-}
-
-.search-box {
-
-  max-width:
-    750px;
-
-  margin:
-    auto;
-
-  position:
-    relative;
-
-}
-
-.search-box input {
-
-  width:
-    100%;
-
-  padding:
-    20px 25px;
-
-  border-radius:
-    15px;
-
-  border:
-    1px solid var(--line);
-
-  background:
-    var(--card);
-
-  color:
-    white;
-
-  outline:
-    none;
-
-  font-size:
-    18px;
-
-  font-family:
-    inherit;
-
-}
-
-.close-search {
-
-  position:
-    absolute;
-
-  left:
-    12px;
-
-  top:
-    10px;
-
-  width:
-    45px;
-
-  height:
-    45px;
-
-  border:
-    none;
-
-  background:
-    transparent;
-
-  color:
-    white;
-
-  font-size:
-    25px;
-
-  cursor:
-    pointer;
-
-}
-
-html[dir="ltr"] .close-search {
-
-  left:
-    auto;
-
-  right:
-    12px;
-
-}
-
-.search-results {
-
-  max-width:
-    750px;
-
-  margin:
-    25px auto;
-
-}
-
-.search-result {
-
-  padding:
-    18px;
-
-  margin-bottom:
-    10px;
-
-  border:
-    1px solid var(--line);
-
-  border-radius:
-    14px;
-
-  background:
-    var(--card);
-
-  cursor:
-    pointer;
-
-}
-
-.search-result:hover {
-
-  border-color:
-    rgba(217,180,91,0.35);
-
-}
-
-.search-result-title {
-
-  font-size:
-    15px;
-
-  font-weight:
-    800;
-
-  line-height:
-    1.7;
-
-}
-
-.search-result-meta {
-
-  color:
-    var(--muted);
-
-  font-size:
-    11px;
-
-  margin-top:
-    7px;
-
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-
-  border-top:
-    1px solid var(--line);
-
-  background:
-    #050711;
-
-  margin-top:
-    20px;
-
-}
-
-.footer-inner {
-
-  max-width:
-    1250px;
-
-  margin:
-    auto;
-
-  padding:
-    35px 22px;
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  gap:
-    20px;
-
-}
-
-.footer-copy {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-}
-
-.footer-logo {
-
-  font-size:
-    20px;
-
-  font-weight:
-    900;
-
-}
-
-.footer-logo span {
-
-  color:
-    var(--gold-light);
-
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.empty-news {
-
-  grid-column:
-    1 / -1;
-
-  text-align:
-    center;
-
-  padding:
-    50px 20px;
-
-  border:
-    1px solid var(--line);
-
-  border-radius:
-    18px;
-
-  background:
-    var(--card);
-
-  color:
-    var(--muted);
-
-}
-
-.empty-news strong {
-
-  display:
-    block;
-
-  color:
-    white;
-
-  font-size:
-    18px;
-
-  margin-bottom:
-    8px;
-
-}
-
-
-/* =====================================================
-   LTR
-===================================================== */
-
-html[dir="ltr"] body {
-
-  font-family:
-    Arial,
-    "Cairo",
-    sans-serif;
-
-}
-
-html[dir="ltr"] .trend-icon {
-
-  left:
-    auto;
-
-  right:
-    18px;
-
-}
-
-html[dir="ltr"] .article-summary-box {
-
-  border-right:
-    1px solid var(--line);
-
-  border-left:
-    3px solid var(--gold);
-
-}
-
-html[dir="ltr"] .section-header {
-
-  text-align:
-    left;
-
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 950px) {
-
-  nav {
-    display:
-      none;
-  }
-
-  .mobile-menu {
-
-    display:
-      block;
-
-  }
-
-  .hero {
-
-    grid-template-columns:
-      1fr;
-
-    padding-top:
-      55px;
-
-  }
-
-  .trend-orb {
-    display:
-      none;
-  }
-
-  .trend-grid,
-  .category-grid {
-
-    grid-template-columns:
-      repeat(2, 1fr);
-
-  }
-
-  .feature {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  .header-inner {
-
-    height:
-      68px;
-
-    padding:
-      0 12px;
-
-    gap:
-      8px;
-
-  }
-
-  .logo {
-
-    font-size:
-      22px;
-
-  }
-
-  .logo-mark {
-
-    width:
-      34px;
-
-    height:
-      34px;
-
-  }
-
-  .language-btn {
-
-    min-width:
-      72px;
-
-    height:
-      40px;
-
-    padding:
-      0 8px;
-
-    font-size:
-      11px;
-
-  }
-
-  .search-btn,
-  .mobile-menu {
-
-    width:
-      40px;
-
-    height:
-      40px;
-
-  }
-
-  .hero {
-
-    padding-top:
-      45px;
-
-  }
-
-  .hero h1 {
-
-    font-size:
-      45px;
-
-    letter-spacing:
-      -1px;
-
-  }
-
-  .hero p {
-
-    font-size:
-      15px;
-
-  }
-
-  .trend-grid,
-  .category-grid {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .trend-image {
-
-    height:
-      205px;
-
-  }
-
-  .trend-card {
-
-    min-height:
-      390px;
-
-  }
-
-  .section {
-
-    padding-bottom:
-      45px;
-
-  }
-
-  .section-header {
-
-    align-items:
-      flex-start;
-
-  }
-
-  .feature-content {
-
-    padding:
-      28px;
-
-  }
-
-  .feature-content h2 {
-
-    font-size:
-      27px;
-
-  }
-
-  .footer-inner {
-
-    flex-direction:
-      column;
-
-    align-items:
-      flex-start;
-
-  }
-
-  .article-overlay {
-
-    padding:
-      15px 14px 40px;
-
-  }
-
-  .article-image-wrapper {
-
-    margin-bottom:
-      20px;
-
-  }
-
-  .article-image {
-
-    max-height:
-      330px;
-
-  }
-
-  .article-summary-box {
-
-    padding:
-      22px;
-
-  }
-
-  .article-summary {
-
-    font-size:
-      16px;
-
-    line-height:
-      2;
-
-  }
-
-  .article-title {
-
-    font-size:
-      30px;
-
-  }
-
-}
-
-
-/* =====================================================
-   IMAGE ERROR
-===================================================== */
-
-.trend-image.image-error {
-  display:
-    none;
-}
-
-.article-image.image-error {
-  display:
-    none;
+  color:var(--text);min-height:100vh;overflow-x:hidden
+}
+body.article-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+
+header{
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(18px);
+  background:rgba(6,9,20,.94);
+  border-bottom:1px solid var(--line)
+}
+.header-inner{
+  max-width:1250px;margin:auto;height:76px;padding:0 22px;
+  display:flex;align-items:center;justify-content:space-between;gap:25px
+}
+.logo{display:flex;align-items:center;gap:10px;font-size:27px;font-weight:900;letter-spacing:-1px;white-space:nowrap}
+.logo-text{color:var(--gold-light)}
+.logo-mark{
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  color:#080b13;font-size:21px;font-weight:900;box-shadow:0 0 25px rgba(217,180,91,.18)
+}
+nav{display:flex;align-items:center;gap:28px}
+nav a{color:#b9c1d3;font-size:14px;font-weight:700;transition:.2s;cursor:pointer}
+nav a:hover,nav a.active{color:#fff}
+.header-actions{display:flex;align-items:center;gap:8px}
+
+.language-btn,.search-btn,.mobile-menu{
+  border:1px solid var(--line);background:rgba(255,255,255,.04);
+  color:#fff;border-radius:12px;cursor:pointer
+}
+.language-btn{
+  height:43px;min-width:82px;padding:0 12px;font-size:13px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:6px
+}
+.language-btn:hover{border-color:rgba(217,180,91,.45);background:rgba(217,180,91,.08)}
+.search-btn,.mobile-menu{width:43px;height:43px;font-size:18px}
+.mobile-menu{display:none}
+
+.hero{
+  max-width:1250px;margin:auto;padding:70px 22px 50px;
+  display:grid;grid-template-columns:1.35fr .65fr;gap:35px;align-items:center
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;padding:8px 14px;
+  border:1px solid rgba(217,180,91,.25);background:rgba(217,180,91,.07);
+  color:var(--gold-light);border-radius:50px;font-size:12px;font-weight:800;margin-bottom:22px
+}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.hero h1{font-size:clamp(45px,7vw,82px);line-height:1.12;letter-spacing:-2px;max-width:850px;margin-bottom:25px;font-weight:900}
+.hero h1 span{background:linear-gradient(90deg,#fff,var(--gold-light));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:700px;color:var(--muted);font-size:18px;line-height:1.9;margin-bottom:30px;font-weight:500}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.primary-btn,.secondary-btn{
+  padding:14px 21px;border-radius:12px;cursor:pointer;font-weight:800;
+  border:1px solid var(--line);transition:.2s
+}
+.primary-btn{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#090c15;border:none}
+.secondary-btn{background:rgba(255,255,255,.04);color:#fff}
+.primary-btn:hover,.secondary-btn:hover{transform:translateY(-2px)}
+
+.trend-orb{min-height:350px;position:relative;display:grid;place-items:center}
+.orb{
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff7d0 0%,var(--gold) 8%,#5b4920 38%,#11182b 65%,transparent 66%);
+  box-shadow:0 0 70px rgba(217,180,91,.16),inset 0 0 50px rgba(255,255,255,.08);
+  animation:float 5s ease-in-out infinite
+}
+.orbit{
+  position:absolute;width:330px;height:170px;border:1px solid rgba(217,180,91,.25);
+  border-radius:50%;transform:rotate(-25deg)
+}
+.orbit:after{
+  content:"";position:absolute;width:9px;height:9px;border-radius:50%;
+  background:var(--gold-light);box-shadow:0 0 18px var(--gold);top:30px;right:30px
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.section{max-width:1250px;margin:auto;padding:25px 22px 60px}
+.section-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:25px;gap:20px}
+.section-title{font-size:30px;letter-spacing:-.5px;font-weight:900}
+.section-title span{color:var(--gold-light)}
+.section-description{color:var(--muted);font-size:13px;margin-top:7px;font-weight:500}
+.view-all{color:var(--gold-light);font-size:13px;font-weight:800;cursor:pointer}
+.news-count{color:var(--muted);font-size:12px;margin-top:5px}
+
+.trend-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:15px
+}
+.trend-card{
+  position:relative;min-height:390px;padding:0;
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.015)),var(--card);
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.25s;cursor:pointer
+}
+.trend-card:hover{transform:translateY(-5px);background:var(--card-hover);border-color:rgba(217,180,91,.25)}
+.trend-image{width:100%;height:190px;display:block;object-fit:cover;object-position:center;background:#0b1020}
+.trend-card-content{padding:17px 20px 20px}
+.trend-number{font-size:13px;color:var(--gold-light);font-weight:900}
+.trend-icon{
+  position:absolute;left:18px;top:15px;font-size:30px;z-index:5;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))
+}
+.trend-card h3{margin-top:10px;font-size:17px;line-height:1.65;font-weight:800}
+.trend-meta{color:var(--muted);font-size:11px;margin-top:8px;font-weight:600}
+.news-link{display:inline-block;margin-top:12px;color:var(--gold-light);font-size:12px;font-weight:800;cursor:pointer}
+.news-link:hover{color:#fff}
+
+.category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.category{
+  padding:0;min-height:180px;border-radius:18px;border:1px solid var(--line);
+  background:var(--card);transition:.25s;cursor:pointer;position:relative;overflow:hidden;user-select:none
+}
+.category:hover{transform:translateY(-4px);border-color:rgba(79,140,255,.3)}
+.category.active{border-color:rgba(217,180,91,.65);box-shadow:0 0 25px rgba(217,180,91,.08)}
+.category-image{width:100%;height:105px;display:block;object-fit:cover;background:#0b1020}
+.category-content{padding:14px 18px 18px}
+.category-icon{font-size:25px;margin-bottom:7px}
+.category h3{font-size:16px;margin-bottom:5px;font-weight:800}
+.category p{color:var(--muted);font-size:11px;line-height:1.6;font-weight:500}
+
+.category-filter-bar{
+  display:none;margin-bottom:20px;padding:13px 16px;border:1px solid rgba(217,180,91,.18);
+  border-radius:14px;background:rgba(217,180,91,.05);color:var(--gold-light);font-size:13px;font-weight:800
+}
+.category-filter-bar.active{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.clear-filter{
+  border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;
+  border-radius:9px;padding:7px 12px;cursor:pointer;font-family:inherit
+}
+
+.feature{
+  display:grid;grid-template-columns:1fr 1fr;min-height:350px;overflow:hidden;
+  border-radius:24px;border:1px solid var(--line);background:var(--card)
+}
+.feature-visual{
+  min-height:350px;display:grid;place-items:center;font-size:100px;
+  background:radial-gradient(circle at center,rgba(79,140,255,.2),transparent 45%),linear-gradient(135deg,#0c1730,#090d1a)
+}
+.feature-content{padding:45px;display:flex;flex-direction:column;justify-content:center}
+.tag{color:var(--gold-light);font-size:12px;font-weight:900;letter-spacing:1px;margin-bottom:15px}
+.feature-content h2{font-size:34px;line-height:1.45;margin-bottom:15px;font-weight:900}
+.feature-content p{color:var(--muted);line-height:1.9;font-size:14px;margin-bottom:22px}
+
+.article-overlay{
+  position:fixed;inset:0;z-index:500;display:none;background:rgba(3,6,14,.97);
+  backdrop-filter:blur(18px);overflow-y:auto;padding:15px 20px 60px
+}
+.article-overlay.active{display:block}
+.article-container{max-width:1050px;margin:0 auto}
+.article-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+.article-brand{display:flex;align-items:center;gap:10px;color:var(--gold-light);font-weight:900;font-size:18px}
+.article-close{
+  width:46px;height:46px;border:1px solid var(--line);background:rgba(255,255,255,.05);
+  color:#fff;border-radius:13px;cursor:pointer;font-size:25px;display:grid;place-items:center
+}
+.article-image-wrapper{
+  width:100%;margin:0 0 20px;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#0b1020
+}
+.article-image{width:100%;max-height:560px;display:block;object-fit:cover}
+.article-category{display:inline-flex;align-items:center;gap:8px;color:var(--gold-light);font-size:13px;font-weight:800;margin-bottom:12px}
+.article-title{font-size:clamp(30px,5vw,54px);line-height:1.35;font-weight:900;letter-spacing:-1px;margin-bottom:15px}
+.article-info{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:13px;margin-bottom:20px}
+.article-info span{padding:7px 12px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:9px}
+
+.article-summary-box{
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018)),var(--card);
+  border:1px solid var(--line);border-right:3px solid var(--gold);
+  border-radius:20px;padding:24px 30px 25px;margin-bottom:20px
+}
+.article-summary-label{color:var(--gold-light);font-size:13px;font-weight:900;margin:0 0 9px;line-height:1.4}
+.article-summary{
+  color:#e9edf8;font-size:18px;line-height:1.9;font-weight:500;
+  white-space:normal;margin:0;padding:0
+}
+.article-points{
+  margin-top:15px;padding:19px 21px;border-radius:18px;
+  background:rgba(79,140,255,.05);border:1px solid rgba(79,140,255,.12)
+}
+.article-points h3{color:var(--gold-light);font-size:17px;margin:0 0 9px;line-height:1.5}
+.article-points p{color:var(--muted);line-height:1.8;font-size:14px;margin:0}
+.article-source{margin-top:20px;padding:22px 0;border-top:1px solid var(--line)}
+.article-source-title{color:var(--muted);font-size:12px;margin-bottom:7px}
+.article-source-name{color:#fff;font-size:18px;font-weight:800;margin-bottom:16px}
+.original-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:13px 19px;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#080b13;
+  border-radius:11px;font-size:13px;font-weight:900
+}
+.article-note{color:var(--muted);font-size:11px;line-height:1.8;margin-top:13px}
+
+.search-panel{
+  display:none;position:fixed;inset:0;z-index:300;background:rgba(4,7,15,.94);
+  backdrop-filter:blur(15px);padding:100px 22px
+}
+.search-panel.active{display:block}
+.search-box{max-width:750px;margin:auto;position:relative}
+.search-box input{
+  width:100%;padding:20px 25px;border-radius:15px;border:1px solid var(--line);
+  background:var(--card);color:#fff;outline:none;font-size:18px;font-family:inherit
+}
+.close-search{
+  position:absolute;left:12px;top:10px;width:45px;height:45px;border:none;
+  background:transparent;color:#fff;font-size:25px;cursor:pointer
+}
+html[dir=ltr] .close-search{left:auto;right:12px}
+.search-results{max-width:750px;margin:25px auto}
+.search-result{
+  padding:18px;margin-bottom:10px;border:1px solid var(--line);
+  border-radius:14px;background:var(--card);cursor:pointer
+}
+.search-result:hover{border-color:rgba(217,180,91,.35)}
+.search-result-title{font-size:15px;font-weight:800;line-height:1.7}
+.search-result-meta{color:var(--muted);font-size:11px;margin-top:7px}
+
+footer{border-top:1px solid var(--line);background:#050711;margin-top:20px}
+.footer-inner{
+  max-width:1250px;margin:auto;padding:35px 22px;display:flex;
+  justify-content:space-between;align-items:center;gap:20px
+}
+.footer-copy{color:var(--muted);font-size:12px}
+.footer-logo{font-size:20px;font-weight:900}
+.footer-logo span{color:var(--gold-light)}
+.empty-news{
+  grid-column:1/-1;text-align:center;padding:50px 20px;border:1px solid var(--line);
+  border-radius:18px;background:var(--card);color:var(--muted)
+}
+.empty-news strong{display:block;color:#fff;font-size:18px;margin-bottom:8px}
+
+html[dir=ltr] body{font-family:Arial,"Cairo",sans-serif}
+html[dir=ltr] .trend-icon{left:auto;right:18px}
+html[dir=ltr] .article-summary-box{border-right:1px solid var(--line);border-left:3px solid var(--gold)}
+html[dir=ltr] .section-header{text-align:left}
+
+.trend-image.image-error,.article-image.image-error{display:none}
+
+@media(max-width:950px){
+  nav{display:none}
+  .mobile-menu{display:block}
+  .hero{grid-template-columns:1fr;padding-top:55px}
+  .trend-orb{display:none}
+  .trend-grid{grid-template-columns:repeat(2,1fr)}
+  .category-grid{grid-template-columns:repeat(2,1fr)}
+  .feature{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .header-inner{height:68px;padding:0 12px;gap:8px}
+  .logo{font-size:22px}
+  .logo-mark{width:34px;height:34px}
+  .language-btn{min-width:72px;height:40px;padding:0 8px;font-size:11px}
+  .search-btn,.mobile-menu{width:40px;height:40px}
+  .hero{padding-top:45px}
+  .hero h1{font-size:45px;letter-spacing:-1px}
+  .hero p{font-size:15px}
+  .trend-grid,.category-grid{grid-template-columns:1fr}
+  .trend-image{height:205px}
+  .trend-card{min-height:390px}
+  .section{padding-bottom:45px}
+  .section-header{align-items:flex-start}
+  .feature-content{padding:28px}
+  .feature-content h2{font-size:27px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .article-overlay{padding:15px 14px 40px}
+  .article-image-wrapper{margin-bottom:18px}
+  .article-image{max-height:330px}
+  .article-summary-box{padding:20px 18px 20px;margin-bottom:18px}
+  .article-summary-label{margin-bottom:8px}
+  .article-summary{font-size:16px;line-height:1.85}
+  .article-points{margin-top:13px;padding:17px 16px}
+  .article-points h3{margin-bottom:8px}
+  .article-points p{line-height:1.75}
+  .article-title{font-size:30px}
 }
-
-
-/* =====================================================
-   LOAD MORE / COUNT
-===================================================== */
-
-.news-count {
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-
-  margin-top:
-    5px;
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
 <header>
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="goHome();return false;">
+      <div class="logo-mark">N</div>
+      <span class="logo-text">NOWNEX</span>
+    </a>
 
-<div class="header-inner">
+    <nav>
+      <a href="#" class="active" onclick="goHome();return false;" data-i18n="navHome">الرئيسية</a>
+      <a href="#trending" onclick="scrollToTrending();return false;" data-i18n="navTrending">الترند</a>
+      <a href="#categories" onclick="scrollToCategories();return false;" data-i18n="navCategories">الأقسام</a>
+      <a href="#about" onclick="scrollToAbout();return false;" data-i18n="navAbout">حول NOWNEX</a>
+    </nav>
 
-
-<a
-  href="#"
-  class="logo"
-  onclick="goHome(); return false;"
->
-
-<div class="logo-mark">
-N
-</div>
-
-<span class="logo-text">
-NOWNEX
-</span>
-
-</a>
-
-
-<nav>
-
-<a
-  href="#"
-  class="active"
-  onclick="goHome(); return false;"
-  data-i18n="navHome"
->
-الرئيسية
-</a>
-
-<a
-  href="#trending"
-  onclick="scrollToTrending(); return false;"
-  data-i18n="navTrending"
->
-الترند
-</a>
-
-<a
-  href="#categories"
-  onclick="scrollToCategories(); return false;"
-  data-i18n="navCategories"
->
-الأقسام
-</a>
-
-<a
-  href="#about"
-  onclick="scrollToAbout(); return false;"
-  data-i18n="navAbout"
->
-حول NOWNEX
-</a>
-
-</nav>
-
-
-<div class="header-actions">
-
-
-<button
-  class="language-btn"
-  id="languageBtn"
-  onclick="toggleLanguage()"
-  aria-label="تغيير اللغة"
->
-🇬🇧 EN
-</button>
-
-
-<button
-  class="search-btn"
-  onclick="openSearch()"
-  aria-label="بحث"
->
-🔍
-</button>
-
-
-<button
-  class="mobile-menu"
-  onclick="scrollToCategories()"
-  aria-label="القائمة"
->
-☰
-</button>
-
-
-</div>
-
-
-</div>
-
+    <div class="header-actions">
+      <button class="language-btn" id="languageBtn" onclick="toggleLanguage()" aria-label="تغيير اللغة">🇬🇧 EN</button>
+      <button class="search-btn" onclick="openSearch()" aria-label="بحث">🔍</button>
+      <button class="mobile-menu" onclick="scrollToCategories()" aria-label="القائمة">☰</button>
+    </div>
+  </div>
 </header>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
 
 <main>
 
-
 <section class="hero">
+  <div>
+    <div class="hero-badge">
+      <span class="live-dot"></span>
+      <span data-i18n="liveTrend">مباشر — الترند الآن</span>
+    </div>
 
+    <h1>
+      <span data-i18n="heroNow">ما يحدث الآن.</span>
+      <span data-i18n="heroNext">ما القادم.</span>
+    </h1>
 
-<div>
+    <p data-i18n="heroDescription">
+      اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.
+    </p>
 
+    <div class="hero-buttons">
+      <button class="primary-btn" onclick="scrollToTrending()" data-i18n="exploreTrend">🔥 استكشف الترند</button>
+      <button class="secondary-btn" onclick="scrollToCategories()" data-i18n="exploreCategories">استكشف الأقسام</button>
+    </div>
+  </div>
 
-<div class="hero-badge">
-
-<span class="live-dot"></span>
-
-<span data-i18n="liveTrend">
-مباشر — الترند الآن
-</span>
-
-</div>
-
-
-<h1>
-
-<span data-i18n="heroNow">
-ما يحدث الآن.
-</span>
-
-<span data-i18n="heroNext">
-ما القادم.
-</span>
-
-</h1>
-
-
-<p data-i18n="heroDescription">
-
-اكتشف أهم الأخبار والترندات والتقنيات
-والأفكار التي تشكل العالم الآن —
-كلها في مكان واحد.
-
-</p>
-
-
-<div class="hero-buttons">
-
-
-<button
-  class="primary-btn"
-  onclick="scrollToTrending()"
-  data-i18n="exploreTrend"
->
-🔥 استكشف الترند
-</button>
-
-
-<button
-  class="secondary-btn"
-  onclick="scrollToCategories()"
-  data-i18n="exploreCategories"
->
-استكشف الأقسام
-</button>
-
-
-</div>
-
-
-</div>
-
-
-<div class="trend-orb">
-
-<div class="orbit"></div>
-
-<div class="orb"></div>
-
-</div>
-
-
+  <div class="trend-orb">
+    <div class="orbit"></div>
+    <div class="orb"></div>
+  </div>
 </section>
 
+<section class="section" id="trending">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title">🔥 <span data-i18n="mostTrending">الأكثر تداولاً</span> <span data-i18n="nowWord">الآن</span></h2>
+      <p class="section-description" data-i18n="trendingDescription">أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.</p>
+      <div class="news-count" id="newsCount"></div>
+    </div>
+    <a href="#trending" class="view-all" onclick="showAllNews();return false;" data-i18n="showAll">عرض الكل ←</a>
+  </div>
 
-<!-- =====================================================
-     TRENDING
-===================================================== -->
+  <div class="category-filter-bar" id="categoryFilterBar">
+    <span id="categoryFilterText"></span>
+    <button class="clear-filter" onclick="clearCategoryFilter()" data-i18n="showAllShort">عرض الكل</button>
+  </div>
 
-<section
-  class="section"
-  id="trending"
->
-
-
-<div class="section-header">
-
-
-<div>
-
-
-<h2 class="section-title">
-
-🔥
-
-<span data-i18n="mostTrending">
-الأكثر تداولاً
-</span>
-
-<span data-i18n="nowWord">
-الآن
-</span>
-
-</h2>
-
-
-<p
-  class="section-description"
-  data-i18n="trendingDescription"
->
-
-أحدث الأخبار والقصص من حول العالم،
-يتم تحديثها تلقائياً.
-
-</p>
-
-
-<div
-  class="news-count"
-  id="newsCount"
->
-</div>
-
-
-</div>
-
-
-<a
-  href="#trending"
-  class="view-all"
-  onclick="showAllNews(); return false;"
-  data-i18n="showAll"
->
-عرض الكل ←
-</a>
-
-
-</div>
-
-
-<div
-  class="category-filter-bar"
-  id="categoryFilterBar"
->
-
-<span id="categoryFilterText">
-</span>
-
-<button
-  class="clear-filter"
-  onclick="clearCategoryFilter()"
-  data-i18n="showAllShort"
->
-عرض الكل
-</button>
-
-</div>
-
-
-<div
-  class="trend-grid"
-  id="newsGrid"
->
-
-
-<article class="trend-card">
-
-<div class="trend-card-content">
-
-<div class="trend-number">
-01
-</div>
-
-<div class="trend-icon">
-🌍
-</div>
-
-<h3 data-i18n="loading">
-جارٍ تحميل آخر الأخبار...
-</h3>
-
-<div class="trend-meta"
-     data-i18n="loadingMeta">
-NOWNEX · تحديث مباشر
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-
+  <div class="trend-grid" id="newsGrid">
+    <article class="trend-card">
+      <div class="trend-card-content">
+        <div class="trend-number">01</div>
+        <div class="trend-icon">🌍</div>
+        <h3 data-i18n="loading">جارٍ تحميل آخر الأخبار...</h3>
+        <div class="trend-meta" data-i18n="loadingMeta">NOWNEX · تحديث مباشر</div>
+      </div>
+    </article>
+  </div>
 </section>
 
-
-<!-- =====================================================
-     CATEGORIES
-===================================================== -->
-
-<section
-  class="section"
-  id="categories"
->
-
-
-<div class="section-header">
-
-
-<div>
-
-<h2 class="section-title">
-
-<span data-i18n="exploreWord">
-استكشف
-</span>
-
-<span>
-NOWNEX
-</span>
-
-</h2>
-
-
-<p
-  class="section-description"
-  data-i18n="categoriesDescription"
->
-كل ما يحدث الآن، مرتب حسب اهتماماتك.
-</p>
-
-</div>
-
-
-</div>
-
-
-<div class="category-grid">
-
-
-<div
-  class="category"
-  data-category="Trending"
-  onclick="filterByCategory('Trending', this)"
->
-
-<div class="category-icon">
-🔥
-</div>
-
-<h3 data-i18n="catTrending">
-الترند الآن
-</h3>
-
-<p data-i18n="catTrendingDesc">
-اكتشف أسرع المواضيع انتشاراً حول العالم.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="AI"
-  onclick="filterByCategory('AI', this)"
->
-
-<div class="category-icon">
-🤖
-</div>
-
-<h3 data-i18n="catAI">
-الذكاء الاصطناعي والمستقبل
-</h3>
-
-<p data-i18n="catAIDesc">
-الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="Technology"
-  onclick="filterByCategory('Technology', this)"
->
-
-<div class="category-icon">
-📱
-</div>
-
-<h3 data-i18n="catTechnology">
-التكنولوجيا
-</h3>
-
-<p data-i18n="catTechnologyDesc">
-التطبيقات والهواتف والأجهزة والابتكارات الرقمية.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="Cars"
-  onclick="filterByCategory('Cars', this)"
->
-
-<div class="category-icon">
-🚗
-</div>
-
-<h3 data-i18n="catCars">
-السيارات
-</h3>
-
-<p data-i18n="catCarsDesc">
-أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="Entertainment"
-  onclick="filterByCategory('Entertainment', this)"
->
-
-<div class="category-icon">
-🎬
-</div>
-
-<h3 data-i18n="catEntertainment">
-الترفيه
-</h3>
-
-<p data-i18n="catEntertainmentDesc">
-الأفلام والمسلسلات والألعاب وثقافة الإنترنت.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="World"
-  onclick="filterByCategory('World', this)"
->
-
-<div class="category-icon">
-🌎
-</div>
-
-<h3 data-i18n="catWorld">
-العالم
-</h3>
-
-<p data-i18n="catWorldDesc">
-أهم الأحداث والقصص التي تشكل العالم.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="Facts"
-  onclick="filterByCategory('Facts', this)"
->
-
-<div class="category-icon">
-🧠
-</div>
-
-<h3 data-i18n="catFacts">
-معلومات وحقائق
-</h3>
-
-<p data-i18n="catFactsDesc">
-حقائق مثيرة وعلوم وأشياء قد لا تعرفها.
-</p>
-
-</div>
-
-
-<div
-  class="category"
-  data-category="Products"
-  onclick="filterByCategory('Products', this)"
->
-
-<div class="category-icon">
-🛍️
-</div>
-
-<h3 data-i18n="catProducts">
-المنتجات الرائجة
-</h3>
-
-<p data-i18n="catProductsDesc">
-المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.
-</p>
-
-</div>
-
-
-</div>
-
+<section class="section" id="categories">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title"><span data-i18n="exploreWord">استكشف</span> NOWNEX</h2>
+      <p class="section-description" data-i18n="categoriesDescription">كل ما يحدث الآن، مرتب حسب اهتماماتك.</p>
+    </div>
+  </div>
+
+  <div class="category-grid">
+
+    <div class="category" data-category="Trending" onclick="filterByCategory('Trending',this)">
+      <div class="category-content">
+        <div class="category-icon">🔥</div>
+        <h3 data-i18n="catTrending">الترند الآن</h3>
+        <p data-i18n="catTrendingDesc">اكتشف أسرع المواضيع انتشاراً حول العالم.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="AI" onclick="filterByCategory('AI',this)">
+      <div class="category-content">
+        <div class="category-icon">🤖</div>
+        <h3 data-i18n="catAI">الذكاء الاصطناعي والمستقبل</h3>
+        <p data-i18n="catAIDesc">الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="Technology" onclick="filterByCategory('Technology',this)">
+      <div class="category-content">
+        <div class="category-icon">📱</div>
+        <h3 data-i18n="catTechnology">التكنولوجيا</h3>
+        <p data-i18n="catTechnologyDesc">التطبيقات والهواتف والأجهزة والابتكارات الرقمية.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="Cars" onclick="filterByCategory('Cars',this)">
+      <div class="category-content">
+        <div class="category-icon">🚗</div>
+        <h3 data-i18n="catCars">السيارات</h3>
+        <p data-i18n="catCarsDesc">أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="Entertainment" onclick="filterByCategory('Entertainment',this)">
+      <div class="category-content">
+        <div class="category-icon">🎬</div>
+        <h3 data-i18n="catEntertainment">الترفيه</h3>
+        <p data-i18n="catEntertainmentDesc">الأفلام والمسلسلات والألعاب وثقافة الإنترنت.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="World" onclick="filterByCategory('World',this)">
+      <div class="category-content">
+        <div class="category-icon">🌎</div>
+        <h3 data-i18n="catWorld">العالم</h3>
+        <p data-i18n="catWorldDesc">أهم الأحداث والقصص التي تشكل العالم.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="Facts" onclick="filterByCategory('Facts',this)">
+      <div class="category-content">
+        <div class="category-icon">🧠</div>
+        <h3 data-i18n="catFacts">معلومات وحقائق</h3>
+        <p data-i18n="catFactsDesc">حقائق مثيرة وعلوم وأشياء قد لا تعرفها.</p>
+      </div>
+    </div>
+
+    <div class="category" data-category="Products" onclick="filterByCategory('Products',this)">
+      <div class="category-content">
+        <div class="category-icon">🛍️</div>
+        <h3 data-i18n="catProducts">المنتجات الرائجة</h3>
+        <p data-i18n="catProductsDesc">المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.</p>
+      </div>
+    </div>
+
+  </div>
 </section>
-
-
-<!-- =====================================================
-     FEATURE
-===================================================== -->
 
 <section class="section">
-
-
-<div class="feature">
-
-
-<div class="feature-visual">
-🤖
-</div>
-
-
-<div class="feature-content">
-
-
-<div
-  class="tag"
-  data-i18n="featureTag"
->
-الذكاء الاصطناعي والمستقبل
-</div>
-
-
-<h2 data-i18n="featureTitle">
-المستقبل يتحرك أسرع من أي وقت مضى.
-</h2>
-
-
-<p data-i18n="featureDescription">
-يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.
-</p>
-
-
-<button
-  class="primary-btn"
-  style="width:max-content;"
-  onclick="filterByCategory('AI', null)"
-  data-i18n="featureButton"
->
-اكتشف عالم الذكاء الاصطناعي ←
-</button>
-
-
-</div>
-
-
-</div>
-
-
+  <div class="feature">
+    <div class="feature-visual">🤖</div>
+    <div class="feature-content">
+      <div class="tag" data-i18n="featureTag">الذكاء الاصطناعي والمستقبل</div>
+      <h2 data-i18n="featureTitle">المستقبل يتحرك أسرع من أي وقت مضى.</h2>
+      <p data-i18n="featureDescription">يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.</p>
+      <button class="primary-btn" style="width:max-content" onclick="filterByCategory('AI',null)" data-i18n="featureButton">اكتشف عالم الذكاء الاصطناعي ←</button>
+    </div>
+  </div>
 </section>
-
 
 </main>
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer id="about">
-
-
-<div class="footer-inner">
-
-
-<div>
-
-
-<div class="footer-logo">
-
-N<span>
-OWNEX
-</span>
-
-</div>
-
-
-<div
-  class="footer-copy"
-  data-i18n="footerTagline"
->
-ما يحدث الآن. ما القادم.
-</div>
-
-
-</div>
-
-
-<div
-  class="footer-copy"
-  data-i18n="copyright"
->
-© 2026 NOWNEX — جميع الحقوق محفوظة
-</div>
-
-
-</div>
-
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">N<span>OWNEX</span></div>
+      <div class="footer-copy" data-i18n="footerTagline">ما يحدث الآن. ما القادم.</div>
+    </div>
+    <div class="footer-copy" data-i18n="copyright">© 2026 NOWNEX — جميع الحقوق محفوظة</div>
+  </div>
 </footer>
 
-
-<!-- =====================================================
-     ARTICLE READER
-===================================================== -->
-
-<div
-  class="article-overlay"
-  id="articleOverlay"
->
-
-
-<div class="article-container">
-
-
-<div class="article-top">
-
-
-<div class="article-brand">
-
-<div
-  class="logo-mark"
-  style="width:34px;height:34px;font-size:18px;"
->
-N
+<div class="article-overlay" id="articleOverlay">
+  <div class="article-container">
+    <div class="article-top">
+      <div class="article-brand">
+        <div class="logo-mark" style="width:34px;height:34px;font-size:18px">N</div>
+        <span>NOWNEX</span>
+      </div>
+      <button class="article-close" onclick="closeArticle()" aria-label="إغلاق">×</button>
+    </div>
+    <div id="articleContent"></div>
+  </div>
 </div>
 
-<span>
-NOWNEX
-</span>
-
+<div class="search-panel" id="searchPanel">
+  <div class="search-box">
+    <input type="text" placeholder="ابحث في أخبار NOWNEX..." id="searchInput" oninput="performSearch()" data-i18n-placeholder="searchPlaceholder">
+    <button class="close-search" onclick="closeSearch()">×</button>
+  </div>
+  <div class="search-results" id="searchResults"></div>
 </div>
-
-
-<button
-  class="article-close"
-  onclick="closeArticle()"
-  aria-label="إغلاق"
->
-×
-</button>
-
-
-</div>
-
-
-<div id="articleContent">
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     SEARCH PANEL
-===================================================== -->
-
-<div
-  class="search-panel"
-  id="searchPanel"
->
-
-
-<div class="search-box">
-
-
-<input
-  type="text"
-  placeholder="ابحث في أخبار NOWNEX..."
-  id="searchInput"
-  oninput="performSearch()"
-  data-i18n-placeholder="searchPlaceholder"
->
-
-
-<button
-  class="close-search"
-  onclick="closeSearch()"
->
-×
-</button>
-
-
-</div>
-
-
-<div
-  class="search-results"
-  id="searchResults"
->
-</div>
-
-
-</div>
-
 
 <script>
-
-/* =====================================================
-   GLOBAL
-===================================================== */
-
-let allNews = [];
-
-let trendingNews = [];
-
-let currentCategory = null;
-
-
-/* =====================================================
-   LANGUAGE
-===================================================== */
-
-let currentLanguage =
-  localStorage.getItem(
-    "nownex-language"
-  ) || "ar";
-
-
-const translations = {
-
-  ar: {
-
-    navHome:
-      "الرئيسية",
-
-    navTrending:
-      "الترند",
-
-    navCategories:
-      "الأقسام",
-
-    navAbout:
-      "حول NOWNEX",
-
-    liveTrend:
-      "مباشر — الترند الآن",
-
-    heroNow:
-      "ما يحدث الآن.",
-
-    heroNext:
-      "ما القادم.",
-
-    heroDescription:
-      "اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
-
-    exploreTrend:
-      "🔥 استكشف الترند",
-
-    exploreCategories:
-      "استكشف الأقسام",
-
-    mostTrending:
-      "الأكثر تداولاً",
-
-    nowWord:
-      "الآن",
-
-    trendingDescription:
-      "أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.",
-
-    showAll:
-      "عرض الكل ←",
-
-    showAllShort:
-      "عرض الكل",
-
-    exploreWord:
-      "استكشف",
-
-    categoriesDescription:
-      "كل ما يحدث الآن، مرتب حسب اهتماماتك.",
-
-    catTrending:
-      "الترند الآن",
-
-    catTrendingDesc:
-      "اكتشف أسرع المواضيع انتشاراً حول العالم.",
-
-    catAI:
-      "الذكاء الاصطناعي والمستقبل",
-
-    catAIDesc:
-      "الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.",
-
-    catTechnology:
-      "التكنولوجيا",
-
-    catTechnologyDesc:
-      "التطبيقات والهواتف والأجهزة والابتكارات الرقمية.",
-
-    catCars:
-      "السيارات",
-
-    catCarsDesc:
-      "أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.",
-
-    catEntertainment:
-      "الترفيه",
-
-    catEntertainmentDesc:
-      "الأفلام والمسلسلات والألعاب وثقافة الإنترنت.",
-
-    catWorld:
-      "العالم",
-
-    catWorldDesc:
-      "أهم الأحداث والقصص التي تشكل العالم.",
-
-    catFacts:
-      "معلومات وحقائق",
-
-    catFactsDesc:
-      "حقائق مثيرة وعلوم وأشياء قد لا تعرفها.",
-
-    catProducts:
-      "المنتجات الرائجة",
-
-    catProductsDesc:
-      "المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.",
-
-    featureTag:
-      "الذكاء الاصطناعي والمستقبل",
-
-    featureTitle:
-      "المستقبل يتحرك أسرع من أي وقت مضى.",
-
-    featureDescription:
-      "يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.",
-
-    featureButton:
-      "اكتشف عالم الذكاء الاصطناعي ←",
-
-    footerTagline:
-      "ما يحدث الآن. ما القادم.",
-
-    copyright:
-      "© 2026 NOWNEX — جميع الحقوق محفوظة",
-
-    searchPlaceholder:
-      "ابحث في أخبار NOWNEX...",
-
-    loading:
-      "جارٍ تحميل آخر الأخبار...",
-
-    loadingMeta:
-      "NOWNEX · تحديث مباشر",
-
-    readArticle:
-      "اقرأ الخبر ←",
-
-    trendingLabel:
-      "الأكثر تداولاً",
-
-    source:
-      "المصدر:",
-
-    summary:
-      "📰 ملخص NOWNEX",
-
-    meaning:
-      "💡 ما الذي يعنيه الخبر؟",
-
-    meaningText:
-      "يقدم NOWNEX هذا الخبر في صورة مختصرة باللغة العربية لتسهيل فهم الحدث وأهميته، مع الحفاظ على الإشارة إلى المصدر الأصلي.",
-
-    originalSource:
-      "المصدر الأصلي",
-
-    readOriginal:
-      "قراءة الخبر الأصلي ↗",
-
-    unavailableLink:
-      "رابط المصدر الأصلي غير متاح حالياً.",
-
-    articleNote:
-      "NOWNEX يعرض ملخصاً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
-
-    noNews:
-      "لا توجد أخبار حالياً",
-
-    noNewsText:
-      "لا توجد أخبار متاحة في هذا القسم.",
-
-    searchNoResults:
-      "لم نجد أخباراً مطابقة لبحثك.",
-
-    searchTry:
-      "جرّب كلمة أخرى.",
-
-    categoryView:
-      "عرض قسم: ",
-
-    newsCount:
-      "خبر متاح",
-
-    languageButton:
-      "🇬🇧 EN"
-
-  },
-
-
-  en: {
-
-    navHome:
-      "Home",
-
-    navTrending:
-      "Trending",
-
-    navCategories:
-      "Categories",
-
-    navAbout:
-      "About NOWNEX",
-
-    liveTrend:
-      "LIVE — Trending Now",
-
-    heroNow:
-      "What's happening now.",
-
-    heroNext:
-      "What's next.",
-
-    heroDescription:
-      "Discover the latest news, trends, technologies and ideas shaping the world — all in one place.",
-
-    exploreTrend:
-      "🔥 Explore Trends",
-
-    exploreCategories:
-      "Explore Categories",
-
-    mostTrending:
-      "Trending",
-
-    nowWord:
-      "Now",
-
-    trendingDescription:
-      "The latest stories and news from around the world, updated automatically.",
-
-    showAll:
-      "View All →",
-
-    showAllShort:
-      "View All",
-
-    exploreWord:
-      "Explore",
-
-    categoriesDescription:
-      "Everything happening now, organized around your interests.",
-
-    catTrending:
-      "Trending Now",
-
-    catTrendingDesc:
-      "Discover the fastest-growing topics around the world.",
-
-    catAI:
-      "AI & Future",
-
-    catAIDesc:
-      "Artificial intelligence, robotics and future technology.",
-
-    catTechnology:
-      "Technology",
-
-    catTechnologyDesc:
-      "Apps, phones, devices and digital innovations.",
-
-    catCars:
-      "Cars",
-
-    catCarsDesc:
-      "Latest cars, electric vehicles and automotive technology.",
-
-    catEntertainment:
-      "Entertainment",
-
-    catEntertainmentDesc:
-      "Movies, series, games and internet culture.",
-
-    catWorld:
-      "World",
-
-    catWorldDesc:
-      "Major events and stories shaping the world.",
-
-    catFacts:
-      "Facts & Knowledge",
-
-    catFactsDesc:
-      "Interesting facts, science and things you may not know.",
-
-    catProducts:
-      "Trending Products",
-
-    catProductsDesc:
-      "Products and devices getting major attention right now.",
-
-    featureTag:
-      "AI & Future",
-
-    featureTitle:
-      "The future is moving faster than ever.",
-
-    featureDescription:
-      "NOWNEX brings together the latest developments in AI, technology and ideas shaping tomorrow's world.",
-
-    featureButton:
-      "Explore the AI world →",
-
-    footerTagline:
-      "What's happening now. What's next.",
-
-    copyright:
-      "© 2026 NOWNEX — All rights reserved",
-
-    searchPlaceholder:
-      "Search NOWNEX news...",
-
-    loading:
-      "Loading the latest news...",
-
-    loadingMeta:
-      "NOWNEX · Live update",
-
-    readArticle:
-      "Read article →",
-
-    trendingLabel:
-      "Trending",
-
-    source:
-      "Source:",
-
-    summary:
-      "📰 NOWNEX Summary",
-
-    meaning:
-      "💡 What does this mean?",
-
-    meaningText:
-      "NOWNEX presents this story in a concise format to make the event and its significance easier to understand, while keeping the original source clearly referenced.",
-
-    originalSource:
-      "Original Source",
-
-    readOriginal:
-      "Read Original ↗",
-
-    unavailableLink:
-      "The original source link is currently unavailable.",
-
-    articleNote:
-      "NOWNEX provides a summary of the story and references the original source. Visit the source for the full article.",
-
-    noNews:
-      "No news available",
-
-    noNewsText:
-      "There are currently no news articles available in this category.",
-
-    searchNoResults:
-      "No matching news was found.",
-
-    searchTry:
-      "Try another keyword.",
-
-    categoryView:
-      "Category: ",
-
-    newsCount:
-      "articles available",
-
-    languageButton:
-      "🇩🇿 AR"
-
-  }
-
+let allNews=[];
+let trendingNews=[];
+let currentCategory=null;
+let currentLanguage=localStorage.getItem("nownex-language")||"ar";
+
+const translations={
+ar:{
+navHome:"الرئيسية",navTrending:"الترند",navCategories:"الأقسام",navAbout:"حول NOWNEX",
+liveTrend:"مباشر — الترند الآن",heroNow:"ما يحدث الآن.",heroNext:"ما القادم.",
+heroDescription:"اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
+exploreTrend:"🔥 استكشف الترند",exploreCategories:"استكشف الأقسام",
+mostTrending:"الأكثر تداولاً",nowWord:"الآن",
+trendingDescription:"أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.",
+showAll:"عرض الكل ←",showAllShort:"عرض الكل",exploreWord:"استكشف",
+categoriesDescription:"كل ما يحدث الآن، مرتب حسب اهتماماتك.",
+catTrending:"الترند الآن",catTrendingDesc:"اكتشف أسرع المواضيع انتشاراً حول العالم.",
+catAI:"الذكاء الاصطناعي والمستقبل",catAIDesc:"الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.",
+catTechnology:"التكنولوجيا",catTechnologyDesc:"التطبيقات والهواتف والأجهزة والابتكارات الرقمية.",
+catCars:"السيارات",catCarsDesc:"أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.",
+catEntertainment:"الترفيه",catEntertainmentDesc:"الأفلام والمسلسلات والألعاب وثقافة الإنترنت.",
+catWorld:"العالم",catWorldDesc:"أهم الأحداث والقصص التي تشكل العالم.",
+catFacts:"معلومات وحقائق",catFactsDesc:"حقائق مثيرة وعلوم وأشياء قد لا تعرفها.",
+catProducts:"المنتجات الرائجة",catProductsDesc:"المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.",
+featureTag:"الذكاء الاصطناعي والمستقبل",featureTitle:"المستقبل يتحرك أسرع من أي وقت مضى.",
+featureDescription:"يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.",
+featureButton:"اكتشف عالم الذكاء الاصطناعي ←",
+footerTagline:"ما يحدث الآن. ما القادم.",copyright:"© 2026 NOWNEX — جميع الحقوق محفوظة",
+searchPlaceholder:"ابحث في أخبار NOWNEX...",loading:"جارٍ تحميل آخر الأخبار...",loadingMeta:"NOWNEX · تحديث مباشر",
+readArticle:"اقرأ الخبر ←",trendingLabel:"الأكثر تداولاً",source:"المصدر:",
+summary:"📰 ملخص NOWNEX",meaning:"💡 ما الذي يعنيه الخبر؟",
+meaningText:"يقدم NOWNEX هذا الخبر في صورة مختصرة باللغة العربية لتسهيل فهم الحدث وأهميته، مع الحفاظ على الإشارة إلى المصدر الأصلي.",
+originalSource:"المصدر الأصلي",readOriginal:"قراءة الخبر الأصلي ↗",
+unavailableLink:"رابط المصدر الأصلي غير متاح حالياً.",
+articleNote:"NOWNEX يعرض ملخصاً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
+noNews:"لا توجد أخبار حالياً",noNewsText:"لا توجد أخبار متاحة في هذا القسم.",
+searchNoResults:"لم نجد أخباراً مطابقة لبحثك.",searchTry:"جرّب كلمة أخرى.",
+categoryView:"عرض قسم: ",newsCount:"خبر متاح",languageButton:"🇬🇧 EN"
+},
+en:{
+navHome:"Home",navTrending:"Trending",navCategories:"Categories",navAbout:"About NOWNEX",
+liveTrend:"LIVE — Trending Now",heroNow:"What's happening now.",heroNext:"What's next.",
+heroDescription:"Discover the latest news, trends, technologies and ideas shaping the world — all in one place.",
+exploreTrend:"🔥 Explore Trends",exploreCategories:"Explore Categories",
+mostTrending:"Trending",nowWord:"Now",
+trendingDescription:"The latest stories and news from around the world, updated automatically.",
+showAll:"View All →",showAllShort:"View All",exploreWord:"Explore",
+categoriesDescription:"Everything happening now, organized around your interests.",
+catTrending:"Trending Now",catTrendingDesc:"Discover the fastest-growing topics around the world.",
+catAI:"AI & Future",catAIDesc:"Artificial intelligence, robotics and future technology.",
+catTechnology:"Technology",catTechnologyDesc:"Apps, phones, devices and digital innovations.",
+catCars:"Cars",catCarsDesc:"Latest cars, electric vehicles and automotive technology.",
+catEntertainment:"Entertainment",catEntertainmentDesc:"Movies, series, games and internet culture.",
+catWorld:"World",catWorldDesc:"Major events and stories shaping the world.",
+catFacts:"Facts & Knowledge",catFactsDesc:"Interesting facts, science and things you may not know.",
+catProducts:"Trending Products",catProductsDesc:"Products and devices getting major attention right now.",
+featureTag:"AI & Future",featureTitle:"The future is moving faster than ever.",
+featureDescription:"NOWNEX brings together the latest developments in AI, technology and ideas shaping tomorrow's world.",
+featureButton:"Explore the AI world →",
+footerTagline:"What's happening now. What's next.",copyright:"© 2026 NOWNEX — All rights reserved",
+searchPlaceholder:"Search NOWNEX news...",loading:"Loading the latest news...",loadingMeta:"NOWNEX · Live update",
+readArticle:"Read article →",trendingLabel:"Trending",source:"Source:",
+summary:"📰 NOWNEX Summary",meaning:"💡 What does this mean?",
+meaningText:"NOWNEX presents this story in a concise format to make the event and its significance easier to understand, while keeping the original source clearly referenced.",
+originalSource:"Original Source",readOriginal:"Read Original ↗",
+unavailableLink:"The original source link is currently unavailable.",
+articleNote:"NOWNEX provides a summary of the story and references the original source. Visit the source for the full article.",
+noNews:"No news available",noNewsText:"There are currently no news articles available in this category.",
+searchNoResults:"No matching news was found.",searchTry:"Try another keyword.",
+categoryView:"Category: ",newsCount:"articles available",languageButton:"🇩🇿 AR"
+}
 };
 
-
-/* =====================================================
-   TRANSLATION
-===================================================== */
-
-function t(key) {
-
-  return (
-
-    translations[
-      currentLanguage
-    ][key]
-
-    ||
-
-    translations.ar[key]
-
-    ||
-
-    key
-
-  );
-
+function t(key){
+  return (translations[currentLanguage]&&translations[currentLanguage][key])||
+         translations.ar[key]||key;
 }
 
-
-/* =====================================================
-   TITLE
-===================================================== */
-
-function getNewsTitle(item) {
-
-  if (!item) {
-    return "";
-  }
-
-  if (
-    currentLanguage === "en"
-  ) {
-
-    return (
-
-      item.title_en ||
-
-      item.title ||
-
-      item.title_ar ||
-
-      "NOWNEX News"
-
-    );
-
-  }
-
-  return (
-
-    item.title_ar ||
-
-    item.title ||
-
-    item.title_en ||
-
-    "خبر من NOWNEX"
-
-  );
-
+/* Prevent English text from leaking into Arabic mode, and vice versa. */
+function containsArabic(value){
+  return /[\u0600-\u06FF]/.test(String(value||""));
 }
 
-
-/* =====================================================
-   SUMMARY
-===================================================== */
-
-function getNewsSummary(item) {
-
-  if (!item) {
-    return "";
-  }
-
-  if (
-    currentLanguage === "en"
-  ) {
-
-    return (
-
-      item.summary_en ||
-
-      item.summary ||
-
-      item.summary_ar ||
-
-      "No summary is currently available."
-
-    );
-
-  }
-
-  return (
-
-    item.summary_ar ||
-
-    item.summary ||
-
-    item.summary_en ||
-
-    "لا يوجد ملخص متاح لهذا الخبر حالياً."
-
-  );
-
+function cleanNewsText(value){
+  return String(value||"")
+    .replace(/\r\n/g,"\n")
+    .replace(/\u00A0/g," ")
+    .replace(/^[\s\n]+/,"")
+    .replace(/[\s\n]+$/,"")
+    .replace(/\n\s*\n+/g," ")
+    .replace(/[ \t]+/g," ")
+    .trim();
 }
 
-
-/* =====================================================
-   SEARCH TEXT
-===================================================== */
-
-function getSearchableText(item) {
-
-  if (!item) {
-    return "";
+function getNewsTitle(item){
+  if(!item)return "";
+  if(currentLanguage==="en"){
+    if(item.title_en)return cleanNewsText(item.title_en);
+    if(item.title && !containsArabic(item.title))return cleanNewsText(item.title);
+    return "NOWNEX News";
   }
+  if(item.title_ar)return cleanNewsText(item.title_ar);
+  if(item.title && containsArabic(item.title))return cleanNewsText(item.title);
+  return "عنوان الخبر غير متوفر بالعربية";
+}
 
+function getNewsSummary(item){
+  if(!item)return "";
+  if(currentLanguage==="en"){
+    if(item.summary_en)return cleanNewsText(item.summary_en);
+    if(item.summary && !containsArabic(item.summary))return cleanNewsText(item.summary);
+    return "No summary is currently available.";
+  }
+  if(item.summary_ar)return cleanNewsText(item.summary_ar);
+  if(item.summary && containsArabic(item.summary))return cleanNewsText(item.summary);
+  return "لا يوجد ملخص عربي متاح لهذا الخبر حالياً.";
+}
+
+function getSearchableText(item){
   return [
-
-    item.title_ar,
-    item.title_en,
-
-    item.summary_ar,
-    item.summary_en,
-
-    item.title,
-    item.summary,
-    item.description,
-
-    item.category,
-    item.source
-
-  ]
-
-    .filter(Boolean)
-
-    .join(" ")
-
-    .toLowerCase();
-
+    item.title_ar,item.title_en,item.summary_ar,item.summary_en,
+    item.title,item.summary,item.description,item.category,item.source
+  ].filter(Boolean).join(" ").toLowerCase();
 }
 
-
-/* =====================================================
-   APPLY LANGUAGE
-===================================================== */
-
-function applyLanguage() {
-
-  const html =
-    document.documentElement;
-
-
-  html.lang =
-    currentLanguage === "ar"
-      ? "ar"
-      : "en";
-
-
-  html.dir =
-    currentLanguage === "ar"
-      ? "rtl"
-      : "ltr";
-
-
-  document
-    .querySelectorAll(
-      "[data-i18n]"
-    )
-    .forEach(function(element) {
-
-      const key =
-        element.getAttribute(
-          "data-i18n"
-        );
-
-
-      if (
-        translations[
-          currentLanguage
-        ][key]
-      ) {
-
-        element.textContent =
-          translations[
-            currentLanguage
-          ][key];
-
-      }
-
-    });
-
-
-  document
-    .querySelectorAll(
-      "[data-i18n-placeholder]"
-    )
-    .forEach(function(element) {
-
-      const key =
-        element.getAttribute(
-          "data-i18n-placeholder"
-        );
-
-
-      if (
-        translations[
-          currentLanguage
-        ][key]
-      ) {
-
-        element.placeholder =
-          translations[
-            currentLanguage
-          ][key];
-
-      }
-
-    });
-
-
-  document
-    .getElementById(
-      "languageBtn"
-    )
-    .textContent =
-      t("languageButton");
-
-
-  updateNewsCount();
-
-
-  if (currentCategory) {
-
-    document
-      .getElementById(
-        "categoryFilterText"
-      )
-      .textContent =
-        t("categoryView") +
-        translateCategory(
-          currentCategory
-        );
-
-  }
-
-
-  const overlay =
-    document.getElementById(
-      "articleOverlay"
-    );
-
-
-  const currentArticle =
-    window.currentOpenedArticle;
-
-
-  if (
-
-    overlay &&
-
-    overlay.classList.contains(
-      "active"
-    ) &&
-
-    currentArticle
-
-  ) {
-
-    openArticle(
-      currentArticle
-    );
-
-  }
-
-
-  if (allNews.length) {
-
-    renderNews(
-      getFilteredNews(
-        currentCategory
-      )
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   TOGGLE LANGUAGE
-===================================================== */
-
-function toggleLanguage() {
-
-  currentLanguage =
-    currentLanguage === "ar"
-      ? "en"
-      : "ar";
-
-
-  localStorage.setItem(
-    "nownex-language",
-    currentLanguage
-  );
-
-
-  applyLanguage();
-
-}
-
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
-function openSearch() {
-
-  document
-    .getElementById(
-      "searchPanel"
-    )
-    .classList
-    .add("active");
-
-
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-
-  input.focus();
-
-}
-
-
-function closeSearch() {
-
-  document
-    .getElementById(
-      "searchPanel"
-    )
-    .classList
-    .remove("active");
-
-}
-
-
-function performSearch() {
-
-  const input =
-    document.getElementById(
-      "searchInput"
-    );
-
-
-  const results =
-    document.getElementById(
-      "searchResults"
-    );
-
-
-  const query =
-    input.value
-      .trim()
-      .toLowerCase();
-
-
-  if (!query) {
-
-    results.innerHTML =
-      "";
-
-    return;
-
-  }
-
-
-  const filtered =
-    allNews.filter(
-      function(item) {
-
-        return getSearchableText(
-          item
-        ).includes(
-          query
-        );
-
-      }
-    );
-
-
-  if (!filtered.length) {
-
-    results.innerHTML = `
-
-      <div class="search-result">
-
-        <div class="search-result-title">
-
-          ${escapeHTML(
-            t("searchNoResults")
-          )}
-
-        </div>
-
-        <div class="search-result-meta">
-
-          ${escapeHTML(
-            t("searchTry")
-          )}
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  results.innerHTML =
-    "";
-
-
-  filtered
-    .slice(0, 20)
-    .forEach(function(item) {
-
-      const result =
-        document.createElement(
-          "div"
-        );
-
-
-      result.className =
-        "search-result";
-
-
-      result.innerHTML = `
-
-        <div class="search-result-title">
-
-          ${escapeHTML(
-            getNewsTitle(item)
-          )}
-
-        </div>
-
-        <div class="search-result-meta">
-
-          ${escapeHTML(
-            translateCategory(
-              item.category ||
-              "Trending"
-            )
-          )}
-
-          ·
-
-          ${escapeHTML(
-            item.source ||
-            "NOWNEX"
-          )}
-
-        </div>
-
-      `;
-
-
-      result.onclick =
-        function() {
-
-          closeSearch();
-
-          openArticle(
-            item
-          );
-
-        };
-
-
-      results.appendChild(
-        result
-      );
-
-    });
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function goHome() {
-
-  closeArticle();
-
-  clearCategoryFilter();
-
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
-
+function applyLanguage(){
+  const html=document.documentElement;
+  html.lang=currentLanguage==="ar"?"ar":"en";
+  html.dir=currentLanguage==="ar"?"rtl":"ltr";
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.getAttribute("data-i18n");
+    if(translations[currentLanguage][key])el.textContent=translations[currentLanguage][key];
   });
 
-}
-
-
-function scrollToTrending() {
-
-  closeArticle();
-
-
-  document
-    .getElementById(
-      "trending"
-    )
-    .scrollIntoView({
-
-      behavior:
-        "smooth"
-
-    });
-
-}
-
-
-function scrollToCategories() {
-
-  closeArticle();
-
-
-  document
-    .getElementById(
-      "categories"
-    )
-    .scrollIntoView({
-
-      behavior:
-        "smooth"
-
-    });
-
-}
-
-
-function scrollToAbout() {
-
-  closeArticle();
-
-
-  document
-    .getElementById(
-      "about"
-    )
-    .scrollIntoView({
-
-      behavior:
-        "smooth"
-
-    });
-
-}
-
-
-/* =====================================================
-   CATEGORY FILTER
-===================================================== */
-
-function filterByCategory(
-  category,
-  clickedElement
-) {
-
-  currentCategory =
-    category;
-
-
-  document
-    .querySelectorAll(
-      ".category"
-    )
-    .forEach(function(card) {
-
-      card.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  if (clickedElement) {
-
-    clickedElement.classList.add(
-      "active"
-    );
-
-  }
-
-  else {
-
-    const target =
-      document.querySelector(
-        '.category[data-category="' +
-        category +
-        '"]'
-      );
-
-
-    if (target) {
-
-      target.classList.add(
-        "active"
-      );
-
-    }
-
-  }
-
-
-  const filterBar =
-    document.getElementById(
-      "categoryFilterBar"
-    );
-
-
-  const filterText =
-    document.getElementById(
-      "categoryFilterText"
-    );
-
-
-  filterBar.classList.add(
-    "active"
-  );
-
-
-  filterText.textContent =
-    t("categoryView") +
-    translateCategory(
-      category
-    );
-
-
-  renderNews(
-    getFilteredNews(
-      category
-    )
-  );
-
-
-  setTimeout(
-    function() {
-
-      document
-        .getElementById(
-          "trending"
-        )
-        .scrollIntoView({
-
-          behavior:
-            "smooth",
-
-          block:
-            "start"
-
-        });
-
-    },
-    80
-  );
-
-}
-
-
-/* =====================================================
-   FILTERED NEWS
-===================================================== */
-
-function getFilteredNews(
-  category
-) {
-
-  if (!category) {
-
-    return allNews.slice();
-
-  }
-
-
-  if (
-    category === "Trending"
-  ) {
-
-    return trendingNews.length
-      ? trendingNews.slice()
-      : allNews.slice();
-
-  }
-
-
-  if (
-    category === "Products"
-  ) {
-
-    return allNews.filter(
-      function(item) {
-
-        return (
-
-          item.category ===
-            "Products"
-
-          ||
-
-          item.category ===
-            "Shopping"
-
-        );
-
-      }
-    );
-
-  }
-
-
-  return allNews.filter(
-    function(item) {
-
-      return String(
-        item.category || ""
-      ).toLowerCase() ===
-
-      String(
-        category
-      ).toLowerCase();
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   CLEAR FILTER
-===================================================== */
-
-function clearCategoryFilter() {
-
-  currentCategory =
-    null;
-
-
-  document
-    .querySelectorAll(
-      ".category"
-    )
-    .forEach(function(card) {
-
-      card.classList.remove(
-        "active"
-      );
-
-    });
-
-
-  document
-    .getElementById(
-      "categoryFilterBar"
-    )
-    .classList
-    .remove("active");
-
-
-  renderNews(
-    allNews.slice()
-  );
-
-}
-
-
-/* =====================================================
-   SHOW ALL
-===================================================== */
-
-function showAllNews() {
-
-  clearCategoryFilter();
-
-  scrollToTrending();
-
-}
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-document.addEventListener(
-  "keydown",
-  function(event) {
-
-    if (
-      event.key ===
-      "Escape"
-    ) {
-
-      closeSearch();
-
-      closeArticle();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   SECURITY
-===================================================== */
-
-function escapeHTML(value) {
-
-  return String(
-    value || ""
-  )
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-function safeURL(value) {
-
-  try {
-
-    const url =
-      new URL(
-        String(
-          value || "#"
-        ),
-        window.location.href
-      );
-
-
-    if (
-
-      url.protocol ===
-        "http:" ||
-
-      url.protocol ===
-        "https:"
-
-    ) {
-
-      return url.href;
-
-    }
-
-  }
-
-  catch (error) {}
-
-
-  return "#";
-
-}
-
-
-/* =====================================================
-   ICONS
-===================================================== */
-
-function getNewsIcon(
-  category
-) {
-
-  const icons = {
-
-    World:
-      "🌍",
-
-    Technology:
-      "💻",
-
-    Entertainment:
-      "🎬",
-
-    AI:
-      "🤖",
-
-    Cars:
-      "🚗",
-
-    Facts:
-      "🧠",
-
-    Science:
-      "🔬",
-
-    Sports:
-      "⚽",
-
-    Trending:
-      "🔥",
-
-    Products:
-      "🛍️",
-
-    Shopping:
-      "🛍️"
-
-  };
-
-
-  return (
-
-    icons[
-      category
-    ]
-
-    ||
-
-    "🔥"
-
-  );
-
-}
-
-
-/* =====================================================
-   CATEGORY TRANSLATION
-===================================================== */
-
-function translateCategory(
-  category
-) {
-
-  if (
-    currentLanguage ===
-    "en"
-  ) {
-
-    const categories = {
-
-      World:
-        "World",
-
-      Technology:
-        "Technology",
-
-      Entertainment:
-        "Entertainment",
-
-      AI:
-        "AI & Future",
-
-      Cars:
-        "Cars",
-
-      Facts:
-        "Facts",
-
-      Science:
-        "Science",
-
-      Sports:
-        "Sports",
-
-      Trending:
-        "Trending",
-
-      Products:
-        "Trending Products",
-
-      Shopping:
-        "Trending Products"
-
-    };
-
-
-    return (
-
-      categories[
-        category
-      ]
-
-      ||
-
-      category
-
-    );
-
-  }
-
-
-  const categories = {
-
-    World:
-      "العالم",
-
-    Technology:
-      "التكنولوجيا",
-
-    Entertainment:
-      "الترفيه",
-
-    AI:
-      "الذكاء الاصطناعي",
-
-    Cars:
-      "السيارات",
-
-    Facts:
-      "حقائق",
-
-    Science:
-      "علوم",
-
-    Sports:
-      "رياضة",
-
-    Trending:
-      "الترند",
-
-    Products:
-      "المنتجات الرائجة",
-
-    Shopping:
-      "المنتجات الرائجة"
-
-  };
-
-
-  return (
-
-    categories[
-      category
-    ]
-
-    ||
-
-    category
-
-  );
-
-}
-
-
-/* =====================================================
-   NEWS COUNT
-===================================================== */
-
-function updateNewsCount() {
-
-  const count =
-    document.getElementById(
-      "newsCount"
-    );
-
-
-  if (!count) {
-    return;
-  }
-
-
-  let number =
-    allNews.length;
-
-
-  if (
-    currentCategory ===
-    "Trending"
-  ) {
-
-    number =
-      trendingNews.length;
-
-  }
-
-  else if (
-    currentCategory
-  ) {
-
-    number =
-      getFilteredNews(
-        currentCategory
-      ).length;
-
-  }
-
-
-  count.textContent =
-    number +
-    " " +
-    t("newsCount");
-
-}
-
-
-/* =====================================================
-   OPEN ARTICLE
-===================================================== */
-
-function openArticle(
-  item
-) {
-
-  if (!item) {
-    return;
-  }
-
-
-  window.currentOpenedArticle =
-    item;
-
-
-  const overlay =
-    document.getElementById(
-      "articleOverlay"
-    );
-
-
-  const content =
-    document.getElementById(
-      "articleContent"
-    );
-
-
-  const title =
-    escapeHTML(
-      getNewsTitle(item)
-    );
-
-
-  const summary =
-    escapeHTML(
-      getNewsSummary(item)
-    );
-
-
-  const category =
-    escapeHTML(
-      translateCategory(
-        item.category ||
-        "Trending"
-      )
-    );
-
-
-  const source =
-    escapeHTML(
-      item.source ||
-      "NOWNEX"
-    );
-
-
-  const originalLink =
-    safeURL(
-      item.link
-    );
-
-
-  const icon =
-    getNewsIcon(
-      item.category
-    );
-
-
-  let dateText =
-    "";
-
-
-  if (
-    item.published
-  ) {
-
-    dateText =
-      escapeHTML(
-        item.published
-      );
-
-  }
-
-
-  let articleImageHTML =
-    "";
-
-
-  if (
-    item.image
-  ) {
-
-    const imageURL =
-      safeURL(
-        item.image
-      );
-
-
-    if (
-      imageURL !== "#"
-    ) {
-
-      articleImageHTML = `
-
-        <div class="article-image-wrapper">
-
-          <img
-
-            class="article-image"
-
-            src="${imageURL}"
-
-            alt=""
-
-            referrerpolicy="no-referrer"
-
-            onerror="this.classList.add('image-error');"
-
-          >
-
-        </div>
-
-      `;
-
-    }
-
-  }
-
-
-  content.innerHTML = `
-
-    ${articleImageHTML}
-
-
-    <div class="article-category">
-
-      ${icon}
-
-      ${category}
-
-    </div>
-
-
-    <h1 class="article-title">
-
-      ${title}
-
-    </h1>
-
-
-    <div class="article-info">
-
-      <span>
-
-        ${escapeHTML(
-          t("source")
-        )}
-
-        ${source}
-
-      </span>
-
-
-      ${
-        dateText
-
-        ?
-
-        `
-          <span>
-            ${dateText}
-          </span>
-        `
-
-        :
-
-        ""
-
-      }
-
-    </div>
-
-
-    <div class="article-summary-box">
-
-      <div class="article-summary-label">
-
-        ${escapeHTML(
-          t("summary")
-        )}
-
-      </div>
-
-
-      <div class="article-summary">
-
-        ${summary}
-
-      </div>
-
-
-      <div class="article-points">
-
-        <h3>
-
-          ${escapeHTML(
-            t("meaning")
-          )}
-
-        </h3>
-
-
-        <p>
-
-          ${escapeHTML(
-            t("meaningText")
-          )}
-
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="article-source">
-
-      <div class="article-source-title">
-
-        ${escapeHTML(
-          t("originalSource")
-        )}
-
-      </div>
-
-
-      <div class="article-source-name">
-
-        ${source}
-
-      </div>
-
-
-      ${
-        originalLink !== "#"
-
-        ?
-
-        `
-
-          <a
-
-            class="original-btn"
-
-            href="${originalLink}"
-
-            target="_blank"
-
-            rel="noopener noreferrer"
-
-          >
-
-            ${escapeHTML(
-              t("readOriginal")
-            )}
-
-          </a>
-
-        `
-
-        :
-
-        `
-
-          <div class="article-note">
-
-            ${escapeHTML(
-              t("unavailableLink")
-            )}
-
-          </div>
-
-        `
-
-      }
-
-
-      <div class="article-note">
-
-        ${escapeHTML(
-          t("articleNote")
-        )}
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  overlay.classList.add(
-    "active"
-  );
-
-
-  document.body.classList.add(
-    "article-open"
-  );
-
-
-  overlay.scrollTop =
-    0;
-
-}
-
-
-function closeArticle() {
-
-  const overlay =
-    document.getElementById(
-      "articleOverlay"
-    );
-
-
-  overlay.classList.remove(
-    "active"
-  );
-
-
-  document.body.classList.remove(
-    "article-open"
-  );
-
-
-  window.currentOpenedArticle =
-    null;
-
-}
-
-
-/* =====================================================
-   RENDER NEWS
-   IMPORTANT:
-   لا يوجد slice(0,8)
-   يعرض كل الأخبار
-===================================================== */
-
-function renderNews(
-  news
-) {
-
-  const newsGrid =
-    document.getElementById(
-      "newsGrid"
-    );
-
-
-  if (!newsGrid) {
-    return;
-  }
-
-
-  newsGrid.innerHTML =
-    "";
-
-
-  if (
-    !news ||
-    !news.length
-  ) {
-
-    newsGrid.innerHTML = `
-
-      <div class="empty-news">
-
-        <strong>
-
-          ${escapeHTML(
-            t("noNews")
-          )}
-
-        </strong>
-
-        ${escapeHTML(
-          t("noNewsText")
-        )}
-
-      </div>
-
-    `;
-
-
-    updateNewsCount();
-
-    return;
-
-  }
-
-
-  /*
-    IMPORTANT:
-
-    هنا لا نستخدم:
-
-    slice(0,8)
-
-    ولا أي حد أقصى.
-
-    الموقع يعرض كل الأخبار الموجودة
-    في news.json.
-  */
-
-
-  const displayNews =
-    news.slice();
-
-
-  displayNews.forEach(
-    function(item, index) {
-
-      const card =
-        document.createElement(
-          "article"
-        );
-
-
-      card.className =
-        "trend-card";
-
-
-      const title =
-        escapeHTML(
-          getNewsTitle(item)
-        );
-
-
-      const category =
-        escapeHTML(
-          translateCategory(
-            item.category ||
-            "Trending"
-          )
-        );
-
-
-      const source =
-        escapeHTML(
-          item.source ||
-          "NOWNEX"
-        );
-
-
-      const icon =
-        getNewsIcon(
-          item.category
-        );
-
-
-      let imageHTML =
-        "";
-
-
-      if (
-        item.image
-      ) {
-
-        const imageURL =
-          safeURL(
-            item.image
-          );
-
-
-        if (
-          imageURL !== "#"
-        ) {
-
-          imageHTML = `
-
-            <img
-
-              class="trend-image"
-
-              src="${imageURL}"
-
-              alt=""
-
-              loading="lazy"
-
-              referrerpolicy="no-referrer"
-
-              onerror="this.classList.add('image-error');"
-
-            >
-
-          `;
-
-        }
-
-      }
-
-
-      card.innerHTML = `
-
-        ${imageHTML}
-
-
-        <div class="trend-card-content">
-
-
-          <div class="trend-number">
-
-            ${String(
-              index + 1
-            ).padStart(
-              2,
-              "0"
-            )}
-
-            — ${escapeHTML(
-              t("trendingLabel")
-            )}
-
-          </div>
-
-
-          <div class="trend-icon">
-
-            ${icon}
-
-          </div>
-
-
-          <h3>
-
-            ${title}
-
-          </h3>
-
-
-          <div class="trend-meta">
-
-            ${category}
-
-            ·
-
-            ${source}
-
-          </div>
-
-
-          <a
-
-            class="news-link"
-
-            href="#"
-
-            aria-label="اقرأ الخبر"
-
-          >
-
-            ${escapeHTML(
-              t("readArticle")
-            )}
-
-          </a>
-
-
-        </div>
-
-      `;
-
-
-      const newsLink =
-        card.querySelector(
-          ".news-link"
-        );
-
-
-      if (
-        newsLink
-      ) {
-
-        newsLink.addEventListener(
-          "click",
-          function(event) {
-
-            event.preventDefault();
-
-            event.stopPropagation();
-
-            openArticle(
-              item
-            );
-
-          }
-        );
-
-      }
-
-
-      card.addEventListener(
-        "click",
-        function(event) {
-
-          if (
-            event.target.closest(
-              ".news-link"
-            )
-          ) {
-
-            return;
-
-          }
-
-          openArticle(
-            item
-          );
-
-        }
-      );
-
-
-      newsGrid.appendChild(
-        card
-      );
-
-    }
-  );
-
-
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    const key=el.getAttribute("data-i18n-placeholder");
+    if(translations[currentLanguage][key])el.placeholder=translations[currentLanguage][key];
+  });
+
+  document.getElementById("languageBtn").textContent=t("languageButton");
   updateNewsCount();
 
-}
-
-
-/* =====================================================
-   LOAD NEWS
-===================================================== */
-
-async function loadNews() {
-
-  const newsGrid =
-    document.getElementById(
-      "newsGrid"
-    );
-
-
-  try {
-
-    const response =
-      await fetch(
-
-        "news.json?v=" +
-        Date.now(),
-
-        {
-          cache:
-            "no-store"
-        }
-
-      );
-
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        "news.json could not be loaded"
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    const news =
-      Array.isArray(
-        data.news
-      )
-
-      ?
-
-      data.news
-
-      :
-
-      [];
-
-
-    const trending =
-      Array.isArray(
-        data.trending
-      )
-
-      ?
-
-      data.trending
-
-      :
-
-      [];
-
-
-    if (
-      !news.length
-    ) {
-
-      throw new Error(
-        "No news available"
-      );
-
-    }
-
-
-    allNews =
-      news;
-
-
-    trendingNews =
-      trending;
-
-
-    /*
-      إذا لم توجد قائمة Trending
-      نستخدم الأخبار العادية.
-    */
-
-    if (
-      !trendingNews.length
-    ) {
-
-      trendingNews =
-        allNews.slice();
-
-    }
-
-
-    if (
-      currentCategory
-    ) {
-
-      renderNews(
-        getFilteredNews(
-          currentCategory
-        )
-      );
-
-    }
-
-    else {
-
-      renderNews(
-        allNews
-      );
-
-    }
-
-
-    console.log(
-      "================================"
-    );
-
-
-    console.log(
-      "NOWNEX:",
-      allNews.length,
-      "articles loaded."
-    );
-
-
-    console.log(
-      "Trending:",
-      trendingNews.length
-    );
-
-
-    console.log(
-      "AI:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "AI"
-      ).length
-    );
-
-
-    console.log(
-      "Technology:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "Technology"
-      ).length
-    );
-
-
-    console.log(
-      "Cars:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "Cars"
-      ).length
-    );
-
-
-    console.log(
-      "Entertainment:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "Entertainment"
-      ).length
-    );
-
-
-    console.log(
-      "World:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "World"
-      ).length
-    );
-
-
-    console.log(
-      "Facts:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "Facts"
-      ).length
-    );
-
-
-    console.log(
-      "Products:",
-      allNews.filter(
-        x =>
-          x.category ===
-          "Products"
-      ).length
-    );
-
-
-    console.log(
-      "================================"
-    );
-
+  if(currentCategory){
+    document.getElementById("categoryFilterText").textContent=
+      t("categoryView")+translateCategory(currentCategory);
   }
 
-  catch (
-    error
-  ) {
+  if(allNews.length)renderNews(getFilteredNews(currentCategory));
 
-    console.error(
-      "NOWNEX News Error:",
-      error
-    );
+  if(window.currentOpenedArticle){
+    openArticle(window.currentOpenedArticle);
+  }
+}
 
+function toggleLanguage(){
+  currentLanguage=currentLanguage==="ar"?"en":"ar";
+  localStorage.setItem("nownex-language",currentLanguage);
+  applyLanguage();
+}
 
-    newsGrid.innerHTML = `
+function openSearch(){
+  document.getElementById("searchPanel").classList.add("active");
+  document.getElementById("searchInput").focus();
+}
+function closeSearch(){
+  document.getElementById("searchPanel").classList.remove("active");
+}
 
-      <div class="empty-news">
+function performSearch(){
+  const query=document.getElementById("searchInput").value.trim().toLowerCase();
+  const results=document.getElementById("searchResults");
+  if(!query){results.innerHTML="";return;}
 
-        <strong>
+  const filtered=allNews.filter(item=>getSearchableText(item).includes(query));
+  if(!filtered.length){
+    results.innerHTML=`<div class="search-result">
+      <div class="search-result-title">${escapeHTML(t("searchNoResults"))}</div>
+      <div class="search-result-meta">${escapeHTML(t("searchTry"))}</div>
+    </div>`;
+    return;
+  }
 
-          ${escapeHTML(
-            t("noNews")
-          )}
+  results.innerHTML="";
+  filtered.slice(0,20).forEach(item=>{
+    const result=document.createElement("div");
+    result.className="search-result";
+    result.innerHTML=`
+      <div class="search-result-title">${escapeHTML(getNewsTitle(item))}</div>
+      <div class="search-result-meta">
+        ${escapeHTML(translateCategory(item.category||"Trending"))} · ${escapeHTML(item.source||"NOWNEX")}
+      </div>`;
+    result.onclick=()=>{closeSearch();openArticle(item)};
+    results.appendChild(result);
+  });
+}
 
-        </strong>
+function goHome(){
+  closeArticle();clearCategoryFilter();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function scrollToTrending(){
+  closeArticle();
+  document.getElementById("trending").scrollIntoView({behavior:"smooth"});
+}
+function scrollToCategories(){
+  closeArticle();
+  document.getElementById("categories").scrollIntoView({behavior:"smooth"});
+}
+function scrollToAbout(){
+  closeArticle();
+  document.getElementById("about").scrollIntoView({behavior:"smooth"});
+}
 
-        ${escapeHTML(
-          t("searchTry")
-        )}
+function filterByCategory(category,clickedElement){
+  currentCategory=category;
+  document.querySelectorAll(".category").forEach(card=>card.classList.remove("active"));
 
+  if(clickedElement)clickedElement.classList.add("active");
+  else{
+    const target=document.querySelector('.category[data-category="'+category+'"]');
+    if(target)target.classList.add("active");
+  }
+
+  document.getElementById("categoryFilterBar").classList.add("active");
+  document.getElementById("categoryFilterText").textContent=
+    t("categoryView")+translateCategory(category);
+
+  renderNews(getFilteredNews(category));
+  setTimeout(()=>document.getElementById("trending").scrollIntoView({behavior:"smooth",block:"start"}),80);
+}
+
+function getFilteredNews(category){
+  if(!category)return allNews.slice();
+  if(category==="Trending")return trendingNews.length?trendingNews.slice():allNews.slice();
+  if(category==="Products"){
+    return allNews.filter(item=>item.category==="Products"||item.category==="Shopping");
+  }
+  return allNews.filter(item=>String(item.category||"").toLowerCase()===String(category).toLowerCase());
+}
+
+function clearCategoryFilter(){
+  currentCategory=null;
+  document.querySelectorAll(".category").forEach(card=>card.classList.remove("active"));
+  document.getElementById("categoryFilterBar").classList.remove("active");
+  renderNews(allNews.slice());
+}
+function showAllNews(){clearCategoryFilter();scrollToTrending()}
+
+function escapeHTML(value){
+  return String(value||"")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function safeURL(value){
+  try{
+    const url=new URL(String(value||"#"),window.location.href);
+    if(url.protocol==="http:"||url.protocol==="https:")return url.href;
+  }catch(e){}
+  return "#";
+}
+
+function getNewsIcon(category){
+  const icons={
+    World:"🌍",Technology:"💻",Entertainment:"🎬",AI:"🤖",Cars:"🚗",
+    Facts:"🧠",Science:"🔬",Sports:"⚽",Trending:"🔥",Products:"🛍️",Shopping:"🛍️"
+  };
+  return icons[category]||"🔥";
+}
+
+function translateCategory(category){
+  const ar={
+    World:"العالم",Technology:"التكنولوجيا",Entertainment:"الترفيه",AI:"الذكاء الاصطناعي",
+    Cars:"السيارات",Facts:"حقائق",Science:"علوم",Sports:"رياضة",Trending:"الترند",
+    Products:"المنتجات الرائجة",Shopping:"المنتجات الرائجة"
+  };
+  const en={
+    World:"World",Technology:"Technology",Entertainment:"Entertainment",AI:"AI & Future",
+    Cars:"Cars",Facts:"Facts",Science:"Science",Sports:"Sports",Trending:"Trending",
+    Products:"Trending Products",Shopping:"Trending Products"
+  };
+  return (currentLanguage==="en"?en:ar)[category]||category;
+}
+
+function updateNewsCount(){
+  const count=document.getElementById("newsCount");
+  if(!count)return;
+  let number=allNews.length;
+  if(currentCategory==="Trending")number=trendingNews.length;
+  else if(currentCategory)number=getFilteredNews(currentCategory).length;
+  count.textContent=number+" "+t("newsCount");
+}
+
+function openArticle(item){
+  if(!item)return;
+  window.currentOpenedArticle=item;
+
+  const overlay=document.getElementById("articleOverlay");
+  const content=document.getElementById("articleContent");
+
+  const title=escapeHTML(getNewsTitle(item));
+  const summary=escapeHTML(getNewsSummary(item));
+  const category=escapeHTML(translateCategory(item.category||"Trending"));
+  const source=escapeHTML(item.source||"NOWNEX");
+  const originalLink=safeURL(item.link);
+  const icon=getNewsIcon(item.category);
+
+  let dateText=item.published?escapeHTML(cleanNewsText(item.published)):"";
+  let articleImageHTML="";
+
+  if(item.image){
+    const imageURL=safeURL(item.image);
+    if(imageURL!=="#"){
+      articleImageHTML=`
+        <div class="article-image-wrapper">
+          <img class="article-image" src="${imageURL}" alt="" referrerpolicy="no-referrer"
+               onerror="this.classList.add('image-error')">
+        </div>`;
+    }
+  }
+
+  content.innerHTML=`
+    ${articleImageHTML}
+
+    <div class="article-category">${icon} ${category}</div>
+
+    <h1 class="article-title">${title}</h1>
+
+    <div class="article-info">
+      <span>${escapeHTML(t("source"))} ${source}</span>
+      ${dateText?`<span>${dateText}</span>`:""}
+    </div>
+
+    <div class="article-summary-box">
+      <div class="article-summary-label">${escapeHTML(t("summary"))}</div>
+      <div class="article-summary">${summary}</div>
+
+      <div class="article-points">
+        <h3>${escapeHTML(t("meaning"))}</h3>
+        <p>${escapeHTML(t("meaningText"))}</p>
       </div>
+    </div>
 
-    `;
+    <div class="article-source">
+      <div class="article-source-title">${escapeHTML(t("originalSource"))}</div>
+      <div class="article-source-name">${source}</div>
 
-  }
+      ${originalLink!=="#"?
+        `<a class="original-btn" href="${originalLink}" target="_blank" rel="noopener noreferrer">
+          ${escapeHTML(t("readOriginal"))}
+        </a>`:
+        `<div class="article-note">${escapeHTML(t("unavailableLink"))}</div>`}
 
+      <div class="article-note">${escapeHTML(t("articleNote"))}</div>
+    </div>`;
+
+  overlay.classList.add("active");
+  document.body.classList.add("article-open");
+  overlay.scrollTop=0;
 }
 
+function closeArticle(){
+  document.getElementById("articleOverlay").classList.remove("active");
+  document.body.classList.remove("article-open");
+  window.currentOpenedArticle=null;
+}
 
-/* =====================================================
-   START
-===================================================== */
+function renderNews(news){
+  const newsGrid=document.getElementById("newsGrid");
+  if(!newsGrid)return;
+  newsGrid.innerHTML="";
+
+  if(!news||!news.length){
+    newsGrid.innerHTML=`
+      <div class="empty-news">
+        <strong>${escapeHTML(t("noNews"))}</strong>
+        ${escapeHTML(t("noNewsText"))}
+      </div>`;
+    updateNewsCount();
+    return;
+  }
+
+  news.slice().forEach((item,index)=>{
+    const card=document.createElement("article");
+    card.className="trend-card";
+
+    const title=escapeHTML(getNewsTitle(item));
+    const category=escapeHTML(translateCategory(item.category||"Trending"));
+    const source=escapeHTML(item.source||"NOWNEX");
+    const icon=getNewsIcon(item.category);
+
+    let imageHTML="";
+    if(item.image){
+      const imageURL=safeURL(item.image);
+      if(imageURL!=="#"){
+        imageHTML=`
+          <img class="trend-image" src="${imageURL}" alt="" loading="lazy"
+               referrerpolicy="no-referrer" onerror="this.classList.add('image-error')">`;
+      }
+    }
+
+    card.innerHTML=`
+      ${imageHTML}
+      <div class="trend-card-content">
+        <div class="trend-number">${String(index+1).padStart(2,"0")} — ${escapeHTML(t("trendingLabel"))}</div>
+        <div class="trend-icon">${icon}</div>
+        <h3>${title}</h3>
+        <div class="trend-meta">${category} · ${source}</div>
+        <a class="news-link" href="#" aria-label="${escapeHTML(t("readArticle"))}">
+          ${escapeHTML(t("readArticle"))}
+        </a>
+      </div>`;
+
+    card.querySelector(".news-link").addEventListener("click",event=>{
+      event.preventDefault();event.stopPropagation();openArticle(item);
+    });
+    card.addEventListener("click",event=>{
+      if(event.target.closest(".news-link"))return;
+      openArticle(item);
+    });
+    newsGrid.appendChild(card);
+  });
+
+  updateNewsCount();
+}
+
+async function loadNews(){
+  const newsGrid=document.getElementById("newsGrid");
+
+  try{
+    const response=await fetch("news.json?v="+Date.now(),{cache:"no-store"});
+    if(!response.ok)throw new Error("news.json could not be loaded");
+
+    const data=await response.json();
+
+    allNews=Array.isArray(data.news)?data.news:[];
+    trendingNews=Array.isArray(data.trending)?data.trending:[];
+
+    if(!allNews.length)throw new Error("No news available");
+    if(!trendingNews.length)trendingNews=allNews.slice();
+
+    renderNews(getFilteredNews(currentCategory));
+
+    console.log("NOWNEX:",allNews.length,"articles loaded.");
+    console.log("Trending:",trendingNews.length);
+  }catch(error){
+    console.error("NOWNEX News Error:",error);
+    newsGrid.innerHTML=`
+      <div class="empty-news">
+        <strong>${escapeHTML(t("noNews"))}</strong>
+        ${escapeHTML(t("searchTry"))}
+      </div>`;
+  }
+}
+
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){closeSearch();closeArticle()}
+});
 
 applyLanguage();
-
 loadNews();
-
-
-/*
-  تحديث الأخبار كل 10 دقائق
-*/
-
-setInterval(
-
-  loadNews,
-
-  10 * 60 * 1000
-
-);
-
+setInterval(loadNews,10*60*1000);
 </script>
 
-
 </body>
-
 </html>
