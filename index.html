@@ -6,80 +6,88 @@
 
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
 
-<meta name="description" content="NOWNEX — منصة لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم.">
+<meta name="description"
+content="NOWNEX — منصة لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 /* =========================================================
-   RESET
+   NOWNEX — GLOBAL
 ========================================================= */
 
 *{
   box-sizing:border-box;
   margin:0;
-  padding:0
+  padding:0;
 }
 
 :root{
-  --bg:#060914;
-  --bg2:#0b1020;
-  --card:#10172a;
-  --card-hover:#151e35;
+  --bg:#030712;
+  --bg2:#071020;
+  --card:#0c1528;
+  --card2:#101c34;
 
-  --text:#f5f7ff;
-  --muted:#8d97ad;
+  --text:#f7f9ff;
+  --muted:#8d98ad;
 
   --gold:#d9b45b;
-  --gold-light:#f3d47d;
+  --gold-light:#f5d477;
 
-  --blue:#4f8cff;
+  --blue:#168cff;
+  --blue-light:#39b9ff;
+  --purple:#655cff;
+
   --green:#56e39f;
 
-  --line:rgba(255,255,255,.08)
+  --line:rgba(255,255,255,.09);
 }
 
 html{
-  scroll-behavior:smooth
+  scroll-behavior:smooth;
 }
 
 body{
   font-family:"Cairo",Arial,sans-serif;
-
   background:
     radial-gradient(
-      circle at 80% 0%,
-      rgba(79,140,255,.12),
+      circle at 78% 15%,
+      rgba(0,105,255,.14),
       transparent 30%
     ),
     radial-gradient(
-      circle at 15% 15%,
-      rgba(217,180,91,.08),
-      transparent 25%
+      circle at 12% 10%,
+      rgba(217,180,91,.07),
+      transparent 24%
     ),
-    var(--bg);
+    linear-gradient(
+      180deg,
+      #020611 0%,
+      #050b18 45%,
+      #030712 100%
+    );
 
   color:var(--text);
   min-height:100vh;
-  overflow-x:hidden
+  overflow-x:hidden;
 }
 
 body.article-open{
-  overflow:hidden
+  overflow:hidden;
 }
 
 a{
   color:inherit;
-  text-decoration:none
+  text-decoration:none;
 }
 
 button{
-  font-family:inherit
+  font-family:inherit;
 }
-
 
 /* =========================================================
    HEADER
@@ -90,46 +98,48 @@ header{
   top:0;
   z-index:100;
 
-  backdrop-filter:blur(18px);
+  background:rgba(3,7,18,.88);
+  backdrop-filter:blur(20px);
 
-  background:rgba(6,9,20,.94);
-
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .header-inner{
-  max-width:1250px;
+  max-width:1450px;
   margin:auto;
-  height:76px;
-  padding:0 22px;
+
+  height:78px;
+  padding:0 25px;
 
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:25px
+  gap:25px;
 }
+
+/* LOGO */
 
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:11px;
 
-  font-size:27px;
+  font-size:28px;
   font-weight:900;
-  letter-spacing:-1px;
 
-  white-space:nowrap
+  letter-spacing:-1px;
+  white-space:nowrap;
 }
 
 .logo-text{
-  color:var(--gold-light)
+  color:var(--gold-light);
 }
 
 .logo-mark{
-  width:40px;
-  height:40px;
+  width:43px;
+  height:43px;
 
-  border-radius:12px;
+  border-radius:13px;
 
   display:grid;
   place-items:center;
@@ -143,36 +153,70 @@ header{
 
   color:#080b13;
 
-  font-size:21px;
+  font-size:22px;
   font-weight:900;
 
   box-shadow:
-    0 0 25px rgba(217,180,91,.18)
+    0 0 25px rgba(217,180,91,.18);
 }
+
+/* NAVIGATION */
 
 nav{
   display:flex;
   align-items:center;
-  gap:28px
+  justify-content:center;
+  gap:38px;
+  flex:1;
 }
 
 nav a{
-  color:#b9c1d3;
+  position:relative;
+
+  color:#aeb8cb;
+
   font-size:14px;
   font-weight:700;
-  transition:.2s;
-  cursor:pointer
+
+  cursor:pointer;
+
+  transition:.25s;
 }
 
 nav a:hover,
 nav a.active{
-  color:#fff
+  color:#fff;
 }
+
+nav a.active::after{
+  content:"";
+
+  position:absolute;
+
+  right:0;
+  left:0;
+
+  bottom:-12px;
+
+  height:2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold),
+      var(--gold-light)
+    );
+
+  box-shadow:
+    0 0 10px rgba(217,180,91,.45);
+}
+
+/* HEADER BUTTONS */
 
 .header-actions{
   display:flex;
   align-items:center;
-  gap:8px
+  gap:9px;
 }
 
 .language-btn,
@@ -180,19 +224,23 @@ nav a.active{
 .mobile-menu{
   border:1px solid var(--line);
 
-  background:rgba(255,255,255,.04);
+  background:
+    rgba(255,255,255,.035);
 
   color:#fff;
 
-  border-radius:12px;
+  border-radius:13px;
 
-  cursor:pointer
+  cursor:pointer;
+
+  transition:.2s;
 }
 
 .language-btn{
-  height:43px;
-  min-width:82px;
-  padding:0 12px;
+  height:44px;
+  min-width:84px;
+
+  padding:0 13px;
 
   font-size:13px;
   font-weight:800;
@@ -200,282 +248,409 @@ nav a.active{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:6px
-}
-
-.language-btn:hover{
-  border-color:rgba(217,180,91,.45);
-  background:rgba(217,180,91,.08)
+  gap:6px;
 }
 
 .search-btn,
 .mobile-menu{
-  width:43px;
-  height:43px;
-  font-size:18px
+  width:44px;
+  height:44px;
+
+  font-size:19px;
+}
+
+.language-btn:hover,
+.search-btn:hover,
+.mobile-menu:hover{
+  border-color:rgba(217,180,91,.4);
+  background:rgba(217,180,91,.07);
 }
 
 .mobile-menu{
-  display:none
+  display:none;
 }
-
 
 /* =========================================================
    HERO
 ========================================================= */
 
 .hero{
-  max-width:1250px;
+  max-width:1450px;
+  min-height:640px;
+
   margin:auto;
 
-  padding:70px 22px 50px;
+  padding:
+    65px
+    35px
+    45px;
 
   display:grid;
-  grid-template-columns:1.35fr .65fr;
 
-  gap:35px;
+  grid-template-columns:
+    minmax(0,1fr)
+    minmax(480px,.95fr);
 
-  align-items:center
+  align-items:center;
+
+  position:relative;
+
+  overflow:hidden;
+}
+
+/* BLUE BACKGROUND GLOW */
+
+.hero::before{
+  content:"";
+
+  position:absolute;
+
+  width:700px;
+  height:700px;
+
+  right:20%;
+
+  top:-200px;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,115,255,.14),
+      transparent 65%
+    );
+
+  pointer-events:none;
+}
+
+/* HERO TEXT */
+
+.hero-content{
+  position:relative;
+  z-index:3;
+
+  max-width:700px;
 }
 
 .hero-badge{
   display:inline-flex;
+
   align-items:center;
-  gap:9px;
+  gap:10px;
 
-  padding:8px 14px;
-
-  border:1px solid rgba(217,180,91,.25);
-
-  background:rgba(217,180,91,.07);
-
-  color:var(--gold-light);
+  padding:9px 17px;
 
   border-radius:50px;
 
-  font-size:12px;
+  border:1px solid rgba(47,146,255,.28);
+
+  background:
+    rgba(35,100,255,.05);
+
+  color:#5d9fff;
+
+  font-size:14px;
   font-weight:800;
 
-  margin-bottom:22px
+  margin-bottom:25px;
 }
 
 .live-dot{
-  width:8px;
-  height:8px;
+  width:9px;
+  height:9px;
 
   border-radius:50%;
 
-  background:var(--green);
+  background:#258dff;
 
   box-shadow:
-    0 0 12px var(--green)
+    0 0 14px #258dff;
 }
 
 .hero h1{
-  font-size:clamp(45px,7vw,82px);
+  font-size:
+    clamp(
+      46px,
+      6vw,
+      78px
+    );
 
-  line-height:1.12;
+  line-height:1.15;
 
   letter-spacing:-2px;
 
-  max-width:850px;
+  max-width:800px;
 
-  margin-bottom:25px;
+  margin-bottom:24px;
 
-  font-weight:900
+  font-weight:900;
 }
 
-.hero h1 span{
-  display:block;
+.hero h1 .white{
+  color:#fff;
+}
+
+.hero h1 .gold{
+  color:#168cff;
 
   background:
     linear-gradient(
       90deg,
-      #fff,
-      var(--gold-light)
+      #168cff,
+      #4d7fff
     );
 
   -webkit-background-clip:text;
   background-clip:text;
 
-  color:transparent
+  -webkit-text-fill-color:transparent;
 }
 
 .hero p{
-  max-width:700px;
+  max-width:650px;
 
-  color:var(--muted);
+  color:#929db2;
 
-  font-size:18px;
+  font-size:17px;
 
   line-height:1.9;
 
   margin-bottom:30px;
 
-  font-weight:500
+  font-weight:500;
 }
+
+/* HERO BUTTONS */
 
 .hero-buttons{
   display:flex;
   gap:12px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .primary-btn,
 .secondary-btn{
-  padding:14px 21px;
+  min-height:52px;
+
+  padding:
+    13px
+    23px;
 
   border-radius:12px;
 
   cursor:pointer;
 
-  font-weight:800;
+  font-weight:900;
 
   border:1px solid var(--line);
 
-  transition:.2s
+  transition:.25s;
 }
 
 .primary-btn{
   background:
     linear-gradient(
       135deg,
-      var(--gold-light),
-      var(--gold)
+      #087dff,
+      #1664e8
     );
 
-  color:#090c15;
+  color:#fff;
 
-  border:none
+  border:none;
+
+  box-shadow:
+    0 8px 30px rgba(0,100,255,.22);
 }
 
 .secondary-btn{
-  background:rgba(255,255,255,.04);
-  color:#fff
+  background:
+    rgba(255,255,255,.025);
+
+  color:#fff;
 }
 
 .primary-btn:hover,
 .secondary-btn:hover{
-  transform:translateY(-2px)
+  transform:translateY(-3px);
 }
 
-
 /* =========================================================
-   HERO ORB
+   FUTURISTIC HERO VISUAL
 ========================================================= */
 
 .trend-orb{
-  min-height:350px;
+  min-height:500px;
 
   position:relative;
 
   display:grid;
-  place-items:center
+
+  place-items:center;
 }
 
 .orb{
-  width:260px;
-  height:260px;
+  width:390px;
+  height:390px;
+
+  border-radius:50%;
+
+  position:relative;
+
+  background:
+
+    radial-gradient(
+      circle at 38% 30%,
+      #ffffff 0%,
+      #dce9ff 7%,
+      #426b9e 22%,
+      #101e36 48%,
+      #061126 67%,
+      transparent 68%
+    );
+
+  box-shadow:
+
+    0 0 80px rgba(0,126,255,.28),
+    0 0 160px rgba(0,80,255,.13),
+    inset 0 0 70px rgba(0,150,255,.12);
+
+  animation:
+    float 5s ease-in-out infinite;
+}
+
+.orb::before{
+  content:"";
+
+  position:absolute;
+
+  inset:-24px;
+
+  border-radius:50%;
+
+  border:
+    2px solid
+    rgba(20,145,255,.75);
+
+  box-shadow:
+    0 0 20px rgba(0,145,255,.35),
+    inset 0 0 20px rgba(0,145,255,.2);
+}
+
+.orb::after{
+  content:"";
+
+  position:absolute;
+
+  width:110px;
+  height:110px;
+
+  right:45px;
+  top:90px;
 
   border-radius:50%;
 
   background:
     radial-gradient(
-      circle at 35% 30%,
-      #fff7d0 0%,
-      var(--gold) 8%,
-      #5b4920 38%,
-      #11182b 65%,
-      transparent 66%
+      circle,
+      #03162d 0%,
+      #061b39 45%,
+      #118eff 47%,
+      #031326 52%,
+      transparent 55%
     );
 
   box-shadow:
-    0 0 70px rgba(217,180,91,.16),
-    inset 0 0 50px rgba(255,255,255,.08);
-
-  animation:float 5s ease-in-out infinite
+    0 0 30px rgba(0,143,255,.7);
 }
 
 .orbit{
   position:absolute;
 
-  width:330px;
-  height:170px;
+  width:500px;
+  height:260px;
 
-  border:1px solid rgba(217,180,91,.25);
+  border:
+    1px solid
+    rgba(30,150,255,.38);
 
   border-radius:50%;
 
-  transform:rotate(-25deg)
+  transform:
+    rotate(-25deg);
+
+  box-shadow:
+    0 0 20px rgba(0,130,255,.12);
 }
 
-.orbit:after{
+.orbit::before{
   content:"";
 
   position:absolute;
 
-  width:9px;
-  height:9px;
+  width:10px;
+  height:10px;
 
   border-radius:50%;
 
-  background:var(--gold-light);
+  background:#32b8ff;
 
   box-shadow:
-    0 0 18px var(--gold);
+    0 0 18px #168cff;
 
-  top:30px;
-  right:30px
+  top:40px;
+  right:70px;
 }
 
 @keyframes float{
 
-  0%,
-  100%{
-    transform:translateY(0)
+  0%,100%{
+    transform:translateY(0);
   }
 
   50%{
-    transform:translateY(-12px)
+    transform:translateY(-12px);
   }
 
 }
-
 
 /* =========================================================
    SECTIONS
 ========================================================= */
 
 .section{
-  max-width:1250px;
+  max-width:1450px;
 
   margin:auto;
 
-  padding:25px 22px 60px
+  padding:
+    25px
+    35px
+    55px;
 }
 
 .section-header{
   display:flex;
 
   justify-content:space-between;
-
   align-items:end;
 
-  margin-bottom:25px;
+  margin-bottom:22px;
 
-  gap:20px
+  gap:20px;
 }
 
 .section-title{
-  font-size:30px;
+  font-size:29px;
 
   letter-spacing:-.5px;
 
-  font-weight:900
+  font-weight:900;
 }
 
 .section-title span{
-  color:var(--gold-light)
+  color:var(--gold-light);
 }
 
 .section-description{
@@ -485,7 +660,15 @@ nav a.active{
 
   margin-top:7px;
 
-  font-weight:500
+  font-weight:500;
+}
+
+.news-count{
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin-top:5px;
 }
 
 .view-all{
@@ -495,32 +678,366 @@ nav a.active{
 
   font-weight:800;
 
-  cursor:pointer
+  cursor:pointer;
 }
 
-.news-count{
-  color:var(--muted);
+/* =========================================================
+   HORIZONTAL CATEGORY SLIDER
+========================================================= */
+
+.category-grid{
+
+  display:flex;
+
+  gap:18px;
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+  padding:
+    7px
+    4px
+    18px;
+
+  scroll-behavior:smooth;
+
+  scroll-snap-type:x mandatory;
+
+  -webkit-overflow-scrolling:touch;
+
+  scrollbar-width:none;
+
+  cursor:grab;
+}
+
+.category-grid::-webkit-scrollbar{
+  display:none;
+}
+
+.category-grid.dragging{
+  cursor:grabbing;
+}
+
+.category{
+
+  flex:
+    0 0
+    285px;
+
+  min-height:235px;
+
+  position:relative;
+
+  overflow:hidden;
+
+  scroll-snap-align:start;
+
+  border-radius:20px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.09);
+
+  background:
+
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(35,116,255,.12),
+      transparent 55%
+    ),
+
+    linear-gradient(
+      145deg,
+      #0d1a31,
+      #07101f
+    );
+
+  cursor:pointer;
+
+  user-select:none;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+
+.category::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(0,145,255,.09),
+      transparent 48%
+    );
+
+  pointer-events:none;
+}
+
+.category::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:20px;
+  right:20px;
+
+  bottom:0;
+
+  height:2px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      #168cff,
+      #675cff,
+      transparent
+    );
+
+  opacity:.7;
+}
+
+.category:hover{
+
+  transform:
+    translateY(-5px);
+
+  border-color:
+    rgba(40,145,255,.45);
+
+  box-shadow:
+
+    0 15px 45px
+    rgba(0,90,255,.13),
+
+    inset 0 0 30px
+    rgba(0,140,255,.04);
+}
+
+.category.active{
+
+  border-color:
+    rgba(217,180,91,.75);
+
+  box-shadow:
+
+    0 0 30px
+    rgba(217,180,91,.13);
+}
+
+.category-content{
+
+  height:100%;
+  min-height:235px;
+
+  padding:
+    27px
+    22px
+    22px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
+  position:relative;
+
+  z-index:2;
+}
+
+.category-icon{
+
+  width:68px;
+  height:68px;
+
+  display:grid;
+
+  place-items:center;
+
+  border-radius:20px;
+
+  font-size:37px;
+
+  margin-bottom:16px;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(0,150,255,.15),
+      rgba(0,100,255,.02)
+    );
+
+  border:
+    1px solid
+    rgba(40,145,255,.18);
+
+  filter:
+    drop-shadow(
+      0 0 13px
+      rgba(0,145,255,.42)
+    );
+
+  transition:.25s;
+}
+
+.category:hover .category-icon{
+
+  transform:scale(1.08);
+
+  filter:
+    drop-shadow(
+      0 0 21px
+      rgba(0,145,255,.65)
+    );
+}
+
+.category h3{
+
+  color:#f5f7ff;
+
+  font-size:18px;
+
+  line-height:1.5;
+
+  margin:
+    0
+    0
+    8px;
+
+  font-weight:900;
+}
+
+.category p{
+
+  color:#8d97ad;
 
   font-size:12px;
 
-  margin-top:5px
+  line-height:1.7;
+
+  max-width:225px;
 }
 
+.category-content::after{
+
+  content:"←";
+
+  position:absolute;
+
+  bottom:15px;
+  left:19px;
+
+  width:29px;
+  height:29px;
+
+  display:grid;
+
+  place-items:center;
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
+  border-radius:8px;
+
+  color:#56a8ff;
+
+  font-size:14px;
+}
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+.category-filter-bar{
+
+  display:none;
+
+  margin-bottom:18px;
+
+  padding:
+    12px
+    15px;
+
+  border:
+    1px solid
+    rgba(217,180,91,.18);
+
+  border-radius:13px;
+
+  background:
+    rgba(217,180,91,.05);
+
+  color:var(--gold-light);
+
+  font-size:13px;
+
+  font-weight:800;
+}
+
+.category-filter-bar.active{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:15px;
+}
+
+.clear-filter{
+
+  border:
+    1px solid
+    var(--line);
+
+  background:
+    rgba(255,255,255,.04);
+
+  color:#fff;
+
+  border-radius:9px;
+
+  padding:
+    7px
+    12px;
+
+  cursor:pointer;
+}
 
 /* =========================================================
    NEWS GRID
 ========================================================= */
 
 .trend-grid{
+
   display:grid;
 
   grid-template-columns:
-    repeat(4,1fr);
+    repeat(3,1fr);
 
-  gap:15px
+  gap:18px;
 }
 
 .trend-card{
+
   position:relative;
 
   min-height:390px;
@@ -528,94 +1045,118 @@ nav a.active{
   padding:0;
 
   background:
+
     linear-gradient(
       145deg,
-      rgba(255,255,255,.06),
-      rgba(255,255,255,.015)
+      rgba(255,255,255,.055),
+      rgba(255,255,255,.012)
     ),
+
     var(--card);
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  border-radius:18px;
+  border-radius:20px;
 
   overflow:hidden;
 
   transition:.25s;
 
-  cursor:pointer
+  cursor:pointer;
 }
 
 .trend-card:hover{
-  transform:translateY(-5px);
 
-  background:var(--card-hover);
+  transform:
+    translateY(-5px);
+
+  background:
+    var(--card2);
 
   border-color:
-    rgba(217,180,91,.25)
+    rgba(40,145,255,.30);
+
+  box-shadow:
+    0 18px 45px
+    rgba(0,0,0,.20);
 }
 
 .trend-image{
+
   width:100%;
-  height:190px;
+
+  height:210px;
 
   display:block;
 
   object-fit:cover;
+
   object-position:center;
 
-  background:#0b1020
+  background:#081120;
 }
 
 .trend-card-content{
-  padding:17px 20px 20px
+
+  padding:
+    17px
+    20px
+    20px;
 }
 
 .trend-number{
-  font-size:13px;
+
+  font-size:12px;
 
   color:var(--gold-light);
 
-  font-weight:900
+  font-weight:900;
 }
 
 .trend-icon{
+
   position:absolute;
 
   left:18px;
   top:15px;
 
-  font-size:30px;
+  font-size:29px;
 
   z-index:5;
 
   filter:
     drop-shadow(
-      0 2px 8px rgba(0,0,0,.5)
-    )
+      0 2px 8px
+      rgba(0,0,0,.55)
+    );
 }
 
 .trend-card h3{
+
   margin-top:10px;
 
   font-size:17px;
 
   line-height:1.65;
 
-  font-weight:800
+  font-weight:800;
 }
 
 .trend-meta{
+
   color:var(--muted);
 
   font-size:11px;
 
   margin-top:8px;
 
-  font-weight:600
+  font-weight:600;
 }
 
 .news-link{
+
   display:inline-block;
 
   margin-top:12px;
@@ -625,251 +1166,23 @@ nav a.active{
   font-size:12px;
 
   font-weight:800;
-
-  cursor:pointer
 }
 
 .news-link:hover{
-  color:#fff
-}
-
-
-/* =========================================================
-   CATEGORY FILTER
-========================================================= */
-
-.category-filter-bar{
-  display:none;
-
-  margin-bottom:20px;
-
-  padding:13px 16px;
-
-  border:1px solid rgba(217,180,91,.18);
-
-  border-radius:14px;
-
-  background:rgba(217,180,91,.05);
-
-  color:var(--gold-light);
-
-  font-size:13px;
-
-  font-weight:800
-}
-
-.category-filter-bar.active{
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  gap:15px
-}
-
-.clear-filter{
-  border:1px solid var(--line);
-
-  background:rgba(255,255,255,.04);
-
   color:#fff;
-
-  border-radius:9px;
-
-  padding:7px 12px;
-
-  cursor:pointer;
-
-  font-family:inherit
 }
-
-
-/* =========================================================
-   ⭐ NEW CATEGORY HORIZONTAL SLIDER
-========================================================= */
-
-/*
-   هذا هو التعديل الأساسي.
-
-   البطاقات أصبحت شريطاً أفقياً يمكن سحبه
-   يميناً ويساراً باللمس.
-*/
-
-.category-scroll{
-  width:100%;
-
-  overflow-x:auto;
-  overflow-y:hidden;
-
-  -webkit-overflow-scrolling:touch;
-
-  scroll-behavior:smooth;
-
-  scrollbar-width:none;
-
-  padding:4px 2px 12px;
-
-  /*
-    مهم جداً:
-    يجعل البطاقات تنزلق بشكل أفقي
-  */
-  overscroll-behavior-x:contain
-}
-
-/* إخفاء شريط التمرير في Chrome / Android */
-.category-scroll::-webkit-scrollbar{
-  display:none
-}
-
-
-/*
-   بدلاً من Grid أصبح Flex
-   حتى نستطيع السحب أفقياً.
-*/
-
-.category-grid{
-  display:flex;
-
-  flex-wrap:nowrap;
-
-  gap:15px;
-
-  width:max-content;
-
-  min-width:100%;
-
-  direction:ltr
-}
-
-
-/*
-   حجم البطاقة في الكمبيوتر.
-   أربع بطاقات تقريباً تظهر معاً.
-*/
-
-.category{
-  flex:0 0 285px;
-
-  min-height:165px;
-
-  border-radius:18px;
-
-  border:1px solid var(--line);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.055),
-      rgba(255,255,255,.015)
-    ),
-    var(--card);
-
-  transition:
-    transform .25s,
-    border-color .25s,
-    background .25s;
-
-  cursor:pointer;
-
-  position:relative;
-
-  overflow:hidden;
-
-  user-select:none;
-
-  -webkit-tap-highlight-color:transparent
-}
-
-.category:hover{
-  transform:translateY(-4px);
-
-  border-color:
-    rgba(79,140,255,.35);
-
-  background:var(--card-hover)
-}
-
-.category.active{
-  border-color:
-    rgba(217,180,91,.75);
-
-  box-shadow:
-    0 0 25px rgba(217,180,91,.09)
-}
-
-
-/*
-   اتجاه النص داخل البطاقة
-*/
-
-html[dir="rtl"] .category{
-  direction:rtl
-}
-
-html[dir="ltr"] .category{
-  direction:ltr
-}
-
-.category-content{
-  min-height:165px;
-
-  padding:20px;
-
-  display:flex;
-
-  flex-direction:column;
-
-  justify-content:center
-}
-
-.category-icon{
-  font-size:29px;
-
-  margin-bottom:8px
-}
-
-.category h3{
-  font-size:17px;
-
-  margin-bottom:5px;
-
-  font-weight:800;
-
-  line-height:1.5
-}
-
-.category p{
-  color:var(--muted);
-
-  font-size:11px;
-
-  line-height:1.6;
-
-  font-weight:500
-}
-
-
-/*
-   لمسة صغيرة توضح للمستخدم أن هناك
-   المزيد من البطاقات خارج الشاشة.
-*/
-
-.category-scroll::after{
-  content:"";
-
-  display:block;
-}
-
 
 /* =========================================================
    FEATURE
 ========================================================= */
 
 .feature{
+
   display:grid;
 
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:
+    1fr
+    1fr;
 
   min-height:350px;
 
@@ -877,12 +1190,16 @@ html[dir="ltr"] .category{
 
   border-radius:24px;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  background:var(--card)
+  background:
+    var(--card);
 }
 
 .feature-visual{
+
   min-height:350px;
 
   display:grid;
@@ -892,29 +1209,33 @@ html[dir="ltr"] .category{
   font-size:100px;
 
   background:
+
     radial-gradient(
       circle at center,
-      rgba(79,140,255,.2),
+      rgba(0,120,255,.22),
       transparent 45%
     ),
+
     linear-gradient(
       135deg,
-      #0c1730,
-      #090d1a
-    )
+      #081735,
+      #050b18
+    );
 }
 
 .feature-content{
+
   padding:45px;
 
   display:flex;
 
   flex-direction:column;
 
-  justify-content:center
+  justify-content:center;
 }
 
 .tag{
+
   color:var(--gold-light);
 
   font-size:12px;
@@ -923,35 +1244,37 @@ html[dir="ltr"] .category{
 
   letter-spacing:1px;
 
-  margin-bottom:15px
+  margin-bottom:15px;
 }
 
 .feature-content h2{
+
   font-size:34px;
 
   line-height:1.45;
 
   margin-bottom:15px;
 
-  font-weight:900
+  font-weight:900;
 }
 
 .feature-content p{
+
   color:var(--muted);
 
   line-height:1.9;
 
   font-size:14px;
 
-  margin-bottom:22px
+  margin-bottom:22px;
 }
-
 
 /* =========================================================
    ARTICLE
 ========================================================= */
 
 .article-overlay{
+
   position:fixed;
 
   inset:0;
@@ -960,26 +1283,32 @@ html[dir="ltr"] .category{
 
   display:none;
 
-  background:rgba(3,6,14,.97);
+  background:
+    rgba(3,6,14,.97);
 
   backdrop-filter:blur(18px);
 
   overflow-y:auto;
 
-  padding:15px 20px 60px
+  padding:
+    15px
+    20px
+    60px;
 }
 
 .article-overlay.active{
-  display:block
+  display:block;
 }
 
 .article-container{
+
   max-width:1050px;
 
-  margin:0 auto
+  margin:auto;
 }
 
 .article-top{
+
   display:flex;
 
   justify-content:space-between;
@@ -988,10 +1317,11 @@ html[dir="ltr"] .category{
 
   gap:15px;
 
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .article-brand{
+
   display:flex;
 
   align-items:center;
@@ -1002,16 +1332,20 @@ html[dir="ltr"] .category{
 
   font-weight:900;
 
-  font-size:18px
+  font-size:18px;
 }
 
 .article-close{
+
   width:46px;
   height:46px;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  background:rgba(255,255,255,.05);
+  background:
+    rgba(255,255,255,.05);
 
   color:#fff;
 
@@ -1023,34 +1357,42 @@ html[dir="ltr"] .category{
 
   display:grid;
 
-  place-items:center
+  place-items:center;
 }
 
 .article-image-wrapper{
+
   width:100%;
 
-  margin:0 0 20px;
+  margin:
+    0
+    0
+    20px;
 
   border-radius:22px;
 
   overflow:hidden;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  background:#0b1020
+  background:#0b1020;
 }
 
 .article-image{
+
   width:100%;
 
   max-height:560px;
 
   display:block;
 
-  object-fit:cover
+  object-fit:cover;
 }
 
 .article-category{
+
   display:inline-flex;
 
   align-items:center;
@@ -1063,11 +1405,17 @@ html[dir="ltr"] .category{
 
   font-weight:800;
 
-  margin-bottom:12px
+  margin-bottom:12px;
 }
 
 .article-title{
-  font-size:clamp(30px,5vw,54px);
+
+  font-size:
+    clamp(
+      30px,
+      5vw,
+      54px
+    );
 
   line-height:1.35;
 
@@ -1075,10 +1423,11 @@ html[dir="ltr"] .category{
 
   letter-spacing:-1px;
 
-  margin-bottom:15px
+  margin-bottom:15px;
 }
 
 .article-info{
+
   display:flex;
 
   flex-wrap:wrap;
@@ -1089,52 +1438,73 @@ html[dir="ltr"] .category{
 
   font-size:13px;
 
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .article-info span{
-  padding:7px 12px;
 
-  border:1px solid var(--line);
+  padding:
+    7px
+    12px;
 
-  background:rgba(255,255,255,.035);
+  border:
+    1px solid
+    var(--line);
 
-  border-radius:9px
+  background:
+    rgba(255,255,255,.035);
+
+  border-radius:9px;
 }
 
 .article-summary-box{
+
   background:
+
     linear-gradient(
       145deg,
       rgba(255,255,255,.055),
       rgba(255,255,255,.018)
     ),
+
     var(--card);
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  border-right:3px solid var(--gold);
+  border-right:
+    3px solid
+    var(--gold);
 
   border-radius:20px;
 
-  padding:24px 30px 25px;
+  padding:
+    24px
+    30px
+    25px;
 
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .article-summary-label{
+
   color:var(--gold-light);
 
   font-size:13px;
 
   font-weight:900;
 
-  margin:0 0 9px;
+  margin:
+    0
+    0
+    9px;
 
-  line-height:1.4
+  line-height:1.4;
 }
 
 .article-summary{
+
   color:#e9edf8;
 
   font-size:18px;
@@ -1147,87 +1517,110 @@ html[dir="ltr"] .category{
 
   margin:0;
 
-  padding:0
+  padding:0;
 }
 
 .article-title.language-ar,
 .article-summary.language-ar{
+
   direction:rtl;
-  text-align:right
+
+  text-align:right;
 }
 
 .article-title.language-en,
 .article-summary.language-en{
+
   direction:ltr;
-  text-align:left
+
+  text-align:left;
 }
 
 .article-points{
+
   margin-top:15px;
 
-  padding:19px 21px;
+  padding:
+    19px
+    21px;
 
   border-radius:18px;
 
-  background:rgba(79,140,255,.05);
+  background:
+    rgba(79,140,255,.05);
 
-  border:1px solid rgba(79,140,255,.12)
+  border:
+    1px solid
+    rgba(79,140,255,.12);
 }
 
 .article-points h3{
+
   color:var(--gold-light);
 
   font-size:17px;
 
-  margin:0 0 9px;
-
-  line-height:1.5
+  margin:
+    0
+    0
+    9px;
 }
 
 .article-points p{
+
   color:var(--muted);
 
   line-height:1.8;
 
   font-size:14px;
 
-  margin:0
+  margin:0;
 }
 
 .article-source{
+
   margin-top:20px;
 
-  padding:22px 0;
+  padding:
+    22px
+    0;
 
-  border-top:1px solid var(--line)
+  border-top:
+    1px solid
+    var(--line);
 }
 
 .article-source-title{
+
   color:var(--muted);
 
   font-size:12px;
 
-  margin-bottom:7px
+  margin-bottom:7px;
 }
 
 .article-source-name{
+
   color:#fff;
 
   font-size:18px;
 
   font-weight:800;
 
-  margin-bottom:16px
+  margin-bottom:16px;
 }
 
 .original-btn{
+
   display:inline-flex;
 
   align-items:center;
 
   gap:8px;
 
-  padding:13px 19px;
+  padding:
+    13px
+    19px;
 
   background:
     linear-gradient(
@@ -1242,25 +1635,26 @@ html[dir="ltr"] .category{
 
   font-size:13px;
 
-  font-weight:900
+  font-weight:900;
 }
 
 .article-note{
+
   color:var(--muted);
 
   font-size:11px;
 
   line-height:1.8;
 
-  margin-top:13px
+  margin-top:13px;
 }
-
 
 /* =========================================================
    SEARCH
 ========================================================= */
 
 .search-panel{
+
   display:none;
 
   position:fixed;
@@ -1269,35 +1663,45 @@ html[dir="ltr"] .category{
 
   z-index:300;
 
-  background:rgba(4,7,15,.94);
+  background:
+    rgba(4,7,15,.94);
 
   backdrop-filter:blur(15px);
 
-  padding:100px 22px
+  padding:
+    100px
+    22px;
 }
 
 .search-panel.active{
-  display:block
+  display:block;
 }
 
 .search-box{
+
   max-width:750px;
 
   margin:auto;
 
-  position:relative
+  position:relative;
 }
 
 .search-box input{
+
   width:100%;
 
-  padding:20px 25px;
+  padding:
+    20px
+    25px;
 
   border-radius:15px;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
-  background:var(--card);
+  background:
+    var(--card);
 
   color:#fff;
 
@@ -1305,18 +1709,17 @@ html[dir="ltr"] .category{
 
   font-size:18px;
 
-  font-family:inherit
+  font-family:inherit;
 }
 
 .close-search{
+
   position:absolute;
 
   left:12px;
-
   top:10px;
 
   width:45px;
-
   height:45px;
 
   border:none;
@@ -1327,74 +1730,90 @@ html[dir="ltr"] .category{
 
   font-size:25px;
 
-  cursor:pointer
+  cursor:pointer;
 }
 
 html[dir=ltr] .close-search{
+
   left:auto;
-  right:12px
+
+  right:12px;
 }
 
 .search-results{
+
   max-width:750px;
 
-  margin:25px auto
+  margin:
+    25px
+    auto;
 }
 
 .search-result{
+
   padding:18px;
 
   margin-bottom:10px;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
   border-radius:14px;
 
-  background:var(--card);
+  background:
+    var(--card);
 
-  cursor:pointer
+  cursor:pointer;
 }
 
 .search-result:hover{
+
   border-color:
-    rgba(217,180,91,.35)
+    rgba(217,180,91,.35);
 }
 
 .search-result-title{
+
   font-size:15px;
 
   font-weight:800;
 
-  line-height:1.7
+  line-height:1.7;
 }
 
 .search-result-meta{
+
   color:var(--muted);
 
   font-size:11px;
 
-  margin-top:7px
+  margin-top:7px;
 }
-
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 footer{
-  border-top:1px solid var(--line);
 
-  background:#050711;
+  border-top:
+    1px solid
+    var(--line);
 
-  margin-top:20px
+  background:#03050d;
+
+  margin-top:20px;
 }
 
 .footer-inner{
-  max-width:1250px;
+
+  max-width:1450px;
 
   margin:auto;
 
-  padding:35px 22px;
+  padding:
+    35px;
 
   display:flex;
 
@@ -1402,319 +1821,441 @@ footer{
 
   align-items:center;
 
-  gap:20px
+  gap:20px;
 }
 
 .footer-copy{
+
   color:var(--muted);
 
-  font-size:12px
+  font-size:12px;
 }
 
 .footer-logo{
+
   font-size:20px;
 
-  font-weight:900
+  font-weight:900;
 }
 
 .footer-logo span{
-  color:var(--gold-light)
+
+  color:var(--gold-light);
 }
 
 .empty-news{
+
   grid-column:1/-1;
 
   text-align:center;
 
   padding:50px 20px;
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
   border-radius:18px;
 
-  background:var(--card);
+  background:
+    var(--card);
 
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .empty-news strong{
+
   display:block;
 
   color:#fff;
 
   font-size:18px;
 
-  margin-bottom:8px
+  margin-bottom:8px;
 }
-
 
 /* =========================================================
    LTR
 ========================================================= */
 
 html[dir=ltr] body{
-  font-family:Arial,"Cairo",sans-serif
+
+  font-family:
+    Arial,
+    "Cairo",
+    sans-serif;
 }
 
 html[dir=ltr] .trend-icon{
+
   left:auto;
-  right:18px
+
+  right:18px;
 }
 
 html[dir=ltr] .article-summary-box{
-  border-right:1px solid var(--line);
 
-  border-left:3px solid var(--gold)
+  border-right:
+    1px solid
+    var(--line);
+
+  border-left:
+    3px solid
+    var(--gold);
 }
 
 html[dir=ltr] .section-header{
-  text-align:left
+
+  text-align:left;
 }
 
 .trend-image.image-error,
 .article-image.image-error{
-  display:none
-}
 
+  display:none;
+}
 
 /* =========================================================
    TABLET
 ========================================================= */
 
-@media(max-width:950px){
+@media(max-width:1050px){
 
   nav{
-    display:none
-  }
-
-  .mobile-menu{
-    display:block
+    gap:20px;
   }
 
   .hero{
-    grid-template-columns:1fr;
 
-    padding-top:55px
+    grid-template-columns:
+      1fr;
+
+    min-height:auto;
+
+    padding-top:55px;
   }
 
   .trend-orb{
-    display:none
+
+    display:none;
   }
 
   .trend-grid{
-    grid-template-columns:repeat(2,1fr)
+
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
-  /*
-     يبقى شريط الأقسام أفقيًا
-     ولا يعود إلى Grid
-  */
-
-  .category{
-    flex-basis:270px
-  }
-
-  .feature{
-    grid-template-columns:1fr
-  }
 }
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media(max-width:600px){
+@media(max-width:700px){
 
   .header-inner{
+
     height:68px;
 
-    padding:0 12px;
+    padding:
+      0
+      12px;
 
-    gap:8px
+    gap:8px;
   }
 
   .logo{
-    font-size:22px
+
+    font-size:21px;
   }
 
   .logo-mark{
-    width:34px;
-    height:34px
+
+    width:35px;
+    height:35px;
+
+    border-radius:11px;
+
+    font-size:18px;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .mobile-menu{
+    display:block;
   }
 
   .language-btn{
-    min-width:72px;
+
+    min-width:70px;
 
     height:40px;
 
-    padding:0 8px;
+    padding:
+      0
+      8px;
 
-    font-size:11px
+    font-size:11px;
   }
 
   .search-btn,
   .mobile-menu{
+
     width:40px;
-    height:40px
+    height:40px;
   }
 
+  /* HERO */
+
   .hero{
-    padding-top:45px
+
+    padding:
+      45px
+      18px
+      30px;
+  }
+
+  .hero-badge{
+
+    font-size:11px;
+
+    padding:
+      7px
+      12px;
   }
 
   .hero h1{
-    font-size:45px;
 
-    letter-spacing:-1px
+    font-size:
+      43px;
+
+    letter-spacing:
+      -1.5px;
   }
 
   .hero p{
-    font-size:15px
+
+    font-size:15px;
+
+    line-height:1.85;
   }
 
-  /*
-     الأخبار تبقى Grid
-  */
+  .hero-buttons{
 
-  .trend-grid{
-    grid-template-columns:1fr
+    gap:9px;
   }
 
-  .trend-image{
-    height:205px
+  .primary-btn,
+  .secondary-btn{
+
+    padding:
+      12px
+      17px;
+
+    font-size:13px;
   }
 
-  .trend-card{
-    min-height:390px
-  }
-
-
-  /*
-     ⭐ شريط الأقسام في الهاتف
-  */
-
-  .category-scroll{
-    margin-left:-2px;
-    margin-right:-2px;
-
-    width:calc(100% + 4px);
-
-    padding-left:8px;
-    padding-right:8px;
-
-    padding-bottom:10px
-  }
-
-  .category-grid{
-    gap:12px
-  }
-
-  .category{
-    flex:0 0 245px;
-
-    min-height:155px;
-
-    border-radius:16px
-  }
-
-  .category-content{
-    min-height:155px;
-
-    padding:18px
-  }
-
-  .category-icon{
-    font-size:27px;
-
-    margin-bottom:6px
-  }
-
-  .category h3{
-    font-size:16px
-  }
-
-  .category p{
-    font-size:10.5px
-  }
-
-
-  /*
-     تقليل الفراغات بين الأقسام
-  */
+  /* SECTIONS */
 
   .section{
-    padding-bottom:38px
+
+    padding:
+      22px
+      15px
+      40px;
   }
 
   .section-header{
+
     align-items:flex-start;
 
-    margin-bottom:18px
+    margin-bottom:17px;
   }
 
   .section-title{
-    font-size:25px
+
+    font-size:24px;
+  }
+
+  .section-description{
+
+    font-size:11px;
+  }
+
+  /* CATEGORY SLIDER */
+
+  .category-grid{
+
+    gap:13px;
+
+    margin-left:-2px;
+    margin-right:-2px;
+
+    padding:
+      5px
+      2px
+      15px;
+  }
+
+  .category{
+
+    flex:
+      0 0
+      250px;
+
+    min-height:215px;
+  }
+
+  .category-content{
+
+    min-height:215px;
+
+    padding:
+      22px
+      17px;
+  }
+
+  .category-icon{
+
+    width:58px;
+    height:58px;
+
+    font-size:31px;
+
+    margin-bottom:13px;
+  }
+
+  .category h3{
+
+    font-size:16px;
+  }
+
+  .category p{
+
+    font-size:11px;
+  }
+
+  /* NEWS */
+
+  .trend-grid{
+
+    grid-template-columns:
+      1fr;
+
+    gap:15px;
+  }
+
+  .trend-card{
+
+    min-height:360px;
+  }
+
+  .trend-image{
+
+    height:205px;
+  }
+
+  /* FEATURE */
+
+  .feature{
+
+    grid-template-columns:
+      1fr;
+  }
+
+  .feature-visual{
+
+    min-height:220px;
+
+    font-size:75px;
   }
 
   .feature-content{
-    padding:28px
+
+    padding:28px 22px;
   }
 
   .feature-content h2{
-    font-size:27px
+
+    font-size:26px;
   }
 
-  .footer-inner{
-    flex-direction:column;
-
-    align-items:flex-start
-  }
+  /* ARTICLE */
 
   .article-overlay{
-    padding:15px 14px 40px
-  }
 
-  .article-image-wrapper{
-    margin-bottom:18px
+    padding:
+      15px
+      14px
+      40px;
   }
 
   .article-image{
-    max-height:330px
+
+    max-height:330px;
   }
 
   .article-summary-box{
-    padding:20px 18px 20px;
 
-    margin-bottom:18px
-  }
-
-  .article-summary-label{
-    margin-bottom:8px
+    padding:
+      20px
+      18px;
   }
 
   .article-summary{
+
     font-size:16px;
 
-    line-height:1.85
-  }
-
-  .article-points{
-    margin-top:13px;
-
-    padding:17px 16px
-  }
-
-  .article-points h3{
-    margin-bottom:8px
-  }
-
-  .article-points p{
-    line-height:1.75
+    line-height:1.85;
   }
 
   .article-title{
-    font-size:30px
+
+    font-size:30px;
+  }
+
+  /* FOOTER */
+
+  .footer-inner{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    padding:
+      30px
+      18px;
+  }
+
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media(max-width:380px){
+
+  .logo{
+
+    font-size:19px;
+  }
+
+  .language-btn{
+
+    min-width:62px;
+  }
+
+  .hero h1{
+
+    font-size:38px;
+  }
+
+  .category{
+
+    flex-basis:235px;
   }
 
 }
@@ -1722,25 +2263,23 @@ html[dir=ltr] .section-header{
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
+<!-- =======================================================
      HEADER
-========================================================= -->
+======================================================= -->
 
 <header>
 
   <div class="header-inner">
 
-    <a
-      href="#"
-      class="logo"
-      onclick="goHome();return false;"
-    >
+    <a href="#"
+       class="logo"
+       onclick="goHome();return false;">
 
-      <div class="logo-mark">N</div>
+      <div class="logo-mark">
+        N
+      </div>
 
       <span class="logo-text">
         NOWNEX
@@ -1748,44 +2287,34 @@ html[dir=ltr] .section-header{
 
     </a>
 
-
     <nav>
 
-      <a
-        href="#"
-        class="active"
-        onclick="goHome();return false;"
-        data-i18n="navHome"
-      >
+      <a href="#"
+         class="active"
+         onclick="goHome();return false;"
+         data-i18n="navHome">
         الرئيسية
       </a>
 
-      <a
-        href="#trending"
-        onclick="scrollToTrending();return false;"
-        data-i18n="navTrending"
-      >
+      <a href="#trending"
+         onclick="scrollToTrending();return false;"
+         data-i18n="navTrending">
         الترند
       </a>
 
-      <a
-        href="#categories"
-        onclick="scrollToCategories();return false;"
-        data-i18n="navCategories"
-      >
+      <a href="#categories"
+         onclick="scrollToCategories();return false;"
+         data-i18n="navCategories">
         الأقسام
       </a>
 
-      <a
-        href="#about"
-        onclick="scrollToAbout();return false;"
-        data-i18n="navAbout"
-      >
+      <a href="#about"
+         onclick="scrollToAbout();return false;"
+         data-i18n="navAbout">
         حول NOWNEX
       </a>
 
     </nav>
-
 
     <div class="header-actions">
 
@@ -1793,24 +2322,21 @@ html[dir=ltr] .section-header{
         class="language-btn"
         id="languageBtn"
         onclick="toggleLanguage()"
-        aria-label="تغيير اللغة"
-      >
+        aria-label="تغيير اللغة">
         🇬🇧 EN
       </button>
 
       <button
         class="search-btn"
         onclick="openSearch()"
-        aria-label="بحث"
-      >
+        aria-label="بحث">
         🔍
       </button>
 
       <button
         class="mobile-menu"
         onclick="scrollToCategories()"
-        aria-label="القائمة"
-      >
+        aria-label="القائمة">
         ☰
       </button>
 
@@ -1823,14 +2349,13 @@ html[dir=ltr] .section-header{
 
 <main>
 
-
-<!-- =========================================================
+<!-- =======================================================
      HERO
-========================================================= -->
+======================================================= -->
 
 <section class="hero">
 
-  <div>
+  <div class="hero-content">
 
     <div class="hero-badge">
 
@@ -1845,11 +2370,17 @@ html[dir=ltr] .section-header{
 
     <h1>
 
-      <span data-i18n="heroNow">
+      <span
+        class="white"
+        data-i18n="heroNow">
         ما يحدث الآن.
       </span>
 
-      <span data-i18n="heroNext">
+      <br>
+
+      <span
+        class="gold"
+        data-i18n="heroNext">
         ما القادم.
       </span>
 
@@ -1857,7 +2388,10 @@ html[dir=ltr] .section-header{
 
 
     <p data-i18n="heroDescription">
-      اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.
+
+      اكتشف أهم الأخبار والترندات والتقنيات والأفكار
+      التي تشكل العالم الآن — كلها في مكان واحد.
+
     </p>
 
 
@@ -1866,23 +2400,28 @@ html[dir=ltr] .section-header{
       <button
         class="primary-btn"
         onclick="scrollToTrending()"
-        data-i18n="exploreTrend"
-      >
-        🔥 استكشف الترند
+        data-i18n="exploreTrend">
+
+        ⚡ استكشف الترند الآن
+
       </button>
+
 
       <button
         class="secondary-btn"
         onclick="scrollToCategories()"
-        data-i18n="exploreCategories"
-      >
-        استكشف الأقسام
+        data-i18n="exploreCategories">
+
+        ▦ استكشف الأقسام
+
       </button>
 
     </div>
 
   </div>
 
+
+  <!-- FUTURISTIC VISUAL -->
 
   <div class="trend-orb">
 
@@ -1895,14 +2434,13 @@ html[dir=ltr] .section-header{
 </section>
 
 
-<!-- =========================================================
-     NEWS
-========================================================= -->
+<!-- =======================================================
+     TRENDING NEWS
+======================================================= -->
 
 <section
   class="section"
-  id="trending"
->
+  id="trending">
 
   <div class="section-header">
 
@@ -1922,19 +2460,19 @@ html[dir=ltr] .section-header{
 
       </h2>
 
-
       <p
         class="section-description"
-        data-i18n="trendingDescription"
-      >
-        أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.
-      </p>
+        data-i18n="trendingDescription">
 
+        أحدث الأخبار والقصص من حول العالم،
+        يتم تحديثها تلقائياً.
+
+      </p>
 
       <div
         class="news-count"
-        id="newsCount"
-      ></div>
+        id="newsCount">
+      </div>
 
     </div>
 
@@ -1943,36 +2481,40 @@ html[dir=ltr] .section-header{
       href="#trending"
       class="view-all"
       onclick="showAllNews();return false;"
-      data-i18n="showAll"
-    >
+      data-i18n="showAll">
+
       عرض الكل ←
+
     </a>
 
   </div>
 
 
+  <!-- CATEGORY FILTER -->
+
   <div
     class="category-filter-bar"
-    id="categoryFilterBar"
-  >
+    id="categoryFilterBar">
 
     <span id="categoryFilterText"></span>
 
     <button
       class="clear-filter"
       onclick="clearCategoryFilter()"
-      data-i18n="showAllShort"
-    >
+      data-i18n="showAllShort">
+
       عرض الكل
+
     </button>
 
   </div>
 
 
+  <!-- NEWS GRID -->
+
   <div
     class="trend-grid"
-    id="newsGrid"
-  >
+    id="newsGrid">
 
     <article class="trend-card">
 
@@ -1992,9 +2534,10 @@ html[dir=ltr] .section-header{
 
         <div
           class="trend-meta"
-          data-i18n="loadingMeta"
-        >
+          data-i18n="loadingMeta">
+
           NOWNEX · تحديث مباشر
+
         </div>
 
       </div>
@@ -2006,14 +2549,13 @@ html[dir=ltr] .section-header{
 </section>
 
 
-<!-- =========================================================
+<!-- =======================================================
      CATEGORIES
-========================================================= -->
+======================================================= -->
 
 <section
   class="section"
-  id="categories"
->
+  id="categories">
 
   <div class="section-header">
 
@@ -2029,12 +2571,12 @@ html[dir=ltr] .section-header{
 
       </h2>
 
-
       <p
         class="section-description"
-        data-i18n="categoriesDescription"
-      >
+        data-i18n="categoriesDescription">
+
         كل ما يحدث الآن، مرتب حسب اهتماماتك.
+
       </p>
 
     </div>
@@ -2042,243 +2584,231 @@ html[dir=ltr] .section-header{
   </div>
 
 
-  <!--
-       ⭐ CATEGORY HORIZONTAL SLIDER
+  <!-- =====================================================
+       HORIZONTAL CATEGORY SLIDER
+  ====================================================== -->
 
-       اسحب يميناً ويساراً
-  -->
-
-  <div class="category-scroll">
-
-    <div class="category-grid">
+  <div
+    class="category-grid"
+    id="categorySlider">
 
 
-      <!-- TRENDING -->
+    <!-- TRENDING -->
 
-      <div
-        class="category"
-        data-category="Trending"
-        onclick="filterByCategory('Trending',this)"
-      >
+    <div
+      class="category"
+      data-category="Trending"
+      onclick="filterByCategory('Trending',this)">
 
-        <div class="category-content">
+      <div class="category-content">
 
-          <div class="category-icon">
-            🔥
-          </div>
-
-          <h3 data-i18n="catTrending">
-            الترند الآن
-          </h3>
-
-          <p data-i18n="catTrendingDesc">
-            اكتشف أسرع المواضيع انتشاراً حول العالم.
-          </p>
-
+        <div class="category-icon">
+          📈
         </div>
 
-      </div>
+        <h3 data-i18n="catTrending">
+          الترند الآن
+        </h3>
 
-
-      <!-- AI -->
-
-      <div
-        class="category"
-        data-category="AI"
-        onclick="filterByCategory('AI',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🤖
-          </div>
-
-          <h3 data-i18n="catAI">
-            الذكاء الاصطناعي والمستقبل
-          </h3>
-
-          <p data-i18n="catAIDesc">
-            الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.
-          </p>
-
-        </div>
+        <p data-i18n="catTrendingDesc">
+          اكتشف أسرع المواضيع انتشاراً حول العالم.
+        </p>
 
       </div>
-
-
-      <!-- TECHNOLOGY -->
-
-      <div
-        class="category"
-        data-category="Technology"
-        onclick="filterByCategory('Technology',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            📱
-          </div>
-
-          <h3 data-i18n="catTechnology">
-            التكنولوجيا
-          </h3>
-
-          <p data-i18n="catTechnologyDesc">
-            التطبيقات والهواتف والأجهزة والابتكارات الرقمية.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- CARS -->
-
-      <div
-        class="category"
-        data-category="Cars"
-        onclick="filterByCategory('Cars',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🚗
-          </div>
-
-          <h3 data-i18n="catCars">
-            السيارات
-          </h3>
-
-          <p data-i18n="catCarsDesc">
-            أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- ENTERTAINMENT -->
-
-      <div
-        class="category"
-        data-category="Entertainment"
-        onclick="filterByCategory('Entertainment',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🎬
-          </div>
-
-          <h3 data-i18n="catEntertainment">
-            الترفيه
-          </h3>
-
-          <p data-i18n="catEntertainmentDesc">
-            الأفلام والمسلسلات والألعاب وثقافة الإنترنت.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- WORLD -->
-
-      <div
-        class="category"
-        data-category="World"
-        onclick="filterByCategory('World',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🌎
-          </div>
-
-          <h3 data-i18n="catWorld">
-            العالم
-          </h3>
-
-          <p data-i18n="catWorldDesc">
-            أهم الأحداث والقصص التي تشكل العالم.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- FACTS -->
-
-      <div
-        class="category"
-        data-category="Facts"
-        onclick="filterByCategory('Facts',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🧠
-          </div>
-
-          <h3 data-i18n="catFacts">
-            معلومات وحقائق
-          </h3>
-
-          <p data-i18n="catFactsDesc">
-            حقائق مثيرة وعلوم وأشياء قد لا تعرفها.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- PRODUCTS -->
-
-      <div
-        class="category"
-        data-category="Products"
-        onclick="filterByCategory('Products',this)"
-      >
-
-        <div class="category-content">
-
-          <div class="category-icon">
-            🛍️
-          </div>
-
-          <h3 data-i18n="catProducts">
-            المنتجات الرائجة
-          </h3>
-
-          <p data-i18n="catProductsDesc">
-            المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.
-          </p>
-
-        </div>
-
-      </div>
-
 
     </div>
+
+
+    <!-- AI -->
+
+    <div
+      class="category"
+      data-category="AI"
+      onclick="filterByCategory('AI',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🧠
+        </div>
+
+        <h3 data-i18n="catAI">
+          الذكاء الاصطناعي والمستقبل
+        </h3>
+
+        <p data-i18n="catAIDesc">
+          الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- TECHNOLOGY -->
+
+    <div
+      class="category"
+      data-category="Technology"
+      onclick="filterByCategory('Technology',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          💻
+        </div>
+
+        <h3 data-i18n="catTechnology">
+          التكنولوجيا
+        </h3>
+
+        <p data-i18n="catTechnologyDesc">
+          التطبيقات والهواتف والأجهزة والابتكارات الرقمية.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARS -->
+
+    <div
+      class="category"
+      data-category="Cars"
+      onclick="filterByCategory('Cars',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🚗
+        </div>
+
+        <h3 data-i18n="catCars">
+          السيارات
+        </h3>
+
+        <p data-i18n="catCarsDesc">
+          أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ENTERTAINMENT -->
+
+    <div
+      class="category"
+      data-category="Entertainment"
+      onclick="filterByCategory('Entertainment',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🎬
+        </div>
+
+        <h3 data-i18n="catEntertainment">
+          الترفيه
+        </h3>
+
+        <p data-i18n="catEntertainmentDesc">
+          الأفلام والمسلسلات والألعاب وثقافة الإنترنت.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- WORLD -->
+
+    <div
+      class="category"
+      data-category="World"
+      onclick="filterByCategory('World',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🌍
+        </div>
+
+        <h3 data-i18n="catWorld">
+          العالم
+        </h3>
+
+        <p data-i18n="catWorldDesc">
+          أهم الأحداث والقصص التي تشكل العالم.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- FACTS -->
+
+    <div
+      class="category"
+      data-category="Facts"
+      onclick="filterByCategory('Facts',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🔬
+        </div>
+
+        <h3 data-i18n="catFacts">
+          معلومات وحقائق
+        </h3>
+
+        <p data-i18n="catFactsDesc">
+          حقائق مثيرة وعلوم وأشياء قد لا تعرفها.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    <div
+      class="category"
+      data-category="Products"
+      onclick="filterByCategory('Products',this)">
+
+      <div class="category-content">
+
+        <div class="category-icon">
+          🛍️
+        </div>
+
+        <h3 data-i18n="catProducts">
+          المنتجات الرائجة
+        </h3>
+
+        <p data-i18n="catProductsDesc">
+          المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.
+        </p>
+
+      </div>
+
+    </div>
+
 
   </div>
 
 </section>
 
 
-<!-- =========================================================
+<!-- =======================================================
      FEATURE
-========================================================= -->
+======================================================= -->
 
 <section class="section">
 
@@ -2288,34 +2818,37 @@ html[dir=ltr] .section-header{
       🤖
     </div>
 
-
     <div class="feature-content">
 
       <div
         class="tag"
-        data-i18n="featureTag"
-      >
+        data-i18n="featureTag">
+
         الذكاء الاصطناعي والمستقبل
+
       </div>
 
-
       <h2 data-i18n="featureTitle">
+
         المستقبل يتحرك أسرع من أي وقت مضى.
+
       </h2>
 
-
       <p data-i18n="featureDescription">
-        يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.
-      </p>
 
+        يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي
+        والتكنولوجيا والأفكار التي تشكل عالم الغد.
+
+      </p>
 
       <button
         class="primary-btn"
         style="width:max-content"
         onclick="filterByCategory('AI',null)"
-        data-i18n="featureButton"
-      >
+        data-i18n="featureButton">
+
         اكتشف عالم الذكاء الاصطناعي ←
+
       </button>
 
     </div>
@@ -2324,13 +2857,12 @@ html[dir=ltr] .section-header{
 
 </section>
 
-
 </main>
 
 
-<!-- =========================================================
+<!-- =======================================================
      FOOTER
-========================================================= -->
+======================================================= -->
 
 <footer id="about">
 
@@ -2344,19 +2876,20 @@ html[dir=ltr] .section-header{
 
       <div
         class="footer-copy"
-        data-i18n="footerTagline"
-      >
+        data-i18n="footerTagline">
+
         ما يحدث الآن. ما القادم.
+
       </div>
 
     </div>
 
-
     <div
       class="footer-copy"
-      data-i18n="copyright"
-    >
+      data-i18n="copyright">
+
       © 2026 NOWNEX — جميع الحقوق محفوظة
+
     </div>
 
   </div>
@@ -2364,14 +2897,13 @@ html[dir=ltr] .section-header{
 </footer>
 
 
-<!-- =========================================================
+<!-- =======================================================
      ARTICLE OVERLAY
-========================================================= -->
+======================================================= -->
 
 <div
   class="article-overlay"
-  id="articleOverlay"
->
+  id="articleOverlay">
 
   <div class="article-container">
 
@@ -2381,9 +2913,14 @@ html[dir=ltr] .section-header{
 
         <div
           class="logo-mark"
-          style="width:34px;height:34px;font-size:18px"
-        >
+          style="
+            width:34px;
+            height:34px;
+            font-size:18px;
+          ">
+
           N
+
         </div>
 
         <span>
@@ -2392,17 +2929,16 @@ html[dir=ltr] .section-header{
 
       </div>
 
-
       <button
         class="article-close"
         onclick="closeArticle()"
-        aria-label="إغلاق"
-      >
+        aria-label="إغلاق">
+
         ×
+
       </button>
 
     </div>
-
 
     <div id="articleContent"></div>
 
@@ -2411,14 +2947,13 @@ html[dir=ltr] .section-header{
 </div>
 
 
-<!-- =========================================================
+<!-- =======================================================
      SEARCH
-========================================================= -->
+======================================================= -->
 
 <div
   class="search-panel"
-  id="searchPanel"
->
+  id="searchPanel">
 
   <div class="search-box">
 
@@ -2427,23 +2962,22 @@ html[dir=ltr] .section-header{
       placeholder="ابحث في أخبار NOWNEX..."
       id="searchInput"
       oninput="performSearch()"
-      data-i18n-placeholder="searchPlaceholder"
-    >
+      data-i18n-placeholder="searchPlaceholder">
 
     <button
       class="close-search"
-      onclick="closeSearch()"
-    >
+      onclick="closeSearch()">
+
       ×
+
     </button>
 
   </div>
 
-
   <div
     class="search-results"
-    id="searchResults"
-  ></div>
+    id="searchResults">
+  </div>
 
 </div>
 
@@ -2451,17 +2985,16 @@ html[dir=ltr] .section-header{
 <script>
 
 /* =========================================================
-   GLOBAL DATA
+   NOWNEX NEWS SYSTEM
 ========================================================= */
 
 let allNews=[];
-
 let trendingNews=[];
 
 let currentCategory=null;
 
 let currentLanguage=
-  localStorage.getItem("nownex-language")||"ar";
+  localStorage.getItem("nownex-language") || "ar";
 
 
 /* =========================================================
@@ -2485,77 +3018,52 @@ heroNext:"ما القادم.",
 heroDescription:
 "اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
 
-exploreTrend:"🔥 استكشف الترند",
+exploreTrend:"⚡ استكشف الترند الآن",
+exploreCategories:"▦ استكشف الأقسام",
 
-exploreCategories:
-"استكشف الأقسام",
-
-mostTrending:
-"الأكثر تداولاً",
-
-nowWord:
-"الآن",
+mostTrending:"الأكثر تداولاً",
+nowWord:"الآن",
 
 trendingDescription:
 "أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.",
 
-showAll:
-"عرض الكل ←",
+showAll:"عرض الكل ←",
+showAllShort:"عرض الكل",
 
-showAllShort:
-"عرض الكل",
-
-exploreWord:
-"استكشف",
+exploreWord:"استكشف",
 
 categoriesDescription:
 "كل ما يحدث الآن، مرتب حسب اهتماماتك.",
 
-catTrending:
-"الترند الآن",
-
+catTrending:"الترند الآن",
 catTrendingDesc:
 "اكتشف أسرع المواضيع انتشاراً حول العالم.",
 
-catAI:
-"الذكاء الاصطناعي والمستقبل",
-
+catAI:"الذكاء الاصطناعي والمستقبل",
 catAIDesc:
 "الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.",
 
-catTechnology:
-"التكنولوجيا",
-
+catTechnology:"التكنولوجيا",
 catTechnologyDesc:
 "التطبيقات والهواتف والأجهزة والابتكارات الرقمية.",
 
-catCars:
-"السيارات",
-
+catCars:"السيارات",
 catCarsDesc:
 "أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.",
 
-catEntertainment:
-"الترفيه",
-
+catEntertainment:"الترفيه",
 catEntertainmentDesc:
 "الأفلام والمسلسلات والألعاب وثقافة الإنترنت.",
 
-catWorld:
-"العالم",
-
+catWorld:"العالم",
 catWorldDesc:
 "أهم الأحداث والقصص التي تشكل العالم.",
 
-catFacts:
-"معلومات وحقائق",
-
+catFacts:"معلومات وحقائق",
 catFactsDesc:
 "حقائق مثيرة وعلوم وأشياء قد لا تعرفها.",
 
-catProducts:
-"المنتجات الرائجة",
-
+catProducts:"المنتجات الرائجة",
 catProductsDesc:
 "المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.",
 
@@ -2614,7 +3122,7 @@ unavailableLink:
 "رابط المصدر الأصلي غير متاح حالياً.",
 
 articleNote:
-"NOWNEX يعرض ملخصاً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
+"يعرض NOWNEX ملخصاً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
 
 noNews:
 "لا توجد أخبار حالياً",
@@ -2639,7 +3147,6 @@ languageButton:
 
 },
 
-
 en:{
 
 navHome:"Home",
@@ -2647,90 +3154,60 @@ navTrending:"Trending",
 navCategories:"Categories",
 navAbout:"About NOWNEX",
 
-liveTrend:
-"LIVE — Trending Now",
+liveTrend:"LIVE — Trending Now",
 
-heroNow:
-"What's happening now.",
-
-heroNext:
-"What's next.",
+heroNow:"What's happening now.",
+heroNext:"What's next.",
 
 heroDescription:
 "Discover the latest news, trends, technologies and ideas shaping the world — all in one place.",
 
-exploreTrend:
-"🔥 Explore Trends",
+exploreTrend:"⚡ Explore Trends",
+exploreCategories:"▦ Explore Categories",
 
-exploreCategories:
-"Explore Categories",
-
-mostTrending:
-"Trending",
-
-nowWord:
-"Now",
+mostTrending:"Trending",
+nowWord:"Now",
 
 trendingDescription:
 "The latest stories and news from around the world, updated automatically.",
 
-showAll:
-"View All →",
+showAll:"View All →",
+showAllShort:"View All",
 
-showAllShort:
-"View All",
-
-exploreWord:
-"Explore",
+exploreWord:"Explore",
 
 categoriesDescription:
 "Everything happening now, organized around your interests.",
 
-catTrending:
-"Trending Now",
-
+catTrending:"Trending Now",
 catTrendingDesc:
 "Discover the fastest-growing topics around the world.",
 
-catAI:
-"AI & Future",
-
+catAI:"AI & Future",
 catAIDesc:
 "Artificial intelligence, robotics and future technology.",
 
-catTechnology:
-"Technology",
-
+catTechnology:"Technology",
 catTechnologyDesc:
 "Apps, phones, devices and digital innovations.",
 
-catCars:
-"Cars",
-
+catCars:"Cars",
 catCarsDesc:
 "Latest cars, electric vehicles and automotive technology.",
 
-catEntertainment:
-"Entertainment",
-
+catEntertainment:"Entertainment",
 catEntertainmentDesc:
 "Movies, series, games and internet culture.",
 
-catWorld:
-"World",
-
+catWorld:"World",
 catWorldDesc:
 "Major events and stories shaping the world.",
 
-catFacts:
-"Facts & Knowledge",
-
+catFacts:"Facts & Knowledge",
 catFactsDesc:
 "Interesting facts, science and things you may not know.",
 
-catProducts:
-"Trending Products",
-
+catProducts:"Trending Products",
 catProductsDesc:
 "Products and devices getting major attention right now.",
 
@@ -2824,25 +3301,26 @@ languageButton:
 function t(key){
 
   return (
+
     translations[currentLanguage] &&
     translations[currentLanguage][key]
+
   ) ||
 
   translations.ar[key] ||
 
   key;
-
 }
 
 
 /* =========================================================
-   LANGUAGE SAFETY
+   LANGUAGE PROTECTION
 ========================================================= */
 
 function containsArabic(value){
 
   return /[\u0600-\u06FF]/.test(
-    String(value||"")
+    String(value || "")
   );
 
 }
@@ -2850,7 +3328,7 @@ function containsArabic(value){
 
 function cleanNewsText(value){
 
-  return String(value||"")
+  return String(value || "")
 
     .replace(/\r\n/g,"\n")
 
@@ -2869,10 +3347,6 @@ function cleanNewsText(value){
 }
 
 
-/* =========================================================
-   TITLE
-========================================================= */
-
 function getNewsTitle(item){
 
   if(!item)return "";
@@ -2886,8 +3360,8 @@ function getNewsTitle(item){
       (
         item.title &&
         !containsArabic(item.title)
-          ? item.title
-          : ""
+        ? item.title
+        : ""
       ) ||
 
       "NOWNEX News"
@@ -2896,7 +3370,6 @@ function getNewsTitle(item){
 
   }
 
-
   return cleanNewsText(
 
     item.title_ar ||
@@ -2904,8 +3377,8 @@ function getNewsTitle(item){
     (
       item.title &&
       containsArabic(item.title)
-        ? item.title
-        : ""
+      ? item.title
+      : ""
     ) ||
 
     "عنوان الخبر غير متوفر بالعربية"
@@ -2914,10 +3387,6 @@ function getNewsTitle(item){
 
 }
 
-
-/* =========================================================
-   SUMMARY
-========================================================= */
 
 function getNewsSummary(item){
 
@@ -2932,8 +3401,8 @@ function getNewsSummary(item){
       (
         item.summary &&
         !containsArabic(item.summary)
-          ? item.summary
-          : ""
+        ? item.summary
+        : ""
       ) ||
 
       "No summary is currently available."
@@ -2942,7 +3411,6 @@ function getNewsSummary(item){
 
   }
 
-
   return cleanNewsText(
 
     item.summary_ar ||
@@ -2950,8 +3418,8 @@ function getNewsSummary(item){
     (
       item.summary &&
       containsArabic(item.summary)
-        ? item.summary
-        : ""
+      ? item.summary
+      : ""
     ) ||
 
     "لا يوجد ملخص عربي متاح لهذا الخبر حالياً."
@@ -2962,7 +3430,7 @@ function getNewsSummary(item){
 
 
 /* =========================================================
-   SEARCHABLE
+   SEARCHABLE TEXT
 ========================================================= */
 
 function getSearchableText(item){
@@ -2972,21 +3440,19 @@ function getSearchableText(item){
     return [
 
       item.title_en,
-
       item.summary_en,
 
       item.title &&
       !containsArabic(item.title)
-        ? item.title
-        : "",
+      ? item.title
+      : "",
 
       item.summary &&
       !containsArabic(item.summary)
-        ? item.summary
-        : "",
+      ? item.summary
+      : "",
 
       item.category,
-
       item.source
 
     ]
@@ -2996,25 +3462,22 @@ function getSearchableText(item){
 
   }
 
-
   return [
 
     item.title_ar,
-
     item.summary_ar,
 
     item.title &&
     containsArabic(item.title)
-      ? item.title
-      : "",
+    ? item.title
+    : "",
 
     item.summary &&
     containsArabic(item.summary)
-      ? item.summary
-      : "",
+    ? item.summary
+    : "",
 
     item.category,
-
     item.source
 
   ]
@@ -3035,13 +3498,13 @@ function applyLanguage(){
 
   html.lang=
     currentLanguage==="ar"
-      ? "ar"
-      : "en";
+    ? "ar"
+    : "en";
 
   html.dir=
     currentLanguage==="ar"
-      ? "rtl"
-      : "ltr";
+    ? "rtl"
+    : "ltr";
 
 
   document
@@ -3098,8 +3561,12 @@ function applyLanguage(){
     document.getElementById(
       "categoryFilterText"
     ).textContent=
-      t("categoryView")+
-      translateCategory(currentCategory);
+
+      t("categoryView") +
+
+      translateCategory(
+        currentCategory
+      );
 
   }
 
@@ -3107,7 +3574,9 @@ function applyLanguage(){
   if(allNews.length){
 
     renderNews(
-      getFilteredNews(currentCategory)
+      getFilteredNews(
+        currentCategory
+      )
     );
 
   }
@@ -3125,15 +3594,15 @@ function applyLanguage(){
 
 
 /* =========================================================
-   LANGUAGE TOGGLE
+   TOGGLE LANGUAGE
 ========================================================= */
 
 function toggleLanguage(){
 
   currentLanguage=
     currentLanguage==="ar"
-      ? "en"
-      : "ar";
+    ? "en"
+    : "ar";
 
   localStorage.setItem(
     "nownex-language",
@@ -3246,7 +3715,6 @@ function performSearch(){
       result.className=
         "search-result";
 
-
       result.innerHTML=`
 
         <div class="search-result-title">
@@ -3261,14 +3729,16 @@ function performSearch(){
 
           ${escapeHTML(
             translateCategory(
-              item.category||"Trending"
+              item.category ||
+              "Trending"
             )
           )}
 
           ·
 
           ${escapeHTML(
-            item.source||"NOWNEX"
+            item.source ||
+            "NOWNEX"
           )}
 
         </div>
@@ -3358,7 +3828,8 @@ function filterByCategory(
   clickedElement
 ){
 
-  currentCategory=category;
+  currentCategory=
+    category;
 
 
   document
@@ -3370,24 +3841,24 @@ function filterByCategory(
 
   if(clickedElement){
 
-    clickedElement.classList.add(
-      "active"
-    );
+    clickedElement
+      .classList
+      .add("active");
 
   }else{
 
     const target=
       document.querySelector(
-        '.category[data-category="'+
-        category+
+        '.category[data-category="' +
+        category +
         '"]'
       );
 
     if(target){
 
-      target.classList.add(
-        "active"
-      );
+      target
+        .classList
+        .add("active");
 
     }
 
@@ -3398,7 +3869,8 @@ function filterByCategory(
     .getElementById(
       "categoryFilterBar"
     )
-    .classList.add("active");
+    .classList
+    .add("active");
 
 
   document
@@ -3406,12 +3878,18 @@ function filterByCategory(
       "categoryFilterText"
     )
     .textContent=
-      t("categoryView")+
-      translateCategory(category);
+
+      t("categoryView") +
+
+      translateCategory(
+        category
+      );
 
 
   renderNews(
-    getFilteredNews(category)
+    getFilteredNews(
+      category
+    )
   );
 
 
@@ -3428,10 +3906,6 @@ function filterByCategory(
 
 }
 
-
-/* =========================================================
-   FILTER DATA
-========================================================= */
 
 function getFilteredNews(category){
 
@@ -3462,20 +3936,20 @@ function getFilteredNews(category){
   }
 
 
-  return allNews.filter(
-    item=>
-      String(item.category||"")
-        .toLowerCase() ===
-      String(category)
-        .toLowerCase()
+  return allNews.filter(item=>
+
+    String(
+      item.category || ""
+    ).toLowerCase()
+
+    ===
+
+    String(category).toLowerCase()
+
   );
 
 }
 
-
-/* =========================================================
-   CLEAR FILTER
-========================================================= */
 
 function clearCategoryFilter(){
 
@@ -3493,7 +3967,8 @@ function clearCategoryFilter(){
     .getElementById(
       "categoryFilterBar"
     )
-    .classList.remove("active");
+    .classList
+    .remove("active");
 
 
   renderNews(
@@ -3513,12 +3988,12 @@ function showAllNews(){
 
 
 /* =========================================================
-   ESCAPE HTML
+   HTML ESCAPE
 ========================================================= */
 
 function escapeHTML(value){
 
-  return String(value||"")
+  return String(value || "")
 
     .replace(/&/g,"&amp;")
 
@@ -3544,7 +4019,8 @@ function formatNewsDate(value){
 
   if(!raw)return "";
 
-  const d=new Date(raw);
+  const d=
+    new Date(raw);
 
   if(
     Number.isNaN(
@@ -3586,10 +4062,9 @@ function safeURL(value){
 
     const url=
       new URL(
-        String(value||"#"),
+        String(value || "#"),
         window.location.href
       );
-
 
     if(
       url.protocol==="http:" ||
@@ -3602,14 +4077,13 @@ function safeURL(value){
 
   }catch(e){}
 
-
   return "#";
 
 }
 
 
 /* =========================================================
-   ICON
+   NEWS ICONS
 ========================================================= */
 
 function getNewsIcon(category){
@@ -3617,31 +4091,20 @@ function getNewsIcon(category){
   const icons={
 
     World:"🌍",
-
     Technology:"💻",
-
     Entertainment:"🎬",
-
     AI:"🤖",
-
     Cars:"🚗",
-
     Facts:"🧠",
-
     Science:"🔬",
-
     Sports:"⚽",
-
     Trending:"🔥",
-
     Products:"🛍️",
-
     Shopping:"🛍️"
 
   };
 
-
-  return icons[category]||"🔥";
+  return icons[category] || "🔥";
 
 }
 
@@ -3655,25 +4118,15 @@ function translateCategory(category){
   const ar={
 
     World:"العالم",
-
     Technology:"التكنولوجيا",
-
     Entertainment:"الترفيه",
-
     AI:"الذكاء الاصطناعي",
-
     Cars:"السيارات",
-
     Facts:"حقائق",
-
     Science:"علوم",
-
     Sports:"رياضة",
-
     Trending:"الترند",
-
     Products:"المنتجات الرائجة",
-
     Shopping:"المنتجات الرائجة"
 
   };
@@ -3682,25 +4135,15 @@ function translateCategory(category){
   const en={
 
     World:"World",
-
     Technology:"Technology",
-
     Entertainment:"Entertainment",
-
     AI:"AI & Future",
-
     Cars:"Cars",
-
     Facts:"Facts",
-
     Science:"Science",
-
     Sports:"Sports",
-
     Trending:"Trending",
-
     Products:"Trending Products",
-
     Shopping:"Trending Products"
 
   };
@@ -3712,7 +4155,7 @@ function translateCategory(category){
       ? en
       : ar
 
-  )[category]||category;
+  )[category] || category;
 
 }
 
@@ -3742,9 +4185,7 @@ function updateNewsCount(){
     number=
       trendingNews.length;
 
-  }
-
-  else if(currentCategory){
+  }else if(currentCategory){
 
     number=
       getFilteredNews(
@@ -3755,21 +4196,20 @@ function updateNewsCount(){
 
 
   count.textContent=
-    number+
-    " "+
+    number +
+    " " +
     t("newsCount");
 
 }
 
 
 /* =========================================================
-   ARTICLE
+   OPEN ARTICLE
 ========================================================= */
 
 function openArticle(item){
 
   if(!item)return;
-
 
   window.currentOpenedArticle=
     item;
@@ -3779,7 +4219,6 @@ function openArticle(item){
     document.getElementById(
       "articleOverlay"
     );
-
 
   const content=
     document.getElementById(
@@ -3792,32 +4231,27 @@ function openArticle(item){
       getNewsTitle(item)
     );
 
-
   const summary=
     escapeHTML(
       getNewsSummary(item)
     );
 
-
   const category=
     escapeHTML(
       translateCategory(
-        item.category||
+        item.category ||
         "Trending"
       )
     );
 
-
   const source=
     escapeHTML(
-      item.source||
+      item.source ||
       "NOWNEX"
     );
 
-
   const originalLink=
     safeURL(item.link);
-
 
   const icon=
     getNewsIcon(
@@ -3827,12 +4261,12 @@ function openArticle(item){
 
   let dateText=
     item.published
-      ? escapeHTML(
-          formatNewsDate(
-            item.published
-          )
+    ? escapeHTML(
+        formatNewsDate(
+          item.published
         )
-      : "";
+      )
+    : "";
 
 
   let articleImageHTML="";
@@ -3848,7 +4282,8 @@ function openArticle(item){
 
       articleImageHTML=`
 
-        <div class="article-image-wrapper">
+        <div
+          class="article-image-wrapper">
 
           <img
             class="article-image"
@@ -3857,9 +4292,10 @@ function openArticle(item){
             referrerpolicy="no-referrer"
 
             onerror="
-              this.classList.add('image-error')
-            "
-          >
+              this.classList.add(
+                'image-error'
+              )
+            ">
 
         </div>
 
@@ -3885,9 +4321,13 @@ function openArticle(item){
 
 
     <h1
-      class="article-title language-${currentLanguage}"
-    >
+      class="
+        article-title
+        language-${currentLanguage}
+      ">
+
       ${title}
+
     </h1>
 
 
@@ -3906,7 +4346,11 @@ function openArticle(item){
 
       ${
         dateText
-        ? `<span>${dateText}</span>`
+        ? `
+          <span>
+            ${dateText}
+          </span>
+        `
         : ""
       }
 
@@ -3925,8 +4369,10 @@ function openArticle(item){
 
 
       <div
-        class="article-summary language-${currentLanguage}"
-      >
+        class="
+          article-summary
+          language-${currentLanguage}
+        ">
 
         ${summary}
 
@@ -3980,29 +4426,35 @@ function openArticle(item){
 
         ?
 
-        `<a
+        `
+
+        <a
           class="original-btn"
           href="${originalLink}"
           target="_blank"
-          rel="noopener noreferrer"
-        >
+          rel="noopener noreferrer">
 
           ${escapeHTML(
             t("readOriginal")
           )}
 
-        </a>`
+        </a>
+
+        `
 
         :
 
-        `<div class="article-note">
+        `
+
+        <div class="article-note">
 
           ${escapeHTML(
             t("unavailableLink")
           )}
 
-        </div>`
+        </div>
 
+        `
       }
 
 
@@ -4019,14 +4471,14 @@ function openArticle(item){
   `;
 
 
-  overlay.classList.add(
-    "active"
-  );
+  overlay
+    .classList
+    .add("active");
 
 
-  document.body.classList.add(
-    "article-open"
-  );
+  document.body
+    .classList
+    .add("article-open");
 
 
   overlay.scrollTop=0;
@@ -4044,14 +4496,13 @@ function closeArticle(){
     .getElementById(
       "articleOverlay"
     )
-    .classList.remove(
-      "active"
-    );
+    .classList
+    .remove("active");
 
 
-  document.body.classList.remove(
-    "article-open"
-  );
+  document.body
+    .classList
+    .remove("article-open");
 
 
   window.currentOpenedArticle=
@@ -4070,7 +4521,6 @@ function renderNews(news){
     document.getElementById(
       "newsGrid"
     );
-
 
   if(!newsGrid)return;
 
@@ -4116,6 +4566,7 @@ function renderNews(news){
     .forEach(
       (item,index)=>{
 
+
         const card=
           document.createElement(
             "article"
@@ -4135,7 +4586,7 @@ function renderNews(news){
         const category=
           escapeHTML(
             translateCategory(
-              item.category||
+              item.category ||
               "Trending"
             )
           );
@@ -4143,7 +4594,7 @@ function renderNews(news){
 
         const source=
           escapeHTML(
-            item.source||
+            item.source ||
             "NOWNEX"
           );
 
@@ -4160,9 +4611,7 @@ function renderNews(news){
         if(item.image){
 
           const imageURL=
-            safeURL(
-              item.image
-            );
+            safeURL(item.image);
 
 
           if(imageURL!=="#"){
@@ -4177,9 +4626,10 @@ function renderNews(news){
                 referrerpolicy="no-referrer"
 
                 onerror="
-                  this.classList.add('image-error')
-                "
-              >
+                  this.classList.add(
+                    'image-error'
+                  )
+                ">
 
             `;
 
@@ -4197,9 +4647,10 @@ function renderNews(news){
 
             <div class="trend-number">
 
-              ${String(
-                index+1
-              ).padStart(2,"0")}
+              ${
+                String(index+1)
+                .padStart(2,"0")
+              }
 
               —
 
@@ -4238,10 +4689,11 @@ function renderNews(news){
             <a
               class="news-link"
               href="#"
-              aria-label="${escapeHTML(
-                t("readArticle")
-              )}"
-            >
+              aria-label="
+                ${escapeHTML(
+                  t("readArticle")
+                )}
+              ">
 
               ${escapeHTML(
                 t("readArticle")
@@ -4280,8 +4732,11 @@ function renderNews(news){
               event.target.closest(
                 ".news-link"
               )
-            )return;
+            ){
 
+              return;
+
+            }
 
             openArticle(item);
 
@@ -4303,7 +4758,7 @@ function renderNews(news){
 
 
 /* =========================================================
-   LOAD NEWS
+   LOAD NEWS.JSON
 ========================================================= */
 
 async function loadNews(){
@@ -4340,14 +4795,16 @@ async function loadNews(){
 
     allNews=
       Array.isArray(data.news)
-        ? data.news
-        : [];
+      ? data.news
+      : [];
 
 
     trendingNews=
-      Array.isArray(data.trending)
-        ? data.trending
-        : [];
+      Array.isArray(
+        data.trending
+      )
+      ? data.trending
+      : [];
 
 
     if(!allNews.length){
@@ -4441,6 +4898,103 @@ document.addEventListener(
 
 
 /* =========================================================
+   CATEGORY MOUSE DRAG
+========================================================= */
+
+(function(){
+
+  const slider=
+    document.getElementById(
+      "categorySlider"
+    );
+
+  if(!slider)return;
+
+
+  let isDown=false;
+
+  let startX=0;
+
+  let scrollLeft=0;
+
+
+  slider.addEventListener(
+    "mousedown",
+    function(event){
+
+      isDown=true;
+
+      slider.classList.add(
+        "dragging"
+      );
+
+      startX=
+        event.pageX -
+        slider.offsetLeft;
+
+      scrollLeft=
+        slider.scrollLeft;
+
+    }
+  );
+
+
+  slider.addEventListener(
+    "mouseleave",
+    function(){
+
+      isDown=false;
+
+      slider.classList.remove(
+        "dragging"
+      );
+
+    }
+  );
+
+
+  slider.addEventListener(
+    "mouseup",
+    function(){
+
+      isDown=false;
+
+      slider.classList.remove(
+        "dragging"
+      );
+
+    }
+  );
+
+
+  slider.addEventListener(
+    "mousemove",
+    function(event){
+
+      if(!isDown)return;
+
+      event.preventDefault();
+
+
+      const x=
+        event.pageX -
+        slider.offsetLeft;
+
+
+      const walk=
+        (x-startX)*1.5;
+
+
+      slider.scrollLeft=
+        scrollLeft-walk;
+
+    }
+  );
+
+})();
+
+
+/* =========================================================
    START
 ========================================================= */
 
@@ -4449,9 +5003,7 @@ applyLanguage();
 loadNews();
 
 
-/*
-   تحديث الأخبار كل 10 دقائق
-*/
+/* تحديث الأخبار كل 10 دقائق */
 
 setInterval(
   loadNews,
