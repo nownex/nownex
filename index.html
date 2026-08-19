@@ -2077,8 +2077,6 @@ NOWNEX
 <div class="header-actions">
 
 
-<!-- LANGUAGE -->
-
 <button
   class="language-btn"
   id="languageBtn"
@@ -2121,8 +2119,6 @@ NOWNEX
 
 <main>
 
-
-<!-- HERO -->
 
 <section class="hero">
 
@@ -2171,9 +2167,7 @@ NOWNEX
   onclick="scrollToTrending()"
   data-i18n="exploreTrend"
 >
-
 🔥 استكشف الترند
-
 </button>
 
 
@@ -2182,9 +2176,7 @@ NOWNEX
   onclick="scrollToCategories()"
   data-i18n="exploreCategories"
 >
-
 استكشف الأقسام
-
 </button>
 
 
@@ -2257,9 +2249,7 @@ NOWNEX
   onclick="showAllNews(); return false;"
   data-i18n="showAll"
 >
-
 عرض الكل ←
-
 </a>
 
 
@@ -2279,9 +2269,7 @@ NOWNEX
   onclick="clearCategoryFilter()"
   data-i18n="showAllShort"
 >
-
 عرض الكل
-
 </button>
 
 </div>
@@ -2356,9 +2344,7 @@ NOWNEX
   class="section-description"
   data-i18n="categoriesDescription"
 >
-
 كل ما يحدث الآن، مرتب حسب اهتماماتك.
-
 </p>
 
 </div>
@@ -2570,19 +2556,12 @@ NOWNEX
 
 
 <h2 data-i18n="featureTitle">
-
-المستقبل يتحرك
-أسرع من أي وقت مضى.
-
+المستقبل يتحرك أسرع من أي وقت مضى.
 </h2>
 
 
 <p data-i18n="featureDescription">
-
-يجمع NOWNEX أحدث التطورات
-في الذكاء الاصطناعي والتكنولوجيا
-والأفكار التي تشكل عالم الغد.
-
+يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.
 </p>
 
 
@@ -2592,9 +2571,7 @@ NOWNEX
   onclick="filterByCategory('AI', null)"
   data-i18n="featureButton"
 >
-
 اكتشف عالم الذكاء الاصطناعي ←
-
 </button>
 
 
@@ -2636,9 +2613,7 @@ OWNEX
   class="footer-copy"
   data-i18n="footerTagline"
 >
-
 ما يحدث الآن. ما القادم.
-
 </div>
 
 
@@ -2649,9 +2624,7 @@ OWNEX
   class="footer-copy"
   data-i18n="copyright"
 >
-
 © 2026 NOWNEX — جميع الحقوق محفوظة
-
 </div>
 
 
@@ -2762,7 +2735,6 @@ NOWNEX
 
 <script>
 
-
 /* =====================================================
    GLOBAL
 ===================================================== */
@@ -2785,26 +2757,19 @@ const translations = {
 
   ar: {
 
-    navHome:
-      "الرئيسية",
+    navHome: "الرئيسية",
 
-    navTrending:
-      "الترند",
+    navTrending: "الترند",
 
-    navCategories:
-      "الأقسام",
+    navCategories: "الأقسام",
 
-    navAbout:
-      "حول NOWNEX",
+    navAbout: "حول NOWNEX",
 
-    liveTrend:
-      "مباشر — الترند الآن",
+    liveTrend: "مباشر — الترند الآن",
 
-    heroNow:
-      "ما يحدث الآن.",
+    heroNow: "ما يحدث الآن.",
 
-    heroNext:
-      "ما القادم.",
+    heroNext: "ما القادم.",
 
     heroDescription:
       "اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
@@ -3143,6 +3108,10 @@ const translations = {
 };
 
 
+/* =====================================================
+   TRANSLATION HELPER
+===================================================== */
+
 function t(key) {
 
   return (
@@ -3150,6 +3119,106 @@ function t(key) {
     translations.ar[key] ||
     key
   );
+
+}
+
+
+/* =====================================================
+   GET LOCALIZED TITLE
+   NEW:
+   title_ar / title_en
+===================================================== */
+
+function getNewsTitle(item) {
+
+  if (!item) {
+    return "";
+  }
+
+  if (currentLanguage === "en") {
+
+    return (
+      item.title_en ||
+      item.title ||
+      item.title_ar ||
+      "NOWNEX News"
+    );
+
+  }
+
+  return (
+    item.title_ar ||
+    item.title ||
+    item.title_en ||
+    "خبر من NOWNEX"
+  );
+
+}
+
+
+/* =====================================================
+   GET LOCALIZED SUMMARY
+   NEW:
+   summary_ar / summary_en
+===================================================== */
+
+function getNewsSummary(item) {
+
+  if (!item) {
+    return "";
+  }
+
+  if (currentLanguage === "en") {
+
+    return (
+      item.summary_en ||
+      item.summary ||
+      item.summary_ar ||
+      "No summary is currently available for this story."
+    );
+
+  }
+
+  return (
+    item.summary_ar ||
+    item.summary ||
+    item.summary_en ||
+    "لا يوجد ملخص متاح لهذا الخبر حالياً."
+  );
+
+}
+
+
+/* =====================================================
+   SEARCH TEXT
+   Searches BOTH languages
+===================================================== */
+
+function getSearchableText(item) {
+
+  if (!item) {
+    return "";
+  }
+
+  return [
+
+    item.title_ar,
+    item.title_en,
+
+    item.summary_ar,
+    item.summary_en,
+
+    item.title,
+    item.summary,
+    item.description,
+
+    item.category,
+    item.source
+
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 
 }
 
@@ -3222,10 +3291,6 @@ function applyLanguage() {
       t("languageButton");
 
 
-  /*
-    تحديث نص الفلتر إذا كان قسم محدد.
-  */
-
   if (currentCategory) {
 
     document
@@ -3242,8 +3307,34 @@ function applyLanguage() {
 
 
   /*
-    إعادة رسم الأخبار حتى تتغير
-    أزرار قراءة الخبر والبيانات الثابتة.
+    إذا كان الخبر مفتوحاً أثناء تغيير اللغة،
+    نعيد فتح نفس الخبر باللغة الجديدة.
+  */
+
+  const articleOverlay =
+    document.getElementById(
+      "articleOverlay"
+    );
+
+  const currentArticle =
+    window.currentOpenedArticle;
+
+
+  if (
+    articleOverlay &&
+    articleOverlay.classList.contains("active") &&
+    currentArticle
+  ) {
+
+    openArticle(
+      currentArticle
+    );
+
+  }
+
+
+  /*
+    إعادة رسم الأخبار باللغة الجديدة.
   */
 
   if (allNews.length) {
@@ -3270,6 +3361,10 @@ function applyLanguage() {
 
 }
 
+
+/* =====================================================
+   TOGGLE LANGUAGE
+===================================================== */
 
 function toggleLanguage() {
 
@@ -3348,31 +3443,24 @@ function performSearch() {
   }
 
 
+  /*
+    البحث في:
+    العربي
+    الإنجليزي
+    العنوان القديم
+    الملخص القديم
+    التصنيف
+    المصدر
+  */
+
   const filtered =
     allNews.filter(function(item) {
 
-      const title =
-        String(item.title || "")
-          .toLowerCase();
+      const searchable =
+        getSearchableText(item);
 
-      const summary =
-        String(item.summary || "")
-          .toLowerCase();
-
-      const category =
-        String(item.category || "")
-          .toLowerCase();
-
-      const source =
-        String(item.source || "")
-          .toLowerCase();
-
-
-      return (
-        title.includes(query) ||
-        summary.includes(query) ||
-        category.includes(query) ||
-        source.includes(query)
+      return searchable.includes(
+        query
       );
 
     });
@@ -3430,7 +3518,7 @@ function performSearch() {
         <div class="search-result-title">
 
           ${escapeHTML(
-            item.title || "خبر"
+            getNewsTitle(item)
           )}
 
         </div>
@@ -3994,6 +4082,7 @@ function translateCategory(
 
 /* =====================================================
    OPEN ARTICLE
+   NEW LANGUAGE SUPPORT
 ===================================================== */
 
 function openArticle(
@@ -4003,6 +4092,15 @@ function openArticle(
   if (!item) {
     return;
   }
+
+
+  /*
+    نحفظ الخبر المفتوح حتى إذا غيّر المستخدم
+    اللغة أثناء قراءة الخبر، يتغير المحتوى مباشرة.
+  */
+
+  window.currentOpenedArticle =
+    item;
 
 
   const overlay =
@@ -4017,22 +4115,23 @@ function openArticle(
     );
 
 
+  /*
+    العنوان أصبح يعتمد على اللغة.
+  */
+
   const title =
     escapeHTML(
-      item.title ||
-      "خبر من NOWNEX"
+      getNewsTitle(item)
     );
 
 
-  const summaryRaw =
-    item.summary ||
-    item.description ||
-    "لا يوجد ملخص متاح لهذا الخبر حالياً.";
-
+  /*
+    الملخص أصبح يعتمد على اللغة.
+  */
 
   const summary =
     escapeHTML(
-      summaryRaw
+      getNewsSummary(item)
     );
 
 
@@ -4321,13 +4420,16 @@ function closeArticle() {
     "article-open"
   );
 
+
+  window.currentOpenedArticle =
+    null;
+
 }
 
 
 /* =====================================================
    RENDER NEWS
-   IMPORTANT:
-   الصور + الأقسام محفوظة
+   NEW LANGUAGE SUPPORT
 ===================================================== */
 
 function renderNews(
@@ -4506,10 +4608,13 @@ function renderNews(
           "trend-card";
 
 
+        /*
+          العنوان حسب اللغة الحالية.
+        */
+
         const title =
           escapeHTML(
-            item.title ||
-            "خبر جديد"
+            getNewsTitle(item)
           );
 
 
@@ -4537,7 +4642,6 @@ function renderNews(
 
         /* =================================================
            IMAGE
-           محفوظة كما هي
         ================================================= */
 
         let imageHTML =
@@ -4669,6 +4773,33 @@ function renderNews(
         }
 
 
+        /*
+          الضغط على البطاقة نفسها يفتح الخبر.
+          لا يغير التصميم، فقط يجعل الاستخدام أسهل.
+        */
+
+        card.addEventListener(
+          "click",
+          function(event) {
+
+            if (
+              event.target.closest(
+                ".news-link"
+              )
+            ) {
+
+              return;
+
+            }
+
+            openArticle(
+              item
+            );
+
+          }
+        );
+
+
         newsGrid.appendChild(
           card
         );
@@ -4789,6 +4920,41 @@ async function loadNews() {
       ).length
     );
 
+
+    console.log(
+      "AI:",
+      allNews.filter(
+        x =>
+          x.category ===
+          "AI"
+      ).length
+    );
+
+
+    /*
+      فحص بسيط للتأكد أن generate_news.py
+      أنشأ الحقول الجديدة.
+    */
+
+    const localizedCount =
+      allNews.filter(function(item) {
+
+        return (
+          item.title_ar ||
+          item.title_en ||
+          item.summary_ar ||
+          item.summary_en
+        );
+
+      }).length;
+
+
+    console.log(
+      "NOWNEX localized articles:",
+      localizedCount,
+      "/",
+      allNews.length
+    );
 
   }
 
