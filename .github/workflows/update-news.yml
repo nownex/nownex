@@ -2,44 +2,126 @@ name: Update NOWNEX News
 
 on:
   workflow_dispatch:
+
   schedule:
     - cron: "0 */6 * * *"
+
+
+# يمنع تشغيل أكثر من نسخة من نفس الـWorkflow في نفس الوقت
+concurrency:
+  group: nownex-news-update
+  cancel-in-progress: false
+
 
 permissions:
   contents: write
 
+
 jobs:
+
   update-news:
+
     runs-on: ubuntu-latest
 
+
     steps:
+
+      # =====================================================
+      # 1. تحميل آخر نسخة من المشروع
+      # =====================================================
+
       - name: Checkout repository
+
         uses: actions/checkout@v4
 
+        with:
+          fetch-depth: 0
+
+
+      # =====================================================
+      # 2. إعداد Python
+      # =====================================================
+
       - name: Setup Python
+
         uses: actions/setup-python@v5
+
         with:
           python-version: "3.12"
 
+
+      # =====================================================
+      # 3. تثبيت المكتبات
+      # =====================================================
+
       - name: Install dependencies
+
         run: |
+
           python -m pip install --upgrade pip
+
           pip install requests feedparser
 
+
+      # =====================================================
+      # 4. توليد الأخبار
+      # =====================================================
+
       - name: Generate news
+
         env:
+
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
         run: |
+
           python generate_news.py
 
-      - name: Save news.json
+
+      # =====================================================
+      # 5. إعداد Git
+      # =====================================================
+
+      - name: Configure Git
+
         run: |
+
           git config user.name "NOWNEX Bot"
+
           git config user.email "actions@github.com"
+
+
+      # =====================================================
+      # 6. جلب آخر تغييرات من GitHub
+      # =====================================================
+
+      - name: Sync with remote
+
+        run: |
+
+          git fetch origin main
+
+          git rebase origin/main
+
+
+      # =====================================================
+      # 7. حفظ الأخبار
+      # =====================================================
+
+      - name: Save news.json
+
+        run: |
+
           git add news.json
+
           if git diff --cached --quiet; then
+
             echo "No changes to news.json"
+
           else
+
             git commit -m "Update NOWNEX Arabic news"
-            git push
+
+            git push origin main
+
           fi
