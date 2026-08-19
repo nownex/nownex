@@ -1,36 +1,21 @@
 {
-  "updatedAt": "2026-08-19T10:23:32.639614+00:00",
-  "count": 2,
+  "updatedAt": "2026-08-19T12:05:58.030472+00:00",
+  "count": 1,
   "news": [
     {
-      "title_ar": "شركة \"ريلاتيفيتي نيتووركس\" تجمع 22 مليون دولار لتوفير ألياف ضوئية أسرع لمراكز البيانات",
-      "summary_ar": "جمعت شركة \"ريلاتيفيتي نيتووركس\" تمويلاً بقيمة 22 مليون دولار لجلب نوع أسرع من الألياف الضوئية إلى مراكز البيانات. وتتخصص الشركة في تقنية الألياف ذات النواة المفرغة، وهي تقنية نادراً ما يتم تطبيقها حالياً. وتسمح هذه التقنية بنقل البيانات بسرعة أكبر بنسبة 30% مقارنة بالألياف الضوئية التقليدية.",
-      "title_en": "Relativity Networks Raises $22 Million to Bring Faster Fiber to Data Centers",
-      "summary_en": "Relativity Networks has raised $22 million to bring a faster kind of fiber technology to data centers. The company deals in hollow-core fiber, a technology that is currently rarely deployed. This technology allows data to be transmitted 30% faster than conventional fiber optic cables.",
-      "title": "شركة \"ريلاتيفيتي نيتووركس\" تجمع 22 مليون دولار لتوفير ألياف ضوئية أسرع لمراكز البيانات",
-      "summary": "جمعت شركة \"ريلاتيفيتي نيتووركس\" تمويلاً بقيمة 22 مليون دولار لجلب نوع أسرع من الألياف الضوئية إلى مراكز البيانات. وتتخصص الشركة في تقنية الألياف ذات النواة المفرغة، وهي تقنية نادراً ما يتم تطبيقها حالياً. وتسمح هذه التقنية بنقل البيانات بسرعة أكبر بنسبة 30% مقارنة بالألياف الضوئية التقليدية.",
-      "description": "جمعت شركة \"ريلاتيفيتي نيتووركس\" تمويلاً بقيمة 22 مليون دولار لجلب نوع أسرع من الألياف الضوئية إلى مراكز البيانات. وتتخصص الشركة في تقنية الألياف ذات النواة المفرغة، وهي تقنية نادراً ما يتم تطبيقها حالياً. وتسمح هذه التقنية بنقل البيانات بسرعة أكبر بنسبة 30% مقارنة بالألياف الضوئية التقليدية.",
-      "category": "Technology",
-      "source": "TechCrunch",
-      "link": "https://techcrunch.com/2026/08/19/relativity-networks-raises-22-million-to-bring-a-faster-kind-of-fiber-to-data-centers/",
-      "image": "https://techcrunch.com/wp-content/uploads/2026/08/Screenshot-2026-08-18-at-5.17.16-PM.jpg?resize=1200,772",
-      "published": "Wed, 19 Aug 2026 10:00:00 +0000",
-      "publishedAt": "2026-08-19T10:06:32.089202+00:00"
-    },
-    {
-      "title_ar": "منصة \"كُرسر\" تستغل استياء المطورين وتطلق خياراً منافساً لـ \"جيت هاب\"",
-      "summary_ar": "أعلنت شركة \"كُرسر\"، المعروفة بتقديم محرر الأكواد المدعوم بالذكاء الاصطناعي، عن إطلاق منصة جديدة لاستضافة البرمجيات. وتهدف المنصة الجديدة إلى منافسة خدمة \"جيت هاب\"، التي طالما كانت الخيار المفضل والأساسي لدى المطورين. وتأتي هذه الخطوة مستفيدة من حالة الاستياء الحالية لدى المطورين لتقديم منصة بديلة.",
-      "title_en": "Cursor Capitalizes on Developer Frustration with Launch of Rival GitHub Platform",
-      "summary_en": "Cursor, a company known for its AI Code Editor, is launching a new code-hosting platform. The new service is designed to directly rival GitHub, which has long been the preferred favorite among developers. Through this launch, Cursor aims to capitalize on growing developer frustration with the established platform.",
-      "title": "منصة \"كُرسر\" تستغل استياء المطورين وتطلق خياراً منافساً لـ \"جيت هاب\"",
-      "summary": "أعلنت شركة \"كُرسر\"، المعروفة بتقديم محرر الأكواد المدعوم بالذكاء الاصطناعي، عن إطلاق منصة جديدة لاستضافة البرمجيات. وتهدف المنصة الجديدة إلى منافسة خدمة \"جيت هاب\"، التي طالما كانت الخيار المفضل والأساسي لدى المطورين. وتأتي هذه الخطوة مستفيدة من حالة الاستياء الحالية لدى المطورين لتقديم منصة بديلة.",
-      "description": "أعلنت شركة \"كُرسر\"، المعروفة بتقديم محرر الأكواد المدعوم بالذكاء الاصطناعي، عن إطلاق منصة جديدة لاستضافة البرمجيات. وتهدف المنصة الجديدة إلى منافسة خدمة \"جيت هاب\"، التي طالما كانت الخيار المفضل والأساسي لدى المطورين. وتأتي هذه الخطوة مستفيدة من حالة الاستياء الحالية لدى المطورين لتقديم منصة بديلة.",
-      "category": "Technology",
-      "source": "TechCrunch",
-      "link": "https://techcrunch.com/2026/08/18/cursor-capitalizes-on-github-frustration-launches-rival-hosting-platform/",
-      "image": "https://techcrunch.com/wp-content/uploads/2026/07/cursor.jpg?resize=1200,800",
-      "published": "Tue, 18 Aug 2026 22:14:25 +0000",
-      "publishedAt": "2026-08-19T10:06:51.053840+00:00"
+      "title_ar": "غريبة ومذهلة.. موقع \"لايف ساينس\" يستعرض 70 حقيقة علمية عن عالمنا",
+      "summary_ar": "نشر موقع \"لايف ساينس\" مجموعة تضم 70 حقيقة علمية مذهلة تتعلق بالعالم الذي نعيش فيه. تتناول هذه الحقائق موضوعات متنوعة تتراوح بين الأمور الغريبة والمقززة والمعلومات العشوائية المدهشة. وتهدف هذه المجموعة إلى تسليط الضوء على ظواهر طبيعية وعلمية فريدة قد لا يعلم عنها الكثيرون. كما توفر المادة نظرة ممتعة تثري المعرفة العامة حول مختلف جوانب كوكبنا.",
+      "title_en": "Weird and Mind-Blowing: Live Science Highlights 70 Fascinating Facts About Our World",
+      "summary_en": "Live Science has compiled a collection of 70 mind-blowing science facts about our world. The feature covers a wide range of topics, including weird, gross, and random scientific details. It aims to highlight unique natural and scientific phenomena that many people may not be aware of. This compilation offers an engaging overview of various fascinating aspects of our planet.",
+      "title": "غريبة ومذهلة.. موقع \"لايف ساينس\" يستعرض 70 حقيقة علمية عن عالمنا",
+      "summary": "نشر موقع \"لايف ساينس\" مجموعة تضم 70 حقيقة علمية مذهلة تتعلق بالعالم الذي نعيش فيه. تتناول هذه الحقائق موضوعات متنوعة تتراوح بين الأمور الغريبة والمقززة والمعلومات العشوائية المدهشة. وتهدف هذه المجموعة إلى تسليط الضوء على ظواهر طبيعية وعلمية فريدة قد لا يعلم عنها الكثيرون. كما توفر المادة نظرة ممتعة تثري المعرفة العامة حول مختلف جوانب كوكبنا.",
+      "description": "نشر موقع \"لايف ساينس\" مجموعة تضم 70 حقيقة علمية مذهلة تتعلق بالعالم الذي نعيش فيه. تتناول هذه الحقائق موضوعات متنوعة تتراوح بين الأمور الغريبة والمقززة والمعلومات العشوائية المدهشة. وتهدف هذه المجموعة إلى تسليط الضوء على ظواهر طبيعية وعلمية فريدة قد لا يعلم عنها الكثيرون. كما توفر المادة نظرة ممتعة تثري المعرفة العامة حول مختلف جوانب كوكبنا.",
+      "category": "Facts",
+      "source": "Google News Science Facts",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE0zUkhacl9McU14LVA3dlZKX0pZcWx4RS0yMWQtb3pUdnZ0Q3ZEUVNvZjJfa2tLSzN6bHMycU1QYWRFdUVLWjVXSFd0dEdhMnB6UFRR?oc=5",
+      "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300",
+      "published": "Tue, 30 Jun 2026 07:00:00 GMT",
+      "publishedAt": "2026-08-19T11:44:51.669024+00:00"
     }
   ]
 }
