@@ -23,7 +23,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet">
 
-
 <style>
 
 /* =========================================================
@@ -313,7 +312,6 @@ nav a.active{
     background-size:cover;
 }
 
-
 .hero::after{
 
     content:"";
@@ -346,11 +344,7 @@ nav a.active{
 
     z-index:5;
 
-    /*
-       مساحة الكتابة في الجهة اليسرى
-    */
-
-    left:3.5%;
+    left:4%;
 
     width:46%;
 
@@ -373,14 +367,9 @@ nav a.active{
     padding:20px;
 }
 
-
-/*
-   الإنجليزية تبقى في نفس منطقة الروبوت
-*/
-
 html[dir="ltr"] .hero-content{
 
-    left:3.5%;
+    left:4%;
 
     right:auto;
 
@@ -524,9 +513,7 @@ html[dir="ltr"] .hero-content{
 
 
 /* =========================================================
-   HERO BUTTONS
-   التعديل الرئيسي:
-   الأزرار إلى أقصى اليسار
+   BUTTONS
 ========================================================= */
 
 .hero-buttons{
@@ -535,37 +522,14 @@ html[dir="ltr"] .hero-content{
 
     align-items:center;
 
-    justify-content:flex-start;
+    justify-content:center;
 
     gap:12px;
 
     flex-wrap:wrap;
 
     width:100%;
-
-    direction:ltr;
-
-    padding-left:0;
 }
-
-
-/*
-   نحافظ على ترتيب الأزرار الصحيح
-   في العربية والإنجليزية
-*/
-
-.hero-buttons button{
-    direction:rtl;
-}
-
-html[dir="ltr"] .hero-buttons{
-    direction:ltr;
-}
-
-html[dir="ltr"] .hero-buttons button{
-    direction:ltr;
-}
-
 
 .primary-btn,
 .secondary-btn{
@@ -580,10 +544,7 @@ html[dir="ltr"] .hero-buttons button{
 
     border:1px solid var(--line);
 
-    transition:
-        transform .22s ease,
-        box-shadow .22s ease,
-        border-color .22s ease;
+    transition:.22s;
 
     font-size:14px;
 
@@ -660,7 +621,7 @@ html[dir="ltr"] .hero-buttons button{
 
     overflow-y:hidden;
 
-    padding:4px 2px 14px;
+    padding:4px 2px 12px;
 
     scroll-snap-type:x mandatory;
 
@@ -672,12 +633,6 @@ html[dir="ltr"] .hero-buttons button{
 .category-slider::-webkit-scrollbar{
     display:none;
 }
-
-
-/* =========================================================
-   CATEGORY CARD
-   حواف مضيئة + Zoom عند اللمس
-========================================================= */
 
 .category-card{
 
@@ -691,13 +646,13 @@ html[dir="ltr"] .hero-buttons button{
 
     border:
         1px solid
-        rgba(35,145,255,.30);
+        rgba(255,255,255,.10);
 
     background:
         linear-gradient(
             145deg,
-            rgba(9,27,52,.96),
-            rgba(4,15,32,.98)
+            rgba(9,27,52,.95),
+            rgba(4,15,32,.97)
         );
 
     display:flex;
@@ -710,37 +665,12 @@ html[dir="ltr"] .hero-buttons button{
 
     cursor:pointer;
 
+    transition:.25s;
+
     position:relative;
 
     overflow:hidden;
-
-    /*
-       انتقال ناعم للـ Zoom
-    */
-
-    transform:scale(1);
-
-    transform-origin:center center;
-
-    transition:
-        transform .22s cubic-bezier(.2,.8,.2,1),
-        border-color .22s ease,
-        box-shadow .22s ease,
-        background .22s ease;
-
-    /*
-       Glow دائم خفيف
-    */
-
-    box-shadow:
-        0 0 0 1px rgba(0,130,255,.05),
-        0 5px 22px rgba(0,80,170,.10);
 }
-
-
-/*
-   إضاءة داخلية متحركة
-*/
 
 .category-card::before{
 
@@ -752,124 +682,25 @@ html[dir="ltr"] .hero-buttons button{
 
     background:
         radial-gradient(
-            circle at 15% 50%,
-            rgba(0,174,255,.15),
-            transparent 48%
+            circle at 20% 50%,
+            rgba(0,145,255,.10),
+            transparent 60%
         );
 
     pointer-events:none;
-
-    opacity:.9;
 }
-
-
-/*
-   خط ضوئي حول الحواف
-*/
-
-.category-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    border-radius:18px;
-
-    pointer-events:none;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(25,191,255,.25),
-            transparent 35%,
-            transparent 65%,
-            rgba(100,95,255,.20)
-        );
-
-    opacity:.65;
-
-    transition:opacity .22s ease;
-}
-
-
-/*
-   Hover للكمبيوتر
-*/
 
 .category-card:hover{
 
-    transform:scale(1.025);
+    transform:translateY(-3px);
 
     border-color:
-        rgba(25,175,255,.72);
+        rgba(0,140,255,.35);
 
     box-shadow:
-        0 0 0 1px rgba(25,175,255,.16),
-        0 0 24px rgba(0,130,255,.22),
-        0 12px 35px rgba(0,70,150,.20);
+        0 10px 35px
+        rgba(0,70,150,.16);
 }
-
-.category-card:hover::after{
-    opacity:1;
-}
-
-
-/*
-   عند اللمس/الضغط على الهاتف
-*/
-
-.category-card:active{
-
-    transform:scale(.975);
-
-    border-color:
-        rgba(25,190,255,.90);
-
-    box-shadow:
-        0 0 0 1px rgba(25,190,255,.25),
-        0 0 30px rgba(0,145,255,.30);
-}
-
-
-/*
-   كلاس JS لإظهار Zoom ثابت للحظة
-*/
-
-.category-card.touch-zoom{
-
-    transform:scale(1.035);
-
-    border-color:
-        rgba(25,190,255,.85);
-
-    box-shadow:
-        0 0 0 1px rgba(25,190,255,.22),
-        0 0 32px rgba(0,145,255,.30),
-        0 12px 38px rgba(0,70,160,.24);
-}
-
-
-/*
-   البطاقة المختارة
-*/
-
-.category-card.selected{
-
-    border-color:
-        rgba(217,180,91,.82);
-
-    box-shadow:
-        0 0 0 1px rgba(217,180,91,.12),
-        0 0 24px rgba(217,180,91,.16),
-        0 10px 32px rgba(0,60,130,.20);
-}
-
-
-/*
-   إبقاء المحتوى فوق التأثير
-*/
 
 .category-icon{
 
@@ -888,17 +719,6 @@ html[dir="ltr"] .hero-buttons button{
     position:relative;
 
     z-index:2;
-
-    transition:
-        transform .22s ease;
-}
-
-.category-card:hover .category-icon{
-    transform:scale(1.06);
-}
-
-.category-card.touch-zoom .category-icon{
-    transform:scale(1.08);
 }
 
 .category-text{
@@ -1747,6 +1567,7 @@ footer{
 
     /* =====================================================
        HERO MOBILE
+       الصورة والروبوت يبقيان كما هما
     ===================================================== */
 
     .hero{
@@ -1780,6 +1601,10 @@ footer{
     }
 
 
+    /*
+       منطقة الكتابة تبقى في الجهة اليسرى
+    */
+
     .hero-content{
 
         left:2%;
@@ -1795,6 +1620,8 @@ footer{
         text-align:center;
 
         align-items:center;
+
+        justify-content:center;
     }
 
 
@@ -1807,6 +1634,8 @@ footer{
         text-align:center;
 
         align-items:center;
+
+        justify-content:center;
     }
 
 
@@ -1861,50 +1690,78 @@ footer{
     }
 
 
-    /*
-       الأزرار الآن تبدأ من أقصى اليسار
-       داخل مساحة الـ Hero
-    */
+    /* =====================================================
+       HERO BUTTONS
+       التعديل المطلوب:
+       الزران جنب بعض وفي منتصف المنطقة اليسرى
+    ===================================================== */
 
     .hero-buttons{
 
-        justify-content:flex-start;
-
-        align-items:flex-start;
-
-        flex-direction:column;
-
-        gap:6px;
-
         width:100%;
 
-        padding-left:0;
+        display:flex;
+
+        flex-direction:row;
+
+        flex-wrap:nowrap;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:8px;
+
+        margin:0 auto;
+
+        direction:rtl;
+    }
+
+
+    /*
+       الإنجليزية بنفس المكان تماماً
+    */
+
+    html[dir="ltr"] .hero-buttons{
+
+        direction:ltr;
+
+        justify-content:center;
     }
 
 
     .primary-btn,
     .secondary-btn{
 
-        padding:8px 10px;
+        flex:0 0 auto;
 
-        font-size:8px;
+        width:auto;
 
-        border-radius:8px;
+        min-width:105px;
+
+        padding:10px 12px;
+
+        font-size:9px;
+
+        line-height:1.3;
+
+        border-radius:10px;
+
+        white-space:nowrap;
+
+        text-align:center;
     }
 
 
     /* =====================================================
-       MOBILE CATEGORY SLIDER
+       CATEGORY SLIDER
     ===================================================== */
 
     .category-section{
 
         padding:
-
             0
-
             13px
-
             22px;
     }
 
@@ -1928,17 +1785,6 @@ footer{
         border-radius:16px;
 
         scroll-snap-align:start;
-
-        /*
-           Glow أوضح على الهاتف
-        */
-
-        border-color:
-            rgba(35,155,255,.38);
-
-        box-shadow:
-            0 0 0 1px rgba(0,130,255,.07),
-            0 5px 22px rgba(0,80,170,.14);
     }
 
     .category-icon{
@@ -1970,11 +1816,8 @@ footer{
     .section{
 
         padding:
-
             18px
-
             13px
-
             45px;
     }
 
@@ -2085,6 +1928,28 @@ footer{
         font-size:7.5px;
     }
 
+
+    /*
+       تصغير الزرين قليلاً فقط للشاشات الصغيرة جداً
+       مع بقائهما جنباً إلى جنب
+    */
+
+    .hero-buttons{
+
+        gap:5px;
+    }
+
+    .primary-btn,
+    .secondary-btn{
+
+        min-width:92px;
+
+        padding:9px 8px;
+
+        font-size:8px;
+    }
+
+
     .category-card{
 
         flex-basis:205px;
@@ -2094,7 +1959,6 @@ footer{
 </style>
 
 </head>
-
 
 <body>
 
@@ -2180,7 +2044,6 @@ footer{
 </header>
 
 
-
 <main>
 
 
@@ -2250,7 +2113,6 @@ footer{
 </section>
 
 
-
 <!-- =======================================================
      CATEGORY SLIDER
 ======================================================= -->
@@ -2285,7 +2147,6 @@ footer{
     </div>
 
 
-
     <div class="category-card"
          data-category="World"
          onclick="filterByCategory('World',this)">
@@ -2307,7 +2168,6 @@ footer{
         </div>
 
     </div>
-
 
 
     <div class="category-card"
@@ -2333,7 +2193,6 @@ footer{
     </div>
 
 
-
     <div class="category-card"
          data-category="Technology"
          onclick="filterByCategory('Technology',this)">
@@ -2355,7 +2214,6 @@ footer{
         </div>
 
     </div>
-
 
 
     <div class="category-card"
@@ -2381,7 +2239,6 @@ footer{
     </div>
 
 
-
     <div class="category-card"
          data-category="Cars"
          onclick="filterByCategory('Cars',this)">
@@ -2405,7 +2262,6 @@ footer{
     </div>
 
 
-
     <div class="category-card"
          data-category="Facts"
          onclick="filterByCategory('Facts',this)">
@@ -2427,7 +2283,6 @@ footer{
         </div>
 
     </div>
-
 
 
     <div class="category-card"
@@ -2456,7 +2311,6 @@ footer{
 </div>
 
 </section>
-
 
 
 <!-- =======================================================
@@ -2541,7 +2395,6 @@ footer{
 </main>
 
 
-
 <!-- =======================================================
      FOOTER
 ======================================================= -->
@@ -2572,7 +2425,6 @@ footer{
 </div>
 
 </footer>
-
 
 
 <!-- =======================================================
@@ -2615,7 +2467,6 @@ footer{
 </div>
 
 
-
 <!-- =======================================================
      SEARCH
 ======================================================= -->
@@ -2644,7 +2495,6 @@ footer{
 </div>
 
 </div>
-
 
 
 <script>
@@ -3294,34 +3144,15 @@ function filterByCategory(
 
     document
         .querySelectorAll(".category-card")
-        .forEach(card=>{
-
-            card.classList.remove("selected");
-
-        });
+        .forEach(card=>
+            card.style.borderColor=""
+        );
 
 
     if(clickedElement){
 
-        clickedElement.classList.add(
-            "selected"
-        );
-
-        /*
-           Zoom بسيط عند الاختيار
-        */
-
-        clickedElement.classList.add(
-            "touch-zoom"
-        );
-
-        setTimeout(()=>{
-
-            clickedElement.classList.remove(
-                "touch-zoom"
-            );
-
-        },280);
+        clickedElement.style.borderColor=
+            "rgba(217,180,91,.65)";
     }
 
 
@@ -3391,17 +3222,9 @@ function clearCategoryFilter(){
 
     document
         .querySelectorAll(".category-card")
-        .forEach(card=>{
-
-            card.classList.remove(
-                "selected"
-            );
-
-            card.classList.remove(
-                "touch-zoom"
-            );
-
-        });
+        .forEach(card=>
+            card.style.borderColor=""
+        );
 
 
     renderNews(
@@ -3416,73 +3239,6 @@ function showAllNews(){
 
     scrollToTrending();
 }
-
-
-/* =========================================================
-   CATEGORY TOUCH ZOOM
-========================================================= */
-
-/*
-   هذا الجزء يجعل البطاقة تكبر قليلاً
-   عند لمسها على الهاتف.
-
-   لا يمنع السحب الأفقي للسلايدر.
-*/
-
-document
-    .querySelectorAll(".category-card")
-    .forEach(card=>{
-
-        let touchTimer=null;
-
-
-        card.addEventListener(
-            "touchstart",
-            ()=>{
-
-                card.classList.add(
-                    "touch-zoom"
-                );
-
-            },
-            {passive:true}
-        );
-
-
-        card.addEventListener(
-            "touchend",
-            ()=>{
-
-                clearTimeout(
-                    touchTimer
-                );
-
-                touchTimer=setTimeout(()=>{
-
-                    card.classList.remove(
-                        "touch-zoom"
-                    );
-
-                },180);
-
-            },
-            {passive:true}
-        );
-
-
-        card.addEventListener(
-            "touchcancel",
-            ()=>{
-
-                card.classList.remove(
-                    "touch-zoom"
-                );
-
-            },
-            {passive:true}
-        );
-
-    });
 
 
 /* =========================================================
