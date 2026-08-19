@@ -5,2023 +5,1842 @@
 
 <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
 
 <meta
-  name="description"
-  content="NOWNEX — منصة عربية لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
+name="description"
+content="NOWNEX — منصة عربية لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
 >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
 
 <link
-  rel="preconnect"
-  href="https://fonts.gstatic.com"
-  crossorigin
->
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+rel="stylesheet">
 
-<link
-  href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
-  rel="stylesheet"
->
 
 <style>
 
 /* =====================================================
-   GLOBAL
+GLOBAL
 ===================================================== */
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
 
-  --bg: #060914;
-  --bg2: #0b1020;
+    --bg: #060914;
+    --bg2: #0b1020;
 
-  --card: #10172a;
-  --card-hover: #151e35;
+    --card: #10172a;
+    --card-hover: #151e35;
 
-  --text: #f5f7ff;
-  --muted: #8d97ad;
+    --text: #f5f7ff;
+    --muted: #8d97ad;
 
-  --gold: #d9b45b;
-  --gold-light: #f3d47d;
+    --gold: #d9b45b;
+    --gold-light: #f3d47d;
 
-  --blue: #4f8cff;
+    --blue: #4f8cff;
 
-  --green: #56e39f;
+    --green: #56e39f;
 
-  --line: rgba(255,255,255,0.08);
+    --line:
+        rgba(255,255,255,0.08);
 
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
 
-  font-family:
-    "Cairo",
-    Arial,
-    sans-serif;
+    font-family:
+        "Cairo",
+        Arial,
+        sans-serif;
 
-  background:
+    background:
 
-    radial-gradient(
-      circle at 80% 0%,
-      rgba(79,140,255,0.12),
-      transparent 30%
-    ),
+        radial-gradient(
+            circle at 80% 0%,
+            rgba(79,140,255,0.12),
+            transparent 30%
+        ),
 
-    radial-gradient(
-      circle at 15% 15%,
-      rgba(217,180,91,0.08),
-      transparent 25%
-    ),
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(217,180,91,0.08),
+            transparent 25%
+        ),
 
-    var(--bg);
+        var(--bg);
 
-  color: var(--text);
+    color: var(--text);
 
-  min-height: 100vh;
+    min-height: 100vh;
 
-  overflow-x: hidden;
-
+    overflow-x: hidden;
 }
 
 body.article-open {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 button {
-  font-family: inherit;
+    font-family: inherit;
 }
 
 
 /* =====================================================
-   NOWNEX BRAND
-===================================================== */
-
-.nownex-brand {
-  direction: ltr;
-  unicode-bidi: isolate;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-.nownex-gold {
-  color: var(--gold-light);
-}
-
-
-/* =====================================================
-   HEADER
+HEADER
 ===================================================== */
 
 header {
 
-  position: sticky;
+    position: sticky;
 
-  top: 0;
+    top: 0;
 
-  z-index: 100;
+    z-index: 100;
 
-  backdrop-filter: blur(18px);
+    backdrop-filter:
+        blur(18px);
 
-  background:
-    rgba(6,9,20,0.90);
+    background:
+        rgba(6,9,20,0.90);
 
-  border-bottom:
-    1px solid var(--line);
-
+    border-bottom:
+        1px solid var(--line);
 }
 
 .header-inner {
 
-  max-width: 1250px;
+    max-width: 1250px;
 
-  margin: auto;
+    margin: auto;
 
-  height: 76px;
+    height: 76px;
 
-  padding: 0 22px;
+    padding: 0 22px;
 
-  display: flex;
+    display: flex;
 
-  align-items: center;
+    align-items: center;
 
-  justify-content: space-between;
+    justify-content: space-between;
 
-  gap: 25px;
-
+    gap: 25px;
 }
+
+
+/* IMPORTANT:
+   dir=ltr prevents NOWNEX
+   from becoming OWNEX N
+*/
 
 .logo {
 
-  display: flex;
+    direction: ltr;
 
-  align-items: center;
+    display: flex;
 
-  gap: 11px;
+    align-items: center;
 
-  font-size: 27px;
+    gap: 11px;
 
-  font-weight: 900;
+    font-size: 27px;
 
-  letter-spacing: -1px;
+    font-weight: 900;
 
-  direction: ltr;
+    letter-spacing: -1px;
 
-  unicode-bidi: isolate;
-
+    white-space: nowrap;
 }
 
 .logo-mark {
 
-  width: 40px;
+    width: 40px;
 
-  height: 40px;
+    height: 40px;
 
-  border-radius: 12px;
+    border-radius: 12px;
 
-  display: grid;
+    display: grid;
 
-  place-items: center;
+    place-items: center;
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
 
-  color: #080b13;
+    color: #080b13;
 
-  font-size: 21px;
+    font-size: 21px;
 
-  box-shadow:
-    0 0 25px
-    rgba(217,180,91,0.18);
+    font-weight: 900;
 
-  flex-shrink: 0;
-
+    box-shadow:
+        0 0 25px
+        rgba(217,180,91,0.18);
 }
 
-.logo-text {
-
-  direction: ltr;
-
-  unicode-bidi: isolate;
-
-}
-
-.logo-text-main {
-  color: var(--gold-light);
-}
-
-.logo-text-end {
-  color: white;
+.logo span {
+    color: var(--gold-light);
 }
 
 nav {
 
-  display: flex;
+    display: flex;
 
-  align-items: center;
+    align-items: center;
 
-  gap: 28px;
-
+    gap: 28px;
 }
 
 nav a {
 
-  color: #b9c1d3;
+    color: #b9c1d3;
 
-  font-size: 14px;
+    font-size: 14px;
 
-  font-weight: 700;
+    font-weight: 700;
 
-  transition: 0.2s;
-
+    transition: 0.2s;
 }
 
 nav a:hover,
 nav a.active {
-
-  color: white;
-
+    color: white;
 }
 
 .header-actions {
 
-  display: flex;
+    display: flex;
 
-  gap: 8px;
-
+    gap: 8px;
 }
 
 .search-btn,
 .mobile-menu {
 
-  width: 43px;
+    width: 43px;
 
-  height: 43px;
+    height: 43px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    rgba(255,255,255,0.04);
+    background:
+        rgba(255,255,255,0.04);
 
-  color: white;
+    color: white;
 
-  border-radius: 12px;
+    border-radius: 12px;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  font-size: 18px;
-
+    font-size: 18px;
 }
 
 .mobile-menu {
-  display: none;
+    display: none;
 }
 
 
 /* =====================================================
-   HERO
+HERO
 ===================================================== */
 
 .hero {
 
-  max-width: 1250px;
+    max-width: 1250px;
 
-  margin: auto;
+    margin: auto;
 
-  padding:
-    85px 22px 55px;
+    padding:
+        85px 22px 55px;
 
-  display: grid;
+    display: grid;
 
-  grid-template-columns:
-    1.35fr 0.65fr;
+    grid-template-columns:
+        1.35fr 0.65fr;
 
-  gap: 35px;
+    gap: 35px;
 
-  align-items: center;
-
+    align-items: center;
 }
 
 .hero-badge {
 
-  display: inline-flex;
+    display: inline-flex;
 
-  align-items: center;
+    align-items: center;
 
-  gap: 9px;
+    gap: 9px;
 
-  padding:
-    8px 14px;
+    padding:
+        8px 14px;
 
-  border:
-    1px solid
-    rgba(217,180,91,0.25);
+    border:
+        1px solid
+        rgba(217,180,91,0.25);
 
-  background:
-    rgba(217,180,91,0.07);
+    background:
+        rgba(217,180,91,0.07);
 
-  color:
-    var(--gold-light);
+    color:
+        var(--gold-light);
 
-  border-radius: 50px;
+    border-radius: 50px;
 
-  font-size: 12px;
+    font-size: 12px;
 
-  font-weight: 800;
+    font-weight: 800;
 
-  margin-bottom: 22px;
-
+    margin-bottom: 22px;
 }
 
 .live-dot {
 
-  width: 8px;
+    width: 8px;
 
-  height: 8px;
+    height: 8px;
 
-  border-radius: 50%;
+    border-radius: 50%;
 
-  background:
-    var(--green);
+    background:
+        var(--green);
 
-  box-shadow:
-    0 0 12px
-    var(--green);
-
+    box-shadow:
+        0 0 12px
+        var(--green);
 }
 
 .hero h1 {
 
-  font-size:
-    clamp(45px, 7vw, 82px);
+    font-size:
+        clamp(45px, 7vw, 82px);
 
-  line-height:
-    1.12;
+    line-height: 1.12;
 
-  letter-spacing:
-    -2px;
+    letter-spacing: -2px;
 
-  max-width:
-    850px;
+    max-width: 850px;
 
-  margin-bottom:
-    25px;
+    margin-bottom: 25px;
 
-  font-weight:
-    900;
-
+    font-weight: 900;
 }
 
 .hero h1 span {
 
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff,
-      var(--gold-light)
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            var(--gold-light)
+        );
 
-  -webkit-background-clip:
-    text;
+    -webkit-background-clip: text;
 
-  color:
-    transparent;
-
+    color: transparent;
 }
 
 .hero p {
 
-  max-width:
-    700px;
+    max-width: 700px;
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  font-size:
-    18px;
+    font-size: 18px;
 
-  line-height:
-    1.9;
+    line-height: 1.9;
 
-  margin-bottom:
-    30px;
+    margin-bottom: 30px;
 
-  font-weight:
-    500;
-
+    font-weight: 500;
 }
 
 .hero-buttons {
 
-  display:
-    flex;
+    display: flex;
 
-  gap:
-    12px;
+    gap: 12px;
 
-  flex-wrap:
-    wrap;
-
+    flex-wrap: wrap;
 }
 
 .primary-btn,
 .secondary-btn {
 
-  padding:
-    14px 21px;
+    padding:
+        14px 21px;
 
-  border-radius:
-    12px;
+    border-radius:
+        12px;
 
-  cursor:
-    pointer;
+    cursor: pointer;
 
-  font-weight:
-    800;
+    font-weight: 800;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  transition:
-    0.2s;
-
+    transition: 0.2s;
 }
 
 .primary-btn {
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
 
-  color:
-    #090c15;
+    color: #090c15;
 
-  border:
-    none;
-
+    border: none;
 }
 
 .secondary-btn {
 
-  background:
-    rgba(255,255,255,0.04);
+    background:
+        rgba(255,255,255,0.04);
 
-  color:
-    white;
-
+    color: white;
 }
 
 .primary-btn:hover,
 .secondary-btn:hover {
 
-  transform:
-    translateY(-2px);
-
+    transform:
+        translateY(-2px);
 }
 
 
 /* =====================================================
-   ORB
+ORB
 ===================================================== */
 
 .trend-orb {
 
-  min-height:
-    350px;
+    min-height: 350px;
 
-  position:
-    relative;
+    position: relative;
 
-  display:
-    grid;
+    display: grid;
 
-  place-items:
-    center;
-
+    place-items: center;
 }
 
 .orb {
 
-  width:
-    260px;
+    width: 260px;
 
-  height:
-    260px;
+    height: 260px;
 
-  border-radius:
-    50%;
+    border-radius: 50%;
 
-  background:
+    background:
 
-    radial-gradient(
-      circle at 35% 30%,
-      #fff7d0 0%,
-      var(--gold) 8%,
-      #5b4920 38%,
-      #11182b 65%,
-      transparent 66%
-    );
+        radial-gradient(
+            circle at 35% 30%,
+            #fff7d0 0%,
+            var(--gold) 8%,
+            #5b4920 38%,
+            #11182b 65%,
+            transparent 66%
+        );
 
-  box-shadow:
+    box-shadow:
 
-    0 0 70px
-    rgba(217,180,91,0.16),
+        0 0 70px
+        rgba(217,180,91,0.16),
 
-    inset 0 0 50px
-    rgba(255,255,255,0.08);
+        inset 0 0 50px
+        rgba(255,255,255,0.08);
 
-  animation:
-    float 5s ease-in-out infinite;
-
+    animation:
+        float 5s ease-in-out infinite;
 }
 
 .orbit {
 
-  position:
-    absolute;
+    position: absolute;
 
-  width:
-    330px;
+    width: 330px;
 
-  height:
-    170px;
+    height: 170px;
 
-  border:
-    1px solid
-    rgba(217,180,91,0.25);
+    border:
+        1px solid
+        rgba(217,180,91,0.25);
 
-  border-radius:
-    50%;
+    border-radius: 50%;
 
-  transform:
-    rotate(-25deg);
-
+    transform:
+        rotate(-25deg);
 }
 
 .orbit::after {
 
-  content: "";
+    content: "";
 
-  position:
-    absolute;
+    position: absolute;
 
-  width:
-    9px;
+    width: 9px;
 
-  height:
-    9px;
+    height: 9px;
 
-  border-radius:
-    50%;
+    border-radius: 50%;
 
-  background:
-    var(--gold-light);
+    background:
+        var(--gold-light);
 
-  box-shadow:
-    0 0 18px
-    var(--gold);
+    box-shadow:
+        0 0 18px
+        var(--gold);
 
-  top:
-    30px;
+    top: 30px;
 
-  right:
-    30px;
-
+    right: 30px;
 }
 
 @keyframes float {
 
-  0%,
-  100% {
-    transform:
-      translateY(0);
-  }
+    0%,100% {
+        transform:
+            translateY(0);
+    }
 
-  50% {
-    transform:
-      translateY(-12px);
-  }
-
+    50% {
+        transform:
+            translateY(-12px);
+    }
 }
 
 
 /* =====================================================
-   SECTIONS
+SECTIONS
 ===================================================== */
 
 .section {
 
-  max-width:
-    1250px;
+    max-width: 1250px;
 
-  margin:
-    auto;
+    margin: auto;
 
-  padding:
-    30px 22px 70px;
-
+    padding:
+        30px 22px 70px;
 }
 
 .section-header {
 
-  display:
-    flex;
+    display: flex;
 
-  justify-content:
-    space-between;
+    justify-content:
+        space-between;
 
-  align-items:
-    end;
+    align-items: end;
 
-  margin-bottom:
-    25px;
+    margin-bottom: 25px;
 
-  gap:
-    20px;
-
+    gap: 20px;
 }
 
 .section-title {
 
-  font-size:
-    30px;
+    font-size: 30px;
 
-  letter-spacing:
-    -0.5px;
+    letter-spacing: -0.5px;
 
-  font-weight:
-    900;
-
+    font-weight: 900;
 }
 
 .section-title span {
-
-  color:
-    var(--gold-light);
-
+    color: var(--gold-light);
 }
 
 .section-description {
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  font-size:
-    13px;
+    font-size: 13px;
 
-  margin-top:
-    7px;
+    margin-top: 7px;
 
-  font-weight:
-    500;
-
+    font-weight: 500;
 }
 
 .view-all {
 
-  color:
-    var(--gold-light);
+    color: var(--gold-light);
 
-  font-size:
-    13px;
+    font-size: 13px;
 
-  font-weight:
-    800;
-
+    font-weight: 800;
 }
 
 
 /* =====================================================
-   NEWS CARDS
+NEWS GRID
 ===================================================== */
 
 .trend-grid {
 
-  display:
-    grid;
+    display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-  gap:
-    15px;
-
+    gap: 15px;
 }
+
+
+/* =====================================================
+NEWS CARD
+===================================================== */
 
 .trend-card {
 
-  position:
-    relative;
+    position: relative;
 
-  min-height:
-    235px;
+    min-height: 430px;
 
-  padding:
-    20px;
+    padding: 0;
 
-  background:
+    background:
 
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.06),
-      rgba(255,255,255,0.015)
-    ),
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.06),
+            rgba(255,255,255,0.015)
+        ),
 
-    var(--card);
+        var(--card);
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  border-radius:
-    18px;
+    border-radius: 18px;
 
-  overflow:
-    hidden;
+    overflow: hidden;
 
-  transition:
-    0.25s;
+    transition: 0.25s;
 
+    display: flex;
+
+    flex-direction: column;
 }
 
 .trend-card:hover {
 
-  transform:
-    translateY(-5px);
+    transform:
+        translateY(-5px);
 
-  background:
-    var(--card-hover);
+    background:
+        var(--card-hover);
 
-  border-color:
-    rgba(217,180,91,0.25);
+    border-color:
+        rgba(217,180,91,0.25);
+}
 
+
+/* =====================================================
+NEWS IMAGE
+===================================================== */
+
+.news-image {
+
+    width: 100%;
+
+    height: 190px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(217,180,91,0.25),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #18233d,
+            #080c18
+        );
+}
+
+.news-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform 0.45s ease;
+}
+
+.trend-card:hover
+.news-image img {
+
+    transform:
+        scale(1.06);
+}
+
+
+/* Image overlay */
+
+.news-image::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 45%,
+            rgba(5,8,17,0.65)
+        );
+
+    pointer-events: none;
+}
+
+
+/* fallback icon */
+
+.image-fallback {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 65px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(217,180,91,0.25),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #17223b,
+            #080c18
+        );
+}
+
+
+/* =====================================================
+CARD CONTENT
+===================================================== */
+
+.card-content {
+
+    padding: 18px 20px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
 }
 
 .trend-number {
 
-  font-size:
-    13px;
+    font-size: 12px;
 
-  color:
-    var(--gold-light);
+    color: var(--gold-light);
 
-  font-weight:
-    900;
+    font-weight: 900;
 
+    margin-bottom: 8px;
 }
 
 .trend-icon {
 
-  position:
-    absolute;
-
-  left:
-    18px;
-
-  top:
-    15px;
-
-  font-size:
-    34px;
-
-  opacity:
-    0.85;
-
+    display: none;
 }
 
 .trend-card h3 {
 
-  margin-top:
-    55px;
+    margin-top: 5px;
 
-  font-size:
-    17px;
+    font-size: 17px;
 
-  line-height:
-    1.65;
+    line-height: 1.65;
 
-  font-weight:
-    800;
+    font-weight: 800;
 
+    display: -webkit-box;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
 }
 
 .trend-meta {
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  font-size:
-    11px;
+    font-size: 11px;
 
-  margin-top:
-    10px;
+    margin-top: auto;
 
-  font-weight:
-    600;
+    padding-top: 12px;
 
+    font-weight: 600;
 }
 
 .news-link {
 
-  display:
-    inline-block;
+    display: inline-block;
 
-  margin-top:
-    15px;
+    margin-top: 14px;
 
-  color:
-    var(--gold-light);
+    color: var(--gold-light);
 
-  font-size:
-    12px;
+    font-size: 12px;
 
-  font-weight:
-    800;
+    font-weight: 800;
 
-  transition:
-    0.2s;
-
-  cursor:
-    pointer;
-
+    cursor: pointer;
 }
 
 .news-link:hover {
-
-  color:
-    white;
-
+    color: white;
 }
 
 
 /* =====================================================
-   CATEGORIES
+CATEGORIES
 ===================================================== */
 
 .category-grid {
 
-  display:
-    grid;
+    display: grid;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-  gap:
-    15px;
-
+    gap: 15px;
 }
 
 .category {
 
-  padding:
-    24px;
+    padding: 24px;
 
-  min-height:
-    150px;
+    min-height: 150px;
 
-  border-radius:
-    18px;
+    border-radius: 18px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    var(--card);
+    background:
+        var(--card);
 
-  transition:
-    0.25s;
+    transition: 0.25s;
 
-  cursor:
-    pointer;
-
+    cursor: pointer;
 }
 
 .category:hover {
 
-  transform:
-    translateY(-4px);
+    transform:
+        translateY(-4px);
 
-  border-color:
-    rgba(79,140,255,0.3);
-
+    border-color:
+        rgba(79,140,255,0.3);
 }
 
 .category-icon {
 
-  font-size:
-    28px;
+    font-size: 28px;
 
-  margin-bottom:
-    18px;
-
+    margin-bottom: 18px;
 }
 
 .category h3 {
 
-  font-size:
-    17px;
+    font-size: 17px;
 
-  margin-bottom:
-    7px;
+    margin-bottom: 7px;
 
-  font-weight:
-    800;
-
+    font-weight: 800;
 }
 
 .category p {
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  font-size:
-    12px;
+    font-size: 12px;
 
-  line-height:
-    1.7;
+    line-height: 1.7;
 
-  font-weight:
-    500;
-
+    font-weight: 500;
 }
 
 
 /* =====================================================
-   FEATURE
+FEATURE
 ===================================================== */
 
 .feature {
 
-  display:
-    grid;
+    display: grid;
 
-  grid-template-columns:
-    1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
-  min-height:
-    350px;
+    min-height: 350px;
 
-  overflow:
-    hidden;
+    overflow: hidden;
 
-  border-radius:
-    24px;
+    border-radius: 24px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    var(--card);
-
+    background:
+        var(--card);
 }
 
 .feature-visual {
 
-  min-height:
-    350px;
+    min-height: 350px;
 
-  display:
-    grid;
+    display: grid;
 
-  place-items:
-    center;
+    place-items: center;
 
-  font-size:
-    100px;
+    font-size: 100px;
 
-  background:
+    background:
 
-    radial-gradient(
-      circle at center,
-      rgba(79,140,255,0.2),
-      transparent 45%
-    ),
+        radial-gradient(
+            circle at center,
+            rgba(79,140,255,0.2),
+            transparent 45%
+        ),
 
-    linear-gradient(
-      135deg,
-      #0c1730,
-      #090d1a
-    );
-
+        linear-gradient(
+            135deg,
+            #0c1730,
+            #090d1a
+        );
 }
 
 .feature-content {
 
-  padding:
-    45px;
+    padding: 45px;
 
-  display:
-    flex;
+    display: flex;
 
-  flex-direction:
-    column;
+    flex-direction: column;
 
-  justify-content:
-    center;
-
+    justify-content: center;
 }
 
 .tag {
 
-  color:
-    var(--gold-light);
+    color: var(--gold-light);
 
-  font-size:
-    12px;
+    font-size: 12px;
 
-  font-weight:
-    900;
+    font-weight: 900;
 
-  letter-spacing:
-    1px;
+    letter-spacing: 1px;
 
-  margin-bottom:
-    15px;
-
+    margin-bottom: 15px;
 }
 
 .feature-content h2 {
 
-  font-size:
-    34px;
+    font-size: 34px;
 
-  line-height:
-    1.45;
+    line-height: 1.45;
 
-  margin-bottom:
-    15px;
+    margin-bottom: 15px;
 
-  font-weight:
-    900;
-
+    font-weight: 900;
 }
 
 .feature-content p {
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  line-height:
-    1.9;
+    line-height: 1.9;
 
-  font-size:
-    14px;
+    font-size: 14px;
 
-  margin-bottom:
-    22px;
-
+    margin-bottom: 22px;
 }
 
 
 /* =====================================================
-   ARTICLE READER
+ARTICLE
 ===================================================== */
 
 .article-overlay {
 
-  position:
-    fixed;
+    position: fixed;
 
-  inset:
-    0;
+    inset: 0;
 
-  z-index:
-    500;
+    z-index: 500;
 
-  display:
-    none;
+    display: none;
 
-  background:
-    rgba(3,6,14,0.96);
+    background:
+        rgba(3,6,14,0.97);
 
-  backdrop-filter:
-    blur(18px);
+    backdrop-filter:
+        blur(18px);
 
-  overflow-y:
-    auto;
+    overflow-y: auto;
 
-  padding:
-    35px 20px 60px;
-
+    padding:
+        35px 20px 60px;
 }
 
 .article-overlay.active {
-  display: block;
+    display: block;
 }
 
 .article-container {
 
-  max-width:
-    900px;
+    max-width: 900px;
 
-  margin:
-    0 auto;
-
+    margin: 0 auto;
 }
 
 .article-top {
 
-  display:
-    flex;
+    display: flex;
 
-  justify-content:
-    space-between;
+    justify-content:
+        space-between;
 
-  align-items:
-    center;
+    align-items: center;
 
-  gap:
-    15px;
+    gap: 15px;
 
-  margin-bottom:
-    35px;
-
+    margin-bottom: 35px;
 }
+
+
+/* FIX NOWNEX RTL */
 
 .article-brand {
 
-  display:
-    flex;
+    direction: ltr;
 
-  align-items:
-    center;
+    display: flex;
 
-  gap:
-    10px;
+    align-items: center;
 
-  color:
-    var(--gold-light);
+    gap: 10px;
 
-  font-weight:
-    900;
+    color: var(--gold-light);
 
-  font-size:
-    18px;
+    font-weight: 900;
 
-  direction:
-    ltr;
+    font-size: 18px;
 
-  unicode-bidi:
-    isolate;
-
+    white-space: nowrap;
 }
 
 .article-close {
 
-  width:
-    46px;
+    width: 46px;
 
-  height:
-    46px;
+    height: 46px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    rgba(255,255,255,0.05);
+    background:
+        rgba(255,255,255,0.05);
 
-  color:
-    white;
+    color: white;
 
-  border-radius:
-    13px;
+    border-radius: 13px;
 
-  cursor:
-    pointer;
+    cursor: pointer;
 
-  font-size:
-    25px;
+    font-size: 25px;
 
-  display:
-    grid;
+    display: grid;
 
-  place-items:
-    center;
-
+    place-items: center;
 }
+
+
+/* =====================================================
+ARTICLE IMAGE
+===================================================== */
+
+.article-image {
+
+    width: 100%;
+
+    height: 430px;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    margin-bottom: 30px;
+
+    background:
+
+        radial-gradient(
+            circle at center,
+            rgba(217,180,91,0.22),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #18233d,
+            #080c18
+        );
+
+    border:
+        1px solid var(--line);
+}
+
+.article-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.article-image-fallback {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 110px;
+}
+
+
+/* =====================================================
+ARTICLE TEXT
+===================================================== */
 
 .article-category {
 
-  display:
-    inline-flex;
+    display: inline-flex;
 
-  align-items:
-    center;
+    align-items: center;
 
-  gap:
-    8px;
+    gap: 8px;
 
-  color:
-    var(--gold-light);
+    color: var(--gold-light);
 
-  font-size:
-    13px;
+    font-size: 13px;
 
-  font-weight:
-    800;
+    font-weight: 800;
 
-  margin-bottom:
-    18px;
-
+    margin-bottom: 18px;
 }
 
 .article-title {
 
-  font-size:
-    clamp(30px, 5vw, 54px);
+    font-size:
+        clamp(30px, 5vw, 54px);
 
-  line-height:
-    1.35;
+    line-height: 1.35;
 
-  font-weight:
-    900;
+    font-weight: 900;
 
-  letter-spacing:
-    -1px;
+    letter-spacing: -1px;
 
-  margin-bottom:
-    20px;
-
+    margin-bottom: 20px;
 }
 
 .article-info {
 
-  display:
-    flex;
+    display: flex;
 
-  flex-wrap:
-    wrap;
+    flex-wrap: wrap;
 
-  gap:
-    12px;
+    gap: 12px;
 
-  color:
-    var(--muted);
+    color: var(--muted);
 
-  font-size:
-    13px;
+    font-size: 13px;
 
-  margin-bottom:
-    35px;
-
+    margin-bottom: 35px;
 }
 
 .article-info span {
 
-  padding:
-    7px 12px;
+    padding:
+        7px 12px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    rgba(255,255,255,0.035);
+    background:
+        rgba(255,255,255,0.035);
 
-  border-radius:
-    9px;
-
+    border-radius: 9px;
 }
+
+
+/* =====================================================
+SUMMARY
+===================================================== */
 
 .article-summary-box {
 
-  background:
+    background:
 
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,0.055),
-      rgba(255,255,255,0.018)
-    ),
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.055),
+            rgba(255,255,255,0.018)
+        ),
 
-    var(--card);
+        var(--card);
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  border-right:
-    3px solid var(--gold);
+    border-right:
+        3px solid var(--gold);
 
-  border-radius:
-    20px;
+    border-radius:
+        20px;
 
-  padding:
-    30px;
+    padding:
+        30px;
 
-  margin-bottom:
-    25px;
-
+    margin-bottom:
+        25px;
 }
 
 .article-summary-label {
 
-  color:
-    var(--gold-light);
+    color:
+        var(--gold-light);
 
-  font-size:
-    13px;
+    font-size:
+        13px;
 
-  font-weight:
-    900;
+    font-weight:
+        900;
 
-  margin-bottom:
-    17px;
+    margin-bottom:
+        17px;
 
+    direction: rtl;
 }
 
 .article-summary {
 
-  color:
-    #e9edf8;
+    color:
+        #e9edf8;
 
-  font-size:
-    18px;
+    font-size:
+        18px;
 
-  line-height:
-    2.05;
+    line-height:
+        2.05;
 
-  font-weight:
-    500;
+    font-weight:
+        500;
 
-  white-space:
-    pre-line;
-
+    white-space:
+        pre-line;
 }
 
 
 /* =====================================================
-   IMPORTANCE / WHY IT MATTERS
+IMPORTANCE
 ===================================================== */
 
 .article-points {
 
-  margin-top:
-    25px;
+    margin-top:
+        25px;
 
-  padding:
-    25px;
+    padding:
+        25px;
 
-  border-radius:
-    18px;
+    border-radius:
+        18px;
 
-  background:
-    rgba(79,140,255,0.05);
+    background:
+        rgba(79,140,255,0.05);
 
-  border:
-    1px solid
-    rgba(79,140,255,0.12);
-
+    border:
+        1px solid
+        rgba(79,140,255,0.12);
 }
 
 .article-points h3 {
 
-  color:
-    var(--gold-light);
+    color:
+        var(--gold-light);
 
-  font-size:
-    17px;
+    font-size:
+        17px;
 
-  margin-bottom:
-    15px;
-
+    margin-bottom:
+        15px;
 }
 
 .article-points p {
 
-  color:
-    var(--muted);
+    color:
+        var(--muted);
 
-  line-height:
-    1.9;
+    line-height:
+        1.9;
 
-  font-size:
-    14px;
-
+    font-size:
+        14px;
 }
 
 
 /* =====================================================
-   SOURCE
+SOURCE
 ===================================================== */
 
 .article-source {
 
-  margin-top:
-    25px;
+    margin-top:
+        25px;
 
-  padding:
-    25px;
+    padding:
+        25px;
 
-  border-top:
-    1px solid var(--line);
-
+    border-top:
+        1px solid var(--line);
 }
 
 .article-source-title {
 
-  color:
-    var(--muted);
+    color:
+        var(--muted);
 
-  font-size:
-    12px;
+    font-size:
+        12px;
 
-  margin-bottom:
-    8px;
-
+    margin-bottom:
+        8px;
 }
 
 .article-source-name {
 
-  color:
-    white;
+    color:
+        white;
 
-  font-size:
-    18px;
+    font-size:
+        18px;
 
-  font-weight:
-    800;
+    font-weight:
+        800;
 
-  margin-bottom:
-    18px;
-
+    margin-bottom:
+        18px;
 }
 
 .original-btn {
 
-  display:
-    inline-flex;
+    display:
+        inline-flex;
 
-  align-items:
-    center;
+    align-items:
+        center;
 
-  gap:
-    8px;
+    gap:
+        8px;
 
-  padding:
-    13px 19px;
+    padding:
+        13px 19px;
 
-  background:
-    linear-gradient(
-      135deg,
-      var(--gold-light),
-      var(--gold)
-    );
+    background:
 
-  color:
-    #080b13;
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold)
+        );
 
-  border-radius:
-    11px;
+    color:
+        #080b13;
 
-  font-size:
-    13px;
+    border-radius:
+        11px;
 
-  font-weight:
-    900;
+    font-size:
+        13px;
 
-  transition:
-    0.2s;
-
-}
-
-.original-btn:hover {
-
-  transform:
-    translateY(-2px);
-
+    font-weight:
+        900;
 }
 
 .article-note {
 
-  color:
-    var(--muted);
+    color:
+        var(--muted);
 
-  font-size:
-    11px;
+    font-size:
+        11px;
 
-  line-height:
-    1.8;
+    line-height:
+        1.8;
 
-  margin-top:
-    15px;
-
+    margin-top:
+        15px;
 }
 
 
 /* =====================================================
-   SEARCH
+SEARCH
 ===================================================== */
 
 .search-panel {
 
-  display:
-    none;
+    display:
+        none;
 
-  position:
-    fixed;
+    position:
+        fixed;
 
-  inset:
-    0;
+    inset:
+        0;
 
-  z-index:
-    300;
+    z-index:
+        300;
 
-  background:
-    rgba(4,7,15,0.94);
+    background:
+        rgba(4,7,15,0.94);
 
-  backdrop-filter:
-    blur(15px);
+    backdrop-filter:
+        blur(15px);
 
-  padding:
-    100px 22px;
-
+    padding:
+        100px 22px;
 }
 
 .search-panel.active {
-  display:
-    block;
+    display:
+        block;
 }
 
 .search-box {
 
-  max-width:
-    750px;
+    max-width:
+        750px;
 
-  margin:
-    auto;
+    margin:
+        auto;
 
-  position:
-    relative;
-
+    position:
+        relative;
 }
 
 .search-box input {
 
-  width:
-    100%;
+    width:
+        100%;
 
-  padding:
-    20px 25px;
+    padding:
+        20px 25px;
 
-  border-radius:
-    15px;
+    border-radius:
+        15px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  background:
-    var(--card);
+    background:
+        var(--card);
 
-  color:
-    white;
+    color:
+        white;
 
-  outline:
-    none;
+    outline:
+        none;
 
-  font-size:
-    18px;
+    font-size:
+        18px;
 
-  font-family:
-    inherit;
-
+    font-family:
+        inherit;
 }
 
 .close-search {
 
-  position:
-    absolute;
+    position:
+        absolute;
 
-  left:
-    12px;
+    left:
+        12px;
 
-  top:
-    10px;
+    top:
+        10px;
 
-  width:
-    45px;
+    width:
+        45px;
 
-  height:
-    45px;
+    height:
+        45px;
 
-  border:
-    none;
+    border:
+        none;
 
-  background:
-    transparent;
+    background:
+        transparent;
 
-  color:
-    white;
+    color:
+        white;
 
-  font-size:
-    25px;
+    font-size:
+        25px;
 
-  cursor:
-    pointer;
-
+    cursor:
+        pointer;
 }
 
 .search-results {
 
-  max-width:
-    750px;
+    max-width:
+        750px;
 
-  margin:
-    25px auto;
-
+    margin:
+        25px auto;
 }
 
 .search-result {
 
-  padding:
-    18px;
+    padding:
+        18px;
 
-  margin-bottom:
-    10px;
+    margin-bottom:
+        10px;
 
-  border:
-    1px solid var(--line);
+    border:
+        1px solid var(--line);
 
-  border-radius:
-    14px;
+    border-radius:
+        14px;
 
-  background:
-    var(--card);
+    background:
+        var(--card);
 
-  cursor:
-    pointer;
-
+    cursor:
+        pointer;
 }
 
 .search-result:hover {
 
-  border-color:
-    rgba(217,180,91,0.35);
-
+    border-color:
+        rgba(217,180,91,0.35);
 }
 
 .search-result-title {
 
-  font-size:
-    15px;
+    font-size:
+        15px;
 
-  font-weight:
-    800;
+    font-weight:
+        800;
 
-  line-height:
-    1.7;
-
+    line-height:
+        1.7;
 }
 
 .search-result-meta {
 
-  color:
-    var(--muted);
+    color:
+        var(--muted);
 
-  font-size:
-    11px;
+    font-size:
+        11px;
 
-  margin-top:
-    7px;
-
+    margin-top:
+        7px;
 }
 
 
 /* =====================================================
-   FOOTER
+FOOTER
 ===================================================== */
 
 footer {
 
-  border-top:
-    1px solid var(--line);
+    border-top:
+        1px solid var(--line);
 
-  background:
-    #050711;
+    background:
+        #050711;
 
-  margin-top:
-    20px;
-
+    margin-top:
+        20px;
 }
 
 .footer-inner {
 
-  max-width:
-    1250px;
+    max-width:
+        1250px;
 
-  margin:
-    auto;
+    margin:
+        auto;
 
-  padding:
-    35px 22px;
+    padding:
+        35px 22px;
 
-  display:
-    flex;
+    display:
+        flex;
 
-  justify-content:
-    space-between;
+    justify-content:
+        space-between;
 
-  align-items:
-    center;
+    align-items:
+        center;
 
-  gap:
-    20px;
-
+    gap:
+        20px;
 }
 
 .footer-copy {
 
-  color:
-    var(--muted);
+    color:
+        var(--muted);
 
-  font-size:
-    12px;
-
+    font-size:
+        12px;
 }
 
 .footer-logo {
 
-  font-size:
-    20px;
+    direction: ltr;
 
-  font-weight:
-    900;
+    font-size:
+        20px;
 
-  direction:
-    ltr;
-
-  unicode-bidi:
-    isolate;
-
+    font-weight:
+        900;
 }
 
 .footer-logo span {
 
-  color:
-    var(--gold-light);
-
+    color:
+        var(--gold-light);
 }
 
 
 /* =====================================================
-   RESPONSIVE
+RESPONSIVE
 ===================================================== */
 
 @media (max-width: 950px) {
 
-  nav {
-    display: none;
-  }
+    nav {
+        display: none;
+    }
 
-  .mobile-menu {
-    display: block;
-  }
+    .mobile-menu {
+        display: block;
+    }
 
-  .hero {
+    .hero {
 
-    grid-template-columns:
-      1fr;
+        grid-template-columns:
+            1fr;
 
-    padding-top:
-      55px;
+        padding-top:
+            55px;
+    }
 
-  }
+    .trend-orb {
+        display: none;
+    }
 
-  .trend-orb {
-    display: none;
-  }
+    .trend-grid,
+    .category-grid {
 
-  .trend-grid,
-  .category-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
-    grid-template-columns:
-      repeat(2, 1fr);
+    .feature {
 
-  }
+        grid-template-columns:
+            1fr;
+    }
 
-  .feature {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
+    .article-image {
+        height: 350px;
+    }
 }
+
 
 @media (max-width: 600px) {
 
-  .header-inner {
-    height: 68px;
-  }
+    .header-inner {
+        height: 68px;
+    }
 
-  .logo {
-    font-size: 22px;
-  }
+    .logo {
+        font-size: 22px;
+    }
 
-  .logo-mark {
+    .logo-mark {
 
-    width:
-      34px;
+        width:
+            34px;
 
-    height:
-      34px;
+        height:
+            34px;
 
-  }
+        font-size:
+            17px;
+    }
 
-  .hero {
-    padding-top:
-      45px;
-  }
+    .hero {
+        padding-top: 45px;
+    }
 
-  .hero h1 {
+    .hero h1 {
 
-    font-size:
-      45px;
+        font-size:
+            45px;
 
-    letter-spacing:
-      -1px;
+        letter-spacing:
+            -1px;
+    }
 
-  }
+    .hero p {
+        font-size:
+            15px;
+    }
 
-  .hero p {
-    font-size:
-      15px;
-  }
+    .trend-grid,
+    .category-grid {
 
-  .trend-grid,
-  .category-grid {
+        grid-template-columns:
+            1fr;
+    }
 
-    grid-template-columns:
-      1fr;
+    .section {
+        padding-bottom:
+            45px;
+    }
 
-  }
+    .section-header {
+        align-items:
+            flex-start;
+    }
 
-  .section {
+    .feature-content {
+        padding:
+            28px;
+    }
 
-    padding-bottom:
-      45px;
+    .feature-content h2 {
+        font-size:
+            27px;
+    }
 
-  }
+    .footer-inner {
 
-  .section-header {
+        flex-direction:
+            column;
 
-    align-items:
-      flex-start;
+        align-items:
+            flex-start;
+    }
 
-  }
+    .article-overlay {
+        padding:
+            20px 14px 40px;
+    }
 
-  .feature-content {
+    .article-image {
+        height:
+            230px;
 
-    padding:
-      28px;
+        border-radius:
+            16px;
+    }
 
-  }
+    .article-summary-box {
+        padding:
+            22px;
+    }
 
-  .feature-content h2 {
+    .article-summary {
+        font-size:
+            16px;
 
-    font-size:
-      27px;
+        line-height:
+            2;
+    }
 
-  }
-
-  .footer-inner {
-
-    flex-direction:
-      column;
-
-    align-items:
-      flex-start;
-
-  }
-
-  .article-overlay {
-
-    padding:
-      20px 14px 40px;
-
-  }
-
-  .article-summary-box {
-
-    padding:
-      22px;
-
-  }
-
-  .article-summary {
-
-    font-size:
-      16px;
-
-    line-height:
-      2;
-
-  }
-
-  .article-title {
-
-    font-size:
-      30px;
-
-  }
-
-}
-
-
-/* =====================================================
-   EXTRA SMALL DEVICES
-===================================================== */
-
-@media (max-width: 380px) {
-
-  .logo {
-    font-size: 19px;
-  }
-
-  .logo-mark {
-    width: 32px;
-    height: 32px;
-  }
-
-  .hero h1 {
-    font-size: 39px;
-  }
-
-}
-
-
-/* =====================================================
-   LOADING
-===================================================== */
-
-.loading-text {
-
-  color:
-    var(--muted);
-
-  text-align:
-    center;
-
-  padding:
-    30px;
-
-  font-size:
-    14px;
-
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.news-error {
-
-  grid-column:
-    1 / -1;
-
-  padding:
-    30px;
-
-  text-align:
-    center;
-
-  border:
-    1px solid var(--line);
-
-  border-radius:
-    18px;
-
-  background:
-    var(--card);
-
-  color:
-    var(--muted);
+    .article-title {
+        font-size:
+            30px;
+    }
 
 }
 
@@ -2034,7 +1853,7 @@ footer {
 
 
 <!-- =====================================================
-     HEADER
+HEADER
 ===================================================== -->
 
 <header>
@@ -2043,20 +1862,16 @@ footer {
 
 
 <a
-  href="#"
-  class="logo"
-  onclick="closeArticle();"
+href="#"
+class="logo"
+onclick="closeArticle();"
 >
 
 <div class="logo-mark">
 N
 </div>
 
-<div class="logo-text">
-
-<span class="logo-text-end">N</span><span class="logo-text-main">OWNEX</span>
-
-</div>
+<span>NOWNEX</span>
 
 </a>
 
@@ -2064,8 +1879,8 @@ N
 <nav>
 
 <a
-  href="#"
-  class="active"
+href="#"
+class="active"
 >
 الرئيسية
 </a>
@@ -2088,17 +1903,18 @@ N
 <div class="header-actions">
 
 <button
-  class="search-btn"
-  onclick="openSearch()"
-  aria-label="بحث"
+class="search-btn"
+onclick="openSearch()"
+aria-label="بحث"
 >
 🔍
 </button>
 
+
 <button
-  class="mobile-menu"
-  onclick="scrollToTrending()"
-  aria-label="القائمة"
+class="mobile-menu"
+onclick="scrollToTrending()"
+aria-label="القائمة"
 >
 ☰
 </button>
@@ -2112,7 +1928,7 @@ N
 
 
 <!-- =====================================================
-     MAIN
+MAIN
 ===================================================== -->
 
 <main>
@@ -2155,26 +1971,20 @@ N
 
 <div class="hero-buttons">
 
-
 <button
-  class="primary-btn"
-  onclick="scrollToTrending()"
+class="primary-btn"
+onclick="scrollToTrending()"
 >
-
 🔥 استكشف الترند
-
 </button>
 
 
 <button
-  class="secondary-btn"
-  onclick="scrollToCategories()"
+class="secondary-btn"
+onclick="scrollToCategories()"
 >
-
 استكشف الأقسام
-
 </button>
-
 
 </div>
 
@@ -2195,12 +2005,12 @@ N
 
 
 <!-- =====================================================
-     TRENDING
+TRENDING
 ===================================================== -->
 
 <section
-  class="section"
-  id="trending"
+class="section"
+id="trending"
 >
 
 
@@ -2208,7 +2018,6 @@ N
 
 
 <div>
-
 
 <h2 class="section-title">
 
@@ -2230,17 +2039,14 @@ N
 
 </p>
 
-
 </div>
 
 
 <a
-  href="#trending"
-  class="view-all"
+href="#trending"
+class="view-all"
 >
-
 عرض الكل ←
-
 </a>
 
 
@@ -2248,27 +2054,38 @@ N
 
 
 <div
-  class="trend-grid"
-  id="newsGrid"
+class="trend-grid"
+id="newsGrid"
 >
 
 
 <article class="trend-card">
 
+<div class="news-image">
+
+<div class="image-fallback">
+🌍
+</div>
+
+</div>
+
+
+<div class="card-content">
+
 <div class="trend-number">
 01 — جارٍ التحميل
 </div>
 
-<div class="trend-icon">
-🌍
-</div>
 
 <h3>
 جارٍ تحميل آخر الأخبار...
 </h3>
 
+
 <div class="trend-meta">
 NOWNEX · تحديث مباشر
+</div>
+
 </div>
 
 </article>
@@ -2276,20 +2093,31 @@ NOWNEX · تحديث مباشر
 
 <article class="trend-card">
 
+<div class="news-image">
+
+<div class="image-fallback">
+🔥
+</div>
+
+</div>
+
+
+<div class="card-content">
+
 <div class="trend-number">
 02 — جارٍ التحميل
 </div>
 
-<div class="trend-icon">
-🔥
-</div>
 
 <h3>
 نبحث عن أهم ما يحدث الآن...
 </h3>
 
+
 <div class="trend-meta">
 NOWNEX · مباشر
+</div>
+
 </div>
 
 </article>
@@ -2302,17 +2130,16 @@ NOWNEX · مباشر
 
 
 <!-- =====================================================
-     CATEGORIES
+CATEGORIES
 ===================================================== -->
 
 <section
-  class="section"
-  id="categories"
+class="section"
+id="categories"
 >
 
 
 <div class="section-header">
-
 
 <div>
 
@@ -2334,7 +2161,6 @@ NOWNEX
 </p>
 
 </div>
-
 
 </div>
 
@@ -2484,7 +2310,7 @@ NOWNEX
 
 
 <!-- =====================================================
-     FEATURE
+FEATURE
 ===================================================== -->
 
 <section class="section">
@@ -2524,9 +2350,9 @@ NOWNEX
 
 
 <button
-  class="primary-btn"
-  style="width:max-content;"
-  onclick="scrollToCategories()"
+class="primary-btn"
+style="width:max-content;"
+onclick="scrollToCategories()"
 >
 
 اكتشف عالم الذكاء الاصطناعي ←
@@ -2536,9 +2362,7 @@ NOWNEX
 
 </div>
 
-
 </div>
-
 
 </section>
 
@@ -2547,7 +2371,7 @@ NOWNEX
 
 
 <!-- =====================================================
-     FOOTER
+FOOTER
 ===================================================== -->
 
 <footer id="about">
@@ -2559,10 +2383,10 @@ NOWNEX
 <div>
 
 
-<div class="footer-logo">
-
-N<span>OWNEX</span>
-
+<div
+class="footer-logo"
+>
+NOWNEX
 </div>
 
 
@@ -2589,12 +2413,12 @@ N<span>OWNEX</span>
 
 
 <!-- =====================================================
-     ARTICLE READER
+ARTICLE READER
 ===================================================== -->
 
 <div
-  class="article-overlay"
-  id="articleOverlay"
+class="article-overlay"
+id="articleOverlay"
 >
 
 
@@ -2607,25 +2431,25 @@ N<span>OWNEX</span>
 <div class="article-brand">
 
 <div
-  class="logo-mark"
-  style="width:34px;height:34px;font-size:18px;"
+class="logo-mark"
+style="
+width:34px;
+height:34px;
+font-size:18px;
+"
 >
 N
 </div>
 
-<div class="nownex-brand">
-
-<span style="color:white;">N</span><span>OWNEX</span>
-
-</div>
+<span>NOWNEX</span>
 
 </div>
 
 
 <button
-  class="article-close"
-  onclick="closeArticle()"
-  aria-label="إغلاق"
+class="article-close"
+onclick="closeArticle()"
+aria-label="إغلاق"
 >
 ×
 </button>
@@ -2636,8 +2460,6 @@ N
 
 <div id="articleContent">
 
-<!-- يتم وضع الخبر هنا -->
-
 </div>
 
 
@@ -2647,12 +2469,12 @@ N
 
 
 <!-- =====================================================
-     SEARCH PANEL
+SEARCH
 ===================================================== -->
 
 <div
-  class="search-panel"
-  id="searchPanel"
+class="search-panel"
+id="searchPanel"
 >
 
 
@@ -2660,16 +2482,16 @@ N
 
 
 <input
-  type="text"
-  placeholder="ابحث في أخبار NOWNEX..."
-  id="searchInput"
-  oninput="performSearch()"
+type="text"
+placeholder="ابحث في أخبار NOWNEX..."
+id="searchInput"
+oninput="performSearch()"
 >
 
 
 <button
-  class="close-search"
-  onclick="closeSearch()"
+class="close-search"
+onclick="closeSearch()"
 >
 ×
 </button>
@@ -2679,8 +2501,8 @@ N
 
 
 <div
-  class="search-results"
-  id="searchResults"
+class="search-results"
+id="searchResults"
 >
 </div>
 
@@ -2689,937 +2511,1184 @@ N
 
 
 <!-- =====================================================
-     JAVASCRIPT
+JAVASCRIPT
 ===================================================== -->
 
 <script>
 
 
 /* =====================================================
-   GLOBAL NEWS DATA
+GLOBAL
 ===================================================== */
 
 let allNews = [];
 
 
 /* =====================================================
-   SEARCH
+SEARCH
 ===================================================== */
 
 function openSearch() {
 
-  document
-    .getElementById("searchPanel")
-    .classList
-    .add("active");
+    document
+        .getElementById("searchPanel")
+        .classList
+        .add("active");
 
-  document
-    .getElementById("searchInput")
-    .focus();
+    document
+        .getElementById("searchInput")
+        .focus();
 
 }
 
 
 function closeSearch() {
 
-  document
-    .getElementById("searchPanel")
-    .classList
-    .remove("active");
+    document
+        .getElementById("searchPanel")
+        .classList
+        .remove("active");
 
 }
 
 
 function performSearch() {
 
-  const input =
-    document.getElementById("searchInput");
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
 
-  const results =
-    document.getElementById("searchResults");
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
 
-  const query =
-    input.value
-      .trim()
-      .toLowerCase();
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
 
-  if (!query) {
+
+    if (!query) {
+
+        results.innerHTML = "";
+
+        return;
+    }
+
+
+    const filtered =
+        allNews.filter(
+            function(item) {
+
+                const title =
+                    String(
+                        item.title || ""
+                    ).toLowerCase();
+
+                const summary =
+                    String(
+                        item.summary || ""
+                    ).toLowerCase();
+
+                const category =
+                    String(
+                        item.category || ""
+                    ).toLowerCase();
+
+
+                return (
+
+                    title.includes(query)
+
+                    ||
+
+                    summary.includes(query)
+
+                    ||
+
+                    category.includes(query)
+
+                );
+
+            }
+        );
+
+
+    if (!filtered.length) {
+
+        results.innerHTML = `
+
+            <div class="search-result">
+
+                <div class="search-result-title">
+
+                    لم نجد أخباراً مطابقة لبحثك.
+
+                </div>
+
+                <div class="search-result-meta">
+
+                    جرّب كلمة أخرى.
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
 
     results.innerHTML = "";
 
-    return;
 
-  }
+    filtered
+        .slice(0, 10)
+        .forEach(
+            function(item) {
 
+                const result =
+                    document.createElement(
+                        "div"
+                    );
 
-  const filtered =
-    allNews.filter(function(item) {
-
-      const title =
-        String(item.title || "")
-          .toLowerCase();
-
-      const summary =
-        String(item.summary || "")
-          .toLowerCase();
-
-      const importance =
-        String(item.importance || "")
-          .toLowerCase();
-
-      const category =
-        String(item.category || "")
-          .toLowerCase();
-
-      return (
-        title.includes(query) ||
-        summary.includes(query) ||
-        importance.includes(query) ||
-        category.includes(query)
-      );
-
-    });
+                result.className =
+                    "search-result";
 
 
-  if (!filtered.length) {
+                result.innerHTML = `
 
-    results.innerHTML = `
+                    <div
+                        class="search-result-title"
+                    >
 
-      <div class="search-result">
+                        ${escapeHTML(
+                            item.title ||
+                            "خبر"
+                        )}
 
-        <div class="search-result-title">
-
-          لم نجد أخباراً مطابقة لبحثك.
-
-        </div>
-
-        <div class="search-result-meta">
-
-          جرّب كلمة أخرى.
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
+                    </div>
 
 
-  results.innerHTML = "";
+                    <div
+                        class="search-result-meta"
+                    >
+
+                        ${escapeHTML(
+                            translateCategory(
+                                item.category ||
+                                "Trending"
+                            )
+                        )}
+
+                        ·
+
+                        ${escapeHTML(
+                            item.source ||
+                            "NOWNEX"
+                        )}
+
+                    </div>
+
+                `;
 
 
-  filtered
-    .slice(0, 10)
-    .forEach(function(item) {
+                result.onclick =
+                    function() {
 
-      const result =
-        document.createElement("div");
+                        closeSearch();
 
-      result.className =
-        "search-result";
+                        openArticle(item);
 
-      result.innerHTML = `
-
-        <div class="search-result-title">
-
-          ${escapeHTML(
-            item.title || "خبر"
-          )}
-
-        </div>
-
-        <div class="search-result-meta">
-
-          ${escapeHTML(
-            translateCategory(
-              item.category || "Trending"
-            )
-          )}
-
-          ·
-
-          ${escapeHTML(
-            item.source || "NOWNEX"
-          )}
-
-        </div>
-
-      `;
+                    };
 
 
-      result.onclick = function() {
+                results.appendChild(
+                    result
+                );
 
-        closeSearch();
-
-        openArticle(item);
-
-      };
-
-
-      results.appendChild(result);
-
-    });
+            }
+        );
 
 }
 
 
 /* =====================================================
-   NAVIGATION
+NAVIGATION
 ===================================================== */
 
 function scrollToTrending() {
 
-  document
-    .getElementById("trending")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
+    document
+        .getElementById("trending")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
 
 }
 
 
 function scrollToCategories() {
 
-  document
-    .getElementById("categories")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
+    document
+        .getElementById("categories")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
 
 }
 
 
 /* =====================================================
-   ESCAPE KEY
+ESC
 ===================================================== */
 
 document.addEventListener(
-  "keydown",
-  function(event) {
+    "keydown",
+    function(event) {
 
-    if (event.key === "Escape") {
+        if (
+            event.key === "Escape"
+        ) {
 
-      closeSearch();
+            closeSearch();
 
-      closeArticle();
+            closeArticle();
+
+        }
 
     }
-
-  }
 );
 
 
 /* =====================================================
-   SECURITY
+SECURITY
 ===================================================== */
 
 function escapeHTML(value) {
 
-  return String(value || "")
+    return String(value || "")
 
-    .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-    .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-    .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-    .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-    .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
 function safeURL(value) {
 
-  try {
+    try {
 
-    const url =
-      new URL(
-        String(value || "#"),
-        window.location.href
-      );
+        const url =
+            new URL(
+                String(
+                    value || "#"
+                ),
+                window.location.href
+            );
 
 
-    if (
-      url.protocol === "http:" ||
-      url.protocol === "https:"
-    ) {
+        if (
 
-      return url.href;
+            url.protocol === "http:"
+            ||
+            url.protocol === "https:"
+
+        ) {
+
+            return url.href;
+
+        }
 
     }
 
-  }
+    catch (error) {}
 
-  catch (error) {}
-
-  return "#";
-
+    return "#";
 }
 
 
 /* =====================================================
-   NEWS ICONS
+NEWS ICON
 ===================================================== */
 
 function getNewsIcon(category) {
 
-  const icons = {
+    const icons = {
 
-    "World": "🌍",
+        "World": "🌍",
 
-    "Technology": "💻",
+        "Technology": "💻",
 
-    "Entertainment": "🎬",
+        "Entertainment": "🎬",
 
-    "AI": "🤖",
+        "AI": "🤖",
 
-    "Cars": "🚗",
+        "Cars": "🚗",
 
-    "Facts": "🧠",
+        "Facts": "🧠",
 
-    "Science": "🔬",
+        "Science": "🔬",
 
-    "Sports": "⚽",
+        "Sports": "⚽",
 
-    "Trending": "🔥"
+        "Trending": "🔥"
 
-  };
+    };
 
 
-  return icons[category] || "🔥";
-
+    return (
+        icons[category]
+        ||
+        "🔥"
+    );
 }
 
 
 /* =====================================================
-   CATEGORY TRANSLATION
+CATEGORY
 ===================================================== */
 
 function translateCategory(category) {
 
-  const categories = {
+    const categories = {
 
-    "World": "العالم",
+        "World":
+            "العالم",
 
-    "Technology": "التكنولوجيا",
+        "Technology":
+            "التكنولوجيا",
 
-    "Entertainment": "الترفيه",
+        "Entertainment":
+            "الترفيه",
 
-    "AI": "الذكاء الاصطناعي",
+        "AI":
+            "الذكاء الاصطناعي",
 
-    "Cars": "السيارات",
+        "Cars":
+            "السيارات",
 
-    "Facts": "حقائق",
+        "Facts":
+            "حقائق",
 
-    "Science": "علوم",
+        "Science":
+            "علوم",
 
-    "Sports": "رياضة",
+        "Sports":
+            "رياضة",
 
-    "Trending": "الترند"
+        "Trending":
+            "الترند"
 
-  };
+    };
 
 
-  return (
-    categories[category] ||
-    category
-  );
+    return (
 
+        categories[category]
+        ||
+        category
+
+    );
 }
 
 
 /* =====================================================
-   OPEN ARTICLE
+CATEGORY FALLBACK
+===================================================== */
+
+function getFallbackIcon(
+    category
+) {
+
+    return getNewsIcon(
+        category
+    );
+}
+
+
+/* =====================================================
+OPEN ARTICLE
 ===================================================== */
 
 function openArticle(item) {
 
-  if (!item) {
-    return;
-  }
+    if (!item) {
+        return;
+    }
 
 
-  const overlay =
-    document.getElementById(
-      "articleOverlay"
-    );
-
-
-  const content =
-    document.getElementById(
-      "articleContent"
-    );
-
-
-  /* =====================================================
-     TITLE
-  ===================================================== */
-
-  const title =
-    escapeHTML(
-      item.title ||
-      "خبر من NOWNEX"
-    );
-
-
-  /* =====================================================
-     SUMMARY
-  ===================================================== */
-
-  const summaryRaw =
-    item.summary ||
-    item.description ||
-    "لا يوجد ملخص متاح لهذا الخبر حالياً.";
-
-
-  const summary =
-    escapeHTML(
-      summaryRaw
-    );
-
-
-  /* =====================================================
-     IMPORTANCE
-  ===================================================== */
-
-  const importanceRaw =
-    item.importance ||
-    "لا تتوفر حالياً معلومات إضافية حول أهمية هذا الخبر.";
-
-
-  const importance =
-    escapeHTML(
-      importanceRaw
-    );
-
-
-  /* =====================================================
-     CATEGORY
-  ===================================================== */
-
-  const category =
-    escapeHTML(
-      translateCategory(
-        item.category ||
-        "Trending"
-      )
-    );
-
-
-  /* =====================================================
-     SOURCE
-  ===================================================== */
-
-  const source =
-    escapeHTML(
-      item.source ||
-      "NOWNEX"
-    );
-
-
-  /* =====================================================
-     ORIGINAL LINK
-  ===================================================== */
-
-  const originalLink =
-    safeURL(
-      item.link
-    );
-
-
-  /* =====================================================
-     ICON
-  ===================================================== */
-
-  const icon =
-    getNewsIcon(
-      item.category
-    );
-
-
-  /* =====================================================
-     DATE
-  ===================================================== */
-
-  let dateText = "";
-
-
-  if (item.publishedAt) {
-
-    try {
-
-      const date =
-        new Date(
-          item.publishedAt
+    const overlay =
+        document.getElementById(
+            "articleOverlay"
         );
 
 
-      if (!isNaN(date.getTime())) {
+    const content =
+        document.getElementById(
+            "articleContent"
+        );
+
+
+    const title =
+        escapeHTML(
+            item.title ||
+            "خبر من NOWNEX"
+        );
+
+
+    const summaryRaw =
+        item.summary
+        ||
+        item.description
+        ||
+        "لا يوجد ملخص متاح لهذا الخبر حالياً.";
+
+
+    const summary =
+        escapeHTML(
+            summaryRaw
+        );
+
+
+    const importance =
+        escapeHTML(
+            item.importance
+            ||
+            "يقدم NOWNEX هذا الخبر في صورة مختصرة باللغة العربية لتسهيل فهم الحدث وأهميته."
+        );
+
+
+    const category =
+        escapeHTML(
+            translateCategory(
+                item.category
+                ||
+                "Trending"
+            )
+        );
+
+
+    const source =
+        escapeHTML(
+            item.source
+            ||
+            "NOWNEX"
+        );
+
+
+    const originalLink =
+        safeURL(
+            item.link
+        );
+
+
+    const icon =
+        getNewsIcon(
+            item.category
+        );
+
+
+    let dateText = "";
+
+
+    if (item.published) {
 
         dateText =
-          date.toLocaleDateString(
-            "ar-DZ",
-            {
-              year: "numeric",
-              month: "long",
-              day: "numeric"
+            escapeHTML(
+                item.published
+            );
+
+    }
+
+    else if (item.date) {
+
+        dateText =
+            escapeHTML(
+                item.date
+            );
+
+    }
+
+    else if (item.publishedAt) {
+
+        try {
+
+            dateText =
+                new Date(
+                    item.publishedAt
+                ).toLocaleDateString(
+                    "ar-DZ",
+                    {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric"
+                    }
+                );
+
+        }
+
+        catch (error) {}
+
+    }
+
+
+    /* =================================================
+       IMAGE
+    ================================================= */
+
+    const imageURL =
+        safeURL(
+            item.image
+        );
+
+
+    let imageHTML = "";
+
+
+    if (
+        imageURL !== "#"
+        &&
+        item.image
+    ) {
+
+        imageHTML = `
+
+            <img
+                src="${imageURL}"
+                alt="${title}"
+                loading="eager"
+                referrerpolicy="no-referrer"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement
+                        .querySelector('.article-image-fallback')
+                        .style.display='grid';
+                "
+            >
+
+            <div
+                class="article-image-fallback"
+                style="display:none;"
+            >
+                ${icon}
+            </div>
+
+        `;
+
+    }
+
+    else {
+
+        imageHTML = `
+
+            <div
+                class="article-image-fallback"
+            >
+                ${icon}
+            </div>
+
+        `;
+
+    }
+
+
+    content.innerHTML = `
+
+        <div
+            class="article-image"
+        >
+
+            ${imageHTML}
+
+        </div>
+
+
+        <div
+            class="article-category"
+        >
+
+            ${icon}
+
+            ${category}
+
+        </div>
+
+
+        <h1
+            class="article-title"
+        >
+
+            ${title}
+
+        </h1>
+
+
+        <div
+            class="article-info"
+        >
+
+            <span>
+
+                المصدر:
+                ${source}
+
+            </span>
+
+
+            ${
+                dateText
+                ?
+                `
+                    <span>
+                        ${dateText}
+                    </span>
+                `
+                :
+                ""
             }
-          );
 
-      }
+        </div>
 
-    }
 
-    catch (error) {
+        <div
+            class="article-summary-box"
+        >
 
-      dateText = "";
+            <div
+                class="article-summary-label"
+            >
 
-    }
+                📰 ملخص
+                <span dir="ltr">
+                    NOWNEX
+                </span>
 
-  }
+            </div>
 
 
-  if (!dateText && item.published) {
+            <div
+                class="article-summary"
+            >
 
-    dateText =
-      escapeHTML(
-        item.published
-      );
+                ${summary}
 
-  }
+            </div>
 
 
-  if (!dateText && item.date) {
+            <div
+                class="article-points"
+            >
 
-    dateText =
-      escapeHTML(
-        item.date
-      );
+                <h3>
 
-  }
+                    💡 ما الذي يعنيه الخبر؟
 
+                </h3>
 
-  /* =====================================================
-     ARTICLE HTML
-  ===================================================== */
 
-  content.innerHTML = `
+                <p>
 
-    <div class="article-category">
+                    ${importance}
 
-      ${icon}
+                </p>
 
-      ${category}
+            </div>
 
-    </div>
+        </div>
 
 
-    <h1 class="article-title">
+        <div
+            class="article-source"
+        >
 
-      ${title}
+            <div
+                class="article-source-title"
+            >
 
-    </h1>
+                المصدر الأصلي
 
+            </div>
 
-    <div class="article-info">
 
-      <span>
+            <div
+                class="article-source-name"
+            >
 
-        المصدر:
-        ${source}
+                ${source}
 
-      </span>
+            </div>
 
 
-      ${
-        dateText
-        ? `
-          <span>
-            ${dateText}
-          </span>
-        `
-        : ""
-      }
+            ${
+                originalLink !== "#"
+                ?
+                `
+                    <a
+                        class="original-btn"
+                        href="${originalLink}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
 
-    </div>
+                        قراءة الخبر الأصلي
+                        ↗
 
+                    </a>
+                `
+                :
+                `
+                    <div
+                        class="article-note"
+                    >
 
-    <!-- ================================================
-         SUMMARY
-    ================================================= -->
+                        رابط المصدر الأصلي
+                        غير متاح حالياً.
 
-    <div class="article-summary-box">
+                    </div>
+                `
+            }
 
-      <div class="article-summary-label">
 
-        📰 ملخص NOWNEX
+            <div
+                class="article-note"
+            >
 
-      </div>
+                NOWNEX يعرض ملخصاً
+                عربياً للخبر مع الإشارة
+                إلى مصدره الأصلي.
 
+                للاطلاع على النص الكامل،
+                يرجى زيارة المصدر.
 
-      <div class="article-summary">
+            </div>
 
-        ${summary}
+        </div>
 
-      </div>
+    `;
 
 
-      <!-- ==============================================
-           IMPORTANCE
-      =============================================== -->
+    overlay.classList.add(
+        "active"
+    );
 
-      <div class="article-points">
 
-        <h3>
+    document.body.classList.add(
+        "article-open"
+    );
 
-          💡 ما الذي يعنيه الخبر؟
 
-        </h3>
-
-
-        <p>
-
-          ${importance}
-
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <!-- ================================================
-         SOURCE
-    ================================================= -->
-
-    <div class="article-source">
-
-      <div class="article-source-title">
-
-        المصدر الأصلي
-
-      </div>
-
-
-      <div class="article-source-name">
-
-        ${source}
-
-      </div>
-
-
-      ${
-        originalLink !== "#"
-        ? `
-          <a
-            class="original-btn"
-            href="${originalLink}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-
-            قراءة الخبر الأصلي
-            ↗
-
-          </a>
-        `
-        :
-        `
-          <div class="article-note">
-
-            رابط المصدر الأصلي غير متاح حالياً.
-
-          </div>
-        `
-      }
-
-
-      <div class="article-note">
-
-        NOWNEX يعرض ملخصاً عربياً للخبر
-        مع الإشارة إلى مصدره الأصلي.
-        للاطلاع على النص الكامل، يرجى
-        زيارة المصدر.
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  /* =====================================================
-     OPEN
-  ===================================================== */
-
-  overlay.classList.add("active");
-
-  document.body.classList.add(
-    "article-open"
-  );
-
-
-  overlay.scrollTop = 0;
+    overlay.scrollTop = 0;
 
 }
 
 
 function closeArticle() {
 
-  const overlay =
-    document.getElementById(
-      "articleOverlay"
+    const overlay =
+        document.getElementById(
+            "articleOverlay"
+        );
+
+
+    overlay.classList.remove(
+        "active"
     );
 
 
-  overlay.classList.remove(
-    "active"
-  );
-
-
-  document.body.classList.remove(
-    "article-open"
-  );
+    document.body.classList.remove(
+        "article-open"
+    );
 
 }
 
 
 /* =====================================================
-   LOAD NEWS
+CREATE NEWS CARD
 ===================================================== */
 
-async function loadNews() {
+function createNewsCard(
+    item,
+    index
+) {
 
-  const newsGrid =
-    document.getElementById(
-      "newsGrid"
-    );
-
-
-  try {
-
-    const response =
-      await fetch(
-        "news.json?v=" +
-        Date.now(),
-        {
-          cache: "no-store"
-        }
-      );
+    const card =
+        document.createElement(
+            "article"
+        );
 
 
-    if (!response.ok) {
-
-      throw new Error(
-        "news.json could not be loaded"
-      );
-
-    }
+    card.className =
+        "trend-card";
 
 
-    const data =
-      await response.json();
+    const title =
+        escapeHTML(
+            item.title ||
+            "خبر جديد"
+        );
 
 
-    const news =
-      Array.isArray(data.news)
-        ? data.news
-        : [];
-
-
-    if (!news.length) {
-
-      throw new Error(
-        "No news available"
-      );
-
-    }
-
-
-    allNews = news;
-
-
-    newsGrid.innerHTML = "";
-
-
-    news
-      .slice(0, 8)
-      .forEach(
-        function(item, index) {
-
-
-          const card =
-            document.createElement(
-              "article"
-            );
-
-
-          card.className =
-            "trend-card";
-
-
-          const title =
-            escapeHTML(
-              item.title ||
-              "خبر جديد"
-            );
-
-
-          const category =
-            escapeHTML(
-              translateCategory(
+    const category =
+        escapeHTML(
+            translateCategory(
                 item.category ||
                 "Trending"
-              )
-            );
+            )
+        );
 
 
-          const source =
-            escapeHTML(
-              item.source ||
-              "NOWNEX"
-            );
+    const source =
+        escapeHTML(
+            item.source ||
+            "NOWNEX"
+        );
 
 
-          const icon =
-            getNewsIcon(
-              item.category
-            );
+    const icon =
+        getNewsIcon(
+            item.category
+        );
 
 
-          card.innerHTML = `
+    const imageURL =
+        safeURL(
+            item.image
+        );
 
-            <div class="trend-number">
 
-              ${String(
-                index + 1
-              ).padStart(2, "0")}
+    let imageHTML = "";
 
-              — الأكثر تداولاً
+
+    if (
+        imageURL !== "#"
+        &&
+        item.image
+    ) {
+
+        imageHTML = `
+
+            <img
+                src="${imageURL}"
+                alt="${title}"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement
+                        .querySelector('.image-fallback')
+                        .style.display='grid';
+                "
+            >
+
+            <div
+                class="image-fallback"
+                style="display:none;"
+            >
+
+                ${icon}
 
             </div>
 
+        `;
 
-            <div class="trend-icon">
+    }
 
-              ${icon}
+    else {
+
+        imageHTML = `
+
+            <div
+                class="image-fallback"
+            >
+
+                ${icon}
+
+            </div>
+
+        `;
+
+    }
+
+
+    card.innerHTML = `
+
+        <div
+            class="news-image"
+        >
+
+            ${imageHTML}
+
+        </div>
+
+
+        <div
+            class="card-content"
+        >
+
+            <div
+                class="trend-number"
+            >
+
+                ${String(
+                    index + 1
+                ).padStart(2, "0")}
+
+                — الأكثر تداولاً
 
             </div>
 
 
             <h3>
 
-              ${title}
+                ${title}
 
             </h3>
 
 
-            <div class="trend-meta">
+            <div
+                class="trend-meta"
+            >
 
-              ${category}
+                ${category}
 
-              ·
+                ·
 
-              ${source}
+                ${source}
 
             </div>
 
 
             <a
-              class="news-link"
-              href="#"
-              aria-label="اقرأ الخبر"
+                class="news-link"
+                href="#"
             >
 
-              اقرأ الخبر ←
+                اقرأ الخبر ←
 
             </a>
 
-          `;
-
-
-          const newsLink =
-            card.querySelector(
-              ".news-link"
-            );
-
-
-          newsLink.addEventListener(
-            "click",
-            function(event) {
-
-              event.preventDefault();
-
-              openArticle(item);
-
-            }
-          );
-
-
-          newsGrid.appendChild(
-            card
-          );
-
-
-        }
-      );
-
-
-  }
-
-
-  catch (error) {
-
-    console.error(
-      "NOWNEX News Error:",
-      error
-    );
-
-
-    newsGrid.innerHTML = `
-
-      <article class="news-error">
-
-        ⚠️
-
-        <br><br>
-
-        الأخبار غير متاحة مؤقتاً.
-
-        <br>
-
-        حاول تحديث الصفحة بعد قليل.
-
-      </article>
+        </div>
 
     `;
 
-  }
+
+    const newsLink =
+        card.querySelector(
+            ".news-link"
+        );
+
+
+    newsLink.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            openArticle(item);
+
+        }
+    );
+
+
+    return card;
+}
+
+
+/* =====================================================
+LOAD NEWS
+===================================================== */
+
+async function loadNews() {
+
+    const newsGrid =
+        document.getElementById(
+            "newsGrid"
+        );
+
+
+    try {
+
+        const response =
+            await fetch(
+                "news.json?v="
+                +
+                Date.now(),
+                {
+                    cache:
+                        "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "news.json could not be loaded"
+            );
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const news =
+            Array.isArray(
+                data.news
+            )
+            ?
+            data.news
+            :
+            [];
+
+
+        if (!news.length) {
+
+            throw new Error(
+                "No news available"
+            );
+        }
+
+
+        allNews = news;
+
+
+        newsGrid.innerHTML = "";
+
+
+        news
+            .slice(0, 8)
+            .forEach(
+                function(
+                    item,
+                    index
+                ) {
+
+                    newsGrid.appendChild(
+
+                        createNewsCard(
+                            item,
+                            index
+                        )
+
+                    );
+
+                }
+            );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "NOWNEX News Error:",
+            error
+        );
+
+
+        newsGrid.innerHTML = `
+
+            <article
+                class="trend-card"
+            >
+
+                <div
+                    class="news-image"
+                >
+
+                    <div
+                        class="image-fallback"
+                    >
+                        ⚠️
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="card-content"
+                >
+
+                    <div
+                        class="trend-number"
+                    >
+
+                        NOWNEX
+
+                    </div>
+
+
+                    <h3>
+
+                        الأخبار غير متاحة
+                        مؤقتاً
+
+                    </h3>
+
+
+                    <div
+                        class="trend-meta"
+                    >
+
+                        حاول تحديث الصفحة
+                        بعد قليل.
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
 
 }
 
 
 /* =====================================================
-   START
+START
 ===================================================== */
 
 loadNews();
 
 
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
+/*
+تحديث الأخبار داخل الصفحة
+كل 10 دقائق.
+*/
 
 setInterval(
-  loadNews,
-  10 * 60 * 1000
+    loadNews,
+    10 * 60 * 1000
 );
-
 
 </script>
 
