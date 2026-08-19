@@ -23,6 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet">
 
+
 <style>
 
 /* =========================================================
@@ -312,6 +313,12 @@ nav a.active{
     background-size:cover;
 }
 
+
+/*
+   طبقة خفيفة فقط لتحسين وضوح الكتابة
+   بدون إخفاء صورة الروبوت
+*/
+
 .hero::after{
 
     content:"";
@@ -327,8 +334,8 @@ nav a.active{
     background:
         linear-gradient(
             90deg,
-            rgba(2,7,20,.30) 0%,
-            rgba(2,7,20,.12) 35%,
+            rgba(2,7,20,.28) 0%,
+            rgba(2,7,20,.10) 35%,
             rgba(2,7,20,0) 65%
         );
 }
@@ -336,6 +343,8 @@ nav a.active{
 
 /* =========================================================
    HERO CONTENT
+   مهم جداً:
+   النصف الأيسر بالكامل مخصص للنص
 ========================================================= */
 
 .hero-content{
@@ -344,13 +353,22 @@ nav a.active{
 
     z-index:5;
 
-    left:4%;
+    /*
+       يبدأ من أقصى يسار الصورة
+       ويأخذ 50% منها بالضبط
+    */
 
-    width:46%;
+    left:0;
 
     top:50%;
 
+    width:50%;
+
     transform:translateY(-50%);
+
+    padding:
+        20px
+        clamp(25px,4vw,65px);
 
     display:flex;
 
@@ -363,17 +381,21 @@ nav a.active{
     text-align:center;
 
     direction:rtl;
-
-    padding:20px;
 }
+
+
+/*
+   في الإنجليزية أيضاً يبقى المحتوى
+   في النصف الأيسر من صورة الروبوت
+*/
 
 html[dir="ltr"] .hero-content{
 
-    left:4%;
+    left:0;
 
     right:auto;
 
-    width:46%;
+    width:50%;
 
     text-align:center;
 
@@ -402,10 +424,10 @@ html[dir="ltr"] .hero-content{
     margin-bottom:18px;
 
     border:1px solid
-        rgba(36,143,255,.42);
+        rgba(36,143,255,.55);
 
     background:
-        rgba(0,30,80,.20);
+        rgba(0,30,80,.28);
 
     color:#5caeff;
 
@@ -417,7 +439,10 @@ html[dir="ltr"] .hero-content{
 
     white-space:nowrap;
 
-    backdrop-filter:blur(4px);
+    backdrop-filter:blur(6px);
+
+    box-shadow:
+        0 0 15px rgba(0,130,255,.08);
 }
 
 .live-dot{
@@ -513,7 +538,7 @@ html[dir="ltr"] .hero-content{
 
 
 /* =========================================================
-   BUTTONS
+   HERO BUTTONS
 ========================================================= */
 
 .hero-buttons{
@@ -544,7 +569,10 @@ html[dir="ltr"] .hero-content{
 
     border:1px solid var(--line);
 
-    transition:.22s;
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
 
     font-size:14px;
 
@@ -572,21 +600,25 @@ html[dir="ltr"] .hero-content{
 .secondary-btn{
 
     background:
-        rgba(2,8,20,.38);
+        rgba(2,8,20,.42);
 
     color:#fff;
 
     border:
         1px solid
-        rgba(255,255,255,.16);
+        rgba(255,255,255,.20);
 
-    backdrop-filter:blur(5px);
+    backdrop-filter:blur(6px);
 }
 
 .primary-btn:hover,
 .secondary-btn:hover{
 
     transform:translateY(-3px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,100,255,.20);
 }
 
 
@@ -634,6 +666,12 @@ html[dir="ltr"] .hero-content{
     display:none;
 }
 
+
+/* =========================================================
+   CATEGORY CARD
+   الخلفية هي الصورة التي رفعتها
+========================================================= */
+
 .category-card{
 
     flex:0 0 300px;
@@ -644,16 +682,29 @@ html[dir="ltr"] .hero-content{
 
     border-radius:18px;
 
+    /*
+       الحواف المضيئة
+    */
+
     border:
         1px solid
-        rgba(255,255,255,.10);
+        rgba(26,150,255,.42);
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9,27,52,.95),
-            rgba(4,15,32,.97)
-        );
+    /*
+       صور البطاقات
+    */
+
+    background-color:#07152c;
+
+    background-size:cover;
+
+    background-position:center center;
+
+    background-repeat:no-repeat;
+
+    /*
+       ترتيب المحتوى
+    */
 
     display:flex;
 
@@ -665,12 +716,59 @@ html[dir="ltr"] .hero-content{
 
     cursor:pointer;
 
-    transition:.25s;
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease;
 
     position:relative;
 
     overflow:hidden;
+
+    /*
+       توهج خارجي
+    */
+
+    box-shadow:
+        0 0 12px
+        rgba(0,130,255,.10),
+
+        inset 0 0 30px
+        rgba(0,0,0,.25);
 }
+
+
+/*
+   طبقة شفافة فوق الصورة
+   تجعل الكتابة واضحة
+*/
+
+.category-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:1;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(2,8,22,.92) 0%,
+            rgba(2,8,22,.68) 38%,
+            rgba(2,8,22,.32) 72%,
+            rgba(2,8,22,.16) 100%
+        );
+}
+
+
+/*
+   توهج خفيف إضافي
+*/
 
 .category-card::before{
 
@@ -680,27 +778,137 @@ html[dir="ltr"] .hero-content{
 
     inset:0;
 
-    background:
-        radial-gradient(
-            circle at 20% 50%,
-            rgba(0,145,255,.10),
-            transparent 60%
-        );
+    z-index:2;
 
     pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at 15% 50%,
+            rgba(0,145,255,.13),
+            transparent 58%
+        );
 }
+
+
+/*
+   محتوى البطاقة فوق الصورة
+*/
+
+.category-card .category-icon,
+.category-card .category-text{
+
+    position:relative;
+
+    z-index:3;
+}
+
+
+/*
+   عند المرور أو لمس البطاقة:
+   زوم خفيف + حواف أكثر إضاءة
+*/
 
 .category-card:hover{
 
-    transform:translateY(-3px);
+    transform:
+        translateY(-3px)
+        scale(1.025);
 
     border-color:
-        rgba(0,140,255,.35);
+        rgba(35,170,255,.85);
 
     box-shadow:
-        0 10px 35px
-        rgba(0,70,150,.16);
+
+        0 0 8px
+        rgba(0,150,255,.35),
+
+        0 0 25px
+        rgba(0,120,255,.20),
+
+        inset 0 0 35px
+        rgba(0,0,0,.25);
 }
+
+
+/*
+   للهواتف: عند اللمس
+*/
+
+.category-card:active{
+
+    transform:scale(1.035);
+
+    border-color:
+        rgba(70,190,255,.95);
+
+    box-shadow:
+
+        0 0 12px
+        rgba(0,160,255,.45),
+
+        0 0 32px
+        rgba(0,120,255,.25);
+}
+
+
+/* =========================================================
+   صور كل بطاقة
+   الصور موجودة بجانب index.html
+========================================================= */
+
+.category-card[data-category="Trending"]{
+
+    background-image:
+        url("trending.png");
+}
+
+.category-card[data-category="World"]{
+
+    background-image:
+        url("world.png");
+}
+
+.category-card[data-category="AI"]{
+
+    background-image:
+        url("ai.png");
+}
+
+.category-card[data-category="Technology"]{
+
+    background-image:
+        url("technology.png");
+}
+
+.category-card[data-category="Entertainment"]{
+
+    background-image:
+        url("entertainment.png");
+}
+
+.category-card[data-category="Cars"]{
+
+    background-image:
+        url("cars.png");
+}
+
+.category-card[data-category="Facts"]{
+
+    background-image:
+        url("facts.png");
+}
+
+.category-card[data-category="Products"]{
+
+    background-image:
+        url("products.png");
+}
+
+
+/* =========================================================
+   CATEGORY CONTENT
+========================================================= */
 
 .category-icon{
 
@@ -718,14 +926,20 @@ html[dir="ltr"] .hero-content{
 
     position:relative;
 
-    z-index:2;
+    z-index:3;
+
+    filter:
+        drop-shadow(
+            0 4px 8px
+            rgba(0,0,0,.5)
+        );
 }
 
 .category-text{
 
     position:relative;
 
-    z-index:2;
+    z-index:3;
 
     min-width:0;
 }
@@ -741,17 +955,23 @@ html[dir="ltr"] .hero-content{
     margin-bottom:5px;
 
     white-space:nowrap;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.75);
 }
 
 .category-text p{
 
-    color:#77849c;
+    color:#a3afc4;
 
     font-size:11px;
 
     line-height:1.6;
 
     font-weight:500;
+
+    text-shadow:
+        0 2px 7px rgba(0,0,0,.8);
 }
 
 
@@ -1483,13 +1703,19 @@ footer{
         background-position:center center;
     }
 
+    /*
+       النصف الأيسر يبقى مخصصاً للنص
+    */
+
     .hero-content{
 
-        left:3%;
+        left:0;
 
-        width:48%;
+        width:50%;
 
-        padding:15px;
+        padding:
+            15px
+            25px;
     }
 
     .hero h1{
@@ -1566,8 +1792,8 @@ footer{
 
 
     /* =====================================================
-       HERO MOBILE
-       الصورة والروبوت يبقيان كما هما
+       MOBILE HERO
+       النصف الأيسر = 50%
     ===================================================== */
 
     .hero{
@@ -1594,20 +1820,20 @@ footer{
         background:
             linear-gradient(
                 90deg,
-                rgba(2,7,20,.38),
-                rgba(2,7,20,.05) 70%,
+                rgba(2,7,20,.35),
+                rgba(2,7,20,.08) 70%,
                 transparent
             );
     }
 
 
     /*
-       منطقة الكتابة تبقى في الجهة اليسرى
+       النص في منتصف المنطقة اليسرى
     */
 
     .hero-content{
 
-        left:2%;
+        left:0;
 
         width:50%;
 
@@ -1615,27 +1841,25 @@ footer{
 
         transform:translateY(-50%);
 
-        padding:10px;
+        padding:
+            8px
+            8px;
 
         text-align:center;
 
         align-items:center;
-
-        justify-content:center;
     }
 
 
     html[dir="ltr"] .hero-content{
 
-        left:2%;
+        left:0;
 
         width:50%;
 
         text-align:center;
 
         align-items:center;
-
-        justify-content:center;
     }
 
 
@@ -1690,66 +1914,24 @@ footer{
     }
 
 
-    /* =====================================================
-       HERO BUTTONS
-       التعديل المطلوب:
-       الزران جنب بعض وفي منتصف المنطقة اليسرى
-    ===================================================== */
-
     .hero-buttons{
 
-        width:100%;
+        gap:6px;
 
-        display:flex;
-
-        flex-direction:row;
-
-        flex-wrap:nowrap;
+        flex-direction:column;
 
         align-items:center;
-
-        justify-content:center;
-
-        gap:8px;
-
-        margin:0 auto;
-
-        direction:rtl;
-    }
-
-
-    /*
-       الإنجليزية بنفس المكان تماماً
-    */
-
-    html[dir="ltr"] .hero-buttons{
-
-        direction:ltr;
-
-        justify-content:center;
     }
 
 
     .primary-btn,
     .secondary-btn{
 
-        flex:0 0 auto;
+        padding:8px 10px;
 
-        width:auto;
+        font-size:8px;
 
-        min-width:105px;
-
-        padding:10px 12px;
-
-        font-size:9px;
-
-        line-height:1.3;
-
-        border-radius:10px;
-
-        white-space:nowrap;
-
-        text-align:center;
+        border-radius:8px;
     }
 
 
@@ -1928,28 +2110,6 @@ footer{
         font-size:7.5px;
     }
 
-
-    /*
-       تصغير الزرين قليلاً فقط للشاشات الصغيرة جداً
-       مع بقائهما جنباً إلى جنب
-    */
-
-    .hero-buttons{
-
-        gap:5px;
-    }
-
-    .primary-btn,
-    .secondary-btn{
-
-        min-width:92px;
-
-        padding:9px 8px;
-
-        font-size:8px;
-    }
-
-
     .category-card{
 
         flex-basis:205px;
@@ -1959,6 +2119,7 @@ footer{
 </style>
 
 </head>
+
 
 <body>
 
@@ -2044,6 +2205,7 @@ footer{
 </header>
 
 
+
 <main>
 
 
@@ -2113,6 +2275,7 @@ footer{
 </section>
 
 
+
 <!-- =======================================================
      CATEGORY SLIDER
 ======================================================= -->
@@ -2147,6 +2310,7 @@ footer{
     </div>
 
 
+
     <div class="category-card"
          data-category="World"
          onclick="filterByCategory('World',this)">
@@ -2168,6 +2332,7 @@ footer{
         </div>
 
     </div>
+
 
 
     <div class="category-card"
@@ -2193,6 +2358,7 @@ footer{
     </div>
 
 
+
     <div class="category-card"
          data-category="Technology"
          onclick="filterByCategory('Technology',this)">
@@ -2214,6 +2380,7 @@ footer{
         </div>
 
     </div>
+
 
 
     <div class="category-card"
@@ -2239,6 +2406,7 @@ footer{
     </div>
 
 
+
     <div class="category-card"
          data-category="Cars"
          onclick="filterByCategory('Cars',this)">
@@ -2262,6 +2430,7 @@ footer{
     </div>
 
 
+
     <div class="category-card"
          data-category="Facts"
          onclick="filterByCategory('Facts',this)">
@@ -2283,6 +2452,7 @@ footer{
         </div>
 
     </div>
+
 
 
     <div class="category-card"
@@ -2311,6 +2481,7 @@ footer{
 </div>
 
 </section>
+
 
 
 <!-- =======================================================
@@ -2395,6 +2566,7 @@ footer{
 </main>
 
 
+
 <!-- =======================================================
      FOOTER
 ======================================================= -->
@@ -2425,6 +2597,7 @@ footer{
 </div>
 
 </footer>
+
 
 
 <!-- =======================================================
@@ -2467,6 +2640,7 @@ footer{
 </div>
 
 
+
 <!-- =======================================================
      SEARCH
 ======================================================= -->
@@ -2495,6 +2669,7 @@ footer{
 </div>
 
 </div>
+
 
 
 <script>
@@ -3152,7 +3327,10 @@ function filterByCategory(
     if(clickedElement){
 
         clickedElement.style.borderColor=
-            "rgba(217,180,91,.65)";
+            "rgba(217,180,91,.85)";
+
+        clickedElement.style.boxShadow=
+            "0 0 12px rgba(217,180,91,.28), 0 0 30px rgba(0,120,255,.18)";
     }
 
 
@@ -3222,9 +3400,12 @@ function clearCategoryFilter(){
 
     document
         .querySelectorAll(".category-card")
-        .forEach(card=>
-            card.style.borderColor=""
-        );
+        .forEach(card=>{
+
+            card.style.borderColor="";
+
+            card.style.boxShadow="";
+        });
 
 
     renderNews(
