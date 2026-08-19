@@ -12,7 +12,7 @@
 
 <meta
   name="description"
-  content="NOWNEX — منصة عربية لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
+  content="NOWNEX — منصة لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
 >
 
 <link rel="preconnect"
@@ -40,7 +40,6 @@
 }
 
 :root {
-
   --bg: #060914;
   --bg2: #0b1020;
 
@@ -54,11 +53,9 @@
   --gold-light: #f3d47d;
 
   --blue: #4f8cff;
-
   --green: #56e39f;
 
   --line: rgba(255,255,255,0.08);
-
 }
 
 html {
@@ -66,14 +63,12 @@ html {
 }
 
 body {
-
   font-family:
     "Cairo",
     Arial,
     sans-serif;
 
   background:
-
     radial-gradient(
       circle at 80% 0%,
       rgba(79,140,255,0.12),
@@ -93,7 +88,6 @@ body {
   min-height: 100vh;
 
   overflow-x: hidden;
-
 }
 
 body.article-open {
@@ -115,11 +109,8 @@ button {
 ===================================================== */
 
 header {
-
   position: sticky;
-
   top: 0;
-
   z-index: 100;
 
   backdrop-filter: blur(18px);
@@ -129,13 +120,10 @@ header {
 
   border-bottom:
     1px solid var(--line);
-
 }
 
 .header-inner {
-
   max-width: 1250px;
-
   margin: auto;
 
   height: 76px;
@@ -143,31 +131,24 @@ header {
   padding: 0 22px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   gap: 25px;
-
 }
 
 .logo {
-
   display: flex;
-
   align-items: center;
 
   gap: 10px;
 
   font-size: 27px;
-
   font-weight: 900;
 
   letter-spacing: -1px;
 
   white-space: nowrap;
-
 }
 
 .logo-text {
@@ -175,15 +156,12 @@ header {
 }
 
 .logo-mark {
-
   width: 40px;
-
   height: 40px;
 
   border-radius: 12px;
 
   display: grid;
-
   place-items: center;
 
   background:
@@ -196,59 +174,91 @@ header {
   color: #080b13;
 
   font-size: 21px;
-
   font-weight: 900;
 
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.18);
-
 }
 
 nav {
-
   display: flex;
-
   align-items: center;
-
   gap: 28px;
-
 }
 
 nav a {
-
   color: #b9c1d3;
 
   font-size: 14px;
-
   font-weight: 700;
 
   transition: 0.2s;
 
   cursor: pointer;
-
 }
 
 nav a:hover,
 nav a.active {
-
   color: white;
-
 }
 
 .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* =====================================================
+   LANGUAGE BUTTON
+===================================================== */
+
+.language-btn {
+  height: 43px;
+
+  min-width: 82px;
+
+  padding: 0 12px;
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(255,255,255,0.04);
+
+  color: white;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  font-weight: 800;
 
   display: flex;
 
-  gap: 8px;
+  align-items: center;
 
+  justify-content: center;
+
+  gap: 6px;
+
+  transition: 0.2s;
+}
+
+.language-btn:hover {
+  border-color:
+    rgba(217,180,91,0.45);
+
+  background:
+    rgba(217,180,91,0.08);
 }
 
 .search-btn,
 .mobile-menu {
-
   width: 43px;
-
   height: 43px;
 
   border:
@@ -264,7 +274,6 @@ nav a.active {
   cursor: pointer;
 
   font-size: 18px;
-
 }
 
 .mobile-menu {
@@ -277,9 +286,7 @@ nav a.active {
 ===================================================== */
 
 .hero {
-
   max-width: 1250px;
-
   margin: auto;
 
   padding:
@@ -293,11 +300,9 @@ nav a.active {
   gap: 35px;
 
   align-items: center;
-
 }
 
 .hero-badge {
-
   display: inline-flex;
 
   align-items: center;
@@ -324,13 +329,10 @@ nav a.active {
   font-weight: 800;
 
   margin-bottom: 22px;
-
 }
 
 .live-dot {
-
   width: 8px;
-
   height: 8px;
 
   border-radius: 50%;
@@ -341,33 +343,24 @@ nav a.active {
   box-shadow:
     0 0 12px
     var(--green);
-
 }
 
 .hero h1 {
-
   font-size:
     clamp(45px, 7vw, 82px);
 
-  line-height:
-    1.12;
+  line-height: 1.12;
 
-  letter-spacing:
-    -2px;
+  letter-spacing: -2px;
 
-  max-width:
-    850px;
+  max-width: 850px;
 
-  margin-bottom:
-    25px;
+  margin-bottom: 25px;
 
-  font-weight:
-    900;
-
+  font-weight: 900;
 }
 
 .hero h1 span {
-
   background:
     linear-gradient(
       90deg,
@@ -375,55 +368,36 @@ nav a.active {
       var(--gold-light)
     );
 
-  -webkit-background-clip:
-    text;
+  -webkit-background-clip: text;
+  background-clip: text;
 
-  background-clip:
-    text;
-
-  color:
-    transparent;
-
+  color: transparent;
 }
 
 .hero p {
+  max-width: 700px;
 
-  max-width:
-    700px;
+  color: var(--muted);
 
-  color:
-    var(--muted);
+  font-size: 18px;
 
-  font-size:
-    18px;
+  line-height: 1.9;
 
-  line-height:
-    1.9;
+  margin-bottom: 30px;
 
-  margin-bottom:
-    30px;
-
-  font-weight:
-    500;
-
+  font-weight: 500;
 }
 
 .hero-buttons {
+  display: flex;
 
-  display:
-    flex;
+  gap: 12px;
 
-  gap:
-    12px;
-
-  flex-wrap:
-    wrap;
-
+  flex-wrap: wrap;
 }
 
 .primary-btn,
 .secondary-btn {
-
   padding:
     14px 21px;
 
@@ -441,11 +415,9 @@ nav a.active {
 
   transition:
     0.2s;
-
 }
 
 .primary-btn {
-
   background:
     linear-gradient(
       135deg,
@@ -458,25 +430,20 @@ nav a.active {
 
   border:
     none;
-
 }
 
 .secondary-btn {
-
   background:
     rgba(255,255,255,0.04);
 
   color:
     white;
-
 }
 
 .primary-btn:hover,
 .secondary-btn:hover {
-
   transform:
     translateY(-2px);
-
 }
 
 
@@ -485,34 +452,22 @@ nav a.active {
 ===================================================== */
 
 .trend-orb {
+  min-height: 350px;
 
-  min-height:
-    350px;
+  position: relative;
 
-  position:
-    relative;
+  display: grid;
 
-  display:
-    grid;
-
-  place-items:
-    center;
-
+  place-items: center;
 }
 
 .orb {
+  width: 260px;
+  height: 260px;
 
-  width:
-    260px;
-
-  height:
-    260px;
-
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   background:
-
     radial-gradient(
       circle at 35% 30%,
       #fff7d0 0%,
@@ -523,7 +478,6 @@ nav a.active {
     );
 
   box-shadow:
-
     0 0 70px
     rgba(217,180,91,0.16),
 
@@ -532,47 +486,33 @@ nav a.active {
 
   animation:
     float 5s ease-in-out infinite;
-
 }
 
 .orbit {
+  position: absolute;
 
-  position:
-    absolute;
-
-  width:
-    330px;
-
-  height:
-    170px;
+  width: 330px;
+  height: 170px;
 
   border:
     1px solid
     rgba(217,180,91,0.25);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   transform:
     rotate(-25deg);
-
 }
 
 .orbit::after {
-
   content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  width:
-    9px;
+  width: 9px;
+  height: 9px;
 
-  height:
-    9px;
-
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   background:
     var(--gold-light);
@@ -581,18 +521,12 @@ nav a.active {
     0 0 18px
     var(--gold);
 
-  top:
-    30px;
-
-  right:
-    30px;
-
+  top: 30px;
+  right: 30px;
 }
 
 @keyframes float {
-
-  0%,
-  100% {
+  0%,100% {
     transform:
       translateY(0);
   }
@@ -601,7 +535,6 @@ nav a.active {
     transform:
       translateY(-12px);
   }
-
 }
 
 
@@ -610,20 +543,15 @@ nav a.active {
 ===================================================== */
 
 .section {
+  max-width: 1250px;
 
-  max-width:
-    1250px;
-
-  margin:
-    auto;
+  margin: auto;
 
   padding:
     30px 22px 70px;
-
 }
 
 .section-header {
-
   display:
     flex;
 
@@ -638,11 +566,9 @@ nav a.active {
 
   gap:
     20px;
-
 }
 
 .section-title {
-
   font-size:
     30px;
 
@@ -651,18 +577,14 @@ nav a.active {
 
   font-weight:
     900;
-
 }
 
 .section-title span {
-
   color:
     var(--gold-light);
-
 }
 
 .section-description {
-
   color:
     var(--muted);
 
@@ -674,11 +596,9 @@ nav a.active {
 
   font-weight:
     500;
-
 }
 
 .view-all {
-
   color:
     var(--gold-light);
 
@@ -690,7 +610,6 @@ nav a.active {
 
   cursor:
     pointer;
-
 }
 
 
@@ -699,7 +618,6 @@ nav a.active {
 ===================================================== */
 
 .trend-grid {
-
   display:
     grid;
 
@@ -708,18 +626,14 @@ nav a.active {
 
   gap:
     15px;
-
 }
 
 
 /* =====================================================
    NEWS CARD
-   IMPORTANT:
-   الصورة موجودة داخل البطاقة
 ===================================================== */
 
 .trend-card {
-
   position:
     relative;
 
@@ -730,7 +644,6 @@ nav a.active {
     0;
 
   background:
-
     linear-gradient(
       145deg,
       rgba(255,255,255,0.06),
@@ -750,11 +663,9 @@ nav a.active {
 
   transition:
     0.25s;
-
 }
 
 .trend-card:hover {
-
   transform:
     translateY(-5px);
 
@@ -763,7 +674,6 @@ nav a.active {
 
   border-color:
     rgba(217,180,91,0.25);
-
 }
 
 
@@ -772,25 +682,17 @@ nav a.active {
 ===================================================== */
 
 .trend-image {
+  width: 100%;
+  height: 190px;
 
-  width:
-    100%;
+  display: block;
 
-  height:
-    190px;
+  object-fit: cover;
 
-  display:
-    block;
-
-  object-fit:
-    cover;
-
-  object-position:
-    center;
+  object-position: center;
 
   background:
     #0b1020;
-
 }
 
 
@@ -799,14 +701,11 @@ nav a.active {
 ===================================================== */
 
 .trend-card-content {
-
   padding:
     17px 20px 20px;
-
 }
 
 .trend-number {
-
   font-size:
     13px;
 
@@ -815,11 +714,9 @@ nav a.active {
 
   font-weight:
     900;
-
 }
 
 .trend-icon {
-
   position:
     absolute;
 
@@ -840,11 +737,9 @@ nav a.active {
       0 2px 8px
       rgba(0,0,0,0.5)
     );
-
 }
 
 .trend-card h3 {
-
   margin-top:
     10px;
 
@@ -856,11 +751,9 @@ nav a.active {
 
   font-weight:
     800;
-
 }
 
 .trend-meta {
-
   color:
     var(--muted);
 
@@ -872,11 +765,9 @@ nav a.active {
 
   font-weight:
     600;
-
 }
 
 .news-link {
-
   display:
     inline-block;
 
@@ -897,14 +788,11 @@ nav a.active {
 
   cursor:
     pointer;
-
 }
 
 .news-link:hover {
-
   color:
     white;
-
 }
 
 
@@ -913,7 +801,6 @@ nav a.active {
 ===================================================== */
 
 .category-grid {
-
   display:
     grid;
 
@@ -922,16 +809,9 @@ nav a.active {
 
   gap:
     15px;
-
 }
 
-
-/* =====================================================
-   CATEGORY BUTTON
-===================================================== */
-
 .category {
-
   padding:
     24px;
 
@@ -958,42 +838,34 @@ nav a.active {
 
   user-select:
     none;
-
 }
 
 .category:hover {
-
   transform:
     translateY(-4px);
 
   border-color:
     rgba(79,140,255,0.3);
-
 }
 
 .category.active {
-
   border-color:
     rgba(217,180,91,0.65);
 
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.08);
-
 }
 
 .category-icon {
-
   font-size:
     28px;
 
   margin-bottom:
     18px;
-
 }
 
 .category h3 {
-
   font-size:
     17px;
 
@@ -1002,11 +874,9 @@ nav a.active {
 
   font-weight:
     800;
-
 }
 
 .category p {
-
   color:
     var(--muted);
 
@@ -1018,16 +888,14 @@ nav a.active {
 
   font-weight:
     500;
-
 }
 
 
 /* =====================================================
-   CATEGORY FILTER MESSAGE
+   CATEGORY FILTER
 ===================================================== */
 
 .category-filter-bar {
-
   display:
     none;
 
@@ -1055,22 +923,23 @@ nav a.active {
 
   font-weight:
     800;
-
 }
 
 .category-filter-bar.active {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
-  gap: 15px;
-
+  gap:
+    15px;
 }
 
 .clear-filter {
-
   border:
     1px solid var(--line);
 
@@ -1091,7 +960,6 @@ nav a.active {
 
   font-family:
     inherit;
-
 }
 
 
@@ -1100,7 +968,6 @@ nav a.active {
 ===================================================== */
 
 .feature {
-
   display:
     grid;
 
@@ -1121,11 +988,9 @@ nav a.active {
 
   background:
     var(--card);
-
 }
 
 .feature-visual {
-
   min-height:
     350px;
 
@@ -1139,7 +1004,6 @@ nav a.active {
     100px;
 
   background:
-
     radial-gradient(
       circle at center,
       rgba(79,140,255,0.2),
@@ -1151,11 +1015,9 @@ nav a.active {
       #0c1730,
       #090d1a
     );
-
 }
 
 .feature-content {
-
   padding:
     45px;
 
@@ -1167,11 +1029,9 @@ nav a.active {
 
   justify-content:
     center;
-
 }
 
 .tag {
-
   color:
     var(--gold-light);
 
@@ -1186,11 +1046,9 @@ nav a.active {
 
   margin-bottom:
     15px;
-
 }
 
 .feature-content h2 {
-
   font-size:
     34px;
 
@@ -1202,11 +1060,9 @@ nav a.active {
 
   font-weight:
     900;
-
 }
 
 .feature-content p {
-
   color:
     var(--muted);
 
@@ -1218,7 +1074,6 @@ nav a.active {
 
   margin-bottom:
     22px;
-
 }
 
 
@@ -1227,7 +1082,6 @@ nav a.active {
 ===================================================== */
 
 .article-overlay {
-
   position:
     fixed;
 
@@ -1250,26 +1104,23 @@ nav a.active {
     auto;
 
   padding:
-    20px 20px 60px;
-
+    15px 20px 60px;
 }
 
 .article-overlay.active {
-  display: block;
+  display:
+    block;
 }
 
 .article-container {
-
   max-width:
     1050px;
 
   margin:
     0 auto;
-
 }
 
 .article-top {
-
   display:
     flex;
 
@@ -1284,11 +1135,9 @@ nav a.active {
 
   margin-bottom:
     20px;
-
 }
 
 .article-brand {
-
   display:
     flex;
 
@@ -1306,11 +1155,9 @@ nav a.active {
 
   font-size:
     18px;
-
 }
 
 .article-close {
-
   width:
     46px;
 
@@ -1340,7 +1187,6 @@ nav a.active {
 
   place-items:
     center;
-
 }
 
 
@@ -1349,7 +1195,6 @@ nav a.active {
 ===================================================== */
 
 .article-image-wrapper {
-
   width:
     100%;
 
@@ -1367,11 +1212,9 @@ nav a.active {
 
   background:
     #0b1020;
-
 }
 
 .article-image {
-
   width:
     100%;
 
@@ -1383,7 +1226,6 @@ nav a.active {
 
   object-fit:
     cover;
-
 }
 
 
@@ -1392,7 +1234,6 @@ nav a.active {
 ===================================================== */
 
 .article-category {
-
   display:
     inline-flex;
 
@@ -1413,11 +1254,9 @@ nav a.active {
 
   margin-bottom:
     15px;
-
 }
 
 .article-title {
-
   font-size:
     clamp(30px, 5vw, 54px);
 
@@ -1432,11 +1271,9 @@ nav a.active {
 
   margin-bottom:
     18px;
-
 }
 
 .article-info {
-
   display:
     flex;
 
@@ -1454,11 +1291,9 @@ nav a.active {
 
   margin-bottom:
     25px;
-
 }
 
 .article-info span {
-
   padding:
     7px 12px;
 
@@ -1470,13 +1305,10 @@ nav a.active {
 
   border-radius:
     9px;
-
 }
 
 .article-summary-box {
-
   background:
-
     linear-gradient(
       145deg,
       rgba(255,255,255,0.055),
@@ -1499,11 +1331,9 @@ nav a.active {
 
   margin-bottom:
     25px;
-
 }
 
 .article-summary-label {
-
   color:
     var(--gold-light);
 
@@ -1515,11 +1345,9 @@ nav a.active {
 
   margin-bottom:
     17px;
-
 }
 
 .article-summary {
-
   color:
     #e9edf8;
 
@@ -1534,11 +1362,9 @@ nav a.active {
 
   white-space:
     pre-line;
-
 }
 
 .article-points {
-
   margin-top:
     22px;
 
@@ -1554,11 +1380,9 @@ nav a.active {
   border:
     1px solid
     rgba(79,140,255,0.12);
-
 }
 
 .article-points h3 {
-
   color:
     var(--gold-light);
 
@@ -1567,11 +1391,9 @@ nav a.active {
 
   margin-bottom:
     15px;
-
 }
 
 .article-points p {
-
   color:
     var(--muted);
 
@@ -1580,11 +1402,9 @@ nav a.active {
 
   font-size:
     14px;
-
 }
 
 .article-source {
-
   margin-top:
     25px;
 
@@ -1593,11 +1413,9 @@ nav a.active {
 
   border-top:
     1px solid var(--line);
-
 }
 
 .article-source-title {
-
   color:
     var(--muted);
 
@@ -1606,11 +1424,9 @@ nav a.active {
 
   margin-bottom:
     8px;
-
 }
 
 .article-source-name {
-
   color:
     white;
 
@@ -1622,11 +1438,9 @@ nav a.active {
 
   margin-bottom:
     18px;
-
 }
 
 .original-btn {
-
   display:
     inline-flex;
 
@@ -1660,18 +1474,14 @@ nav a.active {
 
   transition:
     0.2s;
-
 }
 
 .original-btn:hover {
-
   transform:
     translateY(-2px);
-
 }
 
 .article-note {
-
   color:
     var(--muted);
 
@@ -1683,7 +1493,6 @@ nav a.active {
 
   margin-top:
     15px;
-
 }
 
 
@@ -1692,7 +1501,6 @@ nav a.active {
 ===================================================== */
 
 .search-panel {
-
   display:
     none;
 
@@ -1713,7 +1521,6 @@ nav a.active {
 
   padding:
     100px 22px;
-
 }
 
 .search-panel.active {
@@ -1722,7 +1529,6 @@ nav a.active {
 }
 
 .search-box {
-
   max-width:
     750px;
 
@@ -1731,11 +1537,9 @@ nav a.active {
 
   position:
     relative;
-
 }
 
 .search-box input {
-
   width:
     100%;
 
@@ -1762,11 +1566,9 @@ nav a.active {
 
   font-family:
     inherit;
-
 }
 
 .close-search {
-
   position:
     absolute;
 
@@ -1796,21 +1598,25 @@ nav a.active {
 
   cursor:
     pointer;
+}
 
+html[dir="ltr"] .close-search {
+  left:
+    auto;
+
+  right:
+    12px;
 }
 
 .search-results {
-
   max-width:
     750px;
 
   margin:
     25px auto;
-
 }
 
 .search-result {
-
   padding:
     18px;
 
@@ -1828,18 +1634,14 @@ nav a.active {
 
   cursor:
     pointer;
-
 }
 
 .search-result:hover {
-
   border-color:
     rgba(217,180,91,0.35);
-
 }
 
 .search-result-title {
-
   font-size:
     15px;
 
@@ -1848,11 +1650,9 @@ nav a.active {
 
   line-height:
     1.7;
-
 }
 
 .search-result-meta {
-
   color:
     var(--muted);
 
@@ -1861,7 +1661,6 @@ nav a.active {
 
   margin-top:
     7px;
-
 }
 
 
@@ -1870,7 +1669,6 @@ nav a.active {
 ===================================================== */
 
 footer {
-
   border-top:
     1px solid var(--line);
 
@@ -1879,11 +1677,9 @@ footer {
 
   margin-top:
     20px;
-
 }
 
 .footer-inner {
-
   max-width:
     1250px;
 
@@ -1904,34 +1700,27 @@ footer {
 
   gap:
     20px;
-
 }
 
 .footer-copy {
-
   color:
     var(--muted);
 
   font-size:
     12px;
-
 }
 
 .footer-logo {
-
   font-size:
     20px;
 
   font-weight:
     900;
-
 }
 
 .footer-logo span {
-
   color:
     var(--gold-light);
-
 }
 
 
@@ -1940,7 +1729,6 @@ footer {
 ===================================================== */
 
 .empty-news {
-
   grid-column:
     1 / -1;
 
@@ -1961,11 +1749,9 @@ footer {
 
   color:
     var(--muted);
-
 }
 
 .empty-news strong {
-
   display:
     block;
 
@@ -1977,7 +1763,39 @@ footer {
 
   margin-bottom:
     8px;
+}
 
+
+/* =====================================================
+   LTR ADJUSTMENTS
+===================================================== */
+
+html[dir="ltr"] body {
+  font-family:
+    Arial,
+    "Cairo",
+    sans-serif;
+}
+
+html[dir="ltr"] .trend-icon {
+  left:
+    auto;
+
+  right:
+    18px;
+}
+
+html[dir="ltr"] .article-summary-box {
+  border-right:
+    1px solid var(--line);
+
+  border-left:
+    3px solid var(--gold);
+}
+
+html[dir="ltr"] .section-header {
+  text-align:
+    left;
 }
 
 
@@ -1988,40 +1806,37 @@ footer {
 @media (max-width: 950px) {
 
   nav {
-    display: none;
+    display:
+      none;
   }
 
   .mobile-menu {
-    display: block;
+    display:
+      block;
   }
 
   .hero {
-
     grid-template-columns:
       1fr;
 
     padding-top:
       55px;
-
   }
 
   .trend-orb {
-    display: none;
+    display:
+      none;
   }
 
   .trend-grid,
   .category-grid {
-
     grid-template-columns:
       repeat(2, 1fr);
-
   }
 
   .feature {
-
     grid-template-columns:
       1fr;
-
   }
 
 }
@@ -2029,21 +1844,50 @@ footer {
 @media (max-width: 600px) {
 
   .header-inner {
-    height: 68px;
+    height:
+      68px;
+
+    padding:
+      0 12px;
+
+    gap:
+      8px;
   }
 
   .logo {
-    font-size: 22px;
+    font-size:
+      22px;
   }
 
   .logo-mark {
-
     width:
       34px;
 
     height:
       34px;
+  }
 
+  .language-btn {
+    min-width:
+      72px;
+
+    height:
+      40px;
+
+    padding:
+      0 8px;
+
+    font-size:
+      11px;
+  }
+
+  .search-btn,
+  .mobile-menu {
+    width:
+      40px;
+
+    height:
+      40px;
   }
 
   .hero {
@@ -2052,13 +1896,11 @@ footer {
   }
 
   .hero h1 {
-
     font-size:
       45px;
 
     letter-spacing:
       -1px;
-
   }
 
   .hero p {
@@ -2068,107 +1910,79 @@ footer {
 
   .trend-grid,
   .category-grid {
-
     grid-template-columns:
       1fr;
-
   }
 
   .trend-image {
-
     height:
       205px;
-
   }
 
   .trend-card {
-
     min-height:
       390px;
-
   }
 
   .section {
-
     padding-bottom:
       45px;
-
   }
 
   .section-header {
-
     align-items:
       flex-start;
-
   }
 
   .feature-content {
-
     padding:
       28px;
-
   }
 
   .feature-content h2 {
-
     font-size:
       27px;
-
   }
 
   .footer-inner {
-
     flex-direction:
       column;
 
     align-items:
       flex-start;
-
   }
 
   .article-overlay {
-
     padding:
       15px 14px 40px;
-
   }
 
   .article-image-wrapper {
-
     margin-bottom:
       20px;
-
   }
 
   .article-image {
-
     max-height:
       330px;
-
   }
 
   .article-summary-box {
-
     padding:
       22px;
-
   }
 
   .article-summary {
-
     font-size:
       16px;
 
     line-height:
       2;
-
   }
 
   .article-title {
-
     font-size:
       30px;
-
   }
 
 }
@@ -2179,17 +1993,13 @@ footer {
 ===================================================== */
 
 .trend-image.image-error {
-
   display:
     none;
-
 }
 
 .article-image.image-error {
-
   display:
     none;
-
 }
 
 </style>
@@ -2232,6 +2042,7 @@ NOWNEX
   href="#"
   class="active"
   onclick="goHome(); return false;"
+  data-i18n="navHome"
 >
 الرئيسية
 </a>
@@ -2239,6 +2050,7 @@ NOWNEX
 <a
   href="#trending"
   onclick="scrollToTrending(); return false;"
+  data-i18n="navTrending"
 >
 الترند
 </a>
@@ -2246,6 +2058,7 @@ NOWNEX
 <a
   href="#categories"
   onclick="scrollToCategories(); return false;"
+  data-i18n="navCategories"
 >
 الأقسام
 </a>
@@ -2253,6 +2066,7 @@ NOWNEX
 <a
   href="#about"
   onclick="scrollToAbout(); return false;"
+  data-i18n="navAbout"
 >
 حول NOWNEX
 </a>
@@ -2262,6 +2076,19 @@ NOWNEX
 
 <div class="header-actions">
 
+
+<!-- LANGUAGE -->
+
+<button
+  class="language-btn"
+  id="languageBtn"
+  onclick="toggleLanguage()"
+  aria-label="تغيير اللغة"
+>
+🇬🇧 EN
+</button>
+
+
 <button
   class="search-btn"
   onclick="openSearch()"
@@ -2270,6 +2097,7 @@ NOWNEX
 🔍
 </button>
 
+
 <button
   class="mobile-menu"
   onclick="scrollToCategories()"
@@ -2277,6 +2105,7 @@ NOWNEX
 >
 ☰
 </button>
+
 
 </div>
 
@@ -2293,9 +2122,7 @@ NOWNEX
 <main>
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+<!-- HERO -->
 
 <section class="hero">
 
@@ -2307,23 +2134,27 @@ NOWNEX
 
 <span class="live-dot"></span>
 
+<span data-i18n="liveTrend">
 مباشر — الترند الآن
+</span>
 
 </div>
 
 
 <h1>
 
+<span data-i18n="heroNow">
 ما يحدث الآن.
+</span>
 
-<span>
+<span data-i18n="heroNext">
 ما القادم.
 </span>
 
 </h1>
 
 
-<p>
+<p data-i18n="heroDescription">
 
 اكتشف أهم الأخبار والترندات والتقنيات
 والأفكار التي تشكل العالم الآن —
@@ -2338,6 +2169,7 @@ NOWNEX
 <button
   class="primary-btn"
   onclick="scrollToTrending()"
+  data-i18n="exploreTrend"
 >
 
 🔥 استكشف الترند
@@ -2348,6 +2180,7 @@ NOWNEX
 <button
   class="secondary-btn"
   onclick="scrollToCategories()"
+  data-i18n="exploreCategories"
 >
 
 استكشف الأقسام
@@ -2393,16 +2226,21 @@ NOWNEX
 
 🔥
 
-<span>
+<span data-i18n="mostTrending">
 الأكثر تداولاً
 </span>
 
+<span data-i18n="nowWord">
 الآن
+</span>
 
 </h2>
 
 
-<p class="section-description">
+<p
+  class="section-description"
+  data-i18n="trendingDescription"
+>
 
 أحدث الأخبار والقصص من حول العالم،
 يتم تحديثها تلقائياً.
@@ -2417,6 +2255,7 @@ NOWNEX
   href="#trending"
   class="view-all"
   onclick="showAllNews(); return false;"
+  data-i18n="showAll"
 >
 
 عرض الكل ←
@@ -2438,6 +2277,7 @@ NOWNEX
 <button
   class="clear-filter"
   onclick="clearCategoryFilter()"
+  data-i18n="showAllShort"
 >
 
 عرض الكل
@@ -2501,7 +2341,9 @@ NOWNEX · تحديث مباشر
 
 <h2 class="section-title">
 
+<span data-i18n="exploreWord">
 استكشف
+</span>
 
 <span>
 NOWNEX
@@ -2510,7 +2352,10 @@ NOWNEX
 </h2>
 
 
-<p class="section-description">
+<p
+  class="section-description"
+  data-i18n="categoriesDescription"
+>
 
 كل ما يحدث الآن، مرتب حسب اهتماماتك.
 
@@ -2525,8 +2370,6 @@ NOWNEX
 <div class="category-grid">
 
 
-<!-- TRENDING -->
-
 <div
   class="category"
   data-category="Trending"
@@ -2537,18 +2380,16 @@ NOWNEX
 🔥
 </div>
 
-<h3>
+<h3 data-i18n="catTrending">
 الترند الآن
 </h3>
 
-<p>
+<p data-i18n="catTrendingDesc">
 اكتشف أسرع المواضيع انتشاراً حول العالم.
 </p>
 
 </div>
 
-
-<!-- AI -->
 
 <div
   class="category"
@@ -2560,18 +2401,16 @@ NOWNEX
 🤖
 </div>
 
-<h3>
+<h3 data-i18n="catAI">
 الذكاء الاصطناعي والمستقبل
 </h3>
 
-<p>
+<p data-i18n="catAIDesc">
 الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.
 </p>
 
 </div>
 
-
-<!-- TECHNOLOGY -->
 
 <div
   class="category"
@@ -2583,18 +2422,16 @@ NOWNEX
 📱
 </div>
 
-<h3>
+<h3 data-i18n="catTechnology">
 التكنولوجيا
 </h3>
 
-<p>
+<p data-i18n="catTechnologyDesc">
 التطبيقات والهواتف والأجهزة والابتكارات الرقمية.
 </p>
 
 </div>
 
-
-<!-- CARS -->
 
 <div
   class="category"
@@ -2606,18 +2443,16 @@ NOWNEX
 🚗
 </div>
 
-<h3>
+<h3 data-i18n="catCars">
 السيارات
 </h3>
 
-<p>
+<p data-i18n="catCarsDesc">
 أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.
 </p>
 
 </div>
 
-
-<!-- ENTERTAINMENT -->
 
 <div
   class="category"
@@ -2629,18 +2464,16 @@ NOWNEX
 🎬
 </div>
 
-<h3>
+<h3 data-i18n="catEntertainment">
 الترفيه
 </h3>
 
-<p>
+<p data-i18n="catEntertainmentDesc">
 الأفلام والمسلسلات والألعاب وثقافة الإنترنت.
 </p>
 
 </div>
 
-
-<!-- WORLD -->
 
 <div
   class="category"
@@ -2652,18 +2485,16 @@ NOWNEX
 🌎
 </div>
 
-<h3>
+<h3 data-i18n="catWorld">
 العالم
 </h3>
 
-<p>
+<p data-i18n="catWorldDesc">
 أهم الأحداث والقصص التي تشكل العالم.
 </p>
 
 </div>
 
-
-<!-- FACTS -->
 
 <div
   class="category"
@@ -2675,18 +2506,16 @@ NOWNEX
 🧠
 </div>
 
-<h3>
+<h3 data-i18n="catFacts">
 معلومات وحقائق
 </h3>
 
-<p>
+<p data-i18n="catFactsDesc">
 حقائق مثيرة وعلوم وأشياء قد لا تعرفها.
 </p>
 
 </div>
 
-
-<!-- PRODUCTS -->
 
 <div
   class="category"
@@ -2698,11 +2527,11 @@ NOWNEX
 🛍️
 </div>
 
-<h3>
+<h3 data-i18n="catProducts">
 المنتجات الرائجة
 </h3>
 
-<p>
+<p data-i18n="catProductsDesc">
 المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.
 </p>
 
@@ -2732,12 +2561,15 @@ NOWNEX
 <div class="feature-content">
 
 
-<div class="tag">
+<div
+  class="tag"
+  data-i18n="featureTag"
+>
 الذكاء الاصطناعي والمستقبل
 </div>
 
 
-<h2>
+<h2 data-i18n="featureTitle">
 
 المستقبل يتحرك
 أسرع من أي وقت مضى.
@@ -2745,7 +2577,7 @@ NOWNEX
 </h2>
 
 
-<p>
+<p data-i18n="featureDescription">
 
 يجمع NOWNEX أحدث التطورات
 في الذكاء الاصطناعي والتكنولوجيا
@@ -2758,6 +2590,7 @@ NOWNEX
   class="primary-btn"
   style="width:max-content;"
   onclick="filterByCategory('AI', null)"
+  data-i18n="featureButton"
 >
 
 اكتشف عالم الذكاء الاصطناعي ←
@@ -2799,7 +2632,10 @@ OWNEX
 </div>
 
 
-<div class="footer-copy">
+<div
+  class="footer-copy"
+  data-i18n="footerTagline"
+>
 
 ما يحدث الآن. ما القادم.
 
@@ -2809,7 +2645,10 @@ OWNEX
 </div>
 
 
-<div class="footer-copy">
+<div
+  class="footer-copy"
+  data-i18n="copyright"
+>
 
 © 2026 NOWNEX — جميع الحقوق محفوظة
 
@@ -2817,7 +2656,6 @@ OWNEX
 
 
 </div>
-
 
 </footer>
 
@@ -2867,7 +2705,6 @@ NOWNEX
 
 
 <div id="articleContent">
-
 </div>
 
 
@@ -2894,6 +2731,7 @@ NOWNEX
   placeholder="ابحث في أخبار NOWNEX..."
   id="searchInput"
   oninput="performSearch()"
+  data-i18n-placeholder="searchPlaceholder"
 >
 
 
@@ -2932,6 +2770,524 @@ NOWNEX
 let allNews = [];
 
 let currentCategory = null;
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+let currentLanguage =
+  localStorage.getItem("nownex-language") ||
+  "ar";
+
+
+const translations = {
+
+  ar: {
+
+    navHome:
+      "الرئيسية",
+
+    navTrending:
+      "الترند",
+
+    navCategories:
+      "الأقسام",
+
+    navAbout:
+      "حول NOWNEX",
+
+    liveTrend:
+      "مباشر — الترند الآن",
+
+    heroNow:
+      "ما يحدث الآن.",
+
+    heroNext:
+      "ما القادم.",
+
+    heroDescription:
+      "اكتشف أهم الأخبار والترندات والتقنيات والأفكار التي تشكل العالم الآن — كلها في مكان واحد.",
+
+    exploreTrend:
+      "🔥 استكشف الترند",
+
+    exploreCategories:
+      "استكشف الأقسام",
+
+    mostTrending:
+      "الأكثر تداولاً",
+
+    nowWord:
+      "الآن",
+
+    trendingDescription:
+      "أحدث الأخبار والقصص من حول العالم، يتم تحديثها تلقائياً.",
+
+    showAll:
+      "عرض الكل ←",
+
+    showAllShort:
+      "عرض الكل",
+
+    exploreWord:
+      "استكشف",
+
+    categoriesDescription:
+      "كل ما يحدث الآن، مرتب حسب اهتماماتك.",
+
+    catTrending:
+      "الترند الآن",
+
+    catTrendingDesc:
+      "اكتشف أسرع المواضيع انتشاراً حول العالم.",
+
+    catAI:
+      "الذكاء الاصطناعي والمستقبل",
+
+    catAIDesc:
+      "الذكاء الاصطناعي والروبوتات وتكنولوجيا المستقبل.",
+
+    catTechnology:
+      "التكنولوجيا",
+
+    catTechnologyDesc:
+      "التطبيقات والهواتف والأجهزة والابتكارات الرقمية.",
+
+    catCars:
+      "السيارات",
+
+    catCarsDesc:
+      "أحدث السيارات والمركبات الكهربائية وتكنولوجيا السيارات.",
+
+    catEntertainment:
+      "الترفيه",
+
+    catEntertainmentDesc:
+      "الأفلام والمسلسلات والألعاب وثقافة الإنترنت.",
+
+    catWorld:
+      "العالم",
+
+    catWorldDesc:
+      "أهم الأحداث والقصص التي تشكل العالم.",
+
+    catFacts:
+      "معلومات وحقائق",
+
+    catFactsDesc:
+      "حقائق مثيرة وعلوم وأشياء قد لا تعرفها.",
+
+    catProducts:
+      "المنتجات الرائجة",
+
+    catProductsDesc:
+      "المنتجات والأجهزة التي تحصل على اهتمام كبير الآن.",
+
+    featureTag:
+      "الذكاء الاصطناعي والمستقبل",
+
+    featureTitle:
+      "المستقبل يتحرك أسرع من أي وقت مضى.",
+
+    featureDescription:
+      "يجمع NOWNEX أحدث التطورات في الذكاء الاصطناعي والتكنولوجيا والأفكار التي تشكل عالم الغد.",
+
+    featureButton:
+      "اكتشف عالم الذكاء الاصطناعي ←",
+
+    footerTagline:
+      "ما يحدث الآن. ما القادم.",
+
+    copyright:
+      "© 2026 NOWNEX — جميع الحقوق محفوظة",
+
+    searchPlaceholder:
+      "ابحث في أخبار NOWNEX...",
+
+    loading:
+      "جارٍ تحميل آخر الأخبار...",
+
+    loadingMeta:
+      "NOWNEX · تحديث مباشر",
+
+    readArticle:
+      "اقرأ الخبر ←",
+
+    trendingLabel:
+      "الأكثر تداولاً",
+
+    source:
+      "المصدر:",
+
+    summary:
+      "📰 ملخص NOWNEX",
+
+    meaning:
+      "💡 ما الذي يعنيه الخبر؟",
+
+    meaningText:
+      "يقدم NOWNEX هذا الخبر في صورة مختصرة باللغة العربية لتسهيل فهم الحدث وأهميته، مع الحفاظ على الإشارة إلى المصدر الأصلي.",
+
+    originalSource:
+      "المصدر الأصلي",
+
+    readOriginal:
+      "قراءة الخبر الأصلي ↗",
+
+    unavailableLink:
+      "رابط المصدر الأصلي غير متاح حالياً.",
+
+    articleNote:
+      "NOWNEX يعرض ملخصاً عربياً للخبر مع الإشارة إلى مصدره الأصلي. للاطلاع على النص الكامل، يرجى زيارة المصدر.",
+
+    noNews:
+      "لا توجد أخبار حالياً",
+
+    noNewsText:
+      "لا توجد أخبار متاحة في هذا القسم.",
+
+    searchNoResults:
+      "لم نجد أخباراً مطابقة لبحثك.",
+
+    searchTry:
+      "جرّب كلمة أخرى.",
+
+    categoryView:
+      "عرض قسم: ",
+
+    languageButton:
+      "🇬🇧 EN"
+
+  },
+
+
+  en: {
+
+    navHome:
+      "Home",
+
+    navTrending:
+      "Trending",
+
+    navCategories:
+      "Categories",
+
+    navAbout:
+      "About NOWNEX",
+
+    liveTrend:
+      "LIVE — Trending Now",
+
+    heroNow:
+      "What's happening now.",
+
+    heroNext:
+      "What's next.",
+
+    heroDescription:
+      "Discover the latest news, trends, technologies and ideas shaping the world — all in one place.",
+
+    exploreTrend:
+      "🔥 Explore Trends",
+
+    exploreCategories:
+      "Explore Categories",
+
+    mostTrending:
+      "Trending",
+
+    nowWord:
+      "Now",
+
+    trendingDescription:
+      "The latest stories and news from around the world, updated automatically.",
+
+    showAll:
+      "View All →",
+
+    showAllShort:
+      "View All",
+
+    exploreWord:
+      "Explore",
+
+    categoriesDescription:
+      "Everything happening now, organized around your interests.",
+
+    catTrending:
+      "Trending Now",
+
+    catTrendingDesc:
+      "Discover the fastest-growing topics around the world.",
+
+    catAI:
+      "AI & Future",
+
+    catAIDesc:
+      "Artificial intelligence, robotics and future technology.",
+
+    catTechnology:
+      "Technology",
+
+    catTechnologyDesc:
+      "Apps, phones, devices and digital innovations.",
+
+    catCars:
+      "Cars",
+
+    catCarsDesc:
+      "Latest cars, electric vehicles and automotive technology.",
+
+    catEntertainment:
+      "Entertainment",
+
+    catEntertainmentDesc:
+      "Movies, series, games and internet culture.",
+
+    catWorld:
+      "World",
+
+    catWorldDesc:
+      "Major events and stories shaping the world.",
+
+    catFacts:
+      "Facts & Knowledge",
+
+    catFactsDesc:
+      "Interesting facts, science and things you may not know.",
+
+    catProducts:
+      "Trending Products",
+
+    catProductsDesc:
+      "Products and devices getting major attention right now.",
+
+    featureTag:
+      "AI & Future",
+
+    featureTitle:
+      "The future is moving faster than ever.",
+
+    featureDescription:
+      "NOWNEX brings together the latest developments in AI, technology and ideas shaping tomorrow's world.",
+
+    featureButton:
+      "Explore the AI world →",
+
+    footerTagline:
+      "What's happening now. What's next.",
+
+    copyright:
+      "© 2026 NOWNEX — All rights reserved",
+
+    searchPlaceholder:
+      "Search NOWNEX news...",
+
+    loading:
+      "Loading the latest news...",
+
+    loadingMeta:
+      "NOWNEX · Live update",
+
+    readArticle:
+      "Read article →",
+
+    trendingLabel:
+      "Trending",
+
+    source:
+      "Source:",
+
+    summary:
+      "📰 NOWNEX Summary",
+
+    meaning:
+      "💡 What does this mean?",
+
+    meaningText:
+      "NOWNEX presents this story in a concise format to make the event and its significance easier to understand, while keeping the original source clearly referenced.",
+
+    originalSource:
+      "Original Source",
+
+    readOriginal:
+      "Read Original ↗",
+
+    unavailableLink:
+      "The original source link is currently unavailable.",
+
+    articleNote:
+      "NOWNEX provides a summary of the story and references the original source. Visit the source for the full article.",
+
+    noNews:
+      "No news available",
+
+    noNewsText:
+      "There are currently no news articles available in this category.",
+
+    searchNoResults:
+      "No matching news was found.",
+
+    searchTry:
+      "Try another keyword.",
+
+    categoryView:
+      "Category: ",
+
+    languageButton:
+      "🇩🇿 AR"
+
+  }
+
+};
+
+
+function t(key) {
+
+  return (
+    translations[currentLanguage][key] ||
+    translations.ar[key] ||
+    key
+  );
+
+}
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyLanguage() {
+
+  const html =
+    document.documentElement;
+
+  html.lang =
+    currentLanguage === "ar"
+      ? "ar"
+      : "en";
+
+  html.dir =
+    currentLanguage === "ar"
+      ? "rtl"
+      : "ltr";
+
+
+  document
+    .querySelectorAll("[data-i18n]")
+    .forEach(function(element) {
+
+      const key =
+        element.getAttribute(
+          "data-i18n"
+        );
+
+      if (
+        translations[currentLanguage][key]
+      ) {
+
+        element.textContent =
+          translations[currentLanguage][key];
+
+      }
+
+    });
+
+
+  document
+    .querySelectorAll("[data-i18n-placeholder]")
+    .forEach(function(element) {
+
+      const key =
+        element.getAttribute(
+          "data-i18n-placeholder"
+        );
+
+      if (
+        translations[currentLanguage][key]
+      ) {
+
+        element.placeholder =
+          translations[currentLanguage][key];
+
+      }
+
+    });
+
+
+  document
+    .getElementById("languageBtn")
+    .textContent =
+      t("languageButton");
+
+
+  /*
+    تحديث نص الفلتر إذا كان قسم محدد.
+  */
+
+  if (currentCategory) {
+
+    document
+      .getElementById(
+        "categoryFilterText"
+      )
+      .textContent =
+        t("categoryView") +
+        translateCategory(
+          currentCategory
+        );
+
+  }
+
+
+  /*
+    إعادة رسم الأخبار حتى تتغير
+    أزرار قراءة الخبر والبيانات الثابتة.
+  */
+
+  if (allNews.length) {
+
+    if (currentCategory) {
+
+      renderNews(
+        getFilteredNews(
+          currentCategory
+        )
+      );
+
+    }
+
+    else {
+
+      renderNews(
+        allNews
+      );
+
+    }
+
+  }
+
+}
+
+
+function toggleLanguage() {
+
+  currentLanguage =
+    currentLanguage === "ar"
+      ? "en"
+      : "ar";
+
+
+  localStorage.setItem(
+    "nownex-language",
+    currentLanguage
+  );
+
+
+  applyLanguage();
+
+}
 
 
 /* =====================================================
@@ -2982,6 +3338,7 @@ function performSearch() {
       .trim()
       .toLowerCase();
 
+
   if (!query) {
 
     results.innerHTML = "";
@@ -3010,6 +3367,7 @@ function performSearch() {
         String(item.source || "")
           .toLowerCase();
 
+
       return (
         title.includes(query) ||
         summary.includes(query) ||
@@ -3028,13 +3386,17 @@ function performSearch() {
 
         <div class="search-result-title">
 
-          لم نجد أخباراً مطابقة لبحثك.
+          ${escapeHTML(
+            t("searchNoResults")
+          )}
 
         </div>
 
         <div class="search-result-meta">
 
-          جرّب كلمة أخرى.
+          ${escapeHTML(
+            t("searchTry")
+          )}
 
         </div>
 
@@ -3055,10 +3417,13 @@ function performSearch() {
     .forEach(function(item) {
 
       const result =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
       result.className =
         "search-result";
+
 
       result.innerHTML = `
 
@@ -3074,14 +3439,16 @@ function performSearch() {
 
           ${escapeHTML(
             translateCategory(
-              item.category || "Trending"
+              item.category ||
+              "Trending"
             )
           )}
 
           ·
 
           ${escapeHTML(
-            item.source || "NOWNEX"
+            item.source ||
+            "NOWNEX"
           )}
 
         </div>
@@ -3098,7 +3465,9 @@ function performSearch() {
       };
 
 
-      results.appendChild(result);
+      results.appendChild(
+        result
+      );
 
     });
 
@@ -3174,18 +3543,17 @@ function filterByCategory(
   clickedElement
 ) {
 
-  currentCategory = category;
+  currentCategory =
+    category;
 
-
-  /* ---------------------------------------------
-     Active category
-  --------------------------------------------- */
 
   document
     .querySelectorAll(".category")
     .forEach(function(card) {
 
-      card.classList.remove("active");
+      card.classList.remove(
+        "active"
+      );
 
     });
 
@@ -3207,6 +3575,7 @@ function filterByCategory(
         '"]'
       );
 
+
     if (target) {
 
       target.classList.add(
@@ -3217,10 +3586,6 @@ function filterByCategory(
 
   }
 
-
-  /* ---------------------------------------------
-     Filter message
-  --------------------------------------------- */
 
   const filterBar =
     document.getElementById(
@@ -3239,30 +3604,31 @@ function filterByCategory(
 
 
   filterText.textContent =
-    "عرض قسم: " +
-    translateCategory(category);
+    t("categoryView") +
+    translateCategory(
+      category
+    );
 
-
-  /* ---------------------------------------------
-     Render
-  --------------------------------------------- */
 
   renderNews(
-    getFilteredNews(category)
+    getFilteredNews(
+      category
+    )
   );
 
-
-  /* ---------------------------------------------
-     Scroll to news
-  --------------------------------------------- */
 
   setTimeout(function() {
 
     document
       .getElementById("trending")
       .scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+
+        behavior:
+          "smooth",
+
+        block:
+          "start"
+
       });
 
   }, 80);
@@ -3274,7 +3640,9 @@ function filterByCategory(
    GET FILTERED NEWS
 ===================================================== */
 
-function getFilteredNews(category) {
+function getFilteredNews(
+  category
+) {
 
   if (!category) {
 
@@ -3292,26 +3660,35 @@ function getFilteredNews(category) {
 
   if (category === "Products") {
 
-    return allNews.filter(function(item) {
+    return allNews.filter(
+      function(item) {
 
-      return (
-        item.category === "Products" ||
-        item.category === "Shopping"
-      );
+        return (
+          item.category ===
+            "Products" ||
 
-    });
+          item.category ===
+            "Shopping"
+        );
+
+      }
+    );
 
   }
 
 
-  return allNews.filter(function(item) {
+  return allNews.filter(
+    function(item) {
 
-    return String(
-      item.category || ""
-    ).toLowerCase() ===
-    String(category).toLowerCase();
+      return String(
+        item.category || ""
+      ).toLowerCase() ===
+      String(
+        category
+      ).toLowerCase();
 
-  });
+    }
+  );
 
 }
 
@@ -3322,7 +3699,8 @@ function getFilteredNews(category) {
 
 function clearCategoryFilter() {
 
-  currentCategory = null;
+  currentCategory =
+    null;
 
 
   document
@@ -3365,14 +3743,17 @@ function showAllNews() {
 
 
 /* =====================================================
-   ESCAPE KEY
+   ESCAPE
 ===================================================== */
 
 document.addEventListener(
   "keydown",
   function(event) {
 
-    if (event.key === "Escape") {
+    if (
+      event.key ===
+      "Escape"
+    ) {
 
       closeSearch();
 
@@ -3392,15 +3773,30 @@ function escapeHTML(value) {
 
   return String(value || "")
 
-    .replace(/&/g, "&amp;")
+    .replace(
+      /&/g,
+      "&amp;"
+    )
 
-    .replace(/</g, "&lt;")
+    .replace(
+      /</g,
+      "&lt;"
+    )
 
-    .replace(/>/g, "&gt;")
+    .replace(
+      />/g,
+      "&gt;"
+    )
 
-    .replace(/"/g, "&quot;")
+    .replace(
+      /"/g,
+      "&quot;"
+    )
 
-    .replace(/'/g, "&#039;");
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
@@ -3411,14 +3807,19 @@ function safeURL(value) {
 
     const url =
       new URL(
-        String(value || "#"),
+        String(
+          value || "#"
+        ),
         window.location.href
       );
 
 
     if (
-      url.protocol === "http:" ||
-      url.protocol === "https:"
+      url.protocol ===
+        "http:" ||
+
+      url.protocol ===
+        "https:"
     ) {
 
       return url.href;
@@ -3429,6 +3830,7 @@ function safeURL(value) {
 
   catch (error) {}
 
+
   return "#";
 
 }
@@ -3438,34 +3840,49 @@ function safeURL(value) {
    NEWS ICONS
 ===================================================== */
 
-function getNewsIcon(category) {
+function getNewsIcon(
+  category
+) {
 
   const icons = {
 
-    "World": "🌍",
+    World:
+      "🌍",
 
-    "Technology": "💻",
+    Technology:
+      "💻",
 
-    "Entertainment": "🎬",
+    Entertainment:
+      "🎬",
 
-    "AI": "🤖",
+    AI:
+      "🤖",
 
-    "Cars": "🚗",
+    Cars:
+      "🚗",
 
-    "Facts": "🧠",
+    Facts:
+      "🧠",
 
-    "Science": "🔬",
+    Science:
+      "🔬",
 
-    "Sports": "⚽",
+    Sports:
+      "⚽",
 
-    "Trending": "🔥",
+    Trending:
+      "🔥",
 
-    "Products": "🛍️"
+    Products:
+      "🛍️"
 
   };
 
 
-  return icons[category] || "🔥";
+  return (
+    icons[category] ||
+    "🔥"
+  );
 
 }
 
@@ -3474,31 +3891,95 @@ function getNewsIcon(category) {
    CATEGORY TRANSLATION
 ===================================================== */
 
-function translateCategory(category) {
+function translateCategory(
+  category
+) {
+
+  if (
+    currentLanguage ===
+    "en"
+  ) {
+
+    const categories = {
+
+      World:
+        "World",
+
+      Technology:
+        "Technology",
+
+      Entertainment:
+        "Entertainment",
+
+      AI:
+        "AI & Future",
+
+      Cars:
+        "Cars",
+
+      Facts:
+        "Facts",
+
+      Science:
+        "Science",
+
+      Sports:
+        "Sports",
+
+      Trending:
+        "Trending",
+
+      Products:
+        "Trending Products",
+
+      Shopping:
+        "Trending Products"
+
+    };
+
+
+    return (
+      categories[category] ||
+      category
+    );
+
+  }
+
 
   const categories = {
 
-    "World": "العالم",
+    World:
+      "العالم",
 
-    "Technology": "التكنولوجيا",
+    Technology:
+      "التكنولوجيا",
 
-    "Entertainment": "الترفيه",
+    Entertainment:
+      "الترفيه",
 
-    "AI": "الذكاء الاصطناعي",
+    AI:
+      "الذكاء الاصطناعي",
 
-    "Cars": "السيارات",
+    Cars:
+      "السيارات",
 
-    "Facts": "حقائق",
+    Facts:
+      "حقائق",
 
-    "Science": "علوم",
+    Science:
+      "علوم",
 
-    "Sports": "رياضة",
+    Sports:
+      "رياضة",
 
-    "Trending": "الترند",
+    Trending:
+      "الترند",
 
-    "Products": "المنتجات الرائجة",
+    Products:
+      "المنتجات الرائجة",
 
-    "Shopping": "المنتجات الرائجة"
+    Shopping:
+      "المنتجات الرائجة"
 
   };
 
@@ -3515,7 +3996,9 @@ function translateCategory(category) {
    OPEN ARTICLE
 ===================================================== */
 
-function openArticle(item) {
+function openArticle(
+  item
+) {
 
   if (!item) {
     return;
@@ -3584,7 +4067,9 @@ function openArticle(item) {
   let dateText = "";
 
 
-  if (item.published) {
+  if (
+    item.published
+  ) {
 
     dateText =
       escapeHTML(
@@ -3593,7 +4078,9 @@ function openArticle(item) {
 
   }
 
-  else if (item.date) {
+  else if (
+    item.date
+  ) {
 
     dateText =
       escapeHTML(
@@ -3607,10 +4094,13 @@ function openArticle(item) {
      IMAGE
   ===================================================== */
 
-  let articleImageHTML = "";
+  let articleImageHTML =
+    "";
 
 
-  if (item.image) {
+  if (
+    item.image
+  ) {
 
     const imageURL =
       safeURL(
@@ -3618,7 +4108,9 @@ function openArticle(item) {
       );
 
 
-    if (imageURL !== "#") {
+    if (
+      imageURL !== "#"
+    ) {
 
       articleImageHTML = `
 
@@ -3643,7 +4135,6 @@ function openArticle(item) {
 
   content.innerHTML = `
 
-
     ${articleImageHTML}
 
 
@@ -3667,7 +4158,10 @@ function openArticle(item) {
 
       <span>
 
-        المصدر:
+        ${escapeHTML(
+          t("source")
+        )}
+
         ${source}
 
       </span>
@@ -3690,7 +4184,9 @@ function openArticle(item) {
 
       <div class="article-summary-label">
 
-        📰 ملخص NOWNEX
+        ${escapeHTML(
+          t("summary")
+        )}
 
       </div>
 
@@ -3705,15 +4201,19 @@ function openArticle(item) {
       <div class="article-points">
 
         <h3>
-          💡 ما الذي يعنيه الخبر؟
+
+          ${escapeHTML(
+            t("meaning")
+          )}
+
         </h3>
+
 
         <p>
 
-          يقدم NOWNEX هذا الخبر في صورة
-          مختصرة باللغة العربية لتسهيل فهم
-          الحدث وأهميته، مع الحفاظ على
-          الإشارة إلى المصدر الأصلي.
+          ${escapeHTML(
+            t("meaningText")
+          )}
 
         </p>
 
@@ -3726,7 +4226,9 @@ function openArticle(item) {
 
       <div class="article-source-title">
 
-        المصدر الأصلي
+        ${escapeHTML(
+          t("originalSource")
+        )}
 
       </div>
 
@@ -3740,7 +4242,9 @@ function openArticle(item) {
 
       ${
         originalLink !== "#"
+
         ? `
+
           <a
             class="original-btn"
             href="${originalLink}"
@@ -3748,28 +4252,35 @@ function openArticle(item) {
             rel="noopener noreferrer"
           >
 
-            قراءة الخبر الأصلي
-            ↗
+            ${escapeHTML(
+              t("readOriginal")
+            )}
 
           </a>
+
         `
+
         :
+
         `
+
           <div class="article-note">
 
-            رابط المصدر الأصلي غير متاح حالياً.
+            ${escapeHTML(
+              t("unavailableLink")
+            )}
 
           </div>
+
         `
       }
 
 
       <div class="article-note">
 
-        NOWNEX يعرض ملخصاً عربياً للخبر
-        مع الإشارة إلى مصدره الأصلي.
-        للاطلاع على النص الكامل، يرجى
-        زيارة المصدر.
+        ${escapeHTML(
+          t("articleNote")
+        )}
 
       </div>
 
@@ -3816,10 +4327,12 @@ function closeArticle() {
 /* =====================================================
    RENDER NEWS
    IMPORTANT:
-   الصور + الأقسام
+   الصور + الأقسام محفوظة
 ===================================================== */
 
-function renderNews(news) {
+function renderNews(
+  news
+) {
 
   const newsGrid =
     document.getElementById(
@@ -3832,10 +4345,14 @@ function renderNews(news) {
   }
 
 
-  newsGrid.innerHTML = "";
+  newsGrid.innerHTML =
+    "";
 
 
-  if (!news || !news.length) {
+  if (
+    !news ||
+    !news.length
+  ) {
 
     const categoryName =
       currentCategory
@@ -3850,15 +4367,25 @@ function renderNews(news) {
       <div class="empty-news">
 
         <strong>
-          لا توجد أخبار حالياً
+
+          ${escapeHTML(
+            t("noNews")
+          )}
+
         </strong>
 
-        لا توجد أخبار متاحة في
+        ${escapeHTML(
+          t("noNewsText")
+        )}
+
         ${
           categoryName
-          ? "قسم " + categoryName
-          : "هذا القسم"
-        }.
+          ? " " +
+            escapeHTML(
+              categoryName
+            )
+          : ""
+        }
 
       </div>
 
@@ -3869,58 +4396,78 @@ function renderNews(news) {
   }
 
 
-  /*
-    ترتيب الأخبار:
-
-    1. Technology
-    2. Cars
-    3. AI
-    4. بقية الأخبار
-
-    فقط في العرض العام.
-    عند اختيار قسم، نعرض القسم نفسه.
-  */
-
   let displayNews =
     news.slice();
 
 
-  if (!currentCategory) {
+  /*
+    الترتيب الحالي محفوظ:
+    Technology
+    Cars
+    AI
+    بقية الأخبار
+  */
+
+  if (
+    !currentCategory
+  ) {
 
     const technology =
-      displayNews.filter(function(item) {
+      displayNews.filter(
+        function(item) {
 
-        return item.category === "Technology";
+          return (
+            item.category ===
+            "Technology"
+          );
 
-      });
+        }
+      );
 
 
     const cars =
-      displayNews.filter(function(item) {
+      displayNews.filter(
+        function(item) {
 
-        return item.category === "Cars";
+          return (
+            item.category ===
+            "Cars"
+          );
 
-      });
+        }
+      );
 
 
     const ai =
-      displayNews.filter(function(item) {
+      displayNews.filter(
+        function(item) {
 
-        return item.category === "AI";
+          return (
+            item.category ===
+            "AI"
+          );
 
-      });
+        }
+      );
 
 
     const other =
-      displayNews.filter(function(item) {
+      displayNews.filter(
+        function(item) {
 
-        return (
-          item.category !== "Technology" &&
-          item.category !== "Cars" &&
-          item.category !== "AI"
-        );
+          return (
+            item.category !==
+              "Technology" &&
 
-      });
+            item.category !==
+              "Cars" &&
+
+            item.category !==
+              "AI"
+          );
+
+        }
+      );
 
 
     displayNews = [
@@ -3939,184 +4486,195 @@ function renderNews(news) {
 
 
   /*
-    في الصفحة الرئيسية نعرض أول 8 فقط.
+    الصفحة الرئيسية:
+    أول 8 أخبار.
   */
 
   displayNews
     .slice(0, 8)
-    .forEach(function(item, index) {
+    .forEach(
+      function(item, index) {
 
 
-      const card =
-        document.createElement(
-          "article"
-        );
-
-
-      card.className =
-        "trend-card";
-
-
-      const title =
-        escapeHTML(
-          item.title ||
-          "خبر جديد"
-        );
-
-
-      const category =
-        escapeHTML(
-          translateCategory(
-            item.category ||
-            "Trending"
-          )
-        );
-
-
-      const source =
-        escapeHTML(
-          item.source ||
-          "NOWNEX"
-        );
-
-
-      const icon =
-        getNewsIcon(
-          item.category
-        );
-
-
-      /* =================================================
-         IMAGE
-         لا نحذفها حتى لو كانت موجودة
-      ================================================= */
-
-      let imageHTML = "";
-
-
-      if (item.image) {
-
-        const imageURL =
-          safeURL(
-            item.image
+        const card =
+          document.createElement(
+            "article"
           );
 
 
-        if (imageURL !== "#") {
+        card.className =
+          "trend-card";
 
-          imageHTML = `
 
-            <img
-              class="trend-image"
-              src="${imageURL}"
-              alt=""
-              loading="lazy"
-              referrerpolicy="no-referrer"
-              onerror="this.classList.add('image-error');"
-            >
+        const title =
+          escapeHTML(
+            item.title ||
+            "خبر جديد"
+          );
 
-          `;
+
+        const category =
+          escapeHTML(
+            translateCategory(
+              item.category ||
+              "Trending"
+            )
+          );
+
+
+        const source =
+          escapeHTML(
+            item.source ||
+            "NOWNEX"
+          );
+
+
+        const icon =
+          getNewsIcon(
+            item.category
+          );
+
+
+        /* =================================================
+           IMAGE
+           محفوظة كما هي
+        ================================================= */
+
+        let imageHTML =
+          "";
+
+
+        if (
+          item.image
+        ) {
+
+          const imageURL =
+            safeURL(
+              item.image
+            );
+
+
+          if (
+            imageURL !== "#"
+          ) {
+
+            imageHTML = `
+
+              <img
+                class="trend-image"
+                src="${imageURL}"
+                alt=""
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                onerror="this.classList.add('image-error');"
+              >
+
+            `;
+
+          }
 
         }
 
-      }
+
+        card.innerHTML = `
+
+          ${imageHTML}
 
 
-      /*
-        البطاقة كاملة
-      */
-
-      card.innerHTML = `
-
-        ${imageHTML}
+          <div class="trend-card-content">
 
 
-        <div class="trend-card-content">
+            <div class="trend-number">
+
+              ${String(
+                index + 1
+              ).padStart(
+                2,
+                "0"
+              )}
+
+              — ${escapeHTML(
+                t("trendingLabel")
+              )}
+
+            </div>
 
 
-          <div class="trend-number">
+            <div class="trend-icon">
 
-            ${String(
-              index + 1
-            ).padStart(2, "0")}
+              ${icon}
 
-            — الأكثر تداولاً
+            </div>
+
+
+            <h3>
+
+              ${title}
+
+            </h3>
+
+
+            <div class="trend-meta">
+
+              ${category}
+
+              ·
+
+              ${source}
+
+            </div>
+
+
+            <a
+              class="news-link"
+              href="#"
+              aria-label="اقرأ الخبر"
+            >
+
+              ${escapeHTML(
+                t("readArticle")
+              )}
+
+            </a>
+
 
           </div>
 
-
-          <div class="trend-icon">
-
-            ${icon}
-
-          </div>
+        `;
 
 
-          <h3>
-
-            ${title}
-
-          </h3>
-
-
-          <div class="trend-meta">
-
-            ${category}
-
-            ·
-
-            ${source}
-
-          </div>
+        const newsLink =
+          card.querySelector(
+            ".news-link"
+          );
 
 
-          <a
-            class="news-link"
-            href="#"
-            aria-label="اقرأ الخبر"
-          >
+        if (
+          newsLink
+        ) {
 
-            اقرأ الخبر ←
+          newsLink.addEventListener(
+            "click",
+            function(event) {
 
-          </a>
+              event.preventDefault();
+
+              openArticle(
+                item
+              );
+
+            }
+          );
+
+        }
 
 
-        </div>
-
-      `;
-
-
-      /*
-        قراءة الخبر
-      */
-
-      const newsLink =
-        card.querySelector(
-          ".news-link"
+        newsGrid.appendChild(
+          card
         );
 
-
-      if (newsLink) {
-
-        newsLink.addEventListener(
-          "click",
-          function(event) {
-
-            event.preventDefault();
-
-            openArticle(item);
-
-          }
-        );
-
       }
-
-
-      newsGrid.appendChild(
-        card
-      );
-
-    });
+    );
 
 }
 
@@ -4146,7 +4704,9 @@ async function loadNews() {
       );
 
 
-    if (!response.ok) {
+    if (
+      !response.ok
+    ) {
 
       throw new Error(
         "news.json could not be loaded"
@@ -4167,7 +4727,9 @@ async function loadNews() {
         : [];
 
 
-    if (!news.length) {
+    if (
+      !news.length
+    ) {
 
       throw new Error(
         "No news available"
@@ -4176,19 +4738,13 @@ async function loadNews() {
     }
 
 
-    /*
-      حفظ الأخبار
-    */
-
-    allNews = news;
+    allNews =
+      news;
 
 
-    /*
-      إذا كان المستخدم داخل قسم،
-      نحافظ على القسم بعد التحديث.
-    */
-
-    if (currentCategory) {
+    if (
+      currentCategory
+    ) {
 
       renderNews(
         getFilteredNews(
@@ -4217,7 +4773,9 @@ async function loadNews() {
     console.log(
       "Technology:",
       allNews.filter(
-        x => x.category === "Technology"
+        x =>
+          x.category ===
+          "Technology"
       ).length
     );
 
@@ -4225,15 +4783,18 @@ async function loadNews() {
     console.log(
       "Cars:",
       allNews.filter(
-        x => x.category === "Cars"
+        x =>
+          x.category ===
+          "Cars"
       ).length
     );
 
 
   }
 
-
-  catch (error) {
+  catch (
+    error
+  ) {
 
     console.error(
       "NOWNEX News Error:",
@@ -4246,10 +4807,16 @@ async function loadNews() {
       <div class="empty-news">
 
         <strong>
-          الأخبار غير متاحة مؤقتاً
+
+          ${escapeHTML(
+            t("noNews")
+          )}
+
         </strong>
 
-        حاول تحديث الصفحة بعد قليل.
+        ${escapeHTML(
+          t("searchTry")
+        )}
 
       </div>
 
@@ -4263,6 +4830,8 @@ async function loadNews() {
 /* =====================================================
    START
 ===================================================== */
+
+applyLanguage();
 
 loadNews();
 
