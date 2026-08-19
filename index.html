@@ -5,7 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
 
@@ -14,9 +15,12 @@
   content="NOWNEX — منصة عربية لاكتشاف أهم الأخبار والترندات والتكنولوجيا والذكاء الاصطناعي والسيارات والترفيه حول العالم."
 >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
@@ -121,7 +125,7 @@ header {
   backdrop-filter: blur(18px);
 
   background:
-    rgba(6,9,20,0.90);
+    rgba(6,9,20,0.92);
 
   border-bottom:
     1px solid var(--line);
@@ -154,7 +158,7 @@ header {
 
   align-items: center;
 
-  gap: 11px;
+  gap: 10px;
 
   font-size: 27px;
 
@@ -162,6 +166,12 @@ header {
 
   letter-spacing: -1px;
 
+  white-space: nowrap;
+
+}
+
+.logo-text {
+  color: var(--gold-light);
 }
 
 .logo-mark {
@@ -187,14 +197,12 @@ header {
 
   font-size: 21px;
 
+  font-weight: 900;
+
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.18);
 
-}
-
-.logo span {
-  color: var(--gold-light);
 }
 
 nav {
@@ -216,6 +224,8 @@ nav a {
   font-weight: 700;
 
   transition: 0.2s;
+
+  cursor: pointer;
 
 }
 
@@ -366,6 +376,9 @@ nav a.active {
     );
 
   -webkit-background-clip:
+    text;
+
+  background-clip:
     text;
 
   color:
@@ -682,7 +695,7 @@ nav a.active {
 
 
 /* =====================================================
-   NEWS CARDS
+   NEWS GRID
 ===================================================== */
 
 .trend-grid {
@@ -698,16 +711,23 @@ nav a.active {
 
 }
 
+
+/* =====================================================
+   NEWS CARD
+   IMPORTANT:
+   الصورة موجودة داخل البطاقة
+===================================================== */
+
 .trend-card {
 
   position:
     relative;
 
   min-height:
-    235px;
+    370px;
 
   padding:
-    20px;
+    0;
 
   background:
 
@@ -746,6 +766,45 @@ nav a.active {
 
 }
 
+
+/* =====================================================
+   NEWS IMAGE
+===================================================== */
+
+.trend-image {
+
+  width:
+    100%;
+
+  height:
+    190px;
+
+  display:
+    block;
+
+  object-fit:
+    cover;
+
+  object-position:
+    center;
+
+  background:
+    #0b1020;
+
+}
+
+
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.trend-card-content {
+
+  padding:
+    17px 20px 20px;
+
+}
+
 .trend-number {
 
   font-size:
@@ -771,17 +830,23 @@ nav a.active {
     15px;
 
   font-size:
-    34px;
+    30px;
 
-  opacity:
-    0.85;
+  z-index:
+    5;
+
+  filter:
+    drop-shadow(
+      0 2px 8px
+      rgba(0,0,0,0.5)
+    );
 
 }
 
 .trend-card h3 {
 
   margin-top:
-    55px;
+    10px;
 
   font-size:
     17px;
@@ -803,7 +868,7 @@ nav a.active {
     11px;
 
   margin-top:
-    10px;
+    8px;
 
   font-weight:
     600;
@@ -816,7 +881,7 @@ nav a.active {
     inline-block;
 
   margin-top:
-    15px;
+    12px;
 
   color:
     var(--gold-light);
@@ -844,7 +909,7 @@ nav a.active {
 
 
 /* =====================================================
-   CATEGORIES
+   CATEGORY GRID
 ===================================================== */
 
 .category-grid {
@@ -859,6 +924,11 @@ nav a.active {
     15px;
 
 }
+
+
+/* =====================================================
+   CATEGORY BUTTON
+===================================================== */
 
 .category {
 
@@ -883,6 +953,9 @@ nav a.active {
   cursor:
     pointer;
 
+  position:
+    relative;
+
   user-select:
     none;
 
@@ -898,10 +971,14 @@ nav a.active {
 
 }
 
-.category:active {
+.category.active {
 
-  transform:
-    translateY(-1px);
+  border-color:
+    rgba(217,180,91,0.65);
+
+  box-shadow:
+    0 0 25px
+    rgba(217,180,91,0.08);
 
 }
 
@@ -941,6 +1018,79 @@ nav a.active {
 
   font-weight:
     500;
+
+}
+
+
+/* =====================================================
+   CATEGORY FILTER MESSAGE
+===================================================== */
+
+.category-filter-bar {
+
+  display:
+    none;
+
+  margin-bottom:
+    20px;
+
+  padding:
+    15px 18px;
+
+  border:
+    1px solid
+    rgba(217,180,91,0.18);
+
+  border-radius:
+    14px;
+
+  background:
+    rgba(217,180,91,0.05);
+
+  color:
+    var(--gold-light);
+
+  font-size:
+    13px;
+
+  font-weight:
+    800;
+
+}
+
+.category-filter-bar.active {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+}
+
+.clear-filter {
+
+  border:
+    1px solid var(--line);
+
+  background:
+    rgba(255,255,255,0.04);
+
+  color:
+    white;
+
+  border-radius:
+    9px;
+
+  padding:
+    7px 12px;
+
+  cursor:
+    pointer;
+
+  font-family:
+    inherit;
 
 }
 
@@ -1091,7 +1241,7 @@ nav a.active {
     none;
 
   background:
-    rgba(3,6,14,0.96);
+    rgba(3,6,14,0.97);
 
   backdrop-filter:
     blur(18px);
@@ -1100,7 +1250,7 @@ nav a.active {
     auto;
 
   padding:
-    35px 20px 60px;
+    20px 20px 60px;
 
 }
 
@@ -1111,7 +1261,7 @@ nav a.active {
 .article-container {
 
   max-width:
-    900px;
+    1050px;
 
   margin:
     0 auto;
@@ -1133,7 +1283,7 @@ nav a.active {
     15px;
 
   margin-bottom:
-    35px;
+    20px;
 
 }
 
@@ -1193,25 +1343,24 @@ nav a.active {
 
 }
 
-.article-image {
+
+/* =====================================================
+   ARTICLE IMAGE
+===================================================== */
+
+.article-image-wrapper {
 
   width:
     100%;
 
-  max-height:
-    500px;
-
-  object-fit:
-    cover;
+  margin:
+    0 0 25px;
 
   border-radius:
-    24px;
+    22px;
 
-  display:
-    block;
-
-  margin-bottom:
-    30px;
+  overflow:
+    hidden;
 
   border:
     1px solid var(--line);
@@ -1220,6 +1369,27 @@ nav a.active {
     #0b1020;
 
 }
+
+.article-image {
+
+  width:
+    100%;
+
+  max-height:
+    560px;
+
+  display:
+    block;
+
+  object-fit:
+    cover;
+
+}
+
+
+/* =====================================================
+   ARTICLE CONTENT
+===================================================== */
 
 .article-category {
 
@@ -1242,7 +1412,7 @@ nav a.active {
     800;
 
   margin-bottom:
-    18px;
+    15px;
 
 }
 
@@ -1261,7 +1431,7 @@ nav a.active {
     -1px;
 
   margin-bottom:
-    20px;
+    18px;
 
 }
 
@@ -1283,7 +1453,7 @@ nav a.active {
     13px;
 
   margin-bottom:
-    35px;
+    25px;
 
 }
 
@@ -1370,10 +1540,10 @@ nav a.active {
 .article-points {
 
   margin-top:
-    25px;
+    22px;
 
   padding:
-    25px;
+    22px;
 
   border-radius:
     18px;
@@ -1766,6 +1936,52 @@ footer {
 
 
 /* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-news {
+
+  grid-column:
+    1 / -1;
+
+  text-align:
+    center;
+
+  padding:
+    50px 20px;
+
+  border:
+    1px solid var(--line);
+
+  border-radius:
+    18px;
+
+  background:
+    var(--card);
+
+  color:
+    var(--muted);
+
+}
+
+.empty-news strong {
+
+  display:
+    block;
+
+  color:
+    white;
+
+  font-size:
+    18px;
+
+  margin-bottom:
+    8px;
+
+}
+
+
+/* =====================================================
    RESPONSIVE
 ===================================================== */
 
@@ -1858,6 +2074,20 @@ footer {
 
   }
 
+  .trend-image {
+
+    height:
+      205px;
+
+  }
+
+  .trend-card {
+
+    min-height:
+      390px;
+
+  }
+
   .section {
 
     padding-bottom:
@@ -1899,7 +2129,21 @@ footer {
   .article-overlay {
 
     padding:
-      20px 14px 40px;
+      15px 14px 40px;
+
+  }
+
+  .article-image-wrapper {
+
+    margin-bottom:
+      20px;
+
+  }
+
+  .article-image {
+
+    max-height:
+      330px;
 
   }
 
@@ -1927,15 +2171,24 @@ footer {
 
   }
 
-  .article-image {
+}
 
-    max-height:
-      320px;
 
-    border-radius:
-      18px;
+/* =====================================================
+   HIDE BROKEN IMAGE
+===================================================== */
 
-  }
+.trend-image.image-error {
+
+  display:
+    none;
+
+}
+
+.article-image.image-error {
+
+  display:
+    none;
 
 }
 
@@ -1959,14 +2212,16 @@ footer {
 <a
   href="#"
   class="logo"
-  onclick="closeArticle();"
+  onclick="goHome(); return false;"
 >
 
 <div class="logo-mark">
 N
 </div>
 
-N<span>OWNEX</span>
+<span class="logo-text">
+NOWNEX
+</span>
 
 </a>
 
@@ -1976,19 +2231,29 @@ N<span>OWNEX</span>
 <a
   href="#"
   class="active"
+  onclick="goHome(); return false;"
 >
 الرئيسية
 </a>
 
-<a href="#trending">
+<a
+  href="#trending"
+  onclick="scrollToTrending(); return false;"
+>
 الترند
 </a>
 
-<a href="#categories">
+<a
+  href="#categories"
+  onclick="scrollToCategories(); return false;"
+>
 الأقسام
 </a>
 
-<a href="#about">
+<a
+  href="#about"
+  onclick="scrollToAbout(); return false;"
+>
 حول NOWNEX
 </a>
 
@@ -2007,7 +2272,7 @@ N<span>OWNEX</span>
 
 <button
   class="mobile-menu"
-  onclick="scrollToTrending()"
+  onclick="scrollToCategories()"
   aria-label="القائمة"
 >
 ☰
@@ -2027,6 +2292,10 @@ N<span>OWNEX</span>
 
 <main>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section class="hero">
 
@@ -2159,12 +2428,34 @@ N<span>OWNEX</span>
 
 
 <div
+  class="category-filter-bar"
+  id="categoryFilterBar"
+>
+
+<span id="categoryFilterText">
+</span>
+
+<button
+  class="clear-filter"
+  onclick="clearCategoryFilter()"
+>
+
+عرض الكل
+
+</button>
+
+</div>
+
+
+<div
   class="trend-grid"
   id="newsGrid"
 >
 
 
 <article class="trend-card">
+
+<div class="trend-card-content">
 
 <div class="trend-number">
 01 — جارٍ التحميل
@@ -2182,25 +2473,6 @@ N<span>OWNEX</span>
 NOWNEX · تحديث مباشر
 </div>
 
-</article>
-
-
-<article class="trend-card">
-
-<div class="trend-number">
-02 — جارٍ التحميل
-</div>
-
-<div class="trend-icon">
-🔥
-</div>
-
-<h3>
-نبحث عن أهم ما يحدث الآن...
-</h3>
-
-<div class="trend-meta">
-NOWNEX · مباشر
 </div>
 
 </article>
@@ -2257,7 +2529,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Trending')"
+  data-category="Trending"
+  onclick="filterByCategory('Trending', this)"
 >
 
 <div class="category-icon">
@@ -2279,7 +2552,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('AI')"
+  data-category="AI"
+  onclick="filterByCategory('AI', this)"
 >
 
 <div class="category-icon">
@@ -2301,7 +2575,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Technology')"
+  data-category="Technology"
+  onclick="filterByCategory('Technology', this)"
 >
 
 <div class="category-icon">
@@ -2323,7 +2598,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Cars')"
+  data-category="Cars"
+  onclick="filterByCategory('Cars', this)"
 >
 
 <div class="category-icon">
@@ -2345,7 +2621,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Entertainment')"
+  data-category="Entertainment"
+  onclick="filterByCategory('Entertainment', this)"
 >
 
 <div class="category-icon">
@@ -2367,7 +2644,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('World')"
+  data-category="World"
+  onclick="filterByCategory('World', this)"
 >
 
 <div class="category-icon">
@@ -2389,7 +2667,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Facts')"
+  data-category="Facts"
+  onclick="filterByCategory('Facts', this)"
 >
 
 <div class="category-icon">
@@ -2411,7 +2690,8 @@ NOWNEX
 
 <div
   class="category"
-  onclick="openCategory('Trending')"
+  data-category="Products"
+  onclick="filterByCategory('Products', this)"
 >
 
 <div class="category-icon">
@@ -2477,7 +2757,7 @@ NOWNEX
 <button
   class="primary-btn"
   style="width:max-content;"
-  onclick="openCategory('AI')"
+  onclick="filterByCategory('AI', null)"
 >
 
 اكتشف عالم الذكاء الاصطناعي ←
@@ -2567,7 +2847,9 @@ OWNEX
 N
 </div>
 
-N<span style="color:white;">OWNEX</span>
+<span>
+NOWNEX
+</span>
 
 </div>
 
@@ -2585,8 +2867,6 @@ N<span style="color:white;">OWNEX</span>
 
 
 <div id="articleContent">
-
-<!-- يتم وضع الخبر هنا -->
 
 </div>
 
@@ -2646,10 +2926,12 @@ N<span style="color:white;">OWNEX</span>
 
 
 /* =====================================================
-   GLOBAL NEWS DATA
+   GLOBAL
 ===================================================== */
 
 let allNews = [];
+
+let currentCategory = null;
 
 
 /* =====================================================
@@ -2663,9 +2945,12 @@ function openSearch() {
     .classList
     .add("active");
 
-  document
-    .getElementById("searchInput")
-    .focus();
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+  input.focus();
 
 }
 
@@ -2683,10 +2968,14 @@ function closeSearch() {
 function performSearch() {
 
   const input =
-    document.getElementById("searchInput");
+    document.getElementById(
+      "searchInput"
+    );
 
   const results =
-    document.getElementById("searchResults");
+    document.getElementById(
+      "searchResults"
+    );
 
   const query =
     input.value
@@ -2717,10 +3006,15 @@ function performSearch() {
         String(item.category || "")
           .toLowerCase();
 
+      const source =
+        String(item.source || "")
+          .toLowerCase();
+
       return (
         title.includes(query) ||
         summary.includes(query) ||
-        category.includes(query)
+        category.includes(query) ||
+        source.includes(query)
       );
 
     });
@@ -2815,7 +3109,26 @@ function performSearch() {
    NAVIGATION
 ===================================================== */
 
+function goHome() {
+
+  closeArticle();
+
+  clearCategoryFilter();
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
 function scrollToTrending() {
+
+  closeArticle();
 
   document
     .getElementById("trending")
@@ -2828,6 +3141,8 @@ function scrollToTrending() {
 
 function scrollToCategories() {
 
+  closeArticle();
+
   document
     .getElementById("categories")
     .scrollIntoView({
@@ -2837,22 +3152,12 @@ function scrollToCategories() {
 }
 
 
-/* =====================================================
-   SHOW ALL NEWS
-===================================================== */
+function scrollToAbout() {
 
-function showAllNews() {
-
-  if (!allNews.length) {
-    return;
-  }
-
-  renderNews(
-    allNews.slice(0, 8)
-  );
+  closeArticle();
 
   document
-    .getElementById("trending")
+    .getElementById("about")
     .scrollIntoView({
       behavior: "smooth"
     });
@@ -2864,242 +3169,197 @@ function showAllNews() {
    CATEGORY FILTER
 ===================================================== */
 
-function openCategory(category) {
+function filterByCategory(
+  category,
+  clickedElement
+) {
 
-  if (!allNews.length) {
-
-    scrollToTrending();
-
-    return;
-
-  }
+  currentCategory = category;
 
 
-  let filtered = [];
+  /* ---------------------------------------------
+     Active category
+  --------------------------------------------- */
+
+  document
+    .querySelectorAll(".category")
+    .forEach(function(card) {
+
+      card.classList.remove("active");
+
+    });
 
 
-  /*
-     المنتجات الرائجة لا يوجد لها تصنيف
-     مستقل حالياً في news.json.
-     لذلك نعرض الترند لها.
-  */
+  if (clickedElement) {
 
-  if (category === "Trending") {
-
-    filtered =
-      allNews.slice(0, 8);
+    clickedElement.classList.add(
+      "active"
+    );
 
   }
 
   else {
 
-    filtered =
-      allNews.filter(function(item) {
+    const target =
+      document.querySelector(
+        '.category[data-category="' +
+        category +
+        '"]'
+      );
 
-        return String(
-          item.category || ""
-        )
-        .trim()
-        .toLowerCase()
-        ===
-        String(category)
-        .trim()
-        .toLowerCase();
+    if (target) {
 
-      });
+      target.classList.add(
+        "active"
+      );
+
+    }
 
   }
 
 
-  renderNews(filtered);
+  /* ---------------------------------------------
+     Filter message
+  --------------------------------------------- */
+
+  const filterBar =
+    document.getElementById(
+      "categoryFilterBar"
+    );
+
+  const filterText =
+    document.getElementById(
+      "categoryFilterText"
+    );
 
 
-  document
-    .getElementById("trending")
-    .scrollIntoView({
-      behavior: "smooth"
-    });
+  filterBar.classList.add(
+    "active"
+  );
+
+
+  filterText.textContent =
+    "عرض قسم: " +
+    translateCategory(category);
+
+
+  /* ---------------------------------------------
+     Render
+  --------------------------------------------- */
+
+  renderNews(
+    getFilteredNews(category)
+  );
+
+
+  /* ---------------------------------------------
+     Scroll to news
+  --------------------------------------------- */
+
+  setTimeout(function() {
+
+    document
+      .getElementById("trending")
+      .scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+  }, 80);
 
 }
 
 
 /* =====================================================
-   RENDER NEWS
+   GET FILTERED NEWS
 ===================================================== */
 
-function renderNews(news) {
+function getFilteredNews(category) {
 
-  const newsGrid =
-    document.getElementById(
-      "newsGrid"
-    );
+  if (!category) {
 
-
-  newsGrid.innerHTML = "";
-
-
-  if (!news.length) {
-
-    newsGrid.innerHTML = `
-
-      <article class="trend-card">
-
-        <div class="trend-number">
-
-          NOWNEX
-
-        </div>
-
-
-        <div class="trend-icon">
-
-          📰
-
-        </div>
-
-
-        <h3>
-
-          لا توجد أخبار في هذا القسم حالياً
-
-        </h3>
-
-
-        <div class="trend-meta">
-
-          سيتم عرض الأخبار عند توفرها.
-
-        </div>
-
-
-      </article>
-
-    `;
-
-    return;
+    return allNews.slice();
 
   }
 
 
-  news
-    .slice(0, 8)
-    .forEach(
-      function(item, index) {
+  if (category === "Trending") {
 
-        const card =
-          document.createElement(
-            "article"
-          );
+    return allNews.slice();
+
+  }
 
 
-        card.className =
-          "trend-card";
+  if (category === "Products") {
+
+    return allNews.filter(function(item) {
+
+      return (
+        item.category === "Products" ||
+        item.category === "Shopping"
+      );
+
+    });
+
+  }
 
 
-        const title =
-          escapeHTML(
-            item.title ||
-            "خبر جديد"
-          );
+  return allNews.filter(function(item) {
+
+    return String(
+      item.category || ""
+    ).toLowerCase() ===
+    String(category).toLowerCase();
+
+  });
+
+}
 
 
-        const category =
-          escapeHTML(
-            translateCategory(
-              item.category ||
-              "Trending"
-            )
-          );
+/* =====================================================
+   CLEAR FILTER
+===================================================== */
+
+function clearCategoryFilter() {
+
+  currentCategory = null;
 
 
-        const source =
-          escapeHTML(
-            item.source ||
-            "NOWNEX"
-          );
+  document
+    .querySelectorAll(".category")
+    .forEach(function(card) {
+
+      card.classList.remove(
+        "active"
+      );
+
+    });
 
 
-        const icon =
-          getNewsIcon(
-            item.category
-          );
+  document
+    .getElementById(
+      "categoryFilterBar"
+    )
+    .classList
+    .remove("active");
 
 
-        card.innerHTML = `
+  renderNews(
+    allNews.slice()
+  );
 
-          <div class="trend-number">
-
-            ${String(
-              index + 1
-            ).padStart(2, "0")}
-
-            — الأكثر تداولاً
-
-          </div>
+}
 
 
-          <div class="trend-icon">
+/* =====================================================
+   SHOW ALL
+===================================================== */
 
-            ${icon}
+function showAllNews() {
 
-          </div>
+  clearCategoryFilter();
 
-
-          <h3>
-
-            ${title}
-
-          </h3>
-
-
-          <div class="trend-meta">
-
-            ${category}
-
-            ·
-
-            ${source}
-
-          </div>
-
-
-          <a
-            class="news-link"
-            href="#"
-            aria-label="اقرأ الخبر"
-          >
-
-            اقرأ الخبر ←
-
-          </a>
-
-        `;
-
-
-        const newsLink =
-          card.querySelector(
-            ".news-link"
-          );
-
-
-        newsLink.addEventListener(
-          "click",
-          function(event) {
-
-            event.preventDefault();
-
-            openArticle(item);
-
-          }
-        );
-
-
-        newsGrid.appendChild(
-          card
-        );
-
-      }
-    );
+  scrollToTrending();
 
 }
 
@@ -3198,7 +3458,9 @@ function getNewsIcon(category) {
 
     "Sports": "⚽",
 
-    "Trending": "🔥"
+    "Trending": "🔥",
+
+    "Products": "🛍️"
 
   };
 
@@ -3232,7 +3494,11 @@ function translateCategory(category) {
 
     "Sports": "رياضة",
 
-    "Trending": "الترند"
+    "Trending": "الترند",
+
+    "Products": "المنتجات الرائجة",
+
+    "Shopping": "المنتجات الرائجة"
 
   };
 
@@ -3337,13 +3603,11 @@ function openArticle(item) {
   }
 
 
-  /*
-     الصورة:
-     نستخدم الصورة الموجودة في news.json.
-     إذا لم توجد صورة لا نعرض مساحة فارغة.
-  */
+  /* =====================================================
+     IMAGE
+  ===================================================== */
 
-  let imageHTML = "";
+  let articleImageHTML = "";
 
 
   if (item.image) {
@@ -3356,16 +3620,19 @@ function openArticle(item) {
 
     if (imageURL !== "#") {
 
-      imageHTML = `
+      articleImageHTML = `
 
-        <img
-          class="article-image"
-          src="${imageURL}"
-          alt=""
-          loading="eager"
-          referrerpolicy="no-referrer"
-          onerror="this.style.display='none';"
-        >
+        <div class="article-image-wrapper">
+
+          <img
+            class="article-image"
+            src="${imageURL}"
+            alt=""
+            referrerpolicy="no-referrer"
+            onerror="this.classList.add('image-error');"
+          >
+
+        </div>
 
       `;
 
@@ -3376,7 +3643,8 @@ function openArticle(item) {
 
   content.innerHTML = `
 
-    ${imageHTML}
+
+    ${articleImageHTML}
 
 
     <div class="article-category">
@@ -3437,7 +3705,7 @@ function openArticle(item) {
       <div class="article-points">
 
         <h3>
-          ما الذي يعنيه الخبر؟
+          💡 ما الذي يعنيه الخبر؟
         </h3>
 
         <p>
@@ -3510,20 +3778,20 @@ function openArticle(item) {
   `;
 
 
-  overlay.classList.add("active");
+  overlay.classList.add(
+    "active"
+  );
+
 
   document.body.classList.add(
     "article-open"
   );
 
+
   overlay.scrollTop = 0;
 
 }
 
-
-/* =====================================================
-   CLOSE ARTICLE
-===================================================== */
 
 function closeArticle() {
 
@@ -3541,6 +3809,314 @@ function closeArticle() {
   document.body.classList.remove(
     "article-open"
   );
+
+}
+
+
+/* =====================================================
+   RENDER NEWS
+   IMPORTANT:
+   الصور + الأقسام
+===================================================== */
+
+function renderNews(news) {
+
+  const newsGrid =
+    document.getElementById(
+      "newsGrid"
+    );
+
+
+  if (!newsGrid) {
+    return;
+  }
+
+
+  newsGrid.innerHTML = "";
+
+
+  if (!news || !news.length) {
+
+    const categoryName =
+      currentCategory
+        ? translateCategory(
+            currentCategory
+          )
+        : "";
+
+
+    newsGrid.innerHTML = `
+
+      <div class="empty-news">
+
+        <strong>
+          لا توجد أخبار حالياً
+        </strong>
+
+        لا توجد أخبار متاحة في
+        ${
+          categoryName
+          ? "قسم " + categoryName
+          : "هذا القسم"
+        }.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  /*
+    ترتيب الأخبار:
+
+    1. Technology
+    2. Cars
+    3. AI
+    4. بقية الأخبار
+
+    فقط في العرض العام.
+    عند اختيار قسم، نعرض القسم نفسه.
+  */
+
+  let displayNews =
+    news.slice();
+
+
+  if (!currentCategory) {
+
+    const technology =
+      displayNews.filter(function(item) {
+
+        return item.category === "Technology";
+
+      });
+
+
+    const cars =
+      displayNews.filter(function(item) {
+
+        return item.category === "Cars";
+
+      });
+
+
+    const ai =
+      displayNews.filter(function(item) {
+
+        return item.category === "AI";
+
+      });
+
+
+    const other =
+      displayNews.filter(function(item) {
+
+        return (
+          item.category !== "Technology" &&
+          item.category !== "Cars" &&
+          item.category !== "AI"
+        );
+
+      });
+
+
+    displayNews = [
+
+      ...technology,
+
+      ...cars,
+
+      ...ai,
+
+      ...other
+
+    ];
+
+  }
+
+
+  /*
+    في الصفحة الرئيسية نعرض أول 8 فقط.
+  */
+
+  displayNews
+    .slice(0, 8)
+    .forEach(function(item, index) {
+
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+
+      card.className =
+        "trend-card";
+
+
+      const title =
+        escapeHTML(
+          item.title ||
+          "خبر جديد"
+        );
+
+
+      const category =
+        escapeHTML(
+          translateCategory(
+            item.category ||
+            "Trending"
+          )
+        );
+
+
+      const source =
+        escapeHTML(
+          item.source ||
+          "NOWNEX"
+        );
+
+
+      const icon =
+        getNewsIcon(
+          item.category
+        );
+
+
+      /* =================================================
+         IMAGE
+         لا نحذفها حتى لو كانت موجودة
+      ================================================= */
+
+      let imageHTML = "";
+
+
+      if (item.image) {
+
+        const imageURL =
+          safeURL(
+            item.image
+          );
+
+
+        if (imageURL !== "#") {
+
+          imageHTML = `
+
+            <img
+              class="trend-image"
+              src="${imageURL}"
+              alt=""
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              onerror="this.classList.add('image-error');"
+            >
+
+          `;
+
+        }
+
+      }
+
+
+      /*
+        البطاقة كاملة
+      */
+
+      card.innerHTML = `
+
+        ${imageHTML}
+
+
+        <div class="trend-card-content">
+
+
+          <div class="trend-number">
+
+            ${String(
+              index + 1
+            ).padStart(2, "0")}
+
+            — الأكثر تداولاً
+
+          </div>
+
+
+          <div class="trend-icon">
+
+            ${icon}
+
+          </div>
+
+
+          <h3>
+
+            ${title}
+
+          </h3>
+
+
+          <div class="trend-meta">
+
+            ${category}
+
+            ·
+
+            ${source}
+
+          </div>
+
+
+          <a
+            class="news-link"
+            href="#"
+            aria-label="اقرأ الخبر"
+          >
+
+            اقرأ الخبر ←
+
+          </a>
+
+
+        </div>
+
+      `;
+
+
+      /*
+        قراءة الخبر
+      */
+
+      const newsLink =
+        card.querySelector(
+          ".news-link"
+        );
+
+
+      if (newsLink) {
+
+        newsLink.addEventListener(
+          "click",
+          function(event) {
+
+            event.preventDefault();
+
+            openArticle(item);
+
+          }
+        );
+
+      }
+
+
+      newsGrid.appendChild(
+        card
+      );
+
+    });
 
 }
 
@@ -3564,7 +4140,8 @@ async function loadNews() {
         "news.json?v=" +
         Date.now(),
         {
-          cache: "no-store"
+          cache:
+            "no-store"
         }
       );
 
@@ -3583,7 +4160,9 @@ async function loadNews() {
 
 
     const news =
-      Array.isArray(data.news)
+      Array.isArray(
+        data.news
+      )
         ? data.news
         : [];
 
@@ -3597,12 +4176,59 @@ async function loadNews() {
     }
 
 
+    /*
+      حفظ الأخبار
+    */
+
     allNews = news;
 
 
-    renderNews(
-      news.slice(0, 8)
+    /*
+      إذا كان المستخدم داخل قسم،
+      نحافظ على القسم بعد التحديث.
+    */
+
+    if (currentCategory) {
+
+      renderNews(
+        getFilteredNews(
+          currentCategory
+        )
+      );
+
+    }
+
+    else {
+
+      renderNews(
+        allNews
+      );
+
+    }
+
+
+    console.log(
+      "NOWNEX:",
+      allNews.length,
+      "articles loaded."
     );
+
+
+    console.log(
+      "Technology:",
+      allNews.filter(
+        x => x.category === "Technology"
+      ).length
+    );
+
+
+    console.log(
+      "Cars:",
+      allNews.filter(
+        x => x.category === "Cars"
+      ).length
+    );
+
 
   }
 
@@ -3617,37 +4243,15 @@ async function loadNews() {
 
     newsGrid.innerHTML = `
 
-      <article class="trend-card">
+      <div class="empty-news">
 
-        <div class="trend-number">
-
-          NOWNEX
-
-        </div>
-
-
-        <div class="trend-icon">
-
-          ⚠️
-
-        </div>
-
-
-        <h3>
-
+        <strong>
           الأخبار غير متاحة مؤقتاً
+        </strong>
 
-        </h3>
+        حاول تحديث الصفحة بعد قليل.
 
-
-        <div class="trend-meta">
-
-          حاول تحديث الصفحة بعد قليل.
-
-        </div>
-
-
-      </article>
+      </div>
 
     `;
 
