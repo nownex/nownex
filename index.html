@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
 <title>NOWNEX — ما يحدث الآن. ما القادم.</title>
 
@@ -16,7 +19,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
 
 <link
   href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
@@ -107,6 +114,23 @@ button {
 
 
 /* =====================================================
+   NOWNEX BRAND
+===================================================== */
+
+.nownex-brand {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.nownex-gold {
+  color: var(--gold-light);
+}
+
+
+/* =====================================================
    HEADER
 ===================================================== */
 
@@ -148,11 +172,6 @@ header {
 
 }
 
-
-/* =====================================================
-   NOWNEX LOGO
-===================================================== */
-
 .logo {
 
   display: flex;
@@ -171,22 +190,6 @@ header {
 
   unicode-bidi: isolate;
 
-  white-space: nowrap;
-
-}
-
-.logo-text {
-
-  direction: ltr;
-
-  unicode-bidi: isolate;
-
-  color: #ffffff;
-
-}
-
-.logo-text .gold {
-  color: var(--gold-light);
 }
 
 .logo-mark {
@@ -212,14 +215,28 @@ header {
 
   font-size: 21px;
 
-  font-weight: 900;
-
   box-shadow:
     0 0 25px
     rgba(217,180,91,0.18);
 
   flex-shrink: 0;
 
+}
+
+.logo-text {
+
+  direction: ltr;
+
+  unicode-bidi: isolate;
+
+}
+
+.logo-text-main {
+  color: var(--gold-light);
+}
+
+.logo-text-end {
+  color: white;
 }
 
 nav {
@@ -1103,7 +1120,7 @@ nav a.active {
     none;
 
   background:
-    rgba(3,6,14,0.97);
+    rgba(3,6,14,0.96);
 
   backdrop-filter:
     blur(18px);
@@ -1169,7 +1186,11 @@ nav a.active {
   font-size:
     18px;
 
-  direction: ltr;
+  direction:
+    ltr;
+
+  unicode-bidi:
+    isolate;
 
 }
 
@@ -1289,11 +1310,6 @@ nav a.active {
 
 }
 
-
-/* =====================================================
-   GEMINI SUMMARY
-===================================================== */
-
 .article-summary-box {
 
   background:
@@ -1310,7 +1326,7 @@ nav a.active {
     1px solid var(--line);
 
   border-right:
-    4px solid var(--gold);
+    3px solid var(--gold);
 
   border-radius:
     20px;
@@ -1329,7 +1345,7 @@ nav a.active {
     var(--gold-light);
 
   font-size:
-    15px;
+    13px;
 
   font-weight:
     900;
@@ -1360,7 +1376,7 @@ nav a.active {
 
 
 /* =====================================================
-   IMPORTANCE BOX
+   IMPORTANCE / WHY IT MATTERS
 ===================================================== */
 
 .article-points {
@@ -1764,64 +1780,10 @@ footer {
 
 }
 
-.footer-logo .gold {
-  color:
-    var(--gold-light);
-}
-
-
-/* =====================================================
-   LOADING
-===================================================== */
-
-.loading-card {
-
-  grid-column:
-    1 / -1;
-
-  text-align:
-    center;
-
-  padding:
-    50px 20px;
+.footer-logo span {
 
   color:
-    var(--muted);
-
-}
-
-.loading-spinner {
-
-  width:
-    35px;
-
-  height:
-    35px;
-
-  border:
-    3px solid
-    rgba(255,255,255,0.1);
-
-  border-top-color:
     var(--gold-light);
-
-  border-radius:
-    50%;
-
-  animation:
-    spin 0.8s linear infinite;
-
-  margin:
-    0 auto 15px;
-
-}
-
-@keyframes spin {
-
-  to {
-    transform:
-      rotate(360deg);
-  }
 
 }
 
@@ -1990,6 +1952,79 @@ footer {
 
 }
 
+
+/* =====================================================
+   EXTRA SMALL DEVICES
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .logo {
+    font-size: 19px;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero h1 {
+    font-size: 39px;
+  }
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading-text {
+
+  color:
+    var(--muted);
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  font-size:
+    14px;
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.news-error {
+
+  grid-column:
+    1 / -1;
+
+  padding:
+    30px;
+
+  text-align:
+    center;
+
+  border:
+    1px solid var(--line);
+
+  border-radius:
+    18px;
+
+  background:
+    var(--card);
+
+  color:
+    var(--muted);
+
+}
+
 </style>
 
 </head>
@@ -2011,13 +2046,16 @@ footer {
   href="#"
   class="logo"
   onclick="closeArticle();"
-  aria-label="NOWNEX"
 >
 
-<div class="logo-mark">N</div>
+<div class="logo-mark">
+N
+</div>
 
 <div class="logo-text">
-  <span class="gold">N</span>OWNEX
+
+<span class="logo-text-end">N</span><span class="logo-text-main">OWNEX</span>
+
 </div>
 
 </a>
@@ -2188,7 +2226,7 @@ footer {
 <p class="section-description">
 
 أحدث الأخبار والقصص من حول العالم،
-يتم تحديثها تلقائياً بواسطة NOWNEX.
+يتم تحديثها تلقائياً.
 
 </p>
 
@@ -2214,13 +2252,48 @@ footer {
   id="newsGrid"
 >
 
-<div class="loading-card">
 
-<div class="loading-spinner"></div>
+<article class="trend-card">
 
-جارٍ تحميل آخر أخبار NOWNEX...
-
+<div class="trend-number">
+01 — جارٍ التحميل
 </div>
+
+<div class="trend-icon">
+🌍
+</div>
+
+<h3>
+جارٍ تحميل آخر الأخبار...
+</h3>
+
+<div class="trend-meta">
+NOWNEX · تحديث مباشر
+</div>
+
+</article>
+
+
+<article class="trend-card">
+
+<div class="trend-number">
+02 — جارٍ التحميل
+</div>
+
+<div class="trend-icon">
+🔥
+</div>
+
+<h3>
+نبحث عن أهم ما يحدث الآن...
+</h3>
+
+<div class="trend-meta">
+NOWNEX · مباشر
+</div>
+
+</article>
+
 
 </div>
 
@@ -2488,7 +2561,7 @@ NOWNEX
 
 <div class="footer-logo">
 
-<span class="gold">N</span>OWNEX
+N<span>OWNEX</span>
 
 </div>
 
@@ -2512,7 +2585,6 @@ NOWNEX
 
 </div>
 
-
 </footer>
 
 
@@ -2534,13 +2606,17 @@ NOWNEX
 
 <div class="article-brand">
 
-<div class="logo-mark"
-     style="width:34px;height:34px;font-size:18px;">
+<div
+  class="logo-mark"
+  style="width:34px;height:34px;font-size:18px;"
+>
 N
 </div>
 
-<div>
-  <span style="color:var(--gold-light);">N</span>OWNEX
+<div class="nownex-brand">
+
+<span style="color:white;">N</span><span>OWNEX</span>
+
 </div>
 
 </div>
@@ -2558,7 +2634,11 @@ N
 </div>
 
 
-<div id="articleContent"></div>
+<div id="articleContent">
+
+<!-- يتم وضع الخبر هنا -->
+
+</div>
 
 
 </div>
@@ -2614,8 +2694,9 @@ N
 
 <script>
 
+
 /* =====================================================
-   GLOBAL
+   GLOBAL NEWS DATA
 ===================================================== */
 
 let allNews = [];
@@ -2682,6 +2763,10 @@ function performSearch() {
         String(item.summary || "")
           .toLowerCase();
 
+      const importance =
+        String(item.importance || "")
+          .toLowerCase();
+
       const category =
         String(item.category || "")
           .toLowerCase();
@@ -2689,6 +2774,7 @@ function performSearch() {
       return (
         title.includes(query) ||
         summary.includes(query) ||
+        importance.includes(query) ||
         category.includes(query)
       );
 
@@ -2702,11 +2788,15 @@ function performSearch() {
       <div class="search-result">
 
         <div class="search-result-title">
+
           لم نجد أخباراً مطابقة لبحثك.
+
         </div>
 
         <div class="search-result-meta">
+
           جرّب كلمة أخرى.
+
         </div>
 
       </div>
@@ -2803,7 +2893,7 @@ function scrollToCategories() {
 
 
 /* =====================================================
-   ESCAPE
+   ESCAPE KEY
 ===================================================== */
 
 document.addEventListener(
@@ -2944,47 +3034,6 @@ function translateCategory(category) {
 
 
 /* =====================================================
-   FORMAT DATE
-===================================================== */
-
-function formatDate(value) {
-
-  if (!value) {
-    return "";
-  }
-
-  try {
-
-    const date =
-      new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-      return "";
-    }
-
-    return date.toLocaleString(
-      "ar-DZ",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-
-  }
-
-  catch (error) {
-
-    return "";
-
-  }
-
-}
-
-
-/* =====================================================
    OPEN ARTICLE
 ===================================================== */
 
@@ -3007,6 +3056,10 @@ function openArticle(item) {
     );
 
 
+  /* =====================================================
+     TITLE
+  ===================================================== */
+
   const title =
     escapeHTML(
       item.title ||
@@ -3014,10 +3067,9 @@ function openArticle(item) {
     );
 
 
-  /*
-     هنا نأخذ ملخص Gemini الحقيقي
-     من news.json
-  */
+  /* =====================================================
+     SUMMARY
+  ===================================================== */
 
   const summaryRaw =
     item.summary ||
@@ -3031,6 +3083,25 @@ function openArticle(item) {
     );
 
 
+  /* =====================================================
+     IMPORTANCE
+  ===================================================== */
+
+  const importanceRaw =
+    item.importance ||
+    "لا تتوفر حالياً معلومات إضافية حول أهمية هذا الخبر.";
+
+
+  const importance =
+    escapeHTML(
+      importanceRaw
+    );
+
+
+  /* =====================================================
+     CATEGORY
+  ===================================================== */
+
   const category =
     escapeHTML(
       translateCategory(
@@ -3040,6 +3111,10 @@ function openArticle(item) {
     );
 
 
+  /* =====================================================
+     SOURCE
+  ===================================================== */
+
   const source =
     escapeHTML(
       item.source ||
@@ -3047,11 +3122,19 @@ function openArticle(item) {
     );
 
 
+  /* =====================================================
+     ORIGINAL LINK
+  ===================================================== */
+
   const originalLink =
     safeURL(
       item.link
     );
 
+
+  /* =====================================================
+     ICON
+  ===================================================== */
 
   const icon =
     getNewsIcon(
@@ -3059,13 +3142,71 @@ function openArticle(item) {
     );
 
 
-  const dateText =
-    formatDate(
-      item.publishedAt ||
-      item.published ||
-      item.date
-    );
+  /* =====================================================
+     DATE
+  ===================================================== */
 
+  let dateText = "";
+
+
+  if (item.publishedAt) {
+
+    try {
+
+      const date =
+        new Date(
+          item.publishedAt
+        );
+
+
+      if (!isNaN(date.getTime())) {
+
+        dateText =
+          date.toLocaleDateString(
+            "ar-DZ",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric"
+            }
+          );
+
+      }
+
+    }
+
+    catch (error) {
+
+      dateText = "";
+
+    }
+
+  }
+
+
+  if (!dateText && item.published) {
+
+    dateText =
+      escapeHTML(
+        item.published
+      );
+
+  }
+
+
+  if (!dateText && item.date) {
+
+    dateText =
+      escapeHTML(
+        item.date
+      );
+
+  }
+
+
+  /* =====================================================
+     ARTICLE HTML
+  ===================================================== */
 
   content.innerHTML = `
 
@@ -3099,7 +3240,7 @@ function openArticle(item) {
         dateText
         ? `
           <span>
-            ${escapeHTML(dateText)}
+            ${dateText}
           </span>
         `
         : ""
@@ -3107,6 +3248,10 @@ function openArticle(item) {
 
     </div>
 
+
+    <!-- ================================================
+         SUMMARY
+    ================================================= -->
 
     <div class="article-summary-box">
 
@@ -3124,19 +3269,22 @@ function openArticle(item) {
       </div>
 
 
+      <!-- ==============================================
+           IMPORTANCE
+      =============================================== -->
+
       <div class="article-points">
 
         <h3>
-          ما الذي يعنيه الخبر؟
+
+          💡 ما الذي يعنيه الخبر؟
+
         </h3>
+
 
         <p>
 
-          يعرض NOWNEX هذا الخبر في صورة
-          مختصرة باللغة العربية اعتماداً
-          على المعلومات المتاحة من المصدر
-          الأصلي، مع الحفاظ على أهم النقاط
-          دون إضافة معلومات غير مؤكدة.
+          ${importance}
 
         </p>
 
@@ -3144,6 +3292,10 @@ function openArticle(item) {
 
     </div>
 
+
+    <!-- ================================================
+         SOURCE
+    ================================================= -->
 
     <div class="article-source">
 
@@ -3191,8 +3343,8 @@ function openArticle(item) {
 
         NOWNEX يعرض ملخصاً عربياً للخبر
         مع الإشارة إلى مصدره الأصلي.
-        للاطلاع على التفاصيل الكاملة،
-        يرجى زيارة المصدر الأصلي.
+        للاطلاع على النص الكامل، يرجى
+        زيارة المصدر.
 
       </div>
 
@@ -3201,11 +3353,16 @@ function openArticle(item) {
   `;
 
 
+  /* =====================================================
+     OPEN
+  ===================================================== */
+
   overlay.classList.add("active");
 
   document.body.classList.add(
     "article-open"
   );
+
 
   overlay.scrollTop = 0;
 
@@ -3233,7 +3390,7 @@ function closeArticle() {
 
 
 /* =====================================================
-   LOAD NEWS.JSON
+   LOAD NEWS
 ===================================================== */
 
 async function loadNews() {
@@ -3246,34 +3403,12 @@ async function loadNews() {
 
   try {
 
-    /*
-       نستخدم مساراً نسبياً واضحاً
-       مع timestamp لمنع Cache.
-    */
-
-    const newsURL =
-      new URL(
-        "news.json",
-        document.baseURI
-      );
-
-
-    newsURL.searchParams.set(
-      "v",
-      Date.now().toString()
-    );
-
-
     const response =
       await fetch(
-        newsURL.href,
+        "news.json?v=" +
+        Date.now(),
         {
-          method: "GET",
-          cache: "no-store",
-          headers: {
-            "Cache-Control":
-              "no-cache"
-          }
+          cache: "no-store"
         }
       );
 
@@ -3281,8 +3416,7 @@ async function loadNews() {
     if (!response.ok) {
 
       throw new Error(
-        "news.json HTTP " +
-        response.status
+        "news.json could not be loaded"
       );
 
     }
@@ -3301,26 +3435,17 @@ async function loadNews() {
     if (!news.length) {
 
       throw new Error(
-        "news.json contains no news"
+        "No news available"
       );
 
     }
 
-
-    /*
-       تخزين الأخبار في الذاكرة
-       حتى يعمل البحث عليها.
-    */
 
     allNews = news;
 
 
     newsGrid.innerHTML = "";
 
-
-    /*
-       عرض آخر 8 أخبار.
-    */
 
     news
       .slice(0, 8)
@@ -3445,19 +3570,6 @@ async function loadNews() {
       );
 
 
-    console.log(
-      "NOWNEX: news.json loaded successfully.",
-      news.length,
-      "articles."
-    );
-
-
-    console.log(
-      "NOWNEX updatedAt:",
-      data.updatedAt
-    );
-
-
   }
 
 
@@ -3471,35 +3583,17 @@ async function loadNews() {
 
     newsGrid.innerHTML = `
 
-      <article class="trend-card">
+      <article class="news-error">
 
-        <div class="trend-number">
+        ⚠️
 
-          NOWNEX
+        <br><br>
 
-        </div>
+        الأخبار غير متاحة مؤقتاً.
 
+        <br>
 
-        <div class="trend-icon">
-
-          ⚠️
-
-        </div>
-
-
-        <h3>
-
-          الأخبار غير متاحة مؤقتاً
-
-        </h3>
-
-
-        <div class="trend-meta">
-
-          تعذر تحميل news.json.
-          حاول تحديث الصفحة بعد قليل.
-
-        </div>
+        حاول تحديث الصفحة بعد قليل.
 
       </article>
 
@@ -3517,15 +3611,15 @@ async function loadNews() {
 loadNews();
 
 
-/*
-   تحديث الأخبار من news.json
-   كل 10 دقائق.
-*/
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
 
 setInterval(
   loadNews,
   10 * 60 * 1000
 );
+
 
 </script>
 
