@@ -250,107 +250,124 @@ nav a.active{
 
 
 /* =========================================================
-   HERO — CINEMATIC WIDE DESIGN
+   HERO
+   الصورة الآن خلفية كاملة للواجهة
 ========================================================= */
 
 .hero{
 
-  width:min(1500px,100%);
+  width:min(var(--max),100%);
 
   margin:auto;
 
   min-height:560px;
 
-  padding:25px 35px 0;
-
   position:relative;
 
-  display:grid;
-
-  grid-template-columns:
-    1.05fr
-    .95fr;
+  display:flex;
 
   align-items:center;
 
-  overflow:visible;
+  justify-content:flex-start;
+
+  overflow:hidden;
+
+  padding:55px 55px 45px;
+
+  /*
+    صورة البانر الجديدة.
+    الروبوت موجود يمين الصورة
+    والفراغ الموجود يسار الصورة
+    مخصص للكتابة.
+  */
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(3,8,23,.08) 0%,
+      rgba(3,8,23,.02) 55%,
+      rgba(3,8,23,.05) 100%
+    ),
+    url("robot-hero.png");
+
+  background-size:cover;
+
+  background-position:center;
+
+  background-repeat:no-repeat;
+
+  isolation:isolate;
 }
 
 
 /*
-  The text and robot occupy the SAME visual area.
-
-  The robot is intentionally pulled toward the text,
-  creating the overlap requested.
+   طبقة خفيفة جدًا فوق الصورة
+   حتى تكون الكتابة واضحة
+   مع بقاء الروبوت ظاهرًا.
 */
+
+.hero::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  z-index:-1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3,8,23,.72) 0%,
+      rgba(3,8,23,.42) 30%,
+      rgba(3,8,23,.08) 58%,
+      transparent 100%
+    );
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
 
 .hero-content{
 
   position:relative;
 
-  z-index:8;
+  z-index:5;
 
-  max-width:780px;
+  width:52%;
 
-  padding:35px 10px 70px;
+  max-width:720px;
 
-  text-align:right;
-
-  pointer-events:none;
-}
-
-.hero-content > *{
-  pointer-events:auto;
-}
-
-
-/* Arabic:
-   TEXT RIGHT
-   ROBOT LEFT
-*/
-
-html[dir="rtl"] .hero-content{
-  grid-column:2;
-  grid-row:1;
-
-  text-align:right;
-
-  transform:
-    translateX(25px);
-}
-
-html[dir="rtl"] .hero-visual{
-  grid-column:1;
-  grid-row:1;
-
-  transform:
-    translateX(80px);
-}
-
-
-/* English:
-   TEXT LEFT
-   ROBOT RIGHT
-*/
-
-html[dir="ltr"] .hero-content{
-  grid-column:1;
-  grid-row:1;
+  padding:20px 0;
 
   text-align:left;
-
-  transform:
-    translateX(-25px);
 }
 
-html[dir="ltr"] .hero-visual{
-  grid-column:2;
-  grid-row:1;
 
-  transform:
-    translateX(-80px);
+/*
+   مهم:
+   لا نعكس مكان الكتابة عند تغيير اللغة.
+   الكتابة دائمًا في الفراغ الأيسر.
+*/
+
+html[dir="rtl"] .hero-content,
+html[dir="ltr"] .hero-content{
+
+  margin-left:0;
+  margin-right:0;
+
+  text-align:left;
 }
 
+
+/* =========================================================
+   HERO BADGE
+========================================================= */
 
 .hero-badge{
 
@@ -364,10 +381,10 @@ html[dir="ltr"] .hero-visual{
 
   margin-bottom:22px;
 
-  border:1px solid rgba(36,143,255,.38);
+  border:1px solid rgba(36,143,255,.42);
 
   background:
-    rgba(0,99,255,.055);
+    rgba(0,55,130,.25);
 
   color:#5caeff;
 
@@ -378,7 +395,9 @@ html[dir="ltr"] .hero-visual{
   font-weight:800;
 
   box-shadow:
-    0 0 25px rgba(0,110,255,.05);
+    0 0 25px rgba(0,110,255,.08);
+
+  backdrop-filter:blur(8px);
 }
 
 .live-dot{
@@ -395,35 +414,40 @@ html[dir="ltr"] .hero-visual{
 }
 
 
-/*
-   TWO LINES ONLY
-*/
+/* =========================================================
+   HERO TITLE
+========================================================= */
 
 .hero h1{
 
   font-size:
-    clamp(45px,5.3vw,80px);
+    clamp(44px,5vw,76px);
 
   line-height:1.08;
 
-  letter-spacing:-3px;
+  letter-spacing:-2.5px;
 
   font-weight:900;
 
-  margin-bottom:24px;
+  margin-bottom:22px;
 
   position:relative;
 
-  z-index:10;
-
-  text-shadow:
-    0 4px 20px rgba(0,0,0,.25);
+  z-index:7;
 }
+
+
+/*
+   العنوان سطران فقط
+*/
 
 .hero-title-line{
+
   display:block;
+
   white-space:nowrap;
 }
+
 
 .hero h1 .gradient{
 
@@ -442,50 +466,52 @@ html[dir="ltr"] .hero-visual{
 }
 
 
-/*
-  Description stays above the robot,
-  but doesn't create a separate column.
-*/
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
 
 .hero p{
 
-  max-width:680px;
+  max-width:650px;
 
-  color:#a1acc0;
+  color:#b2bed2;
 
   font-size:17px;
 
-  line-height:1.9;
+  line-height:1.85;
 
-  margin-bottom:28px;
+  margin-bottom:27px;
 
   font-weight:500;
 
-  position:relative;
+  text-align:left;
 
-  z-index:10;
+  text-shadow:
+    0 2px 12px rgba(0,0,0,.7);
 }
 
 
-/* BUTTONS */
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
 
 .hero-buttons{
 
   display:flex;
 
+  align-items:center;
+
+  justify-content:flex-start;
+
   gap:12px;
 
   flex-wrap:wrap;
-
-  position:relative;
-
-  z-index:11;
 }
 
 .primary-btn,
 .secondary-btn{
 
-  padding:14px 23px;
+  padding:14px 22px;
 
   border-radius:12px;
 
@@ -498,6 +524,8 @@ html[dir="ltr"] .hero-visual{
   transition:.22s;
 
   font-size:14px;
+
+  backdrop-filter:blur(8px);
 }
 
 .primary-btn{
@@ -514,15 +542,18 @@ html[dir="ltr"] .hero-visual{
   border:none;
 
   box-shadow:
-    0 8px 30px rgba(0,110,255,.22);
+    0 8px 30px rgba(0,110,255,.25);
 }
 
 .secondary-btn{
 
   background:
-    rgba(255,255,255,.035);
+    rgba(4,12,28,.65);
 
   color:#fff;
+
+  border:
+    1px solid rgba(255,255,255,.14);
 }
 
 .primary-btn:hover,
@@ -533,159 +564,58 @@ html[dir="ltr"] .hero-visual{
 
 
 /* =========================================================
-   ROBOT VISUAL
+   HERO LANGUAGE
 ========================================================= */
 
-.hero-visual{
+/*
+   الصورة والترتيب لا يتغيران.
+   الروبوت دائمًا يمين.
+   الكتابة دائمًا يسار.
+*/
 
-  position:relative;
+html[dir="rtl"] .hero,
+html[dir="ltr"] .hero{
 
-  min-height:550px;
-
-  height:100%;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  z-index:3;
-
-  pointer-events:none;
+  direction:ltr;
 }
 
 
 /*
-  Large atmospheric blue glow behind robot.
+   محتوى العربية يبقى عربيًا من ناحية
+   اتجاه النص، لكن موقعه لا يتغير.
 */
 
-.hero-visual::before{
+html[dir="rtl"] .hero-content{
 
-  content:"";
+  direction:rtl;
 
-  position:absolute;
-
-  width:680px;
-  height:680px;
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(0,125,255,.23) 0%,
-      rgba(0,105,255,.12) 35%,
-      transparent 72%
-    );
-
-  filter:blur(15px);
-
-  z-index:-3;
+  text-align:left;
 }
 
+html[dir="ltr"] .hero-content{
 
-/*
-  Additional light around the robot.
-*/
+  direction:ltr;
 
-.hero-visual::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:470px;
-  height:470px;
-
-  border-radius:50%;
-
-  border:
-    1px solid rgba(0,155,255,.16);
-
-  box-shadow:
-    0 0 80px rgba(0,120,255,.12);
-
-  z-index:-2;
-
-  pointer-events:none;
-}
-
-
-.robot-image{
-
-  width:
-    min(760px,125%);
-
-  height:
-    min(560px,100%);
-
-  object-fit:contain;
-
-  object-position:center;
-
-  display:block;
-
-  filter:
-    drop-shadow(
-      0 0 30px rgba(0,105,255,.28)
-    )
-    drop-shadow(
-      0 20px 35px rgba(0,0,0,.35)
-    );
-
-  position:relative;
-
-  z-index:3;
-
-  /*
-    This is what makes the robot
-    enter the text area.
-  */
-
-  transform:
-    scale(1.16)
-    translateY(8px);
-}
-
-
-/*
-  Arabic robot moves into the text area.
-*/
-
-html[dir="rtl"] .robot-image{
-
-  margin-left:-80px;
-  margin-right:-30px;
-}
-
-
-/*
-  English robot moves into the text area.
-*/
-
-html[dir="ltr"] .robot-image{
-
-  margin-right:-80px;
-  margin-left:-30px;
+  text-align:left;
 }
 
 
 /* =========================================================
    CATEGORY SLIDER
+   لم يتم تغيير نظام البطاقات المنزلقة
 ========================================================= */
 
 .category-section{
 
   width:min(var(--max),100%);
 
-  margin:-22px auto 0;
+  margin:-12px auto 0;
 
   padding:0 30px 28px;
 
   position:relative;
 
-  z-index:30;
+  z-index:20;
 }
 
 .category-slider{
@@ -832,7 +762,7 @@ html[dir="ltr"] .robot-image{
 
 
 /* =========================================================
-   TRENDING
+   TRENDING NEWS
 ========================================================= */
 
 .section{
@@ -1054,7 +984,16 @@ html[dir="ltr"] .trend-icon{
 
 
 /* =========================================================
-   ARTICLE
+   FEATURE
+========================================================= */
+
+.feature{
+  display:none;
+}
+
+
+/* =========================================================
+   ARTICLE OVERLAY
 ========================================================= */
 
 .article-overlay{
@@ -1602,6 +1541,16 @@ footer{
 
 
 /* =========================================================
+   IMAGE ERROR
+========================================================= */
+
+.trend-image.image-error,
+.article-image.image-error{
+  display:none;
+}
+
+
+/* =========================================================
    TABLET
 ========================================================= */
 
@@ -1620,55 +1569,28 @@ footer{
     min-height:500px;
 
     padding:
-      25px 20px 0;
+      45px 35px;
+
+    background-position:
+      center;
+  }
+
+  .hero-content{
+
+    width:58%;
+
+    max-width:650px;
   }
 
   .hero h1{
 
     font-size:
-      clamp(40px,6vw,65px);
-
-    letter-spacing:-2px;
+      clamp(40px,5.8vw,65px);
   }
 
-  .hero-visual{
+  .hero-title-line{
 
-    min-height:490px;
-  }
-
-  .robot-image{
-
-    width:125%;
-
-    transform:
-      scale(1.08)
-      translateY(8px);
-  }
-
-  html[dir="rtl"] .hero-content{
-    transform:translateX(10px);
-  }
-
-  html[dir="ltr"] .hero-content{
-    transform:translateX(-10px);
-  }
-
-  html[dir="rtl"] .hero-visual{
-    transform:translateX(45px);
-  }
-
-  html[dir="ltr"] .hero-visual{
-    transform:translateX(-45px);
-  }
-
-  html[dir="rtl"] .robot-image{
-    margin-left:-45px;
-    margin-right:-20px;
-  }
-
-  html[dir="ltr"] .robot-image{
-    margin-right:-45px;
-    margin-left:-20px;
+    white-space:normal;
   }
 
   .category-card{
@@ -1733,90 +1655,94 @@ footer{
   }
 
 
-  /* =====================================================
+  /* -----------------------------------------
      MOBILE HERO
-  ===================================================== */
+  ----------------------------------------- */
 
   .hero{
 
-    display:block;
-
-    min-height:0;
+    min-height:570px;
 
     padding:
-      20px 12px 0;
+      35px 18px 30px;
 
-    overflow:hidden;
+    align-items:flex-start;
 
-    position:relative;
+    background-position:
+      67% center;
+
+    /*
+      الصورة تبقى خلفية.
+      الروبوت يمين والكتابة يسار.
+    */
+
+    background-size:auto 100%;
   }
 
 
-  /*
-     Mobile keeps the robot and text in one visual block.
-     The robot sits behind the lower part of the hero.
-  */
+  .hero::before{
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(3,8,23,.92) 0%,
+        rgba(3,8,23,.78) 42%,
+        rgba(3,8,23,.30) 75%,
+        rgba(3,8,23,.05) 100%
+      );
+  }
+
 
   .hero-content{
 
-    width:100%;
+    width:78%;
 
     max-width:none;
 
     padding:
-      10px 8px 0;
+      15px 0 0;
 
-    text-align:center !important;
+    margin:0;
 
-    transform:none !important;
-
-    position:relative;
-
-    z-index:10;
+    text-align:left;
   }
 
-  html[dir="rtl"] .hero-content,
-  html[dir="ltr"] .hero-content{
 
-    transform:none;
+  html[dir="rtl"] .hero-content{
+
+    text-align:left;
+
+    direction:rtl;
   }
 
 
   .hero-badge{
 
-    margin-bottom:15px;
+    font-size:10px;
 
-    font-size:11px;
+    padding:
+      7px 11px;
 
-    padding:8px 13px;
+    margin-bottom:17px;
   }
 
-
-  /*
-    Exactly TWO lines.
-  */
 
   .hero h1{
 
     font-size:
-      clamp(34px,9.5vw,52px);
+      clamp(34px,9vw,48px);
 
-    line-height:1.12;
+    line-height:1.1;
 
     letter-spacing:-1.5px;
 
-    margin-bottom:15px;
-
-    position:relative;
-
-    z-index:12;
+    margin-bottom:17px;
   }
+
 
   .hero-title-line{
 
     white-space:normal;
-
-    display:block;
   }
 
 
@@ -1824,29 +1750,23 @@ footer{
 
     font-size:13px;
 
-    line-height:1.85;
+    line-height:1.8;
 
-    margin:
-      0 auto 20px;
+    margin-bottom:21px;
 
-    max-width:600px;
-
-    position:relative;
-
-    z-index:12;
+    max-width:100%;
   }
 
 
   .hero-buttons{
 
-    justify-content:center;
+    flex-direction:column;
 
-    gap:8px;
+    align-items:flex-start;
 
-    position:relative;
-
-    z-index:15;
+    gap:9px;
   }
+
 
   .primary-btn,
   .secondary-btn{
@@ -1855,116 +1775,22 @@ footer{
       12px 16px;
 
     font-size:12px;
+
+    width:auto;
   }
 
 
-  /*
-     Robot is placed behind the lower text area.
-  */
-
-  .hero-visual{
-
-    width:100%;
-
-    min-height:300px;
-
-    height:300px;
-
-    margin:0 !important;
-
-    transform:none !important;
-
-    position:relative;
-
-    z-index:3;
-
-    margin-top:-55px !important;
-
-    display:flex;
-
-    align-items:flex-end;
-
-    justify-content:center;
-  }
-
-  .hero-visual::before{
-
-    width:420px;
-
-    height:420px;
-
-    bottom:-80px;
-  }
-
-  .hero-visual::after{
-
-    width:290px;
-
-    height:290px;
-
-    bottom:5px;
-  }
-
-
-  .robot-image{
-
-    width:130%;
-
-    max-width:none;
-
-    height:330px;
-
-    object-fit:contain;
-
-    object-position:center bottom;
-
-    transform:
-      scale(1.08)
-      translateY(5px);
-
-    margin:0 !important;
-
-    position:relative;
-
-    z-index:3;
-
-    /*
-      Fade the bottom of image naturally into background.
-    */
-
-    -webkit-mask-image:
-      linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 78%,
-        transparent 100%
-      );
-
-    mask-image:
-      linear-gradient(
-        to bottom,
-        #000 0%,
-        #000 78%,
-        transparent 100%
-      );
-  }
-
-
-  /*
-    Categories remain a horizontal slider.
-  */
+  /* -----------------------------------------
+     CATEGORY SLIDER
+  ----------------------------------------- */
 
   .category-section{
 
     margin:
-      -10px auto 0;
+      -5px auto 0;
 
     padding:
       0 13px 25px;
-
-    position:relative;
-
-    z-index:30;
   }
 
   .category-slider{
@@ -1973,8 +1799,6 @@ footer{
 
     padding:
       3px 2px 9px;
-
-    overflow-x:auto;
   }
 
   .category-card{
@@ -2008,9 +1832,9 @@ footer{
   }
 
 
-  /* =====================================================
+  /* -----------------------------------------
      NEWS
-  ===================================================== */
+  ----------------------------------------- */
 
   .section{
 
@@ -2042,6 +1866,7 @@ footer{
     font-size:11px;
   }
 
+
   .trend-grid{
 
     grid-template-columns:
@@ -2071,9 +1896,9 @@ footer{
   }
 
 
-  /* =====================================================
+  /* -----------------------------------------
      ARTICLE
-  ===================================================== */
+  ----------------------------------------- */
 
   .article-overlay{
 
@@ -2105,9 +1930,9 @@ footer{
   }
 
 
-  /* =====================================================
+  /* -----------------------------------------
      FOOTER
-  ===================================================== */
+  ----------------------------------------- */
 
   .footer-inner{
 
@@ -2127,34 +1952,33 @@ footer{
 
 @media(max-width:380px){
 
+  .hero{
+
+    min-height:540px;
+
+    background-position:
+      70% center;
+  }
+
+  .hero-content{
+
+    width:82%;
+  }
+
   .hero h1{
 
-    font-size:33px;
+    font-size:32px;
   }
 
   .hero-buttons{
 
-    flex-direction:column;
-
-    align-items:center;
+    align-items:flex-start;
   }
 
   .primary-btn,
   .secondary-btn{
 
     width:220px;
-  }
-
-  .hero-visual{
-
-    min-height:270px;
-
-    height:270px;
-  }
-
-  .robot-image{
-
-    height:300px;
   }
 
   .category-card{
@@ -2275,9 +2099,8 @@ footer{
 <section class="hero">
 
 
-  <!-- TEXT -->
-
   <div class="hero-content">
+
 
     <div class="hero-badge">
 
@@ -2337,23 +2160,8 @@ footer{
 
     </div>
 
-  </div>
-
-
-
-  <!-- ROBOT -->
-
-  <div class="hero-visual">
-
-    <img
-      src="robot-hero.png"
-      class="robot-image"
-      alt="NOWNEX AI"
-      onerror="this.style.display='none'"
-    >
 
   </div>
-
 
 </section>
 
@@ -4570,7 +4378,7 @@ loadNews();
 
 
 /*
-  Refresh news every 10 minutes.
+  تحديث الأخبار كل 10 دقائق
 */
 
 setInterval(
