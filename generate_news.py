@@ -11,8 +11,7 @@ import feedparser
 
 
 # ============================================================
-# NOWNEX — Arabic AI News Engine
-# Stable Version
+# NOWNEX — Bilingual Arabic / English News Engine
 # ============================================================
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -39,12 +38,10 @@ GEMINI_URL = (
 # SETTINGS
 # ============================================================
 
-# لا نريد إرسال عدد كبير من الطلبات إلى Gemini.
 MAX_NEWS = 8
 
 REQUEST_TIMEOUT = 25
 
-# وقت الانتظار بين الأخبار.
 REQUEST_DELAY = 8
 
 
@@ -54,9 +51,7 @@ REQUEST_DELAY = 8
 
 RSS_FEEDS = [
 
-    # =========================
     # TECHNOLOGY
-    # =========================
 
     (
         "TechCrunch",
@@ -77,9 +72,7 @@ RSS_FEEDS = [
     ),
 
 
-    # =========================
     # AI
-    # =========================
 
     (
         "TechCrunch AI",
@@ -88,9 +81,7 @@ RSS_FEEDS = [
     ),
 
 
-    # =========================
     # CARS
-    # =========================
 
     (
         "Motor1",
@@ -105,9 +96,7 @@ RSS_FEEDS = [
     ),
 
 
-    # =========================
     # WORLD
-    # =========================
 
     (
         "BBC عربي",
@@ -143,7 +132,9 @@ VALID_CATEGORIES = {
     "Cars",
     "Science",
     "Sports",
-    "Facts"
+    "Facts",
+    "Products",
+    "Shopping"
 }
 
 
@@ -214,8 +205,6 @@ def normalize_title(title):
 
 def extract_rss_image(entry):
 
-    # media_content
-
     media_content = entry.get(
         "media_content",
         []
@@ -232,8 +221,6 @@ def extract_rss_image(entry):
         if url:
             return str(url).strip()
 
-
-    # media_thumbnail
 
     media_thumbnail = entry.get(
         "media_thumbnail",
@@ -252,8 +239,6 @@ def extract_rss_image(entry):
             return str(url).strip()
 
 
-    # enclosure
-
     enclosures = entry.get(
         "enclosures",
         []
@@ -270,8 +255,6 @@ def extract_rss_image(entry):
         if url:
             return str(url).strip()
 
-
-    # image inside HTML
 
     sources = [
 
@@ -328,7 +311,6 @@ def get_og_image(url):
 
         page = response.text[:800000]
 
-
         patterns = [
 
             r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
@@ -340,7 +322,6 @@ def get_og_image(url):
             r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']'
 
         ]
-
 
         for pattern in patterns:
 
@@ -369,14 +350,12 @@ def get_og_image(url):
 
                     return image
 
-
     except Exception as error:
 
         print(
             "Image error:",
             error
         )
-
 
     return ""
 
@@ -385,23 +364,14 @@ def get_og_image(url):
 # BEST IMAGE
 # ============================================================
 
-def get_best_image(
-    entry,
-    link
-):
+def get_best_image(entry, link):
 
-    image = extract_rss_image(
-        entry
-    )
+    image = extract_rss_image(entry)
 
     if image:
-
         return image
 
-
-    return get_og_image(
-        link
-    )
+    return get_og_image(link)
 
 
 # ============================================================
@@ -414,7 +384,6 @@ def remove_duplicates(items):
 
     seen = set()
 
-
     for item in items:
 
         key = normalize_title(
@@ -424,17 +393,12 @@ def remove_duplicates(items):
         if not key:
             continue
 
-
         if key in seen:
             continue
 
-
         seen.add(key)
 
-        result.append(
-            item
-        )
-
+        result.append(item)
 
     return result
 
@@ -446,7 +410,6 @@ def remove_duplicates(items):
 def get_news():
 
     articles = []
-
 
     for (
         source_name,
@@ -460,22 +423,18 @@ def get_news():
             source_name
         )
 
-
         try:
 
             feed = feedparser.parse(
                 feed_url
             )
 
-
             entries = feed.entries[:12]
-
 
             print(
                 "Found:",
                 len(entries)
             )
-
 
             for entry in entries:
 
@@ -485,7 +444,6 @@ def get_news():
                         ""
                     )
                 )
-
 
                 if not title:
                     continue
@@ -609,17 +567,14 @@ def summary_is_valid(
     if not summary:
         return False
 
-
-    if len(summary) < 120:
+    if len(summary) < 100:
         return False
-
 
     if summary.lower() == clean_text(
         title
     ).lower():
 
         return False
-
 
     sentences = len(
         re.findall(
@@ -628,10 +583,50 @@ def summary_is_valid(
         )
     )
 
-
     if sentences < 2:
         return False
 
+    return True
+
+
+# ============================================================
+# ENGLISH VALIDATION
+# ============================================================
+
+def english_is_valid(
+    title,
+    summary
+):
+
+    summary = clean_text(
+        summary
+    )
+
+    title = clean_text(
+        title
+    )
+
+    if not title:
+        return False
+
+    if not summary:
+        return False
+
+    if len(summary) < 100:
+        return False
+
+    if summary.lower() == title.lower():
+        return False
+
+    sentences = len(
+        re.findall(
+            r"[.!?]",
+            summary
+        )
+    )
+
+    if sentences < 2:
+        return False
 
     return True
 
@@ -656,9 +651,9 @@ def ask_gemini(
 
 
     prompt = f"""
-أنت محرر الأخبار في منصة NOWNEX العربية.
+أنت محرر الأخبار الرئيسي في منصة NOWNEX.
 
-اكتب نسخة عربية أصلية ومختصرة للخبر التالي.
+المطلوب إنشاء نسخة ثنائية اللغة للخبر التالي.
 
 المصدر:
 {source}
@@ -672,23 +667,30 @@ def ask_gemini(
 المعلومات المتاحة:
 {description}
 
-أرسل JSON فقط:
+أرسل JSON فقط بهذا الشكل:
 
 {{
-  "title": "عنوان عربي احترافي",
-  "summary": "ملخص عربي من 3 إلى 5 جمل"
+  "title_ar": "عنوان عربي احترافي",
+  "summary_ar": "ملخص عربي من 3 إلى 5 جمل",
+  "title_en": "Professional English headline",
+  "summary_en": "English summary of 3 to 5 sentences"
 }}
 
-القواعد:
+القواعد المهمة:
 
-- العربية الفصحى.
-- لا تكرر العنوان داخل الملخص.
-- الملخص من 3 إلى 5 جمل.
-- لا تخترع أي معلومة.
-- لا تخترع أسماء أو أرقامًا أو تصريحات.
-- لا تضف رأيًا.
-- اعتمد فقط على المعلومات المتاحة.
-- أرسل JSON صالحًا فقط.
+1. اكتب العربية بالفصحى.
+2. اكتب الإنجليزية بلغة صحفية طبيعية واحترافية.
+3. العربية والإنجليزية يجب أن تنقلا نفس المعلومات.
+4. لا تخترع أي معلومة.
+5. لا تخترع أسماء أو أرقامًا أو تصريحات.
+6. لا تضف رأيًا شخصيًا.
+7. اعتمد فقط على المعلومات المتاحة.
+8. لا تترجم ترجمة حرفية ركيكة.
+9. اجعل العنوان العربي مناسبًا للأخبار.
+10. اجعل العنوان الإنجليزي مناسبًا للأخبار.
+11. الملخص العربي من 3 إلى 5 جمل.
+12. الملخص الإنجليزي من 3 إلى 5 جمل.
+13. أرسل JSON صالحًا فقط بدون Markdown.
 """
 
 
@@ -735,12 +737,6 @@ def ask_gemini(
     }
 
 
-    # ========================================================
-    # IMPORTANT:
-    # We use only ONE request normally.
-    # If 429 occurs, wait before trying again.
-    # ========================================================
-
     for attempt in range(1, 4):
 
         try:
@@ -769,10 +765,6 @@ def ask_gemini(
             )
 
 
-            # ------------------------------------------------
-            # RATE LIMIT
-            # ------------------------------------------------
-
             if response.status_code == 429:
 
                 print(
@@ -781,15 +773,12 @@ def ask_gemini(
 
 
                 if attempt == 1:
-
                     wait_time = 30
 
                 elif attempt == 2:
-
                     wait_time = 60
 
                 else:
-
                     wait_time = 90
 
 
@@ -804,10 +793,6 @@ def ask_gemini(
 
                 continue
 
-
-            # ------------------------------------------------
-            # OTHER ERROR
-            # ------------------------------------------------
 
             if response.status_code != 200:
 
@@ -855,38 +840,57 @@ def ask_gemini(
             )
 
 
-            new_title = clean_text(
+            title_ar = clean_text(
                 result.get(
-                    "title",
+                    "title_ar",
                     ""
                 )
             )
 
 
-            new_summary = clean_text(
+            summary_ar = clean_text(
                 result.get(
-                    "summary",
+                    "summary_ar",
                     ""
                 )
             )
 
 
-            if not new_title:
+            title_en = clean_text(
+                result.get(
+                    "title_en",
+                    ""
+                )
+            )
+
+
+            summary_en = clean_text(
+                result.get(
+                    "summary_en",
+                    ""
+                )
+            )
+
+
+            if not summary_is_valid(
+                title_ar,
+                summary_ar
+            ):
 
                 print(
-                    "Empty Gemini title."
+                    "Invalid Arabic summary."
                 )
 
                 return None
 
 
-            if not summary_is_valid(
-                title,
-                new_summary
+            if not english_is_valid(
+                title_en,
+                summary_en
             ):
 
                 print(
-                    "Invalid Gemini summary."
+                    "Invalid English summary."
                 )
 
                 return None
@@ -894,11 +898,17 @@ def ask_gemini(
 
             return {
 
-                "title":
-                    new_title,
+                "title_ar":
+                    title_ar,
 
-                "summary":
-                    new_summary
+                "summary_ar":
+                    summary_ar,
+
+                "title_en":
+                    title_en,
+
+                "summary_en":
+                    summary_en
 
             }
 
@@ -925,9 +935,7 @@ def ask_gemini(
 # SELECT NEWS
 # ============================================================
 
-def select_news(
-    articles
-):
+def select_news(articles):
 
     technology = [
         x for x in articles
@@ -961,45 +969,25 @@ def select_news(
     selected = []
 
 
-    # ---------------------------------------------
-    # TECHNOLOGY
-    # ---------------------------------------------
-
     selected.extend(
         technology[:2]
     )
 
-
-    # ---------------------------------------------
-    # CARS
-    # ---------------------------------------------
 
     selected.extend(
         cars[:2]
     )
 
 
-    # ---------------------------------------------
-    # AI
-    # ---------------------------------------------
-
     selected.extend(
         ai_news[:1]
     )
 
 
-    # ---------------------------------------------
-    # OTHER
-    # ---------------------------------------------
-
     selected.extend(
         other[:3]
     )
 
-
-    # ---------------------------------------------
-    # Fill if necessary
-    # ---------------------------------------------
 
     selected_keys = {
         normalize_title(
@@ -1045,7 +1033,7 @@ def main():
 
     print("")
     print("==============================")
-    print(" NOWNEX AI NEWS ENGINE")
+    print(" NOWNEX BILINGUAL NEWS ENGINE")
     print("==============================")
     print("")
 
@@ -1082,10 +1070,6 @@ def main():
 
     final_news = []
 
-
-    # ========================================================
-    # PROCESS ARTICLES
-    # ========================================================
 
     for index, article in enumerate(
         selected,
@@ -1130,11 +1114,6 @@ def main():
         )
 
 
-        # ----------------------------------------------------
-        # If Gemini refuses / rate limited,
-        # skip this article instead of crashing everything.
-        # ----------------------------------------------------
-
         if not ai:
 
             print(
@@ -1146,17 +1125,46 @@ def main():
 
         item = {
 
+            # ==========================================
+            # ARABIC
+            # ==========================================
+
+            "title_ar":
+                ai["title_ar"],
+
+            "summary_ar":
+                ai["summary_ar"],
+
+
+            # ==========================================
+            # ENGLISH
+            # ==========================================
+
+            "title_en":
+                ai["title_en"],
+
+            "summary_en":
+                ai["summary_en"],
+
+
+            # ==========================================
+            # BACKWARD COMPATIBILITY
+            # ==========================================
+
             "title":
-                ai["title"],
+                ai["title_ar"],
 
             "summary":
-                ai["summary"],
+                ai["summary_ar"],
 
             "description":
-                ai["summary"],
+                ai["summary_ar"],
 
-            # IMPORTANT:
-            # Keep the original category.
+
+            # ==========================================
+            # ORIGINAL DATA
+            # ==========================================
+
             "category":
                 article["category"],
 
@@ -1192,7 +1200,11 @@ def main():
 
 
         print(
-            "✓ Article created"
+            "✓ Arabic article created"
+        )
+
+        print(
+            "✓ English article created"
         )
 
 
@@ -1209,16 +1221,10 @@ def main():
             )
 
 
-        # Important delay between API requests.
-
         time.sleep(
             REQUEST_DELAY
         )
 
-
-    # ========================================================
-    # NO ARTICLES
-    # ========================================================
 
     if not final_news:
 
@@ -1239,15 +1245,8 @@ def main():
             "================================"
         )
 
-        # IMPORTANT:
-        # Do NOT overwrite news.json.
-        # Do NOT crash the entire website.
         return
 
-
-    # ========================================================
-    # OUTPUT
-    # ========================================================
 
     output = {
 
