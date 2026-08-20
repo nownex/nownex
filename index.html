@@ -227,7 +227,6 @@ nav a.active{
     order:1;
 }
 
-.language-btn,
 .search-btn,
 .mobile-menu{
 
@@ -244,18 +243,6 @@ nav a.active{
     transition:.2s;
 }
 
-.language-btn{
-
-    height:44px;
-
-    min-width:84px;
-
-    padding:0 13px;
-
-    font-size:13px;
-
-    font-weight:800;
-}
 
 .search-btn,
 .mobile-menu{
@@ -271,7 +258,6 @@ nav a.active{
     display:none;
 }
 
-.language-btn:hover,
 .search-btn:hover,
 .mobile-menu:hover{
 
@@ -389,17 +375,6 @@ html[dir="rtl"] .hero-content{
 
 }
 
-html[dir="ltr"] .hero-content{
-
-    left:3%;
-
-    right:auto;
-
-    direction:ltr;
-
-    text-align:center;
-
-}
 
 
 /* =========================================================
@@ -803,12 +778,6 @@ html[dir="ltr"] .hero-content{
    الإنجليزية أيضًا في الجهة اليسرى
 */
 
-html[dir="ltr"] .category-text{
-
-    direction:ltr;
-
-    text-align:center;
-}
 
 
 /* =========================================================
@@ -1090,12 +1059,6 @@ html[dir="ltr"] .category-text{
     font-size:28px;
 }
 
-html[dir="ltr"] .trend-icon{
-
-    left:auto;
-
-    right:17px;
-}
 
 .trend-card h3{
 
@@ -1305,12 +1268,6 @@ html[dir="ltr"] .trend-icon{
     margin-bottom:20px;
 }
 
-html[dir="ltr"] .article-summary-box{
-
-    border-right:1px solid var(--line);
-
-    border-left:3px solid var(--gold);
-}
 
 .article-summary-label{
 
@@ -1509,12 +1466,6 @@ html[dir="ltr"] .article-summary-box{
     cursor:pointer;
 }
 
-html[dir="ltr"] .close-search{
-
-    left:auto;
-
-    right:12px;
-}
 
 .search-results{
 
@@ -1728,17 +1679,6 @@ footer{
         border-radius:11px;
 
         font-size:20px;
-    }
-
-    .language-btn{
-
-        min-width:74px;
-
-        height:40px;
-
-        padding:0 8px;
-
-        font-size:11px;
     }
 
     .search-btn,
@@ -2153,14 +2093,7 @@ footer{
 
 
     <div class="header-actions">
-
-        <button class="language-btn"
-                id="languageBtn"
-                onclick="toggleLanguage()">
-            🇬🇧 EN
-        </button>
-
-        <button class="search-btn"
+<button class="search-btn"
                 onclick="openSearch()"
                 aria-label="بحث">
             🔍
@@ -2658,8 +2591,7 @@ let trendingNews=[];
 
 let currentCategory=null;
 
-let currentLanguage=
-    localStorage.getItem("nownex-language") || "ar";
+const currentLanguage = "ar";
 
 
 /* =========================================================
@@ -2763,107 +2695,6 @@ searchTry:"جرّب كلمة أخرى.",
 newsCount:"خبر متاح",
 
 languageButton:"🇬🇧 EN"
-
-},
-
-en:{
-
-navHome:"Home",
-navTrending:"Trending",
-navCategories:"Categories",
-navAbout:"About NOWNEX",
-
-liveTrend:"AI & THE FUTURE",
-
-heroLine1:"The future moves",
-
-heroLine2:"faster than ever.",
-
-heroDescription:
-"NOWNEX brings together the latest developments in artificial intelligence, technology and ideas shaping tomorrow's world.",
-
-exploreTrend:"⚡ Explore Trending Now",
-
-exploreCategories:"▦ Explore Categories",
-
-mostTrending:"Trending",
-nowWord:"Now",
-
-trendingDescription:
-"The latest stories and news from around the world, updated automatically.",
-
-showAll:"View All →",
-
-catTrending:"Trending Now",
-catTrendingDesc:"Discover the fastest-growing topics around the world.",
-
-catAI:"AI Intelligence",
-catAIDesc:"The latest artificial intelligence technologies.",
-
-catTechnology:"Continuous Evolution",
-catTechnologyDesc:"Innovations and future technologies.",
-
-catCars:"Cars",
-catCarsDesc:"Latest cars and automotive technology.",
-
-catEntertainment:"Entertainment",
-catEntertainmentDesc:"Movies, games and internet culture.",
-
-catWorld:"Global Coverage",
-catWorldDesc:"News and insights from everywhere.",
-
-catFacts:"Facts & Knowledge",
-catFactsDesc:"Science and fascinating facts.",
-
-catProducts:"Trending Products",
-catProductsDesc:"Products getting major attention.",
-
-footerTagline:"What's happening now. What's next.",
-
-copyright:"© 2026 NOWNEX — All rights reserved",
-
-searchPlaceholder:"Search NOWNEX news...",
-
-loading:"Loading the latest news...",
-
-loadingMeta:"NOWNEX · Live update",
-
-readArticle:"Read article →",
-
-trendingLabel:"Trending",
-
-source:"Source:",
-
-summary:"📰 NOWNEX Summary",
-
-meaning:"💡 What does this mean?",
-
-meaningText:
-"NOWNEX presents this story in a concise format to make the event and its significance easier to understand, while keeping the original source clearly referenced.",
-
-originalSource:"Original Source",
-
-readOriginal:"Read Original ↗",
-
-unavailableLink:
-"The original source link is currently unavailable.",
-
-articleNote:
-"NOWNEX provides a summary of the story and references the original source. Visit the source for the full article.",
-
-noNews:"No news available",
-
-noNewsText:
-"There are currently no news articles available in this category.",
-
-searchNoResults:
-"No matching news was found.",
-
-searchTry:"Try another keyword.",
-
-newsCount:"articles available",
-
-languageButton:"🇩🇿 AR"
 
 }
 
@@ -3049,15 +2880,7 @@ function applyLanguage(){
             }
 
         });
-
-
-    document.getElementById(
-        "languageBtn"
-    ).textContent=
-        t("languageButton");
-
-
-    if(allNews.length){
+if(allNews.length){
 
         renderNews(
             getFilteredNews(
@@ -3067,21 +2890,6 @@ function applyLanguage(){
     }
 }
 
-
-function toggleLanguage(){
-
-    currentLanguage=
-        currentLanguage==="ar"
-            ? "en"
-            : "ar";
-
-    localStorage.setItem(
-        "nownex-language",
-        currentLanguage
-    );
-
-    applyLanguage();
-}
 
 
 /* =========================================================
