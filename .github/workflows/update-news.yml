@@ -2,46 +2,177 @@ name: Update NOWNEX News
 
 on:
   workflow_dispatch:
+
   schedule:
+    # تحديث الأخبار كل 6 ساعات
     - cron: "0 */6 * * *"
 
 permissions:
   contents: write
 
 jobs:
+
   update-news:
+
     runs-on: ubuntu-latest
 
     steps:
+
+      # ==========================================
+      # تحميل المشروع
+      # ==========================================
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
+
+      # ==========================================
+      # Python
+      # ==========================================
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+
+      # ==========================================
+      # المكتبات
+      # ==========================================
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests feedparser
 
+
+      # ==========================================
+      # توليد أخبار NOWNEX
+      # ==========================================
+
       - name: Generate Arabic news
+
         env:
+
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
           GEMINI_MODEL: gemini-2.5-flash
+
         run: |
+
+          echo "=========================================="
+          echo " NOWNEX NEWS UPDATE"
+          echo "=========================================="
+
           python generate_news.py
 
-      - name: Save news.json
+
+      # ==========================================
+      # التأكد من وجود news.json
+      # ==========================================
+
+      - name: Validate news.json
+
         run: |
+
+          echo "Checking news.json..."
+
+          if [ ! -f news.json ]; then
+            echo "ERROR: news.json was not created."
+            exit 1
+          fi
+
+          python - <<'PY'
+
+          import json
+          import sys
+
+          with open(
+              "news.json",
+              "r",
+              encoding="utf-8"
+          ) as f:
+
+              data = json.load(f)
+
+          news = data.get("news", [])
+
+          print(
+              f"NOWNEX articles: {len(news)}"
+          )
+
+          categories = [
+              "AI",
+              "Technology",
+              "Cars",
+              "Entertainment",
+              "World",
+              "Facts",
+              "Products"
+          ]
+
+          missing = []
+
+          for category in categories:
+
+              count = sum(
+                  1
+                  for item in news
+                  if item.get("category") == category
+              )
+
+              print(
+                  f"{category}: {count}"
+              )
+
+              if count < 3:
+
+                  missing.append(
+                      f"{category} ({count}/3)"
+                  )
+
+          if missing:
+
+              print(
+                  "ERROR: Some categories have fewer than 3 articles:"
+              )
+
+              for item in missing:
+                  print(" -", item)
+
+              sys.exit(1)
+
+          print(
+              "SUCCESS: All categories contain at least 3 articles."
+          )
+
+          PY
+
+
+      # ==========================================
+      # حفظ الأخبار
+      # ==========================================
+
+      - name: Save news.json
+
+        run: |
+
           git config user.name "NOWNEX Bot"
+
           git config user.email "actions@github.com"
+
           git add news.json
 
+
           if git diff --cached --quiet; then
+
             echo "No changes to news.json"
+
           else
-            git commit -m "Update NOWNEX Arabic news"
+
+            git commit \
+              -m "Update NOWNEX Arabic news"
+
             git push
+
           fi
