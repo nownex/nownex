@@ -11,14 +11,23 @@ import feedparser
 
 
 # ============================================================
-# NOWNEX — BILINGUAL NEWS ENGINE
+# NOWNEX NEWS ENGINE
+# 7 CATEGORIES × 3 ARTICLES = 21 ARTICLES MINIMUM
+# STRICT ARABIC / ENGLISH SEPARATION
 # ============================================================
+
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    raise RuntimeError("GEMINI_API_KEY is missing from GitHub Secrets.")
+    raise RuntimeError(
+        "GEMINI_API_KEY is missing from GitHub Secrets."
+    )
 
+
+# ============================================================
+# GEMINI
+# ============================================================
 
 GEMINI_MODEL = "gemini-3.6-flash"
 
@@ -32,43 +41,83 @@ GEMINI_URL = (
 # SETTINGS
 # ============================================================
 
-MAX_NEWS = 24
-
-# الموقع يحتاج 3 أخبار على الأقل لكل قسم
 MIN_PER_CATEGORY = 3
 
-# نأخذ عدة مرشحين لكل قسم حتى يكون لدينا بدائل
-CANDIDATES_PER_CATEGORY = 5
+MAX_NEWS = 24
 
-REQUEST_TIMEOUT = 25
-GEMINI_TIMEOUT = 90
+CANDIDATES_PER_CATEGORY = 12
 
-# وقت قصير بين طلبات Gemini
-REQUEST_DELAY = 2
-
-# عدد المحاولات لكل خبر
 GEMINI_RETRIES = 3
 
+REQUEST_TIMEOUT = 25
+
+GEMINI_TIMEOUT = 90
+
+REQUEST_DELAY = 2
+
+
+# ============================================================
+# MAIN CATEGORIES
+# ============================================================
 
 MAIN_CATEGORIES = [
+
     "AI",
+
     "Technology",
+
     "Cars",
+
     "Entertainment",
+
     "World",
+
     "Facts",
+
     "Products",
+
 ]
 
 
-VALID_CATEGORIES = set(MAIN_CATEGORIES)
+VALID_CATEGORIES = set(
+    MAIN_CATEGORIES
+)
 
 
 # ============================================================
-# NEWS SOURCES
+# RSS SOURCES
 # ============================================================
 
 RSS_FEEDS = [
+
+    # ========================================================
+    # AI
+    # ========================================================
+
+    (
+        "TechCrunch AI",
+        "https://techcrunch.com/tag/artificial-intelligence/feed/",
+        "AI"
+    ),
+
+    (
+        "Google News AI",
+        "https://news.google.com/rss/search?q=artificial%20intelligence&hl=en&gl=US&ceid=US:en",
+        "AI"
+    ),
+
+    (
+        "Google News AI Arabic",
+        "https://news.google.com/rss/search?q=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A&hl=ar&gl=DZ&ceid=DZ:ar",
+        "AI"
+    ),
+
+    (
+        "The Verge AI",
+        "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "AI"
+    ),
+
 
     # ========================================================
     # TECHNOLOGY
@@ -100,29 +149,6 @@ RSS_FEEDS = [
 
 
     # ========================================================
-    # AI
-    # ========================================================
-
-    (
-        "TechCrunch AI",
-        "https://techcrunch.com/tag/artificial-intelligence/feed/",
-        "AI"
-    ),
-
-    (
-        "Google News AI",
-        "https://news.google.com/rss/search?q=artificial%20intelligence&hl=en&gl=US&ceid=US:en",
-        "AI"
-    ),
-
-    (
-        "Google News AI Arabic",
-        "https://news.google.com/rss/search?q=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A&hl=ar&gl=DZ&ceid=DZ:ar",
-        "AI"
-    ),
-
-
-    # ========================================================
     # CARS
     # ========================================================
 
@@ -146,7 +172,7 @@ RSS_FEEDS = [
 
     (
         "Google News Cars",
-        "https://news.google.com/rss/search?q=cars%20automotive&hl=en&gl=US&ceid=US:en",
+        "https://news.google.com/rss/search?q=cars%20automotive%20vehicles&hl=en&gl=US&ceid=US:en",
         "Cars"
     ),
 
@@ -169,7 +195,7 @@ RSS_FEEDS = [
 
     (
         "Google News Entertainment",
-        "https://news.google.com/rss/search?q=entertainment%20movies%20music&hl=en&gl=US&ceid=US:en",
+        "https://news.google.com/rss/search?q=entertainment%20movies%20music%20games&hl=en&gl=US&ceid=US:en",
         "Entertainment"
     ),
 
@@ -185,13 +211,13 @@ RSS_FEEDS = [
     # ========================================================
 
     (
-        "BBC عربي",
+        "BBC Arabic",
         "https://feeds.bbci.co.uk/arabic/rss.xml",
         "World"
     ),
 
     (
-        "الجزيرة",
+        "Al Jazeera",
         "https://www.aljazeera.net/aljazeera.rss",
         "World"
     ),
@@ -208,26 +234,32 @@ RSS_FEEDS = [
         "World"
     ),
 
+    (
+        "Google News World English",
+        "https://news.google.com/rss/search?q=world%20news&hl=en&gl=US&ceid=US:en",
+        "World"
+    ),
+
 
     # ========================================================
-    # FACTS
+    # FACTS / SCIENCE
     # ========================================================
 
     (
-        "Google News Science Facts",
-        "https://news.google.com/rss/search?q=science%20facts%20discovery&hl=en&gl=US&ceid=US:en",
+        "ScienceDaily",
+        "https://www.sciencedaily.com/rss/top/science.xml",
+        "Facts"
+    ),
+
+    (
+        "Google News Science",
+        "https://news.google.com/rss/search?q=science%20discovery%20research&hl=en&gl=US&ceid=US:en",
         "Facts"
     ),
 
     (
         "Google News Facts Arabic",
-        "https://news.google.com/rss/search?q=%D8%AD%D9%82%D8%A7%D8%A6%D9%82%20%D8%B9%D9%84%D9%85%20%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81%D8%A7%D8%AA&hl=ar&gl=DZ&ceid=DZ:ar",
-        "Facts"
-    ),
-
-    (
-        "ScienceDaily",
-        "https://www.sciencedaily.com/rss/top/science.xml",
+        "https://news.google.com/rss/search?q=%D8%AD%D9%82%D8%A7%D8%A6%D9%82%20%D8%B9%D9%84%D9%85%D9%8A%D8%A9%20%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81%D8%A7%D8%AA&hl=ar&gl=DZ&ceid=DZ:ar",
         "Facts"
     ),
 
@@ -238,7 +270,7 @@ RSS_FEEDS = [
 
     (
         "Google News Products",
-        "https://news.google.com/rss/search?q=best%20new%20products%20gadgets&hl=en&gl=US&ceid=US:en",
+        "https://news.google.com/rss/search?q=new%20products%20gadgets&hl=en&gl=US&ceid=US:en",
         "Products"
     ),
 
@@ -250,26 +282,32 @@ RSS_FEEDS = [
 
     (
         "Google News Products Arabic",
-        "https://news.google.com/rss/search?q=%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D9%87%D9%88%D8%A7%D8%AA%D9%81&hl=ar&gl=DZ&ceid=DZ:ar",
+        "https://news.google.com/rss/search?q=%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%20%D9%87%D9%88%D8%A7%D8%AA%D9%81%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9&hl=ar&gl=DZ&ceid=DZ:ar",
         "Products"
     ),
+
 ]
 
 
 # ============================================================
-# HTTP SESSION
+# SESSION
 # ============================================================
 
 SESSION = requests.Session()
 
 SESSION.headers.update({
-    "User-Agent": "NOWNEX/1.0 NewsBot",
-    "Accept": "application/rss+xml, application/xml, text/xml, text/html",
+
+    "User-Agent":
+        "NOWNEX/2.0 NewsBot",
+
+    "Accept":
+        "application/rss+xml, application/xml, text/xml, text/html",
+
 })
 
 
 # ============================================================
-# TEXT CLEANING
+# TEXT HELPERS
 # ============================================================
 
 def clean_text(value):
@@ -295,7 +333,9 @@ def clean_text(value):
 
 def normalize_title(title):
 
-    title = clean_text(title).lower()
+    title = clean_text(
+        title
+    ).lower()
 
     return re.sub(
         r"[^\w\u0600-\u06FF]+",
@@ -303,10 +343,6 @@ def normalize_title(title):
         title
     )
 
-
-# ============================================================
-# DUPLICATES
-# ============================================================
 
 def remove_duplicates(items):
 
@@ -317,7 +353,10 @@ def remove_duplicates(items):
     for item in items:
 
         key = normalize_title(
-            item.get("title", "")
+            item.get(
+                "title",
+                ""
+            )
         )
 
         if not key:
@@ -337,114 +376,228 @@ def remove_duplicates(items):
 # LANGUAGE ANALYSIS
 # ============================================================
 
-def count_arabic(text):
+def arabic_chars(text):
 
-    return len(
-        re.findall(
-            r"[\u0600-\u06FF]",
-            clean_text(text)
-        )
+    return re.findall(
+        r"[\u0600-\u06FF]",
+        clean_text(text)
     )
 
 
-def count_english(text):
+def english_chars(text):
 
-    return len(
-        re.findall(
-            r"[A-Za-z]",
-            clean_text(text)
-        )
+    return re.findall(
+        r"[A-Za-z]",
+        clean_text(text)
     )
 
 
-def count_letters(text):
+def all_letters(text):
 
-    return len(
-        re.findall(
-            r"[A-Za-z\u0600-\u06FF]",
-            clean_text(text)
-        )
+    return re.findall(
+        r"[A-Za-z\u0600-\u06FF]",
+        clean_text(text)
     )
 
 
 def arabic_ratio(text):
 
-    total = count_letters(text)
+    letters = all_letters(
+        text
+    )
 
-    if total == 0:
+    if not letters:
         return 0
 
-    return count_arabic(text) / total
+    return len(
+        arabic_chars(text)
+    ) / len(letters)
 
 
 def english_ratio(text):
 
-    total = count_letters(text)
+    letters = all_letters(
+        text
+    )
 
-    if total == 0:
+    if not letters:
         return 0
 
-    return count_english(text) / total
-
-
-def has_arabic(text):
-
-    return count_arabic(text) >= 3
-
-
-def has_english(text):
-
-    return count_english(text) >= 3
+    return len(
+        english_chars(text)
+    ) / len(letters)
 
 
 # ============================================================
-# STRICT LANGUAGE VALIDATION
+# ALLOWED FOREIGN NAMES
 # ============================================================
 
-def is_arabic_text(text):
+# أسماء تجارية وتقنية يمكن أن تظهر داخل النص العربي
+# بدون اعتبارها خلطًا للغة.
 
-    text = clean_text(text)
+ALLOWED_LATIN_WORDS = {
+
+    "AI",
+    "OpenAI",
+    "Anthropic",
+    "Google",
+    "Microsoft",
+    "Apple",
+    "Samsung",
+    "Tesla",
+    "Meta",
+    "Amazon",
+    "Nvidia",
+    "Intel",
+    "AMD",
+    "Sony",
+    "Nintendo",
+    "Netflix",
+    "YouTube",
+    "TikTok",
+    "Instagram",
+    "Facebook",
+    "WhatsApp",
+    "ChatGPT",
+    "Gemini",
+    "Claude",
+    "GPT",
+    "Android",
+    "iPhone",
+    "iOS",
+    "Windows",
+    "Xbox",
+    "PlayStation",
+    "BMW",
+    "Mercedes",
+    "Audi",
+    "Toyota",
+    "Honda",
+    "Ford",
+    "BYD",
+    "Hyundai",
+    "Kia",
+    "Reuters",
+    "BBC",
+    "TechCrunch",
+    "The",
+    "Verge",
+    "NASA",
+    "SpaceX",
+    "YouTube",
+}
+
+
+def remove_allowed_names(text):
+
+    result = clean_text(
+        text
+    )
+
+    for word in ALLOWED_LATIN_WORDS:
+
+        result = re.sub(
+            rf"\b{re.escape(word)}\b",
+            "",
+            result,
+            flags=re.IGNORECASE
+        )
+
+    return result
+
+
+def contains_mixed_language_problem(
+    text,
+    language
+):
+
+    cleaned = remove_allowed_names(
+        text
+    )
+
+    ar = arabic_ratio(
+        cleaned
+    )
+
+    en = english_ratio(
+        cleaned
+    )
+
+
+    if language == "ar":
+
+        # بعد إزالة أسماء الشركات،
+        # لا نريد كمية كبيرة من الإنجليزية.
+
+        if en > 0.20:
+
+            return True
+
+        if ar < 0.55:
+
+            return True
+
+
+    if language == "en":
+
+        if ar > 0.10:
+
+            return True
+
+        if en < 0.65:
+
+            return True
+
+
+    return False
+
+
+def is_valid_arabic(text):
+
+    text = clean_text(
+        text
+    )
 
     if len(text) < 8:
         return False
 
-    if not has_arabic(text):
+    if len(arabic_chars(text)) < 4:
         return False
 
-    # العربية يجب أن تكون هي اللغة الغالبة بوضوح
-    if arabic_ratio(text) < 0.65:
-        return False
+    if contains_mixed_language_problem(
+        text,
+        "ar"
+    ):
 
-    # لا نسمح بكمية كبيرة من الإنجليزية
-    if english_ratio(text) > 0.25:
         return False
 
     return True
 
 
-def is_english_text(text):
+def is_valid_english(text):
 
-    text = clean_text(text)
+    text = clean_text(
+        text
+    )
 
     if len(text) < 8:
         return False
 
-    if not has_english(text):
+    if len(english_chars(text)) < 5:
         return False
 
-    # الإنجليزية يجب أن تكون هي اللغة الغالبة بوضوح
-    if english_ratio(text) < 0.70:
-        return False
+    if contains_mixed_language_problem(
+        text,
+        "en"
+    ):
 
-    # العربية لا يجب أن تكون موجودة بكثرة
-    if arabic_ratio(text) > 0.12:
         return False
 
     return True
 
 
 # ============================================================
-# IMAGE EXTRACTION
+# IMAGE
 # ============================================================
 
 def extract_rss_image(entry):
@@ -460,7 +613,9 @@ def extract_rss_image(entry):
         )
 
         if url:
-            return str(url).strip()
+            return str(
+                url
+            ).strip()
 
 
     for media in entry.get(
@@ -474,7 +629,9 @@ def extract_rss_image(entry):
         )
 
         if url:
-            return str(url).strip()
+            return str(
+                url
+            ).strip()
 
 
     for enclosure in entry.get(
@@ -488,33 +645,40 @@ def extract_rss_image(entry):
         )
 
         if url:
-            return str(url).strip()
+            return str(
+                url
+            ).strip()
 
 
-    for source in [
-        entry.get("summary", ""),
-        entry.get("description", "")
-    ]:
-
-        match = re.search(
-            r'<img[^>]+src=["\']([^"\']+)["\']',
-            str(source),
-            re.IGNORECASE
+    source_text = (
+        entry.get(
+            "summary",
+            ""
         )
+        or
+        entry.get(
+            "description",
+            ""
+        )
+    )
 
-        if match:
 
-            return html.unescape(
-                match.group(1).strip()
-            )
+    match = re.search(
+        r'<img[^>]+src=["\']([^"\']+)["\']',
+        str(source_text),
+        re.IGNORECASE
+    )
+
+
+    if match:
+
+        return html.unescape(
+            match.group(1).strip()
+        )
 
 
     return ""
 
-
-# ============================================================
-# HIGH QUALITY OG IMAGE
-# ============================================================
 
 def get_og_image(url):
 
@@ -534,6 +698,7 @@ def get_og_image(url):
 
         page = response.text[:800000]
 
+
         patterns = [
 
             r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
@@ -545,6 +710,7 @@ def get_og_image(url):
             r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']',
 
         ]
+
 
         for pattern in patterns:
 
@@ -566,10 +732,14 @@ def get_og_image(url):
                 )
 
                 if image.startswith(
-                    ("http://", "https://")
+                    (
+                        "http://",
+                        "https://"
+                    )
                 ):
 
                     return image
+
 
     except Exception as error:
 
@@ -578,17 +748,25 @@ def get_og_image(url):
             error
         )
 
+
     return ""
 
 
-def get_best_image(entry, link):
+def get_best_image(
+    entry,
+    link
+):
 
-    image = extract_rss_image(entry)
+    image = extract_rss_image(
+        entry
+    )
 
     if image:
         return image
 
-    return get_og_image(link)
+    return get_og_image(
+        link
+    )
 
 
 # ============================================================
@@ -599,12 +777,23 @@ def get_news():
 
     articles = []
 
+
     for source_name, feed_url, category in RSS_FEEDS:
 
         print(
-            "\nReading:",
+            "\n--------------------------------"
+        )
+
+        print(
+            "Reading:",
             source_name
         )
+
+        print(
+            "Category:",
+            category
+        )
+
 
         try:
 
@@ -614,10 +803,12 @@ def get_news():
 
             entries = feed.entries[:20]
 
+
             print(
-                "Found:",
+                "Entries:",
                 len(entries)
             )
+
 
             for entry in entries:
 
@@ -627,6 +818,7 @@ def get_news():
                         ""
                     )
                 )
+
 
                 if not title:
                     continue
@@ -696,19 +888,26 @@ def get_news():
 
                 articles.append({
 
-                    "title": title,
+                    "title":
+                        title,
 
-                    "description": description,
+                    "description":
+                        description,
 
-                    "link": link,
+                    "link":
+                        link,
 
-                    "source": source_name,
+                    "source":
+                        source_name,
 
-                    "category": category,
+                    "category":
+                        category,
 
-                    "image": image,
+                    "image":
+                        image,
 
-                    "published": published,
+                    "published":
+                        published,
 
                 })
 
@@ -716,165 +915,152 @@ def get_news():
         except Exception as error:
 
             print(
-                "RSS error:",
-                source_name,
+                "RSS ERROR:",
                 error
             )
 
 
-    return remove_duplicates(
+    articles = remove_duplicates(
         articles
     )
 
 
+    print(
+        "\nTOTAL RSS ARTICLES:",
+        len(articles)
+    )
+
+
+    return articles
+
+
 # ============================================================
-# SUMMARY QUALITY
+# QUALITY
 # ============================================================
 
-def summary_is_valid(
+def summary_quality(
     title,
     summary
 ):
 
-    title = clean_text(title)
-    summary = clean_text(summary)
+    title = clean_text(
+        title
+    )
 
-    if not title or not summary:
+    summary = clean_text(
+        summary
+    )
+
+
+    if not title:
         return False
+
+
+    if not summary:
+        return False
+
 
     if len(summary) < 100:
         return False
 
+
     if summary.lower() == title.lower():
         return False
+
 
     sentences = re.findall(
         r"[.!?؟。]",
         summary
     )
 
+
     if len(sentences) < 2:
         return False
+
 
     return True
 
 
 # ============================================================
-# FINAL ARTICLE LANGUAGE VALIDATION
+# FINAL LANGUAGE VALIDATION
 # ============================================================
 
-def generated_article_is_valid(
+def article_is_valid(
     title_ar,
     summary_ar,
     title_en,
     summary_en
 ):
 
-    # --------------------------------------------------------
-    # Arabic
-    # --------------------------------------------------------
-
-    if not is_arabic_text(title_ar):
+    # Arabic title
+    if not is_valid_arabic(
+        title_ar
+    ):
 
         print(
-            "INVALID Arabic title:",
-            title_ar
+            "FAILED Arabic title"
         )
 
         return False
 
 
-    if not is_arabic_text(summary_ar):
+    # Arabic summary
+    if not is_valid_arabic(
+        summary_ar
+    ):
 
         print(
-            "INVALID Arabic summary"
+            "FAILED Arabic summary"
         )
 
         return False
 
 
-    if not summary_is_valid(
+    # Arabic quality
+    if not summary_quality(
         title_ar,
         summary_ar
     ):
 
         print(
-            "INVALID Arabic summary quality"
+            "FAILED Arabic quality"
         )
 
         return False
 
 
-    # --------------------------------------------------------
-    # English
-    # --------------------------------------------------------
-
-    if not is_english_text(title_en):
+    # English title
+    if not is_valid_english(
+        title_en
+    ):
 
         print(
-            "INVALID English title:",
-            title_en
+            "FAILED English title"
         )
 
         return False
 
 
-    if not is_english_text(summary_en):
+    # English summary
+    if not is_valid_english(
+        summary_en
+    ):
 
         print(
-            "INVALID English summary"
+            "FAILED English summary"
         )
 
         return False
 
 
-    if not summary_is_valid(
+    # English quality
+    if not summary_quality(
         title_en,
         summary_en
     ):
 
         print(
-            "INVALID English summary quality"
-        )
-
-        return False
-
-
-    # --------------------------------------------------------
-    # Explicit opposite-language protection
-    # --------------------------------------------------------
-
-    if arabic_ratio(title_en) > 0.12:
-
-        print(
-            "English text contains too much Arabic."
-        )
-
-        return False
-
-
-    if english_ratio(title_ar) > 0.25:
-
-        print(
-            "Arabic title contains too much English."
-        )
-
-        return False
-
-
-    if arabic_ratio(summary_en) > 0.12:
-
-        print(
-            "English summary contains too much Arabic."
-        )
-
-        return False
-
-
-    if english_ratio(summary_ar) > 0.25:
-
-        print(
-            "Arabic summary contains too much English."
+            "FAILED English quality"
         )
 
         return False
@@ -888,24 +1074,45 @@ def generated_article_is_valid(
 # ============================================================
 
 def ask_gemini(
-    title,
-    description,
-    source,
-    category
+    article
 ):
+
+    title = article.get(
+        "title",
+        ""
+    )
+
+    description = article.get(
+        "description",
+        ""
+    )
+
+    source = article.get(
+        "source",
+        ""
+    )
+
+    category = article.get(
+        "category",
+        ""
+    )
+
 
     if not description:
 
         description = (
-            "لا يوجد وصف إضافي متاح. "
-            "اعتمد فقط على العنوان والمعلومات المتاحة."
+            "No additional description "
+            "is available. Use only the "
+            "headline and available information."
         )
 
 
     prompt = f"""
-You are the senior bilingual news editor for NOWNEX.
+You are the senior editor of NOWNEX,
+a professional bilingual news platform.
 
-Create ONE professional news article in TWO languages.
+Create a news article based ONLY on the
+source information provided below.
 
 SOURCE:
 {source}
@@ -916,15 +1123,13 @@ CATEGORY:
 ORIGINAL HEADLINE:
 {title}
 
-AVAILABLE INFORMATION:
+SOURCE INFORMATION:
 {description}
 
 
 ============================================================
-OUTPUT
+RETURN EXACTLY FOUR JSON FIELDS
 ============================================================
-
-Return exactly these four JSON fields:
 
 title_ar
 summary_ar
@@ -933,78 +1138,81 @@ summary_en
 
 
 ============================================================
-ARABIC — VERY STRICT
+ARABIC VERSION
 ============================================================
 
-title_ar MUST be written primarily in Modern Standard Arabic.
+title_ar MUST be Modern Standard Arabic.
 
-summary_ar MUST be written primarily in Modern Standard Arabic.
+summary_ar MUST be Modern Standard Arabic.
 
-Do NOT copy the English headline.
+The Arabic version MUST NOT be written in English.
 
-Do NOT copy English sentences.
+Translate and professionally rewrite the source information.
 
-Translate and professionally rewrite the information.
+Do not copy the English headline.
 
-Arabic text must contain at least 70% Arabic-script letters.
+Do not copy English sentences.
 
-Do not put English sentences inside Arabic text.
+English is allowed only for unavoidable proper names,
+brands, companies, products, organizations or technical
+names that are normally written in Latin characters.
 
-English is allowed ONLY when naturally necessary for:
-- company names
-- product names
-- person names
-- official organization names
-- technical names that are normally written in Latin characters
+Examples that are allowed:
 
-Do not write an Arabic sentence and then continue it in English.
+OpenAI
+Google
+Tesla
+Samsung
+ChatGPT
+AI
+NASA
 
-Do not use English as the main language of the Arabic version.
+However, do NOT write complete English sentences
+inside the Arabic version.
 
-
-============================================================
-ENGLISH — VERY STRICT
-============================================================
-
-title_en MUST be written in natural professional English.
-
-summary_en MUST be written in natural professional English.
-
-Do NOT copy Arabic sentences.
-
-Do NOT place Arabic sentences inside the English version.
-
-English text must contain at least 70% Latin letters.
-
-Arabic is allowed ONLY when absolutely necessary for a proper name.
-
-Do not use Arabic as the main language of the English version.
+Arabic must remain the dominant language.
 
 
 ============================================================
-CONTENT RULES
+ENGLISH VERSION
 ============================================================
 
-Both languages must describe exactly the same news story.
+title_en MUST be professional English.
 
-Do not invent facts.
+summary_en MUST be professional English.
 
-Do not invent numbers.
+The English version MUST NOT be written in Arabic.
 
-Do not invent names.
+Do not copy Arabic sentences.
 
-Do not invent quotes.
+Arabic is allowed only for unavoidable proper names.
 
-Do not add opinions.
+English must remain the dominant language.
 
-Use only the information available in the source.
 
-The Arabic and English versions may be independently rewritten,
-but they must remain factually equivalent.
+============================================================
+CONTENT
+============================================================
 
-Arabic summary: 3 to 5 sentences.
+Both versions must describe exactly the same event.
 
-English summary: 3 to 5 sentences.
+Do NOT invent facts.
+
+Do NOT invent numbers.
+
+Do NOT invent people.
+
+Do NOT invent quotes.
+
+Do NOT invent dates.
+
+Do NOT add opinions.
+
+Use ONLY the supplied information.
+
+Arabic summary must contain 3 to 5 sentences.
+
+English summary must contain 3 to 5 sentences.
 
 No Markdown.
 
@@ -1014,20 +1222,20 @@ No emojis.
 
 
 ============================================================
-IMPORTANT
+VERY IMPORTANT
 ============================================================
 
-If the original source is English:
+If the original article is English:
 
-You MUST translate the information into Arabic for title_ar
-and summary_ar.
+Create a REAL Arabic translation/rewrite
+for title_ar and summary_ar.
 
-If the original source is Arabic:
+If the original article is Arabic:
 
-You MUST translate the information into English for title_en
-and summary_en.
+Create a REAL English translation/rewrite
+for title_en and summary_en.
 
-NEVER return the original language in the wrong field.
+Never put the source language in the wrong field.
 
 
 ============================================================
@@ -1048,22 +1256,32 @@ JSON ONLY
         "contents": [
 
             {
-                "role": "user",
+
+                "role":
+                    "user",
 
                 "parts": [
+
                     {
-                        "text": prompt
+
+                        "text":
+                            prompt
+
                     }
+
                 ]
+
             }
 
         ],
 
         "generationConfig": {
 
-            "temperature": 0.15,
+            "temperature":
+                0.15,
 
-            "responseMimeType": "application/json"
+            "responseMimeType":
+                "application/json"
 
         }
 
@@ -1089,7 +1307,8 @@ JSON ONLY
         try:
 
             print(
-                f"Gemini request {attempt}/{GEMINI_RETRIES}"
+                f"Gemini attempt "
+                f"{attempt}/{GEMINI_RETRIES}"
             )
 
 
@@ -1107,45 +1326,43 @@ JSON ONLY
 
 
             print(
-                "Gemini status:",
+                "Status:",
                 response.status_code
             )
 
 
-            # ------------------------------------------------
-            # RATE LIMIT
-            # ------------------------------------------------
-
             if response.status_code == 429:
 
-                wait_time = (
+                wait = (
                     30
                     if attempt == 1
-                    else 60
+                    else
+                    60
                     if attempt == 2
-                    else 90
+                    else
+                    90
                 )
+
 
                 print(
-                    f"Rate limit. Waiting {wait_time}s..."
+                    "Rate limit. "
+                    f"Waiting {wait}s."
                 )
 
+
                 time.sleep(
-                    wait_time
+                    wait
                 )
 
                 continue
 
 
-            # ------------------------------------------------
-            # HTTP ERROR
-            # ------------------------------------------------
-
             if response.status_code != 200:
 
                 print(
-                    response.text[:1500]
+                    response.text[:1000]
                 )
+
 
                 if attempt < GEMINI_RETRIES:
 
@@ -1155,18 +1372,20 @@ JSON ONLY
 
                     continue
 
+
                 return None
 
 
-            # ------------------------------------------------
-            # JSON RESPONSE
-            # ------------------------------------------------
-
             data = response.json()
 
+
             text = (
-                data["candidates"][0]
-                ["content"]["parts"][0]
+                data
+                ["candidates"]
+                [0]
+                ["content"]
+                ["parts"]
+                [0]
                 ["text"]
                 .strip()
             )
@@ -1229,17 +1448,18 @@ JSON ONLY
                 title_ar
             )
 
+
             print(
                 "EN:",
                 title_en
             )
 
 
-            # ------------------------------------------------
-            # STRICT VALIDATION
-            # ------------------------------------------------
+            # =================================================
+            # STRICT CHECK
+            # =================================================
 
-            if not generated_article_is_valid(
+            if not article_is_valid(
 
                 title_ar,
 
@@ -1252,14 +1472,11 @@ JSON ONLY
             ):
 
                 print(
-                    "Language validation FAILED."
+                    "LANGUAGE / QUALITY CHECK FAILED."
                 )
 
-                if attempt < GEMINI_RETRIES:
 
-                    print(
-                        "Retrying with strict language rules..."
-                    )
+                if attempt < GEMINI_RETRIES:
 
                     time.sleep(
                         4
@@ -1267,12 +1484,9 @@ JSON ONLY
 
                     continue
 
+
                 return None
 
-
-            # ------------------------------------------------
-            # SUCCESS
-            # ------------------------------------------------
 
             return {
 
@@ -1298,6 +1512,7 @@ JSON ONLY
                 error
             )
 
+
             if attempt < GEMINI_RETRIES:
 
                 time.sleep(
@@ -1319,11 +1534,11 @@ def get_category_articles(
 
     return [
 
-        article
+        item
 
-        for article in articles
+        for item in articles
 
-        if article.get(
+        if item.get(
             "category"
         ) == category
 
@@ -1331,19 +1546,19 @@ def get_category_articles(
 
 
 # ============================================================
-# LOAD OLD NEWS
+# EXISTING NEWS
 # ============================================================
 
 def load_existing_news():
 
+    if not os.path.exists(
+        "news.json"
+    ):
+
+        return []
+
+
     try:
-
-        if not os.path.exists(
-            "news.json"
-        ):
-
-            return []
-
 
         with open(
             "news.json",
@@ -1362,116 +1577,32 @@ def load_existing_news():
         )
 
 
-        if not isinstance(
+        if isinstance(
             news,
             list
         ):
 
-            return []
+            print(
+                "Existing news:",
+                len(news)
+            )
 
-
-        print(
-            f"Existing news loaded: {len(news)}"
-        )
-
-
-        return news
+            return news
 
 
     except Exception as error:
 
         print(
-            "Could not load existing news:",
+            "Existing news error:",
             error
         )
 
-        return []
+
+    return []
 
 
 # ============================================================
-# VALIDATE OLD NEWS
-# ============================================================
-
-def valid_existing_article(item):
-
-    try:
-
-        category = item.get(
-            "category"
-        )
-
-        if category not in VALID_CATEGORIES:
-            return False
-
-
-        return generated_article_is_valid(
-
-            item.get(
-                "title_ar",
-                ""
-            ),
-
-            item.get(
-                "summary_ar",
-                ""
-            ),
-
-            item.get(
-                "title_en",
-                ""
-            ),
-
-            item.get(
-                "summary_en",
-                ""
-            )
-
-        )
-
-    except Exception:
-
-        return False
-
-
-# ============================================================
-# SELECT CANDIDATES
-# ============================================================
-
-def build_candidates(
-    articles
-):
-
-    candidates = {}
-
-    for category in MAIN_CATEGORIES:
-
-        candidates[category] = []
-
-        category_articles = get_category_articles(
-            articles,
-            category
-        )
-
-
-        for article in category_articles:
-
-            if len(
-                candidates[category]
-            ) >= CANDIDATES_PER_CATEGORY:
-
-                break
-
-
-            candidates[category].append(
-                article
-            )
-
-
-    return candidates
-
-
-# ============================================================
-# BUILD NEWS ITEM
+# BUILD FINAL ITEM
 # ============================================================
 
 def build_news_item(
@@ -1494,7 +1625,6 @@ def build_news_item(
             ai["summary_en"],
 
 
-        # Backward compatibility
         "title":
             ai["title_ar"],
 
@@ -1541,19 +1671,28 @@ def build_news_item(
 def main():
 
     print(
-        "\n======================================"
+        "\n"
+        "=========================================="
     )
 
     print(
-        " NOWNEX BILINGUAL NEWS ENGINE"
+        " NOWNEX NEWS ENGINE"
     )
 
     print(
-        "======================================\n"
+        " 7 CATEGORIES × 3 ARTICLES"
+    )
+
+    print(
+        "=========================================="
     )
 
 
-    existing_news = load_existing_news()
+    # ========================================================
+    # LOAD OLD DATA
+    # ========================================================
+
+    old_news = load_existing_news()
 
 
     # ========================================================
@@ -1566,7 +1705,7 @@ def main():
     if not articles:
 
         print(
-            "RSS returned no articles."
+            "No RSS data."
         )
 
         print(
@@ -1576,48 +1715,11 @@ def main():
         return
 
 
-    print(
-        f"\nCollected RSS articles: {len(articles)}"
-    )
-
-
     # ========================================================
-    # AVAILABLE RSS BY CATEGORY
+    # PREPARE CATEGORY POOLS
     # ========================================================
 
-    print(
-        "\nRSS availability:"
-    )
-
-
-    for category in MAIN_CATEGORIES:
-
-        count = len(
-            get_category_articles(
-                articles,
-                category
-            )
-        )
-
-        print(
-            f"  {category}: {count}"
-        )
-
-
-    # ========================================================
-    # CANDIDATES
-    # ========================================================
-
-    candidates = build_candidates(
-        articles
-    )
-
-
-    # ========================================================
-    # GENERATE BY CATEGORY
-    # ========================================================
-
-    generated_by_category = {
+    pools = {
 
         category: []
 
@@ -1628,69 +1730,95 @@ def main():
 
     for category in MAIN_CATEGORIES:
 
+        category_articles = get_category_articles(
+            articles,
+            category
+        )
+
+
+        pools[category] = category_articles[
+            :CANDIDATES_PER_CATEGORY
+        ]
+
+
         print(
-            "\n======================================"
+            f"{category}: "
+            f"{len(pools[category])} candidates"
+        )
+
+
+    # ========================================================
+    # GENERATE
+    # ========================================================
+
+    generated = {
+
+        category: []
+
+        for category in MAIN_CATEGORIES
+
+    }
+
+
+    used_original_titles = set()
+
+
+    for category in MAIN_CATEGORIES:
+
+        print(
+            "\n"
+            "=========================================="
         )
 
         print(
-            f" CATEGORY: {category}"
+            f"PROCESSING CATEGORY: {category}"
         )
 
         print(
-            "======================================"
+            "=========================================="
         )
 
 
-        category_candidates = candidates.get(
-            category,
-            []
-        )
-
-
-        if not category_candidates:
-
-            print(
-                "No RSS candidates."
-            )
-
-            continue
-
-
-        for article in category_candidates:
+        for article in pools[category]:
 
             if len(
-                generated_by_category[category]
+                generated[category]
             ) >= MIN_PER_CATEGORY:
 
                 break
 
 
-            print(
-                "\nTrying:"
+            original_key = normalize_title(
+                article["title"]
             )
 
+
+            if original_key in used_original_titles:
+
+                continue
+
+
+            used_original_titles.add(
+                original_key
+            )
+
+
             print(
+                "\nTrying:",
                 article["title"]
             )
 
 
             ai = ask_gemini(
-
-                article["title"],
-
-                article["description"],
-
-                article["source"],
-
-                category
-
+                article
             )
 
 
             if not ai:
 
                 print(
-                    "✗ Rejected."
+                    "✗ Rejected. "
+                    "Trying next candidate."
                 )
 
                 continue
@@ -1702,15 +1830,13 @@ def main():
             )
 
 
-            generated_by_category[
-                category
-            ].append(
+            generated[category].append(
                 item
             )
 
 
             print(
-                "✓ Valid bilingual article."
+                "✓ ACCEPTED"
             )
 
 
@@ -1721,13 +1847,13 @@ def main():
 
         print(
             f"{category}: "
-            f"{len(generated_by_category[category])} "
+            f"{len(generated[category])} "
             f"new articles"
         )
 
 
     # ========================================================
-    # VALID OLD NEWS FOR FALLBACK
+    # FALLBACK FROM OLD NEWS
     # ========================================================
 
     old_by_category = {
@@ -1739,57 +1865,59 @@ def main():
     }
 
 
-    for item in existing_news:
-
-        if not valid_existing_article(
-            item
-        ):
-
-            continue
-
+    for item in old_news:
 
         category = item.get(
             "category"
         )
 
 
-        if category in VALID_CATEGORIES:
+        if category not in VALID_CATEGORIES:
 
-            old_by_category[
-                category
-            ].append(
-                item
-            )
+            continue
+
+
+        if not item.get(
+            "title_ar"
+        ):
+
+            continue
+
+
+        if not item.get(
+            "title_en"
+        ):
+
+            continue
+
+
+        old_by_category[
+            category
+        ].append(
+            item
+        )
 
 
     # ========================================================
-    # FINAL ASSEMBLY
+    # ASSEMBLE 3 PER CATEGORY
     # ========================================================
 
     final_news = []
 
-    used_titles = set()
+    final_keys = set()
 
 
     for category in MAIN_CATEGORIES:
 
         print(
-            "\nFinalizing:",
+            "\nFINALIZING:",
             category
         )
 
 
-        category_items = []
-
-
-        # ----------------------------------------------------
         # New articles first
-        # ----------------------------------------------------
 
-        for item in generated_by_category.get(
-            category,
-            []
-        ):
+        for item in generated[category]:
 
             key = normalize_title(
                 item.get(
@@ -1799,151 +1927,135 @@ def main():
             )
 
 
-            if key in used_titles:
+            if key in final_keys:
                 continue
 
 
-            used_titles.add(
+            final_keys.add(
                 key
             )
 
-            category_items.append(
-                item
-            )
-
-
-            if len(category_items) >= MIN_PER_CATEGORY:
-                break
-
-
-        # ----------------------------------------------------
-        # Old valid articles as fallback
-        # ----------------------------------------------------
-
-        if len(category_items) < MIN_PER_CATEGORY:
-
-            print(
-                f"{category}: "
-                f"new articles insufficient. "
-                f"Using valid previous articles."
-            )
-
-
-            for item in old_by_category.get(
-                category,
-                []
-            ):
-
-                key = normalize_title(
-                    item.get(
-                        "title_ar",
-                        item.get(
-                            "title",
-                            ""
-                        )
-                    )
-                )
-
-
-                if key in used_titles:
-                    continue
-
-
-                used_titles.add(
-                    key
-                )
-
-                category_items.append(
-                    item
-                )
-
-
-                if len(category_items) >= MIN_PER_CATEGORY:
-
-                    break
-
-
-        print(
-            f"{category}: "
-            f"{len(category_items)} final articles"
-        )
-
-
-        final_news.extend(
-            category_items
-        )
-
-
-    # ========================================================
-    # FILL TO 24
-    # ========================================================
-
-    if len(final_news) < MAX_NEWS:
-
-        print(
-            "\nFilling remaining slots..."
-        )
-
-
-        all_new = []
-
-        for category in MAIN_CATEGORIES:
-
-            all_new.extend(
-                generated_by_category.get(
-                    category,
-                    []
-                )
-            )
-
-
-        all_old = []
-
-        for category in MAIN_CATEGORIES:
-
-            all_old.extend(
-                old_by_category.get(
-                    category,
-                    []
-                )
-            )
-
-
-        for item in all_new + all_old:
-
-            if len(final_news) >= MAX_NEWS:
-
-                break
-
-
-            key = normalize_title(
-                item.get(
-                    "title_ar",
-                    item.get(
-                        "title",
-                        ""
-                    )
-                )
-            )
-
-
-            if key in used_titles:
-
-                continue
-
-
-            used_titles.add(
-                key
-            )
 
             final_news.append(
                 item
             )
 
 
+            if len(
+                get_category_articles(
+                    final_news,
+                    category
+                )
+            ) >= MIN_PER_CATEGORY:
+
+                break
+
+
+        # Old articles as fallback
+
+        current_count = len(
+            get_category_articles(
+                final_news,
+                category
+            )
+        )
+
+
+        if current_count < MIN_PER_CATEGORY:
+
+            print(
+                f"{category}: "
+                f"using old valid articles "
+                f"as fallback."
+            )
+
+
+            for item in old_by_category[category]:
+
+                key = normalize_title(
+                    item.get(
+                        "title_ar",
+                        ""
+                    )
+                )
+
+
+                if key in final_keys:
+
+                    continue
+
+
+                final_keys.add(
+                    key
+                )
+
+
+                final_news.append(
+                    item
+                )
+
+
+                current_count += 1
+
+
+                if current_count >= MIN_PER_CATEGORY:
+
+                    break
+
+
+        print(
+            f"{category}: "
+            f"{current_count} final"
+        )
+
+
     # ========================================================
-    # FINAL SAFETY
+    # FILL EXTRA ARTICLES
     # ========================================================
+
+    if len(final_news) < MAX_NEWS:
+
+        print(
+            "\nAdding extra articles..."
+        )
+
+
+        for category in MAIN_CATEGORIES:
+
+            for item in generated[category]:
+
+                if len(final_news) >= MAX_NEWS:
+
+                    break
+
+
+                key = normalize_title(
+                    item.get(
+                        "title_ar",
+                        ""
+                    )
+                )
+
+
+                if key in final_keys:
+
+                    continue
+
+
+                final_keys.add(
+                    key
+                )
+
+
+                final_news.append(
+                    item
+                )
+
+
+            if len(final_news) >= MAX_NEWS:
+
+                break
+
 
     final_news = final_news[
         :MAX_NEWS
@@ -1951,40 +2063,24 @@ def main():
 
 
     # ========================================================
-    # DO NOT DESTROY A GOOD DATABASE
-    # ========================================================
-
-    if not final_news:
-
-        print(
-            "\nNO VALID NEWS."
-        )
-
-        print(
-            "Existing news.json will remain unchanged."
-        )
-
-        return
-
-
-    # ========================================================
-    # CHECK CATEGORIES
+    # FINAL CATEGORY CHECK
     # ========================================================
 
     print(
-        "\n======================================"
+        "\n"
+        "=========================================="
     )
 
     print(
-        " FINAL NEWS REPORT"
+        "FINAL CATEGORY CHECK"
     )
 
     print(
-        "======================================"
+        "=========================================="
     )
 
 
-    missing_categories = []
+    missing = []
 
 
     for category in MAIN_CATEGORIES:
@@ -2004,38 +2100,41 @@ def main():
 
         if count < MIN_PER_CATEGORY:
 
-            missing_categories.append(
+            missing.append(
                 category
             )
 
 
     # ========================================================
-    # IMPORTANT SAFETY
+    # SAFETY
     # ========================================================
 
-    if missing_categories:
+    if missing:
 
         print(
             "\nWARNING:"
         )
 
         print(
-            "Some categories have fewer than "
-            f"{MIN_PER_CATEGORY} articles:"
+            "The following categories are incomplete:"
         )
 
         print(
-            missing_categories
+            missing
         )
 
 
-        # إذا كانت لدينا أخبار قديمة، لا نستبدل
-        # قاعدة البيانات بقاعدة ناقصة.
-        if existing_news:
+        # إذا كان لدينا ملف قديم يحتوي أخبارًا أكثر،
+        # لا نسمح بتدميره.
+
+        if len(old_news) >= MIN_PER_CATEGORY:
 
             print(
-                "Keeping previous news.json "
-                "because the new dataset is incomplete."
+                "INCOMPLETE UPDATE."
+            )
+
+            print(
+                "Keeping previous news.json."
             )
 
             return
@@ -2076,30 +2175,26 @@ def main():
 
 
     # ========================================================
-    # DONE
+    # SUCCESS
     # ========================================================
 
     print(
-        "\n======================================"
+        "\n"
+        "=========================================="
     )
 
     print(
-        " NOWNEX NEWS UPDATED SUCCESSFULLY"
+        " NOWNEX NEWS UPDATED"
     )
 
     print(
-        "======================================"
+        "=========================================="
     )
 
 
     print(
-        "Total:",
+        "TOTAL:",
         len(final_news)
-    )
-
-
-    print(
-        "\nCategories:"
     )
 
 
@@ -2112,13 +2207,14 @@ def main():
             )
         )
 
+
         print(
-            f"  {category}: {count}"
+            f"{category}: {count}"
         )
 
 
     print(
-        "\nTrending = all generated articles."
+        "\nNOWNEX update complete."
     )
 
 
