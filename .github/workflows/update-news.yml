@@ -2,148 +2,46 @@ name: Update NOWNEX News
 
 on:
   workflow_dispatch:
-
   schedule:
     - cron: "0 */6 * * *"
-
-
-# منع تشغيل تحديثين في نفس الوقت
-concurrency:
-  group: nownex-news-update
-  cancel-in-progress: false
-
 
 permissions:
   contents: write
 
-
 jobs:
-
   update-news:
-
     runs-on: ubuntu-latest
 
-
     steps:
-
-      # =====================================================
-      # 1. تحميل آخر نسخة من المشروع
-      # =====================================================
-
       - name: Checkout repository
-
         uses: actions/checkout@v4
 
-        with:
-          fetch-depth: 0
-
-
-      # =====================================================
-      # 2. إعداد Python
-      # =====================================================
-
       - name: Setup Python
-
         uses: actions/setup-python@v5
-
         with:
           python-version: "3.12"
 
-
-      # =====================================================
-      # 3. تثبيت المكتبات
-      # =====================================================
-
       - name: Install dependencies
-
         run: |
-
           python -m pip install --upgrade pip
-
           pip install requests feedparser
 
-
-      # =====================================================
-      # 4. توليد الأخبار الجديدة
-      # =====================================================
-
-      - name: Generate news
-
+      - name: Generate Arabic news
         env:
-
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
+          GEMINI_MODEL: gemini-2.5-flash
         run: |
-
           python generate_news.py
 
-
-      # =====================================================
-      # 5. حفظ news.json الجديد مؤقتاً
-      # =====================================================
-
-      - name: Backup generated news
-
-        run: |
-
-          cp news.json /tmp/nownex-news.json
-
-
-      # =====================================================
-      # 6. إعداد Git
-      # =====================================================
-
-      - name: Configure Git
-
-        run: |
-
-          git config user.name "NOWNEX Bot"
-
-          git config user.email "actions@github.com"
-
-
-      # =====================================================
-      # 7. جلب آخر نسخة من GitHub
-      # =====================================================
-
-      - name: Sync with remote
-
-        run: |
-
-          git fetch origin main
-
-          git reset --hard origin/main
-
-
-      # =====================================================
-      # 8. إعادة وضع الأخبار التي تم توليدها
-      # =====================================================
-
-      - name: Restore generated news
-
-        run: |
-
-          cp /tmp/nownex-news.json news.json
-
-
-      # =====================================================
-      # 9. حفظ news.json في Git
-      # =====================================================
-
       - name: Save news.json
-
         run: |
-
+          git config user.name "NOWNEX Bot"
+          git config user.email "actions@github.com"
           git add news.json
 
           if git diff --cached --quiet; then
-
             echo "No changes to news.json"
-
           else
-
             git commit -m "Update NOWNEX Arabic news"
-
-            git push origin main
-
+            git push
           fi
