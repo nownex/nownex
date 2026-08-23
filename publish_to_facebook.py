@@ -2,10 +2,11 @@ import json
 import os
 import requests
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 
 
 # =========================================================
-# NOWNEX — FACEBOOK PUBLISHER
+# NOWNEX — FACEBOOK PUBLISHER v2
 # =========================================================
 
 TOKEN = os.environ.get("FACEBOOK_PAGE_TOKEN")
@@ -28,22 +29,28 @@ FEED_URL = (
     f"{GRAPH_VERSION}/me/feed"
 )
 
-BASE_IMAGE_URL = (
-    "https://nownex.github.io/nownex/"
-)
-
 
 # =========================================================
-# الإعدادات
+# FILES
 # =========================================================
 
 NEWS_FILE = "news.json"
-
 POSTED_FILE = "posted_news.json"
 
 
 # =========================================================
-# الهاشتاقات
+# SETTINGS
+# =========================================================
+
+# انشر كل الأخبار الجديدة الموجودة في news.json
+# بدل خبر واحد فقط من كل قسم.
+MAX_POSTS_PER_RUN = 21
+
+REQUEST_TIMEOUT = 60
+
+
+# =========================================================
+# HASHTAGS
 # =========================================================
 
 HASHTAGS = {
@@ -75,7 +82,7 @@ HASHTAGS = {
 
 
 # =========================================================
-# قراءة news.json
+# READ NEWS
 # =========================================================
 
 if not os.path.exists(NEWS_FILE):
@@ -120,7 +127,7 @@ print(
 
 
 # =========================================================
-# قراءة سجل النشر
+# READ POSTED HISTORY
 # =========================================================
 
 if os.path.exists(POSTED_FILE):
@@ -164,7 +171,7 @@ print(
 
 
 # =========================================================
-# حفظ سجل النشر
+# SAVE HISTORY
 # =========================================================
 
 def save_posted_news():
@@ -184,10 +191,7 @@ def save_posted_news():
 
 
 # =========================================================
-# معرف الخبر
-#
-# الرابط هو المعرف الأقوى.
-# العنوان يستخدم كاحتياط.
+# NEWS ID
 # =========================================================
 
 def get_news_id(article):
@@ -219,66 +223,130 @@ def get_news_id(article):
 
 
 # =========================================================
-# تحويل وقت الخبر إلى رقم للمقارنة
-#
-# نستخدم publishedAt أولاً.
+# TIMESTAMP
 # =========================================================
 
 def get_article_timestamp(article):
 
-    value = (
-        article.get("published")
-        or
-        article.get("publishedAt")
-        or
-        ""
-    )
+    # -----------------------------------------------------
+    # publishedAt هو الأفضل لأنه ISO حقيقي من news engine
+    # -----------------------------------------------------
+
+    published_at = str(
+        article.get(
+            "publishedAt",
+            ""
+        ) or ""
+    ).strip()
 
 
-    if not value:
-        return 0
+    if published_at:
 
+        try:
 
-    value = str(value).strip()
-
-
-    # ISO format
-    try:
-
-        normalized = value.replace(
-            "Z",
-            "+00:00"
-        )
-
-
-        dt = datetime.fromisoformat(
-            normalized
-        )
-
-
-        if dt.tzinfo is None:
-
-            dt = dt.replace(
-                tzinfo=timezone.utc
+            normalized = published_at.replace(
+                "Z",
+                "+00:00"
             )
 
 
-        return dt.timestamp()
+            dt = datetime.fromisoformat(
+                normalized
+            )
 
 
-    except Exception:
-        pass
+            if dt.tzinfo is None:
+
+                dt = dt.replace(
+                    tzinfo=timezone.utc
+                )
 
 
-    # إذا لم نستطع تحويل التاريخ
+            return dt.timestamp()
+
+
+        except Exception:
+
+            pass
+
+
+    # -----------------------------------------------------
+    # محاولة قراءة published من RSS
+    # مثال:
+    # Sun, 23 Aug 2026 15:43:53 GMT
+    # -----------------------------------------------------
+
+    published = str(
+        article.get(
+            "published",
+            ""
+        ) or ""
+    ).strip()
+
+
+    if published:
+
+        try:
+
+            dt = parsedate_to_datetime(
+                published
+            )
+
+
+            if dt.tzinfo is None:
+
+                dt = dt.replace(
+                    tzinfo=timezone.utc
+                )
+
+
+            return dt.timestamp()
+
+
+        except Exception:
+
+            pass
+
+
     return 0
 
 
 # =========================================================
-# البحث عن أحدث خبر غير منشور في كل قسم
+# SORT NEWS
 # =========================================================
 
-latest_by_category = {}
+for article in news:
+
+    if isinstance(
+        article,
+        dict
+    ):
+
+        article["_facebook_timestamp"] = (
+            get_article_timestamp(
+                article
+            )
+        )
+
+
+news.sort(
+
+    key=lambda article:
+        article.get(
+            "_facebook_timestamp",
+            0
+        ),
+
+    reverse=True
+
+)
+
+
+# =========================================================
+# FIND NEW NEWS
+# =========================================================
+
+new_articles = []
 
 
 for article in news:
@@ -290,23 +358,13 @@ for article in news:
         continue
 
 
-    category = str(
-        article.get(
-            "category",
-            article.get(
-                "section",
-                "Other"
-            )
-        ) or "Other"
-    ).strip()
-
-
     news_id = get_news_id(
         article
     )
 
 
     if not news_id:
+
         continue
 
 
@@ -321,102 +379,90 @@ for article in news:
     ).strip()
 
 
-    # =====================================================
-    # منع التكرار
-    # =====================================================
-
     if news_id in posted_news:
 
         print(
             "SKIP already published:",
-            title
+            title[:120]
         )
 
         continue
 
 
-    timestamp = get_article_timestamp(
+    new_articles.append(
         article
     )
 
 
-    # =====================================================
-    # إذا كان هناك خبر أحدث في نفس القسم
-    # نحتفظ بالأحدث فقط.
-    # =====================================================
-
-    current = latest_by_category.get(
-        category
-    )
-
-
-    if current is None:
-
-        latest_by_category[
-            category
-        ] = article
-
-    else:
-
-        current_timestamp = (
-            get_article_timestamp(
-                current
-            )
-        )
-
-
-        if timestamp > current_timestamp:
-
-            latest_by_category[
-                category
-            ] = article
-
-
 # =========================================================
-# لا توجد أخبار جديدة
+# LIMIT
 # =========================================================
 
-if not latest_by_category:
+new_articles = new_articles[
+    :MAX_POSTS_PER_RUN
+]
 
-    print("")
+
+print("")
+print(
+    "=========================================="
+)
+
+print(
+    "NEW NEWS READY FOR FACEBOOK"
+)
+
+print(
+    "=========================================="
+)
+
+print(
+    "New articles:",
+    len(new_articles)
+)
+
+
+if not new_articles:
+
     print(
         "No new news to publish."
-    )
-    print(
-        "Facebook is already up to date."
     )
 
     raise SystemExit(0)
 
 
-print("")
-print(
-    "NEW CATEGORIES:"
-)
-
-
-for category in latest_by_category:
-
-    article = latest_by_category[
-        category
-    ]
+for index, article in enumerate(
+    new_articles,
+    start=1
+):
 
     print(
-        f" - {category}: "
+        f"{index}. "
+        f"{article.get('category', 'Other')} | "
         f"{article.get('title_ar', article.get('title', ''))}"
     )
 
 
 # =========================================================
-# النشر
+# PUBLISH
 # =========================================================
 
 success_count = 0
-
 failed_count = 0
 
 
-for category, article in latest_by_category.items():
+for index, article in enumerate(
+    new_articles,
+    start=1
+):
+
+    category = str(
+        article.get(
+            "category",
+            "Other"
+        ) or "Other"
+    ).strip()
+
 
     title = str(
         article.get(
@@ -473,7 +519,15 @@ for category, article in latest_by_category.items():
     )
 
     print(
-        "Publishing:",
+        f"FACEBOOK POST {index}/{len(new_articles)}"
+    )
+
+    print(
+        "=========================================="
+    )
+
+    print(
+        "Category:",
         category
     )
 
@@ -483,13 +537,18 @@ for category, article in latest_by_category.items():
     )
 
     print(
-        "News ID:",
-        news_id
+        "Link:",
+        link
+    )
+
+    print(
+        "Image:",
+        image if image else "NONE"
     )
 
 
     # =====================================================
-    # الهاشتاقات
+    # HASHTAGS
     # =====================================================
 
     hashtags = HASHTAGS.get(
@@ -499,7 +558,7 @@ for category, article in latest_by_category.items():
 
 
     # =====================================================
-    # نص المنشور
+    # MESSAGE
     # =====================================================
 
     message = (
@@ -510,38 +569,14 @@ for category, article in latest_by_category.items():
 
         f"{hashtags}\n\n"
 
-        f"🔗 اقرأ المزيد:\n"
+        f"🔗 اقرأ الخبر كاملًا:\n"
         f"{link}"
 
     )
 
 
     # =====================================================
-    # تجهيز الصورة
-    # =====================================================
-
-    if image:
-
-        if not image.startswith(
-            "http://"
-        ) and not image.startswith(
-            "https://"
-        ):
-
-            image = (
-                BASE_IMAGE_URL
-                + image.lstrip("/")
-            )
-
-
-    print(
-        "Image:",
-        image if image else "NONE"
-    )
-
-
-    # =====================================================
-    # النشر
+    # PUBLISH
     # =====================================================
 
     try:
@@ -570,7 +605,7 @@ for category, article in latest_by_category.items():
 
                 },
 
-                timeout=60
+                timeout=REQUEST_TIMEOUT
 
             )
 
@@ -596,29 +631,41 @@ for category, article in latest_by_category.items():
 
                 },
 
-                timeout=60
+                timeout=REQUEST_TIMEOUT
 
             )
 
 
         # =================================================
-        # النجاح
+        # RESPONSE
+        # =================================================
+
+        print(
+            "Facebook HTTP status:",
+            response.status_code
+        )
+
+
+        try:
+
+            result = response.json()
+
+        except Exception:
+
+            result = {}
+
+
+        # =================================================
+        # SUCCESS
         # =================================================
 
         if response.ok:
 
-            try:
-
-                result = response.json()
-
-            except Exception:
-
-                result = {}
-
-
-            facebook_id = result.get(
-                "id",
-                ""
+            facebook_id = str(
+                result.get(
+                    "id",
+                    ""
+                )
             )
 
 
@@ -644,7 +691,6 @@ for category, article in latest_by_category.items():
             }
 
 
-            # حفظ مباشرة
             save_posted_news()
 
 
@@ -652,12 +698,17 @@ for category, article in latest_by_category.items():
 
 
             print(
-                "Published successfully ✓"
+                "FACEBOOK PUBLISHED ✓"
+            )
+
+            print(
+                "Facebook ID:",
+                facebook_id
             )
 
 
         # =================================================
-        # فشل
+        # ERROR
         # =================================================
 
         else:
@@ -665,17 +716,28 @@ for category, article in latest_by_category.items():
             failed_count += 1
 
 
+            print("")
             print(
-                "Facebook error:"
+                "FACEBOOK PUBLISH FAILED ✗"
             )
 
             print(
-                response.text[:2000]
+                "HTTP:",
+                response.status_code
+            )
+
+            print(
+                "Response:"
+            )
+
+            print(
+                response.text[:4000]
             )
 
 
             print(
-                "Continuing..."
+                "This news will NOT be added "
+                "to posted_news.json."
             )
 
 
@@ -684,23 +746,26 @@ for category, article in latest_by_category.items():
         failed_count += 1
 
 
+        print("")
         print(
-            "Publishing exception:",
+            "FACEBOOK REQUEST EXCEPTION ✗"
+        )
+
+        print(
             str(error)
         )
 
 
-        print(
-            "Continuing with next category..."
-        )
-
-
 # =========================================================
-# حفظ نهائي
+# FINAL SAVE
 # =========================================================
 
 save_posted_news()
 
+
+# =========================================================
+# FINAL REPORT
+# =========================================================
 
 print("")
 print(
@@ -712,18 +777,41 @@ print(
 )
 
 print(
-    f"Successful: {success_count}"
+    "=========================================="
 )
 
 print(
-    f"Failed: {failed_count}"
+    "Total new:",
+    len(new_articles)
 )
 
 print(
-    f"Stored published news: "
-    f"{len(posted_news)}"
+    "Successful:",
+    success_count
+)
+
+print(
+    "Failed:",
+    failed_count
+)
+
+print(
+    "Stored published news:",
+    len(posted_news)
 )
 
 print(
     "=========================================="
 )
+
+
+# =========================================================
+# FAIL GITHUB ACTION IF FACEBOOK FAILED
+# =========================================================
+
+if failed_count > 0:
+
+    raise RuntimeError(
+        f"Facebook publishing failed for "
+        f"{failed_count} article(s)."
+    )
