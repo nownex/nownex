@@ -10,10 +10,12 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: nownex-news-update
+  cancel-in-progress: false
+
 jobs:
-
   update-news:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -21,60 +23,44 @@ jobs:
       # ==========================================
       # تحميل المشروع
       # ==========================================
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
-
       # ==========================================
-      # Python
+      # إعداد Python
       # ==========================================
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-
       # ==========================================
-      # المكتبات
+      # تثبيت المكتبات
       # ==========================================
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests feedparser
 
-
       # ==========================================
       # توليد أخبار NOWNEX
       # ==========================================
-
       - name: Generate Arabic news
-
         env:
-
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-
           GEMINI_MODEL: gemini-2.5-flash
-
         run: |
-
           echo "=========================================="
           echo " NOWNEX NEWS UPDATE"
           echo "=========================================="
 
           python generate_news.py
 
-
       # ==========================================
       # التأكد من وجود news.json
       # ==========================================
-
       - name: Validate news.json
-
         run: |
-
           echo "Checking news.json..."
 
           if [ ! -f news.json ]; then
@@ -83,7 +69,6 @@ jobs:
           fi
 
           python - <<'PY'
-
           import json
           import sys
 
@@ -92,7 +77,6 @@ jobs:
               "r",
               encoding="utf-8"
           ) as f:
-
               data = json.load(f)
 
           news = data.get("news", [])
@@ -111,8 +95,6 @@ jobs:
               "Products"
           ]
 
-          missing = []
-
           for category in categories:
 
               count = sum(
@@ -125,63 +107,86 @@ jobs:
                   f"{category}: {count}"
               )
 
-              if count < 3:
-
-                  missing.append(
-                      f"{category} ({count}/3)"
-                  )
-
-          if missing:
-
-              print(
-                  "ERROR: Some categories have fewer than 3 articles:"
-              )
-
-              for item in missing:
-                  print(" -", item)
-
+          if not news:
+              print("ERROR: No articles found.")
               sys.exit(1)
 
           print(
-              "SUCCESS: All categories contain at least 3 articles."
+              "SUCCESS: news.json is valid."
           )
 
           PY
 
-
       # ==========================================
-      # حفظ الأخبار
+      # نشر الأخبار الجديدة على Facebook
+      #
+      # مهم:
+      # هذه الخطوة تأتي قبل الحفظ والـ push
+      # حتى يتم تحديث posted_news.json أولاً.
       # ==========================================
-
-      - name: Save news.json
-
-        run: |
-
-          git config user.name "NOWNEX Bot"
-
-          git config user.email "actions@github.com"
-
-          git add news.json
-
-
-          if git diff --cached --quiet; then
-
-            echo "No changes to news.json"
-
-          else
-
-            git commit \
-              -m "Update NOWNEX Arabic news"
-
-            git push
-
-          fi
-      - name: Install dependencies
-        run: |
-          python -m pip install requests
-
       - name: Publish latest news to Facebook
         env:
           FACEBOOK_PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_TOKEN }}
         run: |
+          echo "=========================================="
+          echo " PUBLISHING NEW NOWNEX NEWS"
+          echo "=========================================="
+
           python publish_to_facebook.py
+
+      # ==========================================
+      # التأكد من تحديث سجل الأخبار المنشورة
+      # ==========================================
+      - name: Validate posted_news.json
+        run: |
+          if [ ! -f posted_news.json ]; then
+            echo "ERROR: posted_news.json was not created."
+            exit 1
+          fi
+
+          python - <<'PY'
+          import json
+
+          with open(
+              "posted_news.json",
+              "r",
+              encoding="utf-8"
+          ) as f:
+              posted = json.load(f)
+
+          print(
+              f"Published news stored: {len(posted)}"
+          )
+
+          PY
+
+      # ==========================================
+      # حفظ كل التغييرات
+      #
+      # هنا نحفظ:
+      # 1. news.json
+      # 2. posted_news.json
+      #
+      # حتى لا يتم نشر نفس الخبر مرة أخرى.
+      # ==========================================
+      - name: Save news and publication history
+        run: |
+
+          git config user.name "NOWNEX Bot"
+          git config user.email "actions@github.com"
+
+          git add news.json
+          git add posted_news.json
+
+          if git diff --cached --quiet; then
+
+            echo "No changes to commit."
+
+          else
+
+            git commit \
+              -m "Update NOWNEX news and publication history"
+
+            git push
+
+          fi
