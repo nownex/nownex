@@ -13,7 +13,8 @@ import feedparser
 # ============================================================
 # NOWNEX — NEWS ENGINE
 # Arabic-first + Strong Image Extraction
-# 3 أخبار على الأقل لكل قسم
+# + Fallback Images
+# + Better RSS / OG / JSON-LD extraction
 # ============================================================
 
 
@@ -56,6 +57,8 @@ GEMINI_TIMEOUT = 90
 
 REQUEST_DELAY = 3
 
+IMAGE_TIMEOUT = 20
+
 
 # ============================================================
 # CATEGORIES
@@ -73,10 +76,42 @@ MAIN_CATEGORIES = [
 
 
 # ============================================================
-# RSS SOURCES
+# FALLBACK IMAGES
 #
-# لدينا أكثر من مصدر لكل قسم.
-# إذا فشل مصدر، يتم استعمال المصادر الأخرى.
+# إذا لم نجد صورة حقيقية للخبر، نستخدم صورة القسم.
+# يجب أن تكون هذه الصور موجودة داخل مشروع GitHub.
+# ============================================================
+
+FALLBACK_IMAGES = {
+
+    "AI":
+        "https://nownex.github.io/nownex/ai.png",
+
+    "Technology":
+        "https://nownex.github.io/nownex/technology.png",
+
+    "Cars":
+        "https://nownex.github.io/nownex/cars.png",
+
+    "Entertainment":
+        "https://nownex.github.io/nownex/entertainment.png",
+
+    "World":
+        "https://nownex.github.io/nownex/world.png",
+
+    "Facts":
+        "https://nownex.github.io/nownex/facts.png",
+
+    "Products":
+        "https://nownex.github.io/nownex/products.png",
+
+    "Other":
+        "https://nownex.github.io/nownex/technology.png"
+}
+
+
+# ============================================================
+# RSS SOURCES
 # ============================================================
 
 RSS_FEEDS = [
@@ -258,7 +293,7 @@ RSS_FEEDS = [
 
 
     # ========================================================
-    # FACTS / SCIENCE
+    # FACTS
     # ========================================================
 
     (
@@ -324,10 +359,11 @@ SESSION = requests.Session()
 SESSION.headers.update({
 
     "User-Agent":
-        "Mozilla/5.0 (compatible; NOWNEX-NewsBot/3.0)",
+        "Mozilla/5.0 (compatible; NOWNEX-NewsBot/4.0)",
 
     "Accept":
-        "application/rss+xml, application/xml, text/xml, text/html"
+        "application/rss+xml, application/xml, text/xml, "
+        "text/html, application/xhtml+xml"
 
 })
 
@@ -377,7 +413,7 @@ def normalize_title(title):
 
 
 # ============================================================
-# IMAGE HELPERS
+# VALID IMAGE URL
 # ============================================================
 
 def valid_image_url(url):
@@ -399,16 +435,102 @@ def valid_image_url(url):
     ):
         return ""
 
-    # إزالة بعض المعلمات التي قد تكسر الصورة
-    url = url.replace("&amp;", "&")
+    url = url.replace(
+        "&amp;",
+        "&"
+    )
 
     return url
 
 
+# ============================================================
+# IMAGE URL CHECK
+#
+# نتأكد أن الرابط يرجع صورة فعلية.
+# ============================================================
+
+def image_url_works(url):
+
+    url = valid_image_url(url)
+
+    if not url:
+        return False
+
+    try:
+
+        response = SESSION.head(
+            url,
+            timeout=IMAGE_TIMEOUT,
+            allow_redirects=True
+        )
+
+        content_type = str(
+            response.headers.get(
+                "Content-Type",
+                ""
+            )
+        ).lower()
+
+        if response.status_code < 400:
+
+            if (
+                "image/" in content_type
+                or
+                re.search(
+                    r"\.(jpg|jpeg|png|webp|gif|avif)(\?|$)",
+                    url,
+                    re.IGNORECASE
+                )
+            ):
+                return True
+
+    except Exception:
+        pass
+
+    # بعض المواقع تمنع HEAD
+    try:
+
+        response = SESSION.get(
+            url,
+            timeout=IMAGE_TIMEOUT,
+            allow_redirects=True,
+            stream=True
+        )
+
+        content_type = str(
+            response.headers.get(
+                "Content-Type",
+                ""
+            )
+        ).lower()
+
+        response.close()
+
+        if response.status_code < 400 and (
+            "image/" in content_type
+            or
+            re.search(
+                r"\.(jpg|jpeg|png|webp|gif|avif)(\?|$)",
+                url,
+                re.IGNORECASE
+            )
+        ):
+            return True
+
+    except Exception:
+        pass
+
+    return False
+
+
+# ============================================================
+# RSS IMAGE
+# ============================================================
+
 def extract_rss_image(entry):
 
     # --------------------------------------------------------
-    # 1. media_content
+    # media_content
     # --------------------------------------------------------
 
     media_content = entry.get(
@@ -446,7 +568,7 @@ def extract_rss_image(entry):
 
 
     # --------------------------------------------------------
-    # 2. media_thumbnail
+    # media_thumbnail
     # --------------------------------------------------------
 
     media_thumbnail = entry.get(
@@ -484,7 +606,7 @@ def extract_rss_image(entry):
 
 
     # --------------------------------------------------------
-    # 3. enclosure
+    # enclosure
     # --------------------------------------------------------
 
     enclosures = entry.get(
@@ -505,13 +627,6 @@ def extract_rss_image(entry):
             ):
                 continue
 
-            mime = str(
-                enclosure.get(
-                    "type",
-                    ""
-                )
-            ).lower()
-
             url = (
                 enclosure.get("href")
                 or
@@ -522,20 +637,12 @@ def extract_rss_image(entry):
                 url
             )
 
-            if url and (
-                "image" in mime
-                or
-                re.search(
-                    r"\.(jpg|jpeg|png|webp|gif)(\?|$)",
-                    url,
-                    re.IGNORECASE
-                )
-            ):
+            if url:
                 return url
 
 
     # --------------------------------------------------------
-    # 4. image داخل summary / description / content
+    # image داخل HTML
     # --------------------------------------------------------
 
     html_sources = [
@@ -592,6 +699,8 @@ def extract_rss_image(entry):
 
             r'<img[^>]+data-lazy-src=["\']([^"\']+)["\']',
 
+            r'<img[^>]+data-original=["\']([^"\']+)["\']',
+
             r'<source[^>]+srcset=["\']([^"\']+)["\']'
 
         ]
@@ -608,10 +717,8 @@ def extract_rss_image(entry):
             if not match:
                 continue
 
-
             image = match.group(1)
 
-            # srcset قد يحتوي على عدة صور
             if "," in image:
 
                 image = (
@@ -621,11 +728,9 @@ def extract_rss_image(entry):
                     .split(" ")[0]
                 )
 
-
             image = valid_image_url(
                 image
             )
-
 
             if image:
                 return image
@@ -635,109 +740,237 @@ def extract_rss_image(entry):
 
 
 # ============================================================
-# OG IMAGE
+# EXTRACT META IMAGE
 # ============================================================
 
-def get_og_image(url):
+def extract_meta_image(
+    page,
+    base_url
+):
 
-    if not url:
-        return ""
+    patterns = [
 
-    try:
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
 
-        response = SESSION.get(
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
 
-            url,
+        r'<meta[^>]+property=["\']og:image:url["\'][^>]+content=["\']([^"\']+)["\']',
 
-            timeout=REQUEST_TIMEOUT,
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image:url["\']',
 
-            allow_redirects=True
+        r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
 
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']',
+
+        r'<meta[^>]+name=["\']twitter:image:src["\'][^>]+content=["\']([^"\']+)["\']',
+
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image:src["\']'
+
+    ]
+
+
+    for pattern in patterns:
+
+        match = re.search(
+            pattern,
+            page,
+            re.IGNORECASE
         )
 
+        if not match:
+            continue
 
-        if response.status_code != 200:
+        image = html.unescape(
+            match.group(1).strip()
+        )
 
-            return ""
+        image = urljoin(
+            base_url,
+            image
+        )
 
+        image = valid_image_url(
+            image
+        )
 
-        page = response.text[
-            :1000000
-        ]
-
-
-        patterns = [
-
-            # og:image
-            r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']',
-
-            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
-
-            # og:image:url
-            r'<meta[^>]+property=["\']og:image:url["\'][^>]+content=["\']([^"\']+)["\']',
-
-            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image:url["\']',
-
-            # twitter
-            r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']',
-
-            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']',
-
-            # twitter:image:src
-            r'<meta[^>]+name=["\']twitter:image:src["\'][^>]+content=["\']([^"\']+)["\']',
-
-            r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image:src["\']'
-
-        ]
+        if image:
+            return image
 
 
-        for pattern in patterns:
+    return ""
 
-            match = re.search(
-                pattern,
-                page,
-                re.IGNORECASE
+
+# ============================================================
+# JSON-LD IMAGE
+# ============================================================
+
+def extract_jsonld_image(
+    page,
+    base_url
+):
+
+    scripts = re.findall(
+        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        page,
+        re.IGNORECASE | re.DOTALL
+    )
+
+
+    for script in scripts:
+
+        script = html.unescape(
+            script.strip()
+        )
+
+        try:
+
+            data = json.loads(
+                script
             )
 
-            if not match:
+        except Exception:
+            continue
+
+
+        objects = []
+
+        if isinstance(
+            data,
+            dict
+        ):
+
+            objects.append(
+                data
+            )
+
+            graph = data.get(
+                "@graph"
+            )
+
+            if isinstance(
+                graph,
+                list
+            ):
+
+                objects.extend(
+                    graph
+                )
+
+        elif isinstance(
+            data,
+            list
+        ):
+
+            objects.extend(
+                data
+            )
+
+
+        for obj in objects:
+
+            if not isinstance(
+                obj,
+                dict
+            ):
                 continue
 
 
-            image = html.unescape(
-                match.group(1).strip()
+            image = obj.get(
+                "image"
             )
 
 
-            image = urljoin(
-                response.url,
-                image
-            )
+            if isinstance(
+                image,
+                str
+            ):
+
+                image = valid_image_url(
+                    urljoin(
+                        base_url,
+                        image
+                    )
+                )
+
+                if image:
+                    return image
 
 
-            image = valid_image_url(
-                image
-            )
+            if isinstance(
+                image,
+                dict
+            ):
+
+                image_url = (
+                    image.get("url")
+                    or
+                    image.get("contentUrl")
+                )
+
+                image_url = valid_image_url(
+                    urljoin(
+                        base_url,
+                        str(
+                            image_url or ""
+                        )
+                    )
+                )
+
+                if image_url:
+                    return image_url
 
 
-            if image:
-                return image
+            if isinstance(
+                image,
+                list
+            ):
 
+                for image_item in image:
 
-    except Exception as error:
+                    if isinstance(
+                        image_item,
+                        str
+                    ):
 
-        print(
-            "OG image error:",
-            str(error)[:200]
-        )
+                        image_url = valid_image_url(
+                            urljoin(
+                                base_url,
+                                image_item
+                            )
+                        )
+
+                        if image_url:
+                            return image_url
+
+                    elif isinstance(
+                        image_item,
+                        dict
+                    ):
+
+                        image_url = (
+                            image_item.get("url")
+                            or
+                            image_item.get("contentUrl")
+                        )
+
+                        image_url = valid_image_url(
+                            urljoin(
+                                base_url,
+                                str(
+                                    image_url or ""
+                                )
+                            )
+                        )
+
+                        if image_url:
+                            return image_url
 
 
     return ""
 
 
 # ============================================================
-# IMAGE FROM LINKED PAGE HTML
-#
-# بعض المواقع لا تضع الصورة في RSS إطلاقًا.
+# HTML IMAGE
 # ============================================================
 
 def get_html_image(url):
@@ -763,20 +996,63 @@ def get_html_image(url):
 
 
         page = response.text[
-            :1000000
+            :1500000
         ]
 
 
-        # أولاً الصور التي تحمل دلالات article / featured
+        # ----------------------------------------------------
+        # 1. OpenGraph
+        # ----------------------------------------------------
+
+        image = extract_meta_image(
+            page,
+            response.url
+        )
+
+        if image:
+
+            print(
+                "    Image: OG"
+            )
+
+            return image
+
+
+        # ----------------------------------------------------
+        # 2. JSON-LD
+        # ----------------------------------------------------
+
+        image = extract_jsonld_image(
+            page,
+            response.url
+        )
+
+        if image:
+
+            print(
+                "    Image: JSON-LD"
+            )
+
+            return image
+
+
+        # ----------------------------------------------------
+        # 3. Featured / hero / article images
+        # ----------------------------------------------------
+
         patterns = [
 
-            r'<img[^>]+class=["\'][^"\']*(?:featured|hero|article|thumbnail)[^"\']*["\'][^>]+src=["\']([^"\']+)["\']',
+            r'<img[^>]+class=["\'][^"\']*(?:featured|hero|article|thumbnail|main-image|post-image)[^"\']*["\'][^>]+src=["\']([^"\']+)["\']',
 
-            r'<img[^>]+src=["\']([^"\']+)["\'][^>]+class=["\'][^"\']*(?:featured|hero|article|thumbnail)[^"\']*["\']',
+            r'<img[^>]+src=["\']([^"\']+)["\'][^>]+class=["\'][^"\']*(?:featured|hero|article|thumbnail|main-image|post-image)[^"\']*["\']',
 
             r'<img[^>]+data-src=["\']([^"\']+)["\']',
 
-            r'<img[^>]+data-lazy-src=["\']([^"\']+)["\']'
+            r'<img[^>]+data-lazy-src=["\']([^"\']+)["\']',
+
+            r'<img[^>]+data-original=["\']([^"\']+)["\']',
+
+            r'<img[^>]+src=["\']([^"\']+)["\']'
 
         ]
 
@@ -789,12 +1065,21 @@ def get_html_image(url):
                 re.IGNORECASE
             )
 
-
             if not match:
                 continue
 
 
             image = match.group(1)
+
+
+            if "," in image:
+
+                image = (
+                    image
+                    .split(",")[0]
+                    .strip()
+                    .split(" ")[0]
+                )
 
 
             image = urljoin(
@@ -816,7 +1101,7 @@ def get_html_image(url):
 
         print(
             "HTML image error:",
-            str(error)[:200]
+            str(error)[:300]
         )
 
 
@@ -829,12 +1114,12 @@ def get_html_image(url):
 
 def get_best_image(
     entry,
-    link
+    link,
+    category
 ):
 
     # --------------------------------------------------------
-    # الطريقة 1
-    # RSS image
+    # 1. RSS
     # --------------------------------------------------------
 
     image = extract_rss_image(
@@ -851,26 +1136,7 @@ def get_best_image(
 
 
     # --------------------------------------------------------
-    # الطريقة 2
-    # OpenGraph
-    # --------------------------------------------------------
-
-    image = get_og_image(
-        link
-    )
-
-    if image:
-
-        print(
-            "    Image: OG"
-        )
-
-        return image
-
-
-    # --------------------------------------------------------
-    # الطريقة 3
-    # HTML image
+    # 2. HTML / OG / JSON-LD
     # --------------------------------------------------------
 
     image = get_html_image(
@@ -879,18 +1145,25 @@ def get_best_image(
 
     if image:
 
-        print(
-            "    Image: HTML"
-        )
-
         return image
 
 
-    print(
-        "    Image: NONE"
+    # --------------------------------------------------------
+    # 3. FALLBACK
+    # --------------------------------------------------------
+
+    fallback = FALLBACK_IMAGES.get(
+        category,
+        FALLBACK_IMAGES["Other"]
     )
 
-    return ""
+
+    print(
+        f"    Image: FALLBACK ({category})"
+    )
+
+
+    return fallback
 
 
 # ============================================================
@@ -1075,7 +1348,8 @@ def get_news():
 
                 image = get_best_image(
                     entry,
-                    link
+                    link,
+                    category
                 )
 
 
@@ -1476,9 +1750,6 @@ def get_category_articles(
 
 # ============================================================
 # SELECT NEWS
-#
-# الأولوية:
-# 3 أخبار لكل قسم.
 # ============================================================
 
 def select_news(
@@ -1491,7 +1762,7 @@ def select_news(
 
 
     # --------------------------------------------------------
-    # أولاً: 3 لكل قسم
+    # 3 أخبار لكل قسم
     # --------------------------------------------------------
 
     for category in MAIN_CATEGORIES:
@@ -1545,7 +1816,7 @@ def select_news(
 
 
     # --------------------------------------------------------
-    # ثانياً: الأخبار الإضافية
+    # أخبار إضافية حتى 30
     # --------------------------------------------------------
 
     for article in articles:
@@ -1599,9 +1870,6 @@ def create_trending(
 
     seen = set()
 
-
-    # نأخذ خبرين تقريباً من كل قسم
-    # ثم نكمل حتى 10 أخبار.
 
     for category in MAIN_CATEGORIES:
 
@@ -1672,12 +1940,15 @@ def main():
     print(
         "=========================================="
     )
+
     print(
         " NOWNEX NEWS ENGINE"
     )
+
     print(
-        " Arabic + Strong Images"
+        " Arabic + Strong Images + Fallback"
     )
+
     print(
         "=========================================="
     )
@@ -1688,12 +1959,10 @@ def main():
         MAX_NEWS
     )
 
-
     print(
         "Minimum per category:",
         MIN_PER_CATEGORY
     )
-
 
     print("")
 
@@ -1763,36 +2032,6 @@ def main():
 
 
     # ========================================================
-    # VERIFY BEFORE GEMINI
-    # ========================================================
-
-    print("")
-    print(
-        "SELECTED BY CATEGORY:"
-    )
-
-
-    for category in MAIN_CATEGORIES:
-
-        count = len([
-
-            item
-
-            for item in selected
-
-            if item.get(
-                "category"
-            ) == category
-
-        ])
-
-
-        print(
-            f"  {category}: {count}"
-        )
-
-
-    # ========================================================
     # GENERATE
     # ========================================================
 
@@ -1835,17 +2074,13 @@ def main():
         )
 
 
-        if article.get("image"):
-
-            print(
-                "Image: YES"
+        print(
+            "Image:",
+            article.get(
+                "image",
+                ""
             )
-
-        else:
-
-            print(
-                "Image: NO"
-            )
+        )
 
 
         ai = ask_gemini(
@@ -1870,6 +2105,27 @@ def main():
             continue
 
 
+        image = article.get(
+            "image",
+            ""
+        )
+
+
+        # حماية أخيرة:
+        # إذا اختفت الصورة لأي سبب،
+        # نضع صورة القسم.
+
+        if not image:
+
+            image = FALLBACK_IMAGES.get(
+
+                article["category"],
+
+                FALLBACK_IMAGES["Other"]
+
+            )
+
+
         item = {
 
             "title_ar":
@@ -1877,9 +2133,6 @@ def main():
 
             "summary_ar":
                 ai["summary_ar"],
-
-            # الحقول القديمة تبقى
-            # حتى لا يتعطل الموقع الحالي.
 
             "title":
                 ai["title_ar"],
@@ -1899,15 +2152,8 @@ def main():
             "link":
                 article["link"],
 
-            # =================================================
-            # نظام الصور
-            # =================================================
-
             "image":
-                article.get(
-                    "image",
-                    ""
-                ),
+                image,
 
             "published":
                 article.get(
@@ -1939,17 +2185,13 @@ def main():
 
 
     # ========================================================
-    # SAFETY CHECK
-    #
-    # لا نكتب news.json إذا كان هناك قسم ناقص.
-    # هذا يمنع تدمير الأخبار القديمة.
+    # FINAL CATEGORY CHECK
     # ========================================================
 
     print("")
     print(
         "=========================================="
     )
-
 
     print(
         "FINAL CATEGORY CHECK"
@@ -1999,8 +2241,10 @@ def main():
 
 
     # ========================================================
-    # إذا كانت بعض الأقسام ناقصة:
-    # لا نستبدل news.json
+    # إذا فشل قسم:
+    # لا نكتب news.json.
+    #
+    # هذا يحمي الموقع من التحديث الجزئي.
     # ========================================================
 
     if missing_categories:
@@ -2029,11 +2273,6 @@ def main():
             "Existing news.json was NOT modified."
         )
 
-
-        # لا نرمي Error هنا حتى لا يعتبر GitHub
-        # أن العملية فشلت بالكامل.
-        #
-        # لكن الأفضل أن يظل الملف القديم سليماً.
 
         return
 
@@ -2140,13 +2379,9 @@ def main():
 
     for category in MAIN_CATEGORIES:
 
-        count = category_counts[
-            category
-        ]
-
-
         print(
-            f"  {category}: {count}"
+            f"  {category}: "
+            f"{category_counts[category]}"
         )
 
 
