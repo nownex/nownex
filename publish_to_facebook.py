@@ -1,8 +1,20 @@
 import json
 import os
 import requests
+from datetime import datetime, timezone
 
-TOKEN = os.environ["FACEBOOK_PAGE_TOKEN"]
+
+# =========================================================
+# NOWNEX — FACEBOOK PUBLISHER
+# =========================================================
+
+TOKEN = os.environ.get("FACEBOOK_PAGE_TOKEN")
+
+if not TOKEN:
+    raise RuntimeError(
+        "FACEBOOK_PAGE_TOKEN is missing."
+    )
+
 
 GRAPH_VERSION = "v26.0"
 
@@ -16,14 +28,26 @@ FEED_URL = (
     f"{GRAPH_VERSION}/me/feed"
 )
 
-BASE_IMAGE_URL = "https://nownex.github.io/nownex/"
+BASE_IMAGE_URL = (
+    "https://nownex.github.io/nownex/"
+)
 
 
 # =========================================================
-# هاشتاقات حسب القسم
+# الإعدادات
+# =========================================================
+
+NEWS_FILE = "news.json"
+
+POSTED_FILE = "posted_news.json"
+
+
+# =========================================================
+# الهاشتاقات
 # =========================================================
 
 HASHTAGS = {
+
     "AI":
         "#NOWNEX #الذكاء_الاصطناعي #AI #تقنية #أخبار_التقنية",
 
@@ -51,11 +75,18 @@ HASHTAGS = {
 
 
 # =========================================================
-# قراءة الأخبار
+# قراءة news.json
 # =========================================================
 
+if not os.path.exists(NEWS_FILE):
+
+    raise RuntimeError(
+        "news.json does not exist."
+    )
+
+
 with open(
-    "news.json",
+    NEWS_FILE,
     "r",
     encoding="utf-8"
 ) as f:
@@ -63,34 +94,62 @@ with open(
     data = json.load(f)
 
 
-news = data.get("news", [])
+news = data.get(
+    "news",
+    []
+)
+
+
+if not isinstance(news, list):
+
+    raise RuntimeError(
+        "news.json has invalid news format."
+    )
+
 
 if not news:
-    raise SystemExit("No news found")
+
+    raise RuntimeError(
+        "No news found in news.json."
+    )
+
+
+print(
+    f"Total news in news.json: {len(news)}"
+)
 
 
 # =========================================================
-# قراءة سجل الأخبار المنشورة
+# قراءة سجل النشر
 # =========================================================
 
-posted_file = "posted_news.json"
-
-if os.path.exists(posted_file):
+if os.path.exists(POSTED_FILE):
 
     try:
 
         with open(
-            posted_file,
+            POSTED_FILE,
             "r",
             encoding="utf-8"
         ) as f:
 
             posted_news = json.load(f)
 
-        if not isinstance(posted_news, dict):
+
+        if not isinstance(
+            posted_news,
+            dict
+        ):
+
             posted_news = {}
 
-    except Exception:
+
+    except Exception as error:
+
+        print(
+            "WARNING: Could not read posted_news.json:",
+            error
+        )
 
         posted_news = {}
 
@@ -100,94 +159,18 @@ else:
 
 
 print(
-    f"Previously published: "
-    f"{len(posted_news)}"
+    f"Previously published: {len(posted_news)}"
 )
 
 
 # =========================================================
-# اختيار أحدث خبر جديد من كل قسم
-# =========================================================
-
-latest_by_category = {}
-
-
-for article in news:
-
-    category = (
-        article.get("category")
-        or article.get("section")
-        or "Other"
-    )
-
-    category = str(category).strip()
-
-    link = (
-        article.get("link")
-        or ""
-    ).strip()
-
-    title = (
-        article.get("title_ar")
-        or article.get("title")
-        or ""
-    ).strip()
-
-    if not link and not title:
-        continue
-
-
-    # الرابط هو المعرف الأساسي للخبر
-    # والعنوان احتياط
-    news_id = link or title
-
-
-    # =============================================
-    # منع التكرار
-    # =============================================
-
-    if news_id in posted_news:
-
-        print(
-            f"SKIP already published: "
-            f"{title}"
-        )
-
-        continue
-
-
-    # نأخذ خبرًا واحدًا فقط من كل قسم
-    if category not in latest_by_category:
-
-        latest_by_category[category] = article
-
-
-# =========================================================
-# لا توجد أخبار جديدة
-# =========================================================
-
-if not latest_by_category:
-
-    print("No new news to publish.")
-    raise SystemExit(0)
-
-
-print(
-    "New categories:",
-    list(latest_by_category.keys())
-)
-
-
-# =========================================================
-# دالة حفظ سجل النشر
-#
-# نحفظ بعد كل خبر ناجح أيضًا، وليس فقط في النهاية.
+# حفظ سجل النشر
 # =========================================================
 
 def save_posted_news():
 
     with open(
-        posted_file,
+        POSTED_FILE,
         "w",
         encoding="utf-8"
     ) as f:
@@ -201,45 +184,287 @@ def save_posted_news():
 
 
 # =========================================================
-# نشر الأخبار
+# معرف الخبر
+#
+# الرابط هو المعرف الأقوى.
+# العنوان يستخدم كاحتياط.
+# =========================================================
+
+def get_news_id(article):
+
+    link = str(
+        article.get(
+            "link",
+            ""
+        ) or ""
+    ).strip()
+
+
+    title = str(
+        article.get(
+            "title_ar",
+            article.get(
+                "title",
+                ""
+            )
+        ) or ""
+    ).strip()
+
+
+    if link:
+        return link
+
+
+    return title
+
+
+# =========================================================
+# تحويل وقت الخبر إلى رقم للمقارنة
+#
+# نستخدم publishedAt أولاً.
+# =========================================================
+
+def get_article_timestamp(article):
+
+    value = (
+        article.get("published")
+        or
+        article.get("publishedAt")
+        or
+        ""
+    )
+
+
+    if not value:
+        return 0
+
+
+    value = str(value).strip()
+
+
+    # ISO format
+    try:
+
+        normalized = value.replace(
+            "Z",
+            "+00:00"
+        )
+
+
+        dt = datetime.fromisoformat(
+            normalized
+        )
+
+
+        if dt.tzinfo is None:
+
+            dt = dt.replace(
+                tzinfo=timezone.utc
+            )
+
+
+        return dt.timestamp()
+
+
+    except Exception:
+        pass
+
+
+    # إذا لم نستطع تحويل التاريخ
+    return 0
+
+
+# =========================================================
+# البحث عن أحدث خبر غير منشور في كل قسم
+# =========================================================
+
+latest_by_category = {}
+
+
+for article in news:
+
+    if not isinstance(
+        article,
+        dict
+    ):
+        continue
+
+
+    category = str(
+        article.get(
+            "category",
+            article.get(
+                "section",
+                "Other"
+            )
+        ) or "Other"
+    ).strip()
+
+
+    news_id = get_news_id(
+        article
+    )
+
+
+    if not news_id:
+        continue
+
+
+    title = str(
+        article.get(
+            "title_ar",
+            article.get(
+                "title",
+                ""
+            )
+        ) or ""
+    ).strip()
+
+
+    # =====================================================
+    # منع التكرار
+    # =====================================================
+
+    if news_id in posted_news:
+
+        print(
+            "SKIP already published:",
+            title
+        )
+
+        continue
+
+
+    timestamp = get_article_timestamp(
+        article
+    )
+
+
+    # =====================================================
+    # إذا كان هناك خبر أحدث في نفس القسم
+    # نحتفظ بالأحدث فقط.
+    # =====================================================
+
+    current = latest_by_category.get(
+        category
+    )
+
+
+    if current is None:
+
+        latest_by_category[
+            category
+        ] = article
+
+    else:
+
+        current_timestamp = (
+            get_article_timestamp(
+                current
+            )
+        )
+
+
+        if timestamp > current_timestamp:
+
+            latest_by_category[
+                category
+            ] = article
+
+
+# =========================================================
+# لا توجد أخبار جديدة
+# =========================================================
+
+if not latest_by_category:
+
+    print("")
+    print(
+        "No new news to publish."
+    )
+    print(
+        "Facebook is already up to date."
+    )
+
+    raise SystemExit(0)
+
+
+print("")
+print(
+    "NEW CATEGORIES:"
+)
+
+
+for category in latest_by_category:
+
+    article = latest_by_category[
+        category
+    ]
+
+    print(
+        f" - {category}: "
+        f"{article.get('title_ar', article.get('title', ''))}"
+    )
+
+
+# =========================================================
+# النشر
 # =========================================================
 
 success_count = 0
+
 failed_count = 0
 
 
 for category, article in latest_by_category.items():
 
-    title = (
-        article.get("title_ar")
-        or article.get("title")
-        or ""
-    ).strip()
-
-    summary = (
-        article.get("summary_ar")
-        or article.get("summary")
-        or article.get("description")
-        or ""
-    ).strip()
-
-    link = (
-        article.get("link")
-        or ""
-    ).strip()
-
-    image = (
-        article.get("image")
-        or article.get("image_url")
-        or ""
+    title = str(
+        article.get(
+            "title_ar",
+            article.get(
+                "title",
+                ""
+            )
+        ) or ""
     ).strip()
 
 
-    # =============================================
-    # معرف الخبر
-    # =============================================
+    summary = str(
+        article.get(
+            "summary_ar",
+            article.get(
+                "summary",
+                article.get(
+                    "description",
+                    ""
+                )
+            )
+        ) or ""
+    ).strip()
 
-    news_id = link or title
+
+    link = str(
+        article.get(
+            "link",
+            ""
+        ) or ""
+    ).strip()
+
+
+    image = str(
+        article.get(
+            "image",
+            article.get(
+                "image_url",
+                ""
+            )
+        ) or ""
+    ).strip()
+
+
+    news_id = get_news_id(
+        article
+    )
 
 
     print("")
@@ -248,21 +473,24 @@ for category, article in latest_by_category.items():
     )
 
     print(
-        f"Publishing category: {category}"
+        "Publishing:",
+        category
     )
 
     print(
-        f"Title: {title}"
+        "Title:",
+        title
     )
 
     print(
-        "=========================================="
+        "News ID:",
+        news_id
     )
 
 
-    # =============================================
+    # =====================================================
     # الهاشتاقات
-    # =============================================
+    # =====================================================
 
     hashtags = HASHTAGS.get(
         category,
@@ -270,25 +498,35 @@ for category, article in latest_by_category.items():
     )
 
 
-    # =============================================
+    # =====================================================
     # نص المنشور
-    # =============================================
+    # =====================================================
 
     message = (
+
         f"📰 {title}\n\n"
+
         f"{summary}\n\n"
+
         f"{hashtags}\n\n"
-        f"🔗 اقرأ المزيد:\n{link}"
+
+        f"🔗 اقرأ المزيد:\n"
+        f"{link}"
+
     )
 
 
-    # =============================================
+    # =====================================================
     # تجهيز الصورة
-    # =============================================
+    # =====================================================
 
     if image:
 
-        if not image.startswith("http"):
+        if not image.startswith(
+            "http://"
+        ) and not image.startswith(
+            "https://"
+        ):
 
             image = (
                 BASE_IMAGE_URL
@@ -296,116 +534,148 @@ for category, article in latest_by_category.items():
             )
 
 
-    # =============================================
-    # محاولة النشر
-    # =============================================
+    print(
+        "Image:",
+        image if image else "NONE"
+    )
+
+
+    # =====================================================
+    # النشر
+    # =====================================================
 
     try:
 
         if image:
 
             print(
-                f"Publishing image for category: "
-                f"{category}"
+                "Publishing as PHOTO..."
             )
 
+
             response = requests.post(
+
                 PHOTO_URL,
+
                 data={
-                    "url": image,
-                    "caption": message,
-                    "access_token": TOKEN,
+
+                    "url":
+                        image,
+
+                    "caption":
+                        message,
+
+                    "access_token":
+                        TOKEN
+
                 },
-                timeout=60,
+
+                timeout=60
+
             )
+
 
         else:
 
             print(
-                f"No image for {category}, "
-                "publishing text instead."
+                "Publishing as TEXT..."
             )
+
 
             response = requests.post(
+
                 FEED_URL,
+
                 data={
-                    "message": message,
-                    "access_token": TOKEN,
+
+                    "message":
+                        message,
+
+                    "access_token":
+                        TOKEN
+
                 },
-                timeout=60,
+
+                timeout=60
+
             )
 
 
-        # =========================================
-        # نجاح النشر
-        # =========================================
+        # =================================================
+        # النجاح
+        # =================================================
 
         if response.ok:
 
-            print(
-                f"Published successfully: "
-                f"{category} - {title}"
-            )
-
-
-            # =====================================
-            # تسجيل الخبر فور نجاحه
-            # =====================================
-
-            result = {}
-
             try:
+
                 result = response.json()
+
             except Exception:
-                pass
+
+                result = {}
+
+
+            facebook_id = result.get(
+                "id",
+                ""
+            )
 
 
             posted_news[news_id] = {
 
-                "title": title,
+                "title":
+                    title,
 
-                "category": category,
+                "category":
+                    category,
+
+                "link":
+                    link,
 
                 "facebook_id":
-                    result.get("id", ""),
+                    facebook_id,
 
                 "published_at":
-                    __import__("datetime")
-                    .datetime.now(
-                        __import__("datetime")
-                        .timezone.utc
-                    )
-                    .isoformat()
+                    datetime.now(
+                        timezone.utc
+                    ).isoformat()
 
             }
 
 
-            # حفظ مباشر
+            # حفظ مباشرة
             save_posted_news()
 
 
             success_count += 1
 
 
-        else:
+            print(
+                "Published successfully ✓"
+            )
 
-            # =====================================
-            # فشل النشر
-            #
-            # لا نضيف الخبر إلى posted_news
-            # حتى يمكن إعادة المحاولة لاحقًا.
-            # =====================================
+
+        # =================================================
+        # فشل
+        # =================================================
+
+        else:
 
             failed_count += 1
 
+
             print(
-                f"Facebook error for "
-                f"{category}: "
-                f"{response.text}"
+                "Facebook error:"
             )
 
             print(
-                "Continuing with the next category..."
+                response.text[:2000]
+            )
+
+
+            print(
+                "Continuing..."
             )
 
 
@@ -413,13 +683,15 @@ for category, article in latest_by_category.items():
 
         failed_count += 1
 
-        print(
-            f"Exception while publishing "
-            f"{category}: {error}"
-        )
 
         print(
-            "Continuing with the next category..."
+            "Publishing exception:",
+            str(error)
+        )
+
+
+        print(
+            "Continuing with next category..."
         )
 
 
@@ -436,7 +708,7 @@ print(
 )
 
 print(
-    "NOWNEX publishing finished"
+    "NOWNEX FACEBOOK PUBLISHING FINISHED"
 )
 
 print(
@@ -448,7 +720,7 @@ print(
 )
 
 print(
-    f"Total stored as published: "
+    f"Stored published news: "
     f"{len(posted_news)}"
 )
 
