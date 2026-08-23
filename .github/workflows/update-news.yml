@@ -4,7 +4,6 @@ on:
   workflow_dispatch:
 
   schedule:
-    # تحديث الأخبار كل 6 ساعات
     - cron: "0 */6 * * *"
 
 permissions:
@@ -20,48 +19,37 @@ jobs:
 
     steps:
 
-      # ==========================================
-      # تحميل المشروع
-      # ==========================================
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # ==========================================
-      # إعداد Python
-      # ==========================================
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # ==========================================
-      # تثبيت المكتبات
-      # ==========================================
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests feedparser
 
-      # ==========================================
-      # توليد أخبار NOWNEX
-      # ==========================================
       - name: Generate Arabic news
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-2.5-flash
         run: |
           echo "=========================================="
-          echo " NOWNEX NEWS UPDATE"
+          echo " GENERATING NOWNEX NEWS"
           echo "=========================================="
 
           python generate_news.py
 
-      # ==========================================
-      # التأكد من وجود news.json
-      # ==========================================
-      - name: Validate news.json
+      - name: Validate generated news.json
         run: |
-          echo "Checking news.json..."
+          echo "=========================================="
+          echo " VALIDATING NEWS.JSON"
+          echo "=========================================="
 
           if [ ! -f news.json ]; then
             echo "ERROR: news.json was not created."
@@ -72,18 +60,13 @@ jobs:
           import json
           import sys
 
-          with open(
-              "news.json",
-              "r",
-              encoding="utf-8"
-          ) as f:
+          with open("news.json", "r", encoding="utf-8") as f:
               data = json.load(f)
 
           news = data.get("news", [])
 
-          print(
-              f"NOWNEX articles: {len(news)}"
-          )
+          print("updatedAt:", data.get("updatedAt"))
+          print("Articles:", len(news))
 
           categories = [
               "AI",
@@ -96,81 +79,68 @@ jobs:
           ]
 
           for category in categories:
-
               count = sum(
                   1
                   for item in news
                   if item.get("category") == category
               )
-
-              print(
-                  f"{category}: {count}"
-              )
+              print(f"{category}: {count}")
 
           if not news:
               print("ERROR: No articles found.")
               sys.exit(1)
 
-          print(
-              "SUCCESS: news.json is valid."
-          )
-
           PY
 
-      # ==========================================
-      # نشر الأخبار الجديدة على Facebook
-      #
-      # مهم:
-      # هذه الخطوة تأتي قبل الحفظ والـ push
-      # حتى يتم تحديث posted_news.json أولاً.
-      # ==========================================
       - name: Publish latest news to Facebook
         env:
           FACEBOOK_PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_TOKEN }}
         run: |
           echo "=========================================="
-          echo " PUBLISHING NEW NOWNEX NEWS"
+          echo " PUBLISHING NOWNEX NEWS TO FACEBOOK"
           echo "=========================================="
 
           python publish_to_facebook.py
 
-      # ==========================================
-      # التأكد من تحديث سجل الأخبار المنشورة
-      # ==========================================
       - name: Validate posted_news.json
         run: |
+          echo "=========================================="
+          echo " VALIDATING PUBLICATION HISTORY"
+          echo "=========================================="
+
           if [ ! -f posted_news.json ]; then
-            echo "ERROR: posted_news.json was not created."
+            echo "ERROR: posted_news.json does not exist."
             exit 1
           fi
 
           python - <<'PY'
           import json
 
-          with open(
-              "posted_news.json",
-              "r",
-              encoding="utf-8"
-          ) as f:
+          with open("posted_news.json", "r", encoding="utf-8") as f:
               posted = json.load(f)
 
           print(
               f"Published news stored: {len(posted)}"
           )
-
           PY
 
-      # ==========================================
-      # حفظ كل التغييرات
-      #
-      # هنا نحفظ:
-      # 1. news.json
-      # 2. posted_news.json
-      #
-      # حتى لا يتم نشر نفس الخبر مرة أخرى.
-      # ==========================================
+      - name: Show files before commit
+        run: |
+          echo "=========================================="
+          echo " FILES CHANGED"
+          echo "=========================================="
+
+          git status --short
+
+          echo ""
+          echo "news.json timestamp:"
+          grep -m1 '"updatedAt"' news.json || true
+
       - name: Save news and publication history
         run: |
+          echo "=========================================="
+          echo " SAVING NOWNEX DATA"
+          echo "=========================================="
 
           git config user.name "NOWNEX Bot"
           git config user.email "actions@github.com"
@@ -179,14 +149,17 @@ jobs:
           git add posted_news.json
 
           if git diff --cached --quiet; then
-
-            echo "No changes to commit."
-
+            echo "No changes detected."
           else
-
-            git commit \
-              -m "Update NOWNEX news and publication history"
-
-            git push
-
+            git commit -m "Update NOWNEX news and publication history"
+            git push origin main
           fi
+
+      - name: Final status
+        run: |
+          echo "=========================================="
+          echo " NOWNEX UPDATE FINISHED"
+          echo "=========================================="
+
+          git status --short
+          git log -1 --oneline
