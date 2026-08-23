@@ -19,32 +19,55 @@ jobs:
 
     steps:
 
+      # ==========================================
+      # CHECKOUT
+      # ==========================================
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # ==========================================
+      # PYTHON
+      # ==========================================
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
+      # ==========================================
+      # DEPENDENCIES
+      # ==========================================
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests feedparser
 
+      # ==========================================
+      # GENERATE ARABIC NEWS
+      # ==========================================
       - name: Generate Arabic news
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: gemini-2.5-flash
+
+          # IMPORTANT:
+          # Gemini 2.5 Flash was causing HTTP 404.
+          # Use Gemini 3.6 Flash.
+          GEMINI_MODEL: gemini-3.6-flash
+
         run: |
           echo "=========================================="
           echo " GENERATING NOWNEX NEWS"
           echo "=========================================="
 
+          echo "Gemini model:"
+          echo "$GEMINI_MODEL"
+
           python generate_news.py
 
+      # ==========================================
+      # VALIDATE NEWS.JSON
+      # ==========================================
       - name: Validate generated news.json
         run: |
           echo "=========================================="
@@ -90,11 +113,17 @@ jobs:
               print("ERROR: No articles found.")
               sys.exit(1)
 
+          print("NEWS.JSON VALID")
+
           PY
 
+      # ==========================================
+      # PUBLISH TO FACEBOOK
+      # ==========================================
       - name: Publish latest news to Facebook
         env:
           FACEBOOK_PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_TOKEN }}
+
         run: |
           echo "=========================================="
           echo " PUBLISHING NOWNEX NEWS TO FACEBOOK"
@@ -102,6 +131,9 @@ jobs:
 
           python publish_to_facebook.py
 
+      # ==========================================
+      # VALIDATE POSTED NEWS
+      # ==========================================
       - name: Validate posted_news.json
         run: |
           echo "=========================================="
@@ -122,8 +154,12 @@ jobs:
           print(
               f"Published news stored: {len(posted)}"
           )
+
           PY
 
+      # ==========================================
+      # SHOW CHANGES
+      # ==========================================
       - name: Show files before commit
         run: |
           echo "=========================================="
@@ -136,6 +172,9 @@ jobs:
           echo "news.json timestamp:"
           grep -m1 '"updatedAt"' news.json || true
 
+      # ==========================================
+      # SAVE NEWS
+      # ==========================================
       - name: Save news and publication history
         run: |
           echo "=========================================="
@@ -155,6 +194,9 @@ jobs:
             git push origin main
           fi
 
+      # ==========================================
+      # FINAL STATUS
+      # ==========================================
       - name: Final status
         run: |
           echo "=========================================="
@@ -162,4 +204,7 @@ jobs:
           echo "=========================================="
 
           git status --short
+
+          echo ""
+          echo "Latest commit:"
           git log -1 --oneline
