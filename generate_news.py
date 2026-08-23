@@ -3,7 +3,8 @@ import json
 import re
 import html
 import time
-from datetime import datetime, timezone
+import calendar
+from datetime import datetime, timezone, timedelta
 from urllib.parse import urljoin
 
 import requests
@@ -11,12 +12,18 @@ import feedparser
 
 
 # ============================================================
-# NOWNEX — NEWS ENGINE
-# Arabic-first
-# Fast RSS collection
-# Latest news first
-# 3 news per category
-# Images are processed AFTER selecting news
+# NOWNEX — NEWS ENGINE v5
+# ============================================================
+#
+# الهدف:
+# - أخبار حديثة فقط
+# - آخر 72 ساعة
+# - ترتيب حسب تاريخ النشر الحقيقي
+# - 3 أخبار على الأقل لكل قسم
+# - 30 خبرًا كحد أقصى
+# - العربية عبر Gemini
+# - الصور بعد اختيار الأخبار
+# - منع الأخبار القديمة من الدخول
 # ============================================================
 
 
@@ -32,9 +39,11 @@ if not API_KEY:
     )
 
 
+# إذا لم يتم تحديد المتغير في GitHub
+# سيستخدم هذا النموذج
 GEMINI_MODEL = os.environ.get(
     "GEMINI_MODEL",
-    "gemini-2.5-flash"
+    "gemini-3.6-flash"
 )
 
 
@@ -54,11 +63,21 @@ MIN_PER_CATEGORY = 3
 
 ENTRIES_PER_FEED = 15
 
-REQUEST_TIMEOUT = 10
+REQUEST_TIMEOUT = 15
 
 GEMINI_TIMEOUT = 60
 
-REQUEST_DELAY = 1
+REQUEST_DELAY = 0.5
+
+
+# ============================================================
+# IMPORTANT:
+# الخبر يجب ألا يكون أقدم من هذا العدد من الساعات.
+#
+# 72 ساعة = آخر 3 أيام
+# ============================================================
+
+MAX_AGE_HOURS = 72
 
 
 # ============================================================
@@ -95,7 +114,7 @@ RSS_FEEDS = [
     (
         "Google News AI",
         "https://news.google.com/rss/search?"
-        "q=artificial%20intelligence%20AI"
+        "q=artificial%20intelligence%20AI%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "AI"
     ),
@@ -103,7 +122,7 @@ RSS_FEEDS = [
     (
         "Google News AI Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A"
+        "q=%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1%20%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "AI"
     ),
@@ -140,7 +159,7 @@ RSS_FEEDS = [
     (
         "Google News Technology",
         "https://news.google.com/rss/search?"
-        "q=technology%20smartphones%20gadgets"
+        "q=technology%20smartphones%20gadgets%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Technology"
     ),
@@ -148,7 +167,7 @@ RSS_FEEDS = [
     (
         "Google News Technology Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7%20%D9%87%D9%88%D8%A7%D8%AA%D9%81%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9"
+        "q=%D8%AA%D9%83%D9%86%D9%88%D9%84%D9%88%D8%AC%D9%8A%D8%A7%20%D9%87%D9%88%D8%A7%D8%AA%D9%81%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "Technology"
     ),
@@ -179,7 +198,7 @@ RSS_FEEDS = [
     (
         "Google News Cars",
         "https://news.google.com/rss/search?"
-        "q=cars%20automotive%20electric%20vehicles"
+        "q=cars%20automotive%20electric%20vehicles%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Cars"
     ),
@@ -187,7 +206,7 @@ RSS_FEEDS = [
     (
         "Google News Cars Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA%20%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA%20%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9"
+        "q=%D8%B3%D9%8A%D8%A7%D8%B1%D8%A7%D8%AA%20%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A%D8%A9%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "Cars"
     ),
@@ -212,7 +231,7 @@ RSS_FEEDS = [
     (
         "Google News Entertainment",
         "https://news.google.com/rss/search?"
-        "q=entertainment%20movies%20music%20games"
+        "q=entertainment%20movies%20music%20games%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Entertainment"
     ),
@@ -220,7 +239,7 @@ RSS_FEEDS = [
     (
         "Google News Entertainment Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D8%AA%D8%B1%D9%81%D9%8A%D9%87%20%D8%A3%D9%81%D9%84%D8%A7%D9%85%20%D9%85%D9%88%D8%B3%D9%8A%D9%82%D9%89%20%D8%A3%D9%84%D8%B9%D8%A7%D8%A8"
+        "q=%D8%AA%D8%B1%D9%81%D9%8A%D9%87%20%D8%A3%D9%81%D9%84%D8%A7%D9%85%20%D9%85%D9%88%D8%B3%D9%8A%D9%82%D9%89%20%D8%A3%D9%84%D8%B9%D8%A7%D8%A8%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "Entertainment"
     ),
@@ -244,15 +263,16 @@ RSS_FEEDS = [
 
     (
         "Google News World Arabic",
-        "https://news.google.com/rss?"
-        "hl=ar&gl=DZ&ceid=DZ:ar",
+        "https://news.google.com/rss/search?"
+        "q=world%20news%20%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B9%D8%A7%D9%84%D9%85%20when%3A3d"
+        "&hl=ar&gl=DZ&ceid=DZ:ar",
         "World"
     ),
 
     (
         "Google News World",
         "https://news.google.com/rss/search?"
-        "q=world%20news"
+        "q=world%20news%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "World"
     ),
@@ -271,7 +291,7 @@ RSS_FEEDS = [
     (
         "Google News Science",
         "https://news.google.com/rss/search?"
-        "q=science%20discovery%20space"
+        "q=science%20discovery%20space%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Facts"
     ),
@@ -279,7 +299,7 @@ RSS_FEEDS = [
     (
         "Google News Science Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D8%B9%D9%84%D9%85%20%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81%D8%A7%D8%AA%20%D9%81%D8%B6%D8%A7%D8%A1"
+        "q=%D8%B9%D9%84%D9%85%20%D8%A7%D9%83%D8%AA%D8%B4%D8%A7%D9%81%D8%A7%D8%AA%20%D9%81%D8%B6%D8%A7%D8%A1%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "Facts"
     ),
@@ -292,7 +312,7 @@ RSS_FEEDS = [
     (
         "Google News Products",
         "https://news.google.com/rss/search?"
-        "q=new%20products%20gadgets"
+        "q=new%20products%20gadgets%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Products"
     ),
@@ -300,7 +320,7 @@ RSS_FEEDS = [
     (
         "Google News Gadgets",
         "https://news.google.com/rss/search?"
-        "q=new%20gadgets%20smartphones%20devices"
+        "q=new%20gadgets%20smartphones%20devices%20when%3A3d"
         "&hl=en&gl=US&ceid=US:en",
         "Products"
     ),
@@ -308,7 +328,7 @@ RSS_FEEDS = [
     (
         "Google News Products Arabic",
         "https://news.google.com/rss/search?"
-        "q=%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D9%87%D9%88%D8%A7%D8%AA%D9%81"
+        "q=%D9%85%D9%86%D8%AA%D8%AC%D8%A7%D8%AA%20%D8%A3%D8%AC%D9%87%D8%B2%D8%A9%20%D9%87%D9%88%D8%A7%D8%AA%D9%81%20when%3A3d"
         "&hl=ar&gl=DZ&ceid=DZ:ar",
         "Products"
     )
@@ -325,12 +345,23 @@ SESSION = requests.Session()
 SESSION.headers.update({
 
     "User-Agent":
-        "Mozilla/5.0 (compatible; NOWNEX-NewsBot/4.0)",
+        "Mozilla/5.0 (compatible; NOWNEX-NewsBot/5.0)",
 
     "Accept":
         "application/rss+xml, application/xml, text/xml, text/html"
 
 })
+
+
+# ============================================================
+# CURRENT UTC TIME
+# ============================================================
+
+def now_utc():
+
+    return datetime.now(
+        timezone.utc
+    )
 
 
 # ============================================================
@@ -400,25 +431,17 @@ def valid_image_url(url):
     ):
         return ""
 
-    url = url.replace(
+    return url.replace(
         "&amp;",
         "&"
     )
 
-    return url
-
 
 # ============================================================
 # RSS IMAGE
-#
-# هذه العملية سريعة لأنها لا تفتح صفحة الخبر.
 # ============================================================
 
 def extract_rss_image(entry):
-
-    # --------------------------------------------------------
-    # media_content
-    # --------------------------------------------------------
 
     media_content = entry.get(
         "media_content",
@@ -454,10 +477,6 @@ def extract_rss_image(entry):
                 return image
 
 
-    # --------------------------------------------------------
-    # media_thumbnail
-    # --------------------------------------------------------
-
     media_thumbnail = entry.get(
         "media_thumbnail",
         []
@@ -491,10 +510,6 @@ def extract_rss_image(entry):
             if image:
                 return image
 
-
-    # --------------------------------------------------------
-    # enclosure
-    # --------------------------------------------------------
 
     enclosures = entry.get(
         "enclosures",
@@ -546,10 +561,6 @@ def extract_rss_image(entry):
                 return image
 
 
-    # --------------------------------------------------------
-    # image داخل RSS HTML
-    # --------------------------------------------------------
-
     html_sources = [
 
         entry.get(
@@ -596,7 +607,6 @@ def extract_rss_image(entry):
             source or ""
         )
 
-
         patterns = [
 
             r'<img[^>]+src=["\']([^"\']+)["\']',
@@ -621,9 +631,7 @@ def extract_rss_image(entry):
             if not match:
                 continue
 
-
             image = match.group(1)
-
 
             if "," in image:
 
@@ -634,11 +642,9 @@ def extract_rss_image(entry):
                     .split(" ")[0]
                 )
 
-
             image = valid_image_url(
                 image
             )
-
 
             if image:
                 return image
@@ -649,10 +655,6 @@ def extract_rss_image(entry):
 
 # ============================================================
 # GET OG IMAGE
-#
-# مهم:
-# هذه الدالة لا تعمل أثناء قراءة RSS.
-# تعمل فقط بعد اختيار الأخبار.
 # ============================================================
 
 def get_og_image(url):
@@ -675,7 +677,6 @@ def get_og_image(url):
 
 
         if response.status_code != 200:
-
             return ""
 
 
@@ -713,7 +714,6 @@ def get_og_image(url):
 
             )
 
-
             if not match:
                 continue
 
@@ -750,16 +750,17 @@ def get_og_image(url):
 
 
 # ============================================================
-# PUBLISHED DATE
+# GET PUBLISHED DATETIME
 #
-# نستخدم التاريخ الحقيقي من RSS لترتيب الأخبار.
+# هذه أهم دالة في النسخة الجديدة.
 # ============================================================
 
-def get_published_timestamp(entry):
+def get_published_datetime(entry):
 
     parsed = entry.get(
         "published_parsed"
     )
+
 
     if not parsed:
 
@@ -772,16 +773,93 @@ def get_published_timestamp(entry):
 
         try:
 
-            return time.mktime(
+            timestamp = calendar.timegm(
                 parsed
             )
 
+            return datetime.fromtimestamp(
+                timestamp,
+                timezone.utc
+            )
+
         except Exception:
+
             pass
 
 
-    # fallback
-    return 0
+    # محاولة ثانية من النص
+    raw_date = (
+        entry.get("published")
+        or
+        entry.get("updated")
+        or
+        ""
+    )
+
+
+    raw_date = str(
+        raw_date
+    ).strip()
+
+
+    if raw_date:
+
+        try:
+
+            parsed_date = feedparser._parse_date(
+                raw_date
+            )
+
+            if parsed_date:
+
+                timestamp = calendar.timegm(
+                    parsed_date
+                )
+
+                return datetime.fromtimestamp(
+                    timestamp,
+                    timezone.utc
+                )
+
+        except Exception:
+
+            pass
+
+
+    return None
+
+
+# ============================================================
+# CHECK IF NEWS IS FRESH
+# ============================================================
+
+def is_fresh_article(
+    published_dt
+):
+
+    if not published_dt:
+        return False
+
+
+    current = now_utc()
+
+
+    age = (
+        current - published_dt
+    ).total_seconds()
+
+
+    # لا نقبل أخبارًا مستقبلية بشكل كبير
+    if age < -3600:
+        return False
+
+
+    max_age = (
+        MAX_AGE_HOURS * 3600
+    )
+
+
+    return age <= max_age
 
 
 # ============================================================
@@ -852,15 +930,50 @@ def remove_duplicates(items):
 
 # ============================================================
 # READ RSS
-#
-# مهم:
-# لا نستخرج OG/HTML images هنا.
-# هذا يجعل العملية أسرع بكثير.
 # ============================================================
 
 def get_news():
 
     articles = []
+
+
+    current = now_utc()
+
+    oldest_allowed = (
+        current
+        -
+        timedelta(
+            hours=MAX_AGE_HOURS
+        )
+    )
+
+
+    print("")
+    print(
+        "=========================================="
+    )
+
+    print(
+        "NEWS FRESHNESS FILTER"
+    )
+
+    print(
+        "Current UTC:",
+        current.isoformat()
+    )
+
+    print(
+        "Oldest allowed:",
+        oldest_allowed.isoformat()
+    )
+
+    print(
+        f"Maximum age: {MAX_AGE_HOURS} hours"
+    )
+
+    print(
+        "=========================================="
+    )
 
 
     for (
@@ -917,9 +1030,12 @@ def get_news():
 
 
             print(
-                "Found:",
+                "RSS entries:",
                 len(entries)
             )
+
+
+            fresh_count = 0
 
 
             for entry in entries:
@@ -947,6 +1063,53 @@ def get_news():
                 if not link:
                     continue
 
+
+                # ==========================================
+                # REAL PUBLICATION DATE
+                # ==========================================
+
+                published_dt = (
+                    get_published_datetime(
+                        entry
+                    )
+                )
+
+
+                # ==========================================
+                # IMPORTANT:
+                # تجاهل أي خبر بدون تاريخ حقيقي
+                # ==========================================
+
+                if not published_dt:
+
+                    print(
+                        "SKIP — no publication date:",
+                        title[:100]
+                    )
+
+                    continue
+
+
+                # ==========================================
+                # IMPORTANT:
+                # تجاهل الأخبار القديمة
+                # ==========================================
+
+                if published_dt < oldest_allowed:
+
+                    print(
+                        "SKIP — OLD:",
+                        published_dt.isoformat(),
+                        "|",
+                        title[:100]
+                    )
+
+                    continue
+
+
+                # ==========================================
+                # DESCRIPTION
+                # ==========================================
 
                 description = clean_text(
 
@@ -986,19 +1149,20 @@ def get_news():
                             )
 
                         except Exception:
+
                             pass
 
 
-                # --------------------------------------------
-                # RSS IMAGE ONLY
-                # --------------------------------------------
+                # ==========================================
+                # RSS IMAGE
+                # ==========================================
 
                 image = extract_rss_image(
                     entry
                 )
 
 
-                published = clean_text(
+                published_text = clean_text(
 
                     entry.get(
                         "published",
@@ -1008,13 +1172,6 @@ def get_news():
                         )
                     )
 
-                )
-
-
-                published_timestamp = (
-                    get_published_timestamp(
-                        entry
-                    )
                 )
 
 
@@ -1039,12 +1196,25 @@ def get_news():
                         image,
 
                     "published":
-                        published,
+                        published_text,
+
+                    # تاريخ حقيقي وليس وقت التشغيل
+                    "_published_datetime":
+                        published_dt,
 
                     "_published_timestamp":
-                        published_timestamp
+                        published_dt.timestamp()
 
                 })
+
+
+                fresh_count += 1
+
+
+            print(
+                "Fresh:",
+                fresh_count
+            )
 
 
         except Exception as error:
@@ -1066,7 +1236,8 @@ def get_news():
 
 
     # ========================================================
-    # ترتيب الأخبار من الأحدث إلى الأقدم
+    # ترتيب حقيقي:
+    # الأحدث أولًا
     # ========================================================
 
     articles.sort(
@@ -1080,6 +1251,32 @@ def get_news():
         reverse=True
 
     )
+
+
+    print("")
+    print(
+        "=========================================="
+    )
+
+    print(
+        "FRESH ARTICLES AFTER FILTER:",
+        len(articles)
+    )
+
+    print(
+        "=========================================="
+    )
+
+
+    for article in articles[:10]:
+
+        print(
+            article["category"],
+            "|",
+            article["_published_datetime"].isoformat(),
+            "|",
+            article["title"][:100]
+        )
 
 
     return articles
@@ -1154,7 +1351,7 @@ def ask_gemini(
     prompt = f"""
 أنت محرر الأخبار الرئيسي في NOWNEX.
 
-أنشئ نسخة عربية احترافية من الخبر التالي.
+حوّل الخبر التالي إلى خبر عربي احترافي.
 
 المصدر:
 {source}
@@ -1168,7 +1365,7 @@ def ask_gemini(
 المعلومات المتاحة:
 {description}
 
-أعد JSON فقط:
+أعد JSON فقط بهذا الشكل:
 
 {{
   "title_ar": "عنوان عربي احترافي",
@@ -1181,11 +1378,11 @@ def ask_gemini(
 2. لا تخترع أي معلومة.
 3. لا تخترع أسماء.
 4. لا تخترع أرقاماً.
-5. لا تخترع تصريحات أو اقتباسات.
+5. لا تخترع تصريحات.
 6. لا تضف رأياً شخصياً.
-7. استخدم المعلومات المتاحة فقط.
-8. يجب أن يكون الملخص من 3 إلى 5 جمل.
-9. يجب أن يكون العنوان واضحاً ومهنياً.
+7. استخدم المعلومات الموجودة فقط.
+8. الملخص من 3 إلى 5 جمل.
+9. العنوان واضح ومهني.
 10. أعد JSON صالحاً فقط.
 11. لا تستخدم Markdown.
 """
@@ -1463,11 +1660,6 @@ def get_category_articles(
 
 # ============================================================
 # SELECT NEWS
-#
-# الأولوية:
-# أحدث 3 أخبار من كل قسم.
-#
-# ثم نضيف الأخبار الإضافية حتى MAX_NEWS.
 # ============================================================
 
 def select_news(
@@ -1480,7 +1672,8 @@ def select_news(
 
 
     # ========================================================
-    # أولاً: أحدث 3 أخبار لكل قسم
+    # أولاً:
+    # أحدث 3 أخبار لكل قسم
     # ========================================================
 
     for category in MAIN_CATEGORIES:
@@ -1540,8 +1733,17 @@ def select_news(
 
 
             print(
-                f"SELECTED {category}: "
-                f"{article.get('title', '')}"
+                "SELECTED",
+                category,
+                "|",
+                article.get(
+                    "_published_datetime"
+                ).isoformat(),
+                "|",
+                article.get(
+                    "title",
+                    ""
+                )
             )
 
 
@@ -1594,6 +1796,23 @@ def select_news(
         selected_keys.add(
             key
         )
+
+
+    # ========================================================
+    # إعادة ترتيب المختارات حسب التاريخ الحقيقي
+    # ========================================================
+
+    selected.sort(
+
+        key=lambda item:
+            item.get(
+                "_published_timestamp",
+                0
+            ),
+
+        reverse=True
+
+    )
 
 
     return selected[
@@ -1678,10 +1897,7 @@ def create_trending(
 
 
 # ============================================================
-# FETCH IMAGES FOR SELECTED NEWS ONLY
-#
-# هذه هي النقطة المهمة جدًا:
-# الصور لا يتم البحث عنها إلا بعد اختيار الأخبار.
+# FETCH IMAGES
 # ============================================================
 
 def complete_images(
@@ -1710,9 +1926,6 @@ def complete_images(
 
     ):
 
-        # إذا كانت RSS أعطتنا صورة،
-        # لا نحتاج لفتح صفحة الخبر.
-
         if article.get(
             "image"
         ):
@@ -1732,7 +1945,6 @@ def complete_images(
 
 
         if not link:
-
             continue
 
 
@@ -1777,15 +1989,20 @@ def main():
     )
 
     print(
-        " NOWNEX NEWS ENGINE v4"
+        " NOWNEX NEWS ENGINE v5"
     )
 
     print(
-        " FAST + ARABIC + LATEST NEWS"
+        " FRESH + ARABIC + LATEST NEWS"
     )
 
     print(
         "=========================================="
+    )
+
+    print(
+        "Gemini model:",
+        GEMINI_MODEL
     )
 
     print(
@@ -1796,6 +2013,12 @@ def main():
     print(
         "Minimum per category:",
         MIN_PER_CATEGORY
+    )
+
+    print(
+        "Maximum news age:",
+        MAX_AGE_HOURS,
+        "hours"
     )
 
     print("")
@@ -1811,13 +2034,13 @@ def main():
     if not articles:
 
         raise RuntimeError(
-            "No RSS articles found."
+            "No fresh RSS articles found."
         )
 
 
     print("")
     print(
-        "TOTAL COLLECTED:",
+        "TOTAL FRESH COLLECTED:",
         len(articles)
     )
 
@@ -1828,7 +2051,7 @@ def main():
 
     print("")
     print(
-        "AVAILABLE BY CATEGORY:"
+        "AVAILABLE FRESH NEWS BY CATEGORY:"
     )
 
 
@@ -1850,7 +2073,35 @@ def main():
 
 
     # ========================================================
-    # 3. SELECT LATEST NEWS
+    # 3. CHECK BEFORE AI
+    # ========================================================
+
+    for category in MAIN_CATEGORIES:
+
+        count = len(
+
+            get_category_articles(
+                articles,
+                category
+            )
+
+        )
+
+
+        if count < MIN_PER_CATEGORY:
+
+            raise RuntimeError(
+
+                f"Not enough FRESH news for "
+                f"{category}: "
+                f"{count}/{MIN_PER_CATEGORY}. "
+                f"news.json was NOT modified."
+
+            )
+
+
+    # ========================================================
+    # 4. SELECT NEWS
     # ========================================================
 
     selected = select_news(
@@ -1865,8 +2116,17 @@ def main():
     )
 
 
+    if len(selected) < MAX_NEWS:
+
+        print(
+            "WARNING: Only",
+            len(selected),
+            "fresh articles available."
+        )
+
+
     # ========================================================
-    # 4. VERIFY SELECTION
+    # 5. VERIFY SELECTION
     # ========================================================
 
     print("")
@@ -1896,7 +2156,7 @@ def main():
 
 
     # ========================================================
-    # 5. FETCH IMAGES ONLY FOR SELECTED NEWS
+    # 6. FETCH IMAGES
     # ========================================================
 
     selected = complete_images(
@@ -1905,7 +2165,7 @@ def main():
 
 
     # ========================================================
-    # 6. GENERATE ARABIC
+    # 7. GENERATE ARABIC
     # ========================================================
 
     final_news = []
@@ -1939,16 +2199,23 @@ def main():
         )
 
         print(
-            "Title:",
-            article["title"]
-        )
-
-        print(
             "Published:",
             article.get(
                 "published",
                 ""
             )
+        )
+
+        print(
+            "Published UTC:",
+            article.get(
+                "_published_datetime"
+            ).isoformat()
+        )
+
+        print(
+            "Title:",
+            article["title"]
         )
 
         print(
@@ -1980,6 +2247,27 @@ def main():
             )
 
             continue
+
+
+        # ====================================================
+        # REAL PUBLICATION DATE
+        # ====================================================
+
+        published_dt = article.get(
+            "_published_datetime"
+        )
+
+
+        published_iso = (
+
+            published_dt.isoformat()
+
+            if published_dt
+
+            else
+            ""
+
+        )
 
 
         item = {
@@ -2014,6 +2302,10 @@ def main():
                     ""
                 ),
 
+            # ================================================
+            # التاريخ الحقيقي للخبر
+            # ================================================
+
             "published":
                 article.get(
                     "published",
@@ -2021,9 +2313,14 @@ def main():
                 ),
 
             "publishedAt":
-                datetime.now(
-                    timezone.utc
-                ).isoformat()
+                published_iso,
+
+            # ================================================
+            # وقت جلب الخبر
+            # ================================================
+
+            "fetchedAt":
+                now_utc().isoformat()
 
         }
 
@@ -2044,7 +2341,7 @@ def main():
 
 
     # ========================================================
-    # 7. FINAL CATEGORY CHECK
+    # 8. FINAL CATEGORY CHECK
     # ========================================================
 
     print("")
@@ -2105,29 +2402,34 @@ def main():
 
 
     # ========================================================
-    # إذا كان هناك قسم ناقص:
-    # لا نستبدل news.json
+    # إذا فشل قسم:
+    # لا نستبدل الأخبار القديمة
     # ========================================================
 
     if missing_categories:
 
         print("")
         print(
-            "WARNING:"
+            "=========================================="
         )
 
         print(
-            "Some categories have fewer than "
-            "3 valid articles."
+            "ERROR — FRESH NEWS VALIDATION FAILED"
+        )
+
+        print(
+            "=========================================="
         )
 
 
         for category in missing_categories:
 
             print(
-                f" - {category}: "
+
+                f"{category}: "
                 f"{category_counts.get(category, 0)}/"
                 f"{MIN_PER_CATEGORY}"
+
             )
 
 
@@ -2137,11 +2439,13 @@ def main():
         )
 
 
-        return
+        raise RuntimeError(
+            "Not enough fresh valid articles."
+        )
 
 
     # ========================================================
-    # 8. TRENDING
+    # 9. TRENDING
     # ========================================================
 
     trending_news = create_trending(
@@ -2150,21 +2454,54 @@ def main():
 
 
     # ========================================================
-    # 9. OUTPUT
+    # 10. SORT FINAL NEWS AGAIN
+    #
+    # مهم جدًا للواجهة.
+    # ========================================================
+
+    final_news.sort(
+
+        key=lambda item:
+            item.get(
+                "publishedAt",
+                ""
+            ),
+
+        reverse=True
+
+    )
+
+
+    trending_news.sort(
+
+        key=lambda item:
+            item.get(
+                "publishedAt",
+                ""
+            ),
+
+        reverse=True
+
+    )
+
+
+    # ========================================================
+    # 11. OUTPUT
     # ========================================================
 
     output = {
 
         "updatedAt":
-            datetime.now(
-                timezone.utc
-            ).isoformat(),
+            now_utc().isoformat(),
 
         "count":
             len(final_news),
 
         "trendingCount":
             len(trending_news),
+
+        "maxAgeHours":
+            MAX_AGE_HOURS,
 
         "news":
             final_news,
@@ -2176,12 +2513,15 @@ def main():
 
 
     # ========================================================
-    # 10. SAVE news.json
+    # 12. SAVE news.json
     # ========================================================
+
+    temp_file = "news.json.tmp"
+
 
     with open(
 
-        "news.json",
+        temp_file,
 
         "w",
 
@@ -2202,8 +2542,15 @@ def main():
         )
 
 
+    # استبدال الملف فقط بعد نجاح الكتابة
+    os.replace(
+        temp_file,
+        "news.json"
+    )
+
+
     # ========================================================
-    # 11. FINAL REPORT
+    # 13. FINAL REPORT
     # ========================================================
 
     print("")
@@ -2249,6 +2596,13 @@ def main():
     )
 
 
+    print(
+        "Maximum article age:",
+        MAX_AGE_HOURS,
+        "hours"
+    )
+
+
     print("")
     print(
         "FINAL CATEGORY COUNTS:"
@@ -2260,6 +2614,32 @@ def main():
         print(
             f"  {category}: "
             f"{category_counts[category]}"
+        )
+
+
+    print("")
+    print(
+        "LATEST 10 ARTICLES:"
+    )
+
+
+    for item in final_news[:10]:
+
+        print(
+            item.get(
+                "publishedAt",
+                ""
+            ),
+            "|",
+            item.get(
+                "category",
+                ""
+            ),
+            "|",
+            item.get(
+                "title_ar",
+                ""
+            )
         )
 
 
